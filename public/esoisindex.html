@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>ESOIS</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .container {
+            margin: 50px auto;
+        }
+
+        .lang {
+            margin-top: -50px;
+            margin-right: 5%;
+            margin-left: 80%;
+        }
+
+        .form {
+            width: 70%;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0px 20px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            
+        }
+
+        .ico {
+            border:0; 
+            height:20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+
+
+        hr {
+            background-color: rgb(220, 133, 46);
+            border: 2px solid rgb(220, 133, 46);
+        }
+
+        .footer-img {
+            position: absolute;
+            bottom: 0px;
+            right: 3%;
+            border: 0;
+            height: 50%;
+            opacity: 0.5;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+    </style>
+
+</head>
+
+<body>
+    &nbsp;&nbsp;
+    <img src="img/logo.png" style="border:0; height:75px;" alt="" />
+
+    <div class="lang">
+        <img class="ico" src="img/ee-icon.png" alt="" />&nbsp;
+        <img class="ico" src="img/gb-icon.png" alt="" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="img/login-icon.png" style="border:0; height:25px;" alt="" />&nbsp;
+        <img src="img/settings-icon.png" style="border:0; height:25px;" alt="" />&nbsp;
+        <br/> &nbsp;
+    </div>
+    <hr>
+
+    <p th:text="'&nbsp&nbsp&nbspTere, ' + ${userName} + '!'" />
+    
+    <p th:text="'&nbsp&nbsp&nbspEelmine paring, ' + ${srcString} + '!'" />
+
+    <div class="container">
+        <h1>Ühendatud otsingu konsool</h1>
+
+        <div class="form">
+            <p>
+
+
+                <form method="POST">
+                    <fieldset>
+                        <input type='checkbox' name='queryType' checked="checked" /> &nbsp;
+                        <input type="text" style="width: 60%" name="searchText" placeholder="Sisesta päring" />
+                        <button type="submit" class="fa fa-search">
+                            <i class="button fa fa-search" aria-hidden="true">Otsi</i>
+                        </button>
+                    </fieldset>
+                    <br/>
+
+                    <input type="text" list="language" name="lang" placeholder="Vali artikli keel">
+                    <datalist id="language">
+                        <option value="Kõik keeled" selected="selected" />
+                        <option value="Eesti keeles" />
+                        <option value="Inglise keeles" />
+                        <option value="Vene keeles" />
+                    </datalist>
+
+
+                    <input type="text" list="libraries" name="library" placeholder="Vali allikas">
+                    <datalist id="libraries">
+                        <option value="Kõik võimalikud allikad" selected="selected" />
+                        <option value="KOPR" />
+                        <option value="TTU keelelabor" />
+                        <option value="Jänku-Vinku keele resurss" />
+                    </datalist>
+                    <br/>
+                    <br/>
+                    <fieldset>
+                        <label for="hitCount">Tulemust per allikas:
+                            <em id="hitCountLabel" style="font-style: normal;">10</em>
+                        </label>
+                        <input type="range" id="hitCount" name="hitCount" min="5" max="25" step="5" value="10" oninput="document.getElementById('hitCountLabel').innerHTML = this.value;"
+                        />
+
+                    </fieldset>
+
+                    <br/>
+
+                </form>
+            </p>
+        </div>
+    </div>
+    <img class="footer-img" src="img/EKRK_logoraamat_2-000.png" alt="" />
+    <div class="footer">
+        <hr>
+        <center>
+            <p>© 2018 Eesti Keeleressursside Keskus | Liivi 2-340, Tartu 50409 | Tel. (+372) 737 6433 | info@keeleressursid.ee</p>
+        </center>
+    </div>
+    <script src="js/bootstrap-switch.js"></script>
+
+    <script>
+        // Remember set you events before call bootstrapSwitch or they will fire after bootstrapSwitch's events
+
+        $("[name='checkbox2']").change(function () {
+            if (!confirm('Do you wanna cancel me!')) {
+                this.checked = true;
+            }
+        });
+
+        $("[name='checkbox2']").bootstrapSwitch({
+            on: 'Simple mode',
+            off: 'Advanced mode',
+            onClass: 'success',
+            offClass: 'warning'
+        });
+
+        $("[name='queryType']").bootstrapSwitch({
+            on: 'Text layer CQL query',
+            off: 'Multi-layer FCS query',
+            onClass: 'success',
+            offClass: 'warning'
+        });
+    </script>
+
+
+
+</body>
+
+</html>
