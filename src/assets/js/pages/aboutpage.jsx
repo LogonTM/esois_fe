@@ -91,5 +91,5 @@ class AboutPage extends Component {
 	}
 }//);
 
-module.exports = AboutPage;
+// module.exports = AboutPage;
 export default AboutPage;

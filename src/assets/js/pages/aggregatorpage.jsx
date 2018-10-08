@@ -12,7 +12,9 @@ import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 import $ from 'jquery';
 import _ from "../components/results.jsx";
+
 var PT = PropTypes;
+
  
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
@@ -360,7 +362,7 @@ class AggregatorPage extends Component {
 					{corpus.title}
 					{ corpus.landingPage ?
 						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-							<span> – Homepage </span>
+							<span> â€“ Homepage </span>
 							<i className="glyphicon glyphicon-home"/>
 						</a>: false}				</h3>);
 	}//,

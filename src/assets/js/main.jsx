@@ -9,9 +9,10 @@ import Footer from "./components/footer.jsx";
 import EmbeddedFooter from "./components/embeddedfooter.jsx";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
+import jQuery from 'jquery';
 
-(function() {
-"use strict";
+// (function() {
+// "use strict";
 
 window.MyAggregator = window.MyAggregator || {};
 
@@ -54,13 +55,21 @@ class Main extends Component {
 		routeFromLocation.bind(this)();
 	}//,
 
-	getInitialState/*: function */() {
-		return {
+	// getInitialState/*: function */() {
+	// 	return {
+	// 		navbarCollapse: false,
+	// 		navbarPageFn: this.renderAggregator,
+	// 		errorMessages: [],
+	// 	};
+	// }//,
+	constructor(props){
+		super(props)
+		this.state = { 
 			navbarCollapse: false,
 			navbarPageFn: this.renderAggregator,
-			errorMessages: [],
+			errorMessages: []
 		};
-	}//,
+	}
 
 	error/*: function*/(errObj) {
 		var err = "";
@@ -269,14 +278,16 @@ var routeFromLocation = function() {
 	}
 };
 
-var main = ReactDOM.render(<Main />,  document.getElementById('body'));
-if (!isEmbeddedView()) {
-	ReactDOM.render(<Footer VERSION={VERSION} toAbout={main.toAbout}/>, document.getElementById('footer') );
-} else {
-	ReactDOM.render(<EmbeddedFooter URLROOT={URLROOT} />, document.getElementById('footer') );
-	if (jQuery) { jQuery('body, #footer').addClass('embedded'); }
-}
+// var main = ReactDOM.render(<Main />,  document.getElementById('body'));
+// if (!isEmbeddedView()) {
+// 	ReactDOM.render(<Footer VERSION={VERSION} toAbout={main.toAbout}/>, document.getElementById('footer') );
+// } else {
+// 	ReactDOM.render(<EmbeddedFooter URLROOT={URLROOT} />, document.getElementById('footer') );
+// 	if (jQuery) { jQuery('body, #footer').addClass('embedded'); }
+// }
 
-window.onpopstate = routeFromLocation.bind(main);
+// window.onpopstate = routeFromLocation.bind(main);
 
-})();
+// })();
+
+export default Main;

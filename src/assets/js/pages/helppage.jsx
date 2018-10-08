@@ -62,5 +62,5 @@ class HelpPage extends Component {
 	}
 }//);
 
-module.exports = HelpPage;
+// module.exports = HelpPage;
 export default HelpPage;

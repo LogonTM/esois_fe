@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import classNames from "classnames";
 // import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
+import _ from "../components/results.jsx";
 
 // var PT = PropTypes;
 
@@ -203,5 +204,5 @@ class StatisticsPage extends Component {
 	}//,
 }//);
 
-module.exports = StatisticsPage;
+// module.exports = StatisticsPage;
 export default StatisticsPage;
