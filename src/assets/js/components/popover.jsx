@@ -1,29 +1,32 @@
-"use strict";
-import classNames from "classnames";
+// "use strict";
+import React, { Component } from 'react';
+// import classNames from "classnames";
 import PopoverMixin from "./popovermixin.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var Popover = createReactClass({
+//var Popover = createReactClass({
+class Popover extends Component {}
 	propTypes: {
-		placement: PT.string,
-		title: PT.string,
-		triggerButtonClass: PT.string,
+		placement: PT.string;
+		title: PT.string;
+		triggerButtonClass: PT.string;
 		triggerButtonContent: PT.element.isRequired
-	},
-	mixins: [PopoverMixin],
+	}//,
+	mixins: [PopoverMixin];//,
 
-	handleClick: function(e) {
+	handleClick/*: function*/(e) {
 		e.stopPropagation();
-	},
+	};//,
 
-	render: function() {
+	render/*: function*/() {
 		return	<button className={this.props.triggerButtonClass} onClick={this.handleClick}>
 					{this.props.triggerButtonContent}
 				</button>;
 	}
-});
+}//);
 
-module.exports = Popover;
+// module.exports = Popover;
+export default Popover;

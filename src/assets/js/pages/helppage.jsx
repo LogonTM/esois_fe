@@ -1,18 +1,20 @@
 "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+// import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var HelpPage = createReactClass({
+//var HelpPage = createReactClass({
 //fixme! - class HelpPage extends React.Component {
-	openHelpDesk: function() {
+class HelpPage extends Component {
+	openHelpDesk/*: function*/() {
 		window.open('http://support.clarin-d.de/mail/form.php?queue=Aggregator&lang=en',
 			'_blank', 'height=560,width=370');
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		return	(
 			<div>
 				<div className="top-gap">
@@ -58,6 +60,7 @@ var HelpPage = createReactClass({
 			</div>
 		);
 	}
-});
+}//);
 
 module.exports = HelpPage;
+export default HelpPage;

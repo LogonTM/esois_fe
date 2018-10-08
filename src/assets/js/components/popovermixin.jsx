@@ -1,6 +1,9 @@
 "use strict";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+// import classNames from "classnames";
 import PropTypes from "prop-types";
+import $ from 'jquery';
 
 var PT = PropTypes;
 
@@ -41,4 +44,5 @@ var PopoverMixin = {
 	},	
 };
 
-module.exports = PopoverMixin;
+// module.exports = PopoverMixin;
+export default PopoverMixin;

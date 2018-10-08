@@ -1,25 +1,28 @@
-"use strict";
+// "use strict";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
+import $ from 'jquery';
 
 var PT = PropTypes;
-
-var Modal = createReactClass({
+// var Modal = createReactClass({
 //fixme! - class Modal extends React.Component {
-	propTypes: {
-		title: PT.object.isRequired,
-	},
-	componentDidMount: function() {
-		$(ReactDOM.findDOMNode(this)).modal({background: true, keyboard: true, show: false});
-	},
-	componentWillUnmount: function() {
+class Modal extends Component {
+	// propTypes: {
+	// 	title: PT.object.isRequired,
+	// }//,
+	componentDidMount/*: function*/() {
+		// $(ReactDOM.findDOMNode(this)).modal({background: true, keyboard: true, show: false});
+	}//,
+	componentWillUnmount/*: function*/() {
 		$(ReactDOM.findDOMNode(this)).off('hidden');
-	},
-	handleClick: function(e) {
+	}//,
+	handleClick/*: function*/(e) {
 		e.stopPropagation();
-	},
-	render: function() {
+	}//,
+	render/*: function*/() {
 		return (
 			<div onClick={this.handleClick} className="modal fade" role="dialog" aria-hidden="true">
 				<div className="modal-dialog">
@@ -42,6 +45,7 @@ var Modal = createReactClass({
 			</div>
 		);
 	}
-});
+}//);
 
-module.exports = Modal;
+// module.exports = Modal;
+export default Modal;

@@ -1,5 +1,7 @@
-"use strict";
+// "use strict";
 import classNames from "classnames";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import CorpusView from "../components/corpusview.jsx";
 import LanguageSelector from "../components/languageselector.jsx"
 import Modal from "../components/modal.jsx";
@@ -7,28 +9,53 @@ import Results from "../components/results.jsx";
 import QueryInput from "../components/queryinput.jsx";
 import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
-
+// import createReactClass from "create-react-class";
+import $ from 'jquery';
+import _ from "../components/results.jsx";
 var PT = PropTypes;
-
+ 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
 
-var AggregatorPage = createReactClass({
+// var AggregatorPage = createReactClass({
 // fixme! - class AggregatorPage extends React.Component {
-	propTypes: {
-		ajax: PT.func.isRequired,
-		error: PT.func.isRequired,
-	        embedded: PT.bool.isRequired
-	},
+class AggregatorPage extends Component {
+	// propTypes: {
+	// 	ajax: PT.func.isRequired,
+	// 	error: PT.func.isRequired,
+	//         embedded: PT.bool.isRequired
+	// }//, 
 
-	nohits: {
+	nohits = {
 		results: null,
-	},
-	anyLanguage: [multipleLanguageCode, "Any Language"],
+	}//,
+	anyLanguage = [multipleLanguageCode, "Any Language"];//,
 
-	getInitialState: function () {
-		return {
+	// getInitialState/*: function */() {
+	// 	return {
+	// 		corpora: new Corpora([], this.updateCorpora),
+	// 		languageMap: {},
+	// 		weblichtLanguages: [],
+	//                 queryTypeId: getQueryVariable('queryType') || 'cql',
+	// 		query: getQueryVariable('query') || '',
+	// 		aggregationContext: getQueryVariable('x-aggregation-context') || '',
+	// 		language: this.anyLanguage,
+	// 		languageFilter: 'byMeta',
+	// 		numberOfResults: 10,
+
+	// 		searchId: null,
+	// 		timeout: 0,
+	// 		hits: this.nohits,
+
+	// 		zoomedCorpusHit: null,
+	// 	        _isMounted: false
+	// 	};
+	// }
+	
+
+	constructor/*: function */(props) {
+		super(props)
+		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
 			weblichtLanguages: [],
@@ -46,61 +73,60 @@ var AggregatorPage = createReactClass({
 			zoomedCorpusHit: null,
 		        _isMounted: false
 		};
-	},
+	}
 
-	componentDidMount: function() {
+	componentDidMount/*: function*/() {
 	        this.setState({_isMounted: true});
+			
+		// 	this.props.ajax({
+		// 	url: 'rest/init',
+		// 	success: function(json, textStatus, jqXHR) {
+		// 		if (this.state._isMounted) {
+		// 			var corpora = new Corpora(json.corpora, this.updateCorpora);
+		// 			window.MyAggregator.corpora = json.corpora;
+		// 			this.setState({
+		// 				corpora : corpora,
+		// 				languageMap: json.languages,
+		// 				weblichtLanguages: json.weblichtLanguages,
+		// 				query: this.state.query || json.query || '',
+		// 			});
+		// 			// for testing aggregation context
+		// 			json['x-aggregation-context'] = {
+		// 				'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
+		// 			};
 
-		this.props.ajax({
-			url: 'rest/init',
-			success: function(json, textStatus, jqXHR) {
-				if (this.state._isMounted) {
-					var corpora = new Corpora(json.corpora, this.updateCorpora);
-					window.MyAggregator.corpora = json.corpora;
-					this.setState({
-						corpora : corpora,
-						languageMap: json.languages,
-						weblichtLanguages: json.weblichtLanguages,
-						query: this.state.query || json.query || '',
-					});
-					// // for testing aggregation context
-					// json['x-aggregation-context'] = {
-					// 	'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
-					// };
+		// 	    	if (this.state.aggregationContext && !json['x-aggregation-context']) {
+		// 			json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
+		// 			console.log(json['x-aggregation-context']);
+		// 	    	}
+		// 	    	if (json['x-aggregation-context']) {
+		// 			window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
+		// 			corpora.setAggregationContext(json["x-aggregation-context"]);
+		// 				if (!corpora.getSelectedIds().length) {
+		// 					this.props.error("Cannot find the required collection, will search all collections instead");
+		// 					corpora.recurse(function(corpus) { corpus.selected = true; });
+		// 				}
+		// 			corpora.update();
+		// 			}
+		// 	    	// Setting visibility, e.g. only corpora 
+		// 	    	// from v2.0 endpoints for fcs v2.0
+		// 		    this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+		// 		    corpora.update();
 
-				    if (this.state.aggregationContext && !json['x-aggregation-context']) {
-					json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-					console.log(json['x-aggregation-context']);
-				    }
-				    if (json['x-aggregation-context']) {
-					window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-					corpora.setAggregationContext(json["x-aggregation-context"]);
-						if (!corpora.getSelectedIds().length) {
-							this.props.error("Cannot find the required collection, will search all collections instead");
-							corpora.recurse(function(corpus) { corpus.selected = true; });
-						}
-						corpora.update();
-					}
-				    // Setting visibility, e.g. only corpora 
-				    // from v2.0 endpoints for fcs v2.0
-				    this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-				    corpora.update();
+		// 			if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
+		// 				window.MyAggregator.mode = 'search';
+		// 				this.search();
+		// 			}
+		// 		}
+		// 	}.bind(this),
+		// });
+	}
 
-					if (getQueryVariable('mode') === 'search' ||
-						json.mode === 'search') {
-							window.MyAggregator.mode = 'search';
-							this.search();
-					}
-				}
-			}.bind(this),
-		});
-	},
-
-	updateCorpora: function(corpora) {
+	updateCorpora/*: function*/(corpora) {
 		this.setState({corpora:corpora});
-	},
+	}
 
-	search: function() {
+	search/*: function*/() {
 		var query = this.state.query;
 		var queryTypeId = this.state.queryTypeId;
 		if (!query || this.props.embedded) {
@@ -130,18 +156,18 @@ var AggregatorPage = createReactClass({
 			        //Piwik.getAsyncTracker().trackSiteSearch(query, queryTypeId);
 			        // automatic inclusion of piwik in prod
 			        //console.log("location.hostname: " + location.hostname);
-			        if (location.hostname !== "localhost") {
-				   //console.log("location.host: " + location.host);
-			           _paq.push(['trackSiteSearch', query, queryTypeId, false]);
-			        }
+			    //     if (location.hostname !== "localhost") {
+				//    //console.log("location.host: " + location.host);
+			    //        _paq.push(['trackSiteSearch', query, queryTypeId, false]);
+			    //     }
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId: searchId, timeout: timeout });
 			}.bind(this),
 		});
-	},
-	nextResults: function(corpusId) {
+	}
+	nextResults/*: function*/(corpusId) {
 		// console.log("searching next results in corpus:", corpusId);
 		this.props.ajax({
 			url: 'rest/search/'+this.state.searchId,
@@ -157,9 +183,9 @@ var AggregatorPage = createReactClass({
 				this.setState({ searchId: searchId, timeout: timeout });
 			}.bind(this),
 		});
-	},
+	}
 
-	refreshSearchResults: function() {
+	refreshSearchResults/*: function*/() {
 		if (!this.state.searchId || !this.state._isMounted) {
 			return;
 		}
@@ -189,9 +215,9 @@ var AggregatorPage = createReactClass({
 				this.setState({ hits: json, timeout: timeout, zoomedCorpusHit: corpusHit});
 			}.bind(this),
 		});
-	},
+	}
 
-	getExportParams: function(corpusId, format, filterLanguage) {
+	getExportParams/*: function*/(corpusId, format, filterLanguage) {
 		var params = corpusId ? {corpusId:corpusId}:{};
 		if (format) params.format = format;
 		if (filterLanguage) {
@@ -200,19 +226,19 @@ var AggregatorPage = createReactClass({
 			params.filterLanguage = this.state.language[0];
 		}
 		return encodeQueryData(params);
-	},
+	}
 
-	getDownloadLink: function(corpusId, format) {
+	getDownloadLink/*: function*/(corpusId, format) {
 		return 'rest/search/'+this.state.searchId+'/download?' +
 			this.getExportParams(corpusId, format);
-	},
+	}
 
-	getToWeblichtLink: function(corpusId, forceLanguage) {
+	getToWeblichtLink/*: function*/(corpusId, forceLanguage) {
 		return 'rest/search/'+this.state.searchId+'/toWeblicht?' +
 			this.getExportParams(corpusId, null, forceLanguage);
-	},
+	}
 
-	setLanguageAndFilter: function(languageObj, languageFilter) {
+	setLanguageAndFilter/*: function*/(languageObj, languageFilter) {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
 			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
 		this.setState({
@@ -220,33 +246,33 @@ var AggregatorPage = createReactClass({
 			languageFilter: languageFilter,
 			corpora: this.state.corpora, // === this.state.corpora.update();
 		});
-	},
+	}
 
-	setQueryType: function(queryTypeId) {
+	setQueryType/*: function*/(queryTypeId) {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
 		this.setState({
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
 			searchId: null,
-		        displayADV: queryTypeId == "fcs" ? true : false,
+		        displayADV: queryTypeId === "fcs" ? true : false,
 			corpora: this.state.corpora, // === this.state.corpora.update();
 		});
-	},
+	}
 
-	setNumberOfResults: function(e) {
+	setNumberOfResults/*: function*/(e) {
 		var n = e.target.value;
 		if (n < 10) n = 10;
 		if (n > 250) n = 250;
 		this.setState({numberOfResults: n});
 		e.preventDefault();
 		e.stopPropagation();
-	},
+	}
 
-	stop: function(e) {
+	stop/*: function*/(e) {
 		e.stopPropagation();
-	},
+	}
 
-	filterResults: function() {
+	filterResults/*: function*/() {
 		var noLangFiltering = this.state.languageFilter === 'byMeta';
 		var langCode = this.state.language[0];
 		var results = null, inProgress = 0, hits = 0;
@@ -286,48 +312,48 @@ var AggregatorPage = createReactClass({
 			hits: hits,
 			inProgress: inProgress,
 		};
-	},
+	}
 
-	toggleLanguageSelection: function(e) {
+	toggleLanguageSelection/*: function*/(e) {
 	    $(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
-	},
+	}//,
 
-	toggleCorpusSelection: function(e) {
+	toggleCorpusSelection/*: function*/(e) {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
-	},
+	}//,
 
-	toggleResultModal: function(e, corpusHit) {
+	toggleResultModal/*: function*/(e, corpusHit) {
 	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
 		e.stopPropagation();
-	},
+	}//,
 
-	onQuery: function(event) {
+	onQuery/*: function*/(event) {
 		this.setState({query: event.target.value});
-	},
+	}//,
 
-        onADVQuery: function(fcsql) {
+        onADVQuery/*: function*/(fcsql) {
 	    this.setState({query: fcsql.target.value});
-	},
+	}//,
 
-	handleKey: function(event) {
-		if (event.keyCode==13) {
+	handleKey/*: function*/(event) {
+		if (event.keyCode === 13) {
 			this.search();
 		}
-	},
+	}//,
 
-        handleADVKey: function(event) {
-	    if (event.keyCode==13) {
+        handleADVKe/*: function*/(event) {
+	    if (event.keyCode === 13) {
 		this.addADVToken();
 	    }
-	},
+	}//,
 
-	renderZoomedResultTitle: function(corpusHit) {
+	renderZoomedResultTitle/*: function*/(corpusHit) {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
 		return (<h3 style={{fontSize:'1em'}}>
@@ -336,11 +362,10 @@ var AggregatorPage = createReactClass({
 						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
 							<span> – Homepage </span>
 							<i className="glyphicon glyphicon-home"/>
-						</a>: false}
-				</h3>);
-	},
+						</a>: false}				</h3>);
+	}//,
 
-	renderSearchButtonOrLink: function() {
+	renderSearchButtonOrLink/*: function*/() {
 		if (this.props.embedded) {
 			var query = this.state.query;
 			var queryTypeId = this.state.queryTypeId;
@@ -362,9 +387,9 @@ var AggregatorPage = createReactClass({
 				<i className="glyphicon glyphicon-search"></i>
 		    </button>
 		);
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		var queryType = queryTypeMap[this.state.queryTypeId];
 		return	(
 			<div className="top-gap">
@@ -480,8 +505,8 @@ var AggregatorPage = createReactClass({
 				</div>
 			</div>
 			);
-	},
-});
+	}//,
+}//);
 
 function Corpora(corpora, updateFn) {
 	var that = this;
@@ -627,32 +652,32 @@ Corpora.prototype.getSelectedMessage = function() {
 	return selected + " selected collections";
 };
 
-function Corpora(corpora, updateFn) {
-	var that = this;
-	this.corpora = corpora;
-	this.update = function() {
-		updateFn(that);
-	};
+// function Corpora(corpora, updateFn) {
+// 	var that = this;
+// 	this.corpora = corpora;
+// 	this.update = function() {
+// 		updateFn(that);
+// 	};
 
-	var sortFn = function(x, y) {
-		var r = x.institution.name.localeCompare(y.institution.name);
-		if (r !== 0) {
-			return r;
-		}
-		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
-	};
+// 	var sortFn = function(x, y) {
+// 		var r = x.institution.name.localeCompare(y.institution.name);
+// 		if (r !== 0) {
+// 			return r;
+// 		}
+// 		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
+// 	};
 
-	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
-	this.corpora.sort(sortFn);
+// 	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
+// 	this.corpora.sort(sortFn);
 
-	this.recurse(function(corpus, index) {
-		corpus.visible = true; // visible in the corpus view
-		corpus.selected = true; // selected in the corpus view
-		corpus.expanded = false; // not expanded in the corpus view
-		corpus.priority = 1; // used for ordering search results in corpus view
-		corpus.index = index; // original order, used for stable sort
-	});
-}
+// 	this.recurse(function(corpus, index) {
+// 		corpus.visible = true; // visible in the corpus view
+// 		corpus.selected = true; // selected in the corpus view
+// 		corpus.expanded = false; // not expanded in the corpus view
+// 		corpus.priority = 1; // used for ordering search results in corpus view
+// 		corpus.index = index; // original order, used for stable sort
+// 	});
+// }
 
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
@@ -660,7 +685,7 @@ function getQueryVariable(variable) {
     console.log("vars: ", vars);
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
+        if (decodeURIComponent(pair[0]) === variable) {
 	    console.log("variable found: (", variable, ") = ", decodeURIComponent(pair[1]));
             return decodeURIComponent(pair[1]);
         }
@@ -668,32 +693,32 @@ function getQueryVariable(variable) {
     return null;
 }
 
-function Corpora(corpora, updateFn) {
-	var that = this;
-	this.corpora = corpora;
-	this.update = function() {
-		updateFn(that);
-	};
+// function Corpora(corpora, updateFn) {
+// 	var that = this;
+// 	this.corpora = corpora;
+// 	this.update = function() {
+// 		updateFn(that);
+// 	};
 
-	var sortFn = function(x, y) {
-		var r = x.institution.name.localeCompare(y.institution.name);
-		if (r !== 0) {
-			return r;
-		}
-		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
-	};
+// 	var sortFn = function(x, y) {
+// 		var r = x.institution.name.localeCompare(y.institution.name);
+// 		if (r !== 0) {
+// 			return r;
+// 		}
+// 		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
+// 	};
 
-	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
-	this.corpora.sort(sortFn);
+// 	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
+// 	this.corpora.sort(sortFn);
 
-	this.recurse(function(corpus, index) {
-		corpus.visible = true; // visible in the corpus view
-		corpus.selected = true; // selected in the corpus view
-		corpus.expanded = false; // not expanded in the corpus view
-		corpus.priority = 1; // used for ordering search results in corpus view
-		corpus.index = index; // original order, used for stable sort
-	});
-}
+// 	this.recurse(function(corpus, index) {
+// 		corpus.visible = true; // visible in the corpus view
+// 		corpus.selected = true; // selected in the corpus view
+// 		corpus.expanded = false; // not expanded in the corpus view
+// 		corpus.priority = 1; // used for ordering search results in corpus view
+// 		corpus.index = index; // original order, used for stable sort
+// 	});
+// }
 
 function encodeQueryData(data)
 {
@@ -728,4 +753,5 @@ var queryTypeMap = {
      	fcs: queryTypes[1],
 };
 
-module.exports = AggregatorPage;
+// module.exports = AggregatorPage;
+export default AggregatorPage;

@@ -1,17 +1,19 @@
 "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var AboutPage = createReactClass({
+//var AboutPage = createReactClass({
 //fixme! - class AboutPage extends React.Component { 
-    propTypes: {
-	toStatistics: PT.func.isRequired,
-    },
+class AboutPage extends Component {
+    // propTypes: {
+	// toStatistics: PT.func.isRequired,
+    // },
 
-    render: function() {
+    render/*: function*/() {
 	return	(<div>
 	           <div className="top-gap">
 	              <h1 style={{padding:15}}>About</h1>
@@ -87,6 +89,7 @@ var AboutPage = createReactClass({
 	  </div>
 	</div>);
 	}
-});
+}//);
 
 module.exports = AboutPage;
+export default AboutPage;

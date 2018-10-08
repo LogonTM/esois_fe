@@ -1,45 +1,52 @@
-"use strict";
+// "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import ResultMixin from "./resultmixin.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-
+import _ from "./results.jsx";
 var PT = PropTypes;
 
-var ZoomedResult = createReactClass({
-	propTypes: {
-		corpusHit: PT.object,
-		nextResults: PT.func.isRequired,
-		languageMap: PT.object.isRequired,
-		weblichtLanguages: PT.array.isRequired,
-		searchedLanguage: PT.array.isRequired,
-		getDownloadLink: PT.func.isRequired,
-		getToWeblichtLink: PT.func.isRequired,
-	        queryTypeId: PT.string.isRequired,
-	},
-	mixins: [ResultMixin],
-
-	getInitialState: function() {
-		return {
-			forceUpdate: 1, // hack to force an update, used when searching for next results
+//var ZoomedResult = createReactClass({
+class ZoomedResult extends Component {
+	// propTypes: {
+	// 	corpusHit: PT.object,
+	// 	nextResults: PT.func.isRequired,
+	// 	languageMap: PT.object.isRequired,
+	// 	weblichtLanguages: PT.array.isRequired,
+	// 	searchedLanguage: PT.array.isRequired,
+	// 	getDownloadLink: PT.func.isRequired,
+	// 	getToWeblichtLink: PT.func.isRequired,
+	//         queryTypeId: PT.string.isRequired,
+	// }//,
+	mixins: [ResultMixin];
+	constructor(props) {
+		super(props)
+		this.state = {
+			forceUpdate: 1
 		};
-	},
+	}
+	// getInitialState/*: function*/() {
+	// 	return {
+	// 		forceUpdate: 1, // hack to force an update, used when searching for next results
+	// 	};
+	// }//,
 
-	nextResults: function(e) {
+	nextResults/*: function*/(e) {
 		this.props.corpusHit.inProgress = true;
 		this.setState({forceUpdate: this.state.forceUpdate+1});
 		this.props.nextResults(this.props.corpusHit.corpus.id);
-	},
+	}//,
 
-	renderLanguages: function(languages) {
+	renderLanguages/*: function*/(languages) {
 		return languages
 				.map(function(l) { return this.props.languageMap[l]; }.bind(this))
 				.sort()
 				.join(", ");
-	},
+	}//,
 
-	renderMoreResults:function(){
+	renderMoreResults/*: function*/(){
 		if (this.props.corpusHit.inProgress)
 			return (<span style={{fontStyle:'italic'}}>Retrieving results, please wait...</span>);
 
@@ -56,9 +63,9 @@ var ZoomedResult = createReactClass({
 		return	(<button className="btn btn-default" onClick={this.nextResults}>
 					<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true"/> More Results
 				</button>);
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		var corpusHit = this.props.corpusHit;
 		if (!corpusHit) {
 			return false;
@@ -72,7 +79,7 @@ var ZoomedResult = createReactClass({
 					forceLanguage = corpusHit.corpus.languages[0];
 				} else {
 					var langs = corpusHit.kwics.map(function(kwic) {return kwic.language;});
-					langs = _.uniq(langs.filter(function(l){ return l !== null; }));
+					langs = /*_.*/uniq(langs.filter(function(l){ return l !== null; }));
 					if (langs.length === 1) {
 						forceLanguage = langs[0];
 					}
@@ -113,7 +120,18 @@ var ZoomedResult = createReactClass({
 						</div>
 
 				</div>);
-	},
-});
+	}//,
+}//);
 
-module.exports = ZoomedResult;
+function uniq/*: function*/(a) {
+		var r = [];
+		for (var i = 0; i < a.length; i++) {
+			if (r.indexOf(a[i]) < 0) {
+				r.push(a[i]);
+			}
+		}
+		return r;
+}
+
+// module.exports = ZoomedResult;
+export default ZoomedResult;

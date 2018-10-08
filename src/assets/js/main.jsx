@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import AboutPage from "./pages/aboutpage.jsx";
 import AggregatorPage from "./pages/aggregatorpage.jsx";
 import HelpPage from "./pages/helppage.jsx";
@@ -6,7 +8,7 @@ import ErrorPane from "./components/errorpane.jsx";
 import Footer from "./components/footer.jsx";
 import EmbeddedFooter from "./components/embeddedfooter.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 
 (function() {
 "use strict";
@@ -45,21 +47,22 @@ The top-most component, Main, tracks of the window's location URL and, depending
 	  The embedded view is supposed to work like a YouTube embedded clip.
 */
 
-var Main = createReactClass({
+//var Main = createReactClass({
 // fixme! - class Main extends React.Component {
-	componentWillMount: function() {
+class Main extends Component {
+	componentWillMount/*: function*/() {
 		routeFromLocation.bind(this)();
-	},
+	}//,
 
-	getInitialState: function () {
+	getInitialState/*: function */() {
 		return {
 			navbarCollapse: false,
 			navbarPageFn: this.renderAggregator,
 			errorMessages: [],
 		};
-	},
+	}//,
 
-	error: function(errObj) {
+	error/*: function*/(errObj) {
 		var err = "";
 		if (typeof errObj === 'string' || errObj instanceof String) {
 			err = errObj;
@@ -80,9 +83,9 @@ var Main = createReactClass({
 			errs.shift();
 			that.setState({errorMessages: errs});
 		}, 10000);
-	},
+	}//,
 
-	ajax: function(ajaxObject) {
+	ajax/*: function*/(ajaxObject) {
 		var that = this;
 		if (!ajaxObject.error) {
 			ajaxObject.error = function(jqXHR, textStatus, error) {
@@ -98,33 +101,33 @@ var Main = createReactClass({
 		}
 		// console.log("ajax", ajaxObject);
 		jQuery.ajax(ajaxObject);
-	},
+	}//,
 
-	toggleCollapse: function() {
+	toggleCollapse/*: function*/() {
 		this.setState({navbarCollapse: !this.state.navbarCollapse});
-	},
+	}//,
 
-	renderAggregator: function() {
+	renderAggregator/*: function*/() {
 		return <AggregatorPage ajax={this.ajax} error={this.error} embedded={false}/>;
-	},
+	}//,
 
-	renderHelp: function() {
+	renderHelp/*: function*/() {
 		return <HelpPage />;
-	},
+	}//,
 
-	renderAbout: function() {
+	renderAbout/*: function*/() {
 		return <AboutPage toStatistics={this.toStatistics} />;
-	},
+	}//,
 
-	renderStatistics: function() {
+	renderStatistics/*: function*/() {
 		return <StatisticsPage ajax={this.ajax} />;
-	},
+	}//,
 
-	renderEmbedded: function() {
+	renderEmbedded/*: function*/() {
 		return <AggregatorPage ajax={this.ajax} error={this.error} embedded={true}/>;
-	},
+	}//,
 
-	getPageFns: function() {
+	getPageFns/*: function*/() {
 		return {
 			'': this.renderAggregator,
 			'help': this.renderHelp,
@@ -132,9 +135,9 @@ var Main = createReactClass({
 			'stats': this.renderStatistics,
 			'embed': this.renderEmbedded,
 		};
-	},
+	}//,
 
-	gotoPage: function(doPushHistory, pageFnName) {
+	gotoPage/*: function*/(doPushHistory, pageFnName) {
 		var pageFn = this.getPageFns()[pageFnName];
 		if (this.state.navbarPageFn !== pageFn) {
 			if (doPushHistory) {
@@ -143,22 +146,22 @@ var Main = createReactClass({
 			this.setState({navbarPageFn: pageFn});
 			console.log("new page: " + document.location + ", name: " + pageFnName);
 		}
-	},
+	}//,
 
-	toAggregator: function(doPushHistory) { this.gotoPage(doPushHistory, ''); },
-	toHelp: function(doPushHistory) { this.gotoPage(doPushHistory, 'help'); },
-	toAbout: function(doPushHistory) { this.gotoPage(doPushHistory, 'about'); },
-	toStatistics: function(doPushHistory) { this.gotoPage(doPushHistory, 'stats'); },
-	toEmbedded: function(doPushHistory) { this.gotoPage(doPushHistory, 'embed'); },
+	toAggregator/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, ''); }
+	toHelp/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'help'); }
+	toAbout/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'about'); }
+	toStatistics/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'stats'); }
+	toEmbedded/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'embed'); }
 
-	renderLogin: function() {
+	renderLogin/*: function*/() {
 		return false;
 		// return  <li className="unauthenticated">
 		// 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
 		// 		</li>;
-	},
+	}//,
 
-	renderCollapsible: function() {
+	renderCollapsible/*: function*/() {
 		var classname = "navbar-collapse collapse " + (this.state.navbarCollapse?"in":"");
 		return (
 			<div className={classname}>
@@ -176,9 +179,9 @@ var Main = createReactClass({
 				</ul>
 			</div>
 		);
-	},
+	}//,
 
-	renderTop: function() {
+	renderTop/*: function*/() {
 		if (this.state.navbarPageFn === this.renderEmbedded) {
 			return false;
 		}
@@ -206,9 +209,9 @@ var Main = createReactClass({
 
 			</div>
 		);
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		return	(
 			<div>
 				<div> { this.renderTop() } </div>
@@ -222,7 +225,7 @@ var Main = createReactClass({
 			</div>
 		);
 	}
-});
+}//);
 
 // StatisticsPage
 

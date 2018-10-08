@@ -1,15 +1,19 @@
-"use strict";
-import classNames from "classnames";
+// "use strict";
+import React, { Component } from 'react';
+// import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+// import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var PanelGroup = createReactClass({
+// var PanelGroup = createReactClass({
 //fixme! - class PanelGroup extends React.Component {
-	render: function() {
+class PanelGroup extends Component {
+	render/*: function*/() {
 		return	<div className="panel-group"> {this.props.children} </div>;
-	},
-});
+		}//,
+}//);
 
-module.exports = PanelGroup;
+// module.exports = PanelGroup;
+export default PanelGroup;
+
