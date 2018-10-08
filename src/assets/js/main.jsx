@@ -206,7 +206,7 @@ class Main extends Component {
 								<span className="icon-bar"></span>
 							</button>
 							<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-								<img width="28px" height="28px" src="img/magglass1.png"/>
+								<img width="28px" height="28px" src="../img/magglass1.png"/>
 								<header className="inline"> Content Search </header>
 							</a>
 						</div>
@@ -278,15 +278,15 @@ var routeFromLocation = function() {
 	}
 };
 
-// var main = ReactDOM.render(<Main />,  document.getElementById('body'));
-// if (!isEmbeddedView()) {
-// 	ReactDOM.render(<Footer VERSION={VERSION} toAbout={main.toAbout}/>, document.getElementById('footer') );
-// } else {
-// 	ReactDOM.render(<EmbeddedFooter URLROOT={URLROOT} />, document.getElementById('footer') );
-// 	if (jQuery) { jQuery('body, #footer').addClass('embedded'); }
-// }
+var main = ReactDOM.render(<Main />,  document.getElementById('body'));
+if (!isEmbeddedView()) {
+	ReactDOM.render(<Footer VERSION={VERSION} toAbout={main.toAbout}/>, document.getElementById('footer') );
+} else {
+	ReactDOM.render(<EmbeddedFooter URLROOT={URLROOT} />, document.getElementById('footer') );
+	if (jQuery) { jQuery('body, #footer').addClass('embedded'); }
+}
 
-// window.onpopstate = routeFromLocation.bind(main);
+window.onpopstate = routeFromLocation.bind(main);
 
 // })();
 
