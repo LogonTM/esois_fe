@@ -12,3 +12,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.orange-line {
+  background-color: rgb(220, 133, 46) !important;
+  border: 2px solid rgb(220, 133, 46) !important;
+}
+
+#footer {
+  border-top: 0px solid #e7e7e7;
+  background-color: white;
+}
+
+.footer-img {
+  position: absolute;
+  bottom: 0px;
+  right: 3%;
+  border: 0;
+  height: 50%;
+  opacity: 0.5;
+}
+
+.footer {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+}
+
+.footer-link {
+  color: black
+}
