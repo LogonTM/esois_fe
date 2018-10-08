@@ -178,7 +178,6 @@ var $ = window.$ = Zepto;
 
   Dropdown.prototype.toggle = function (e) {
     var $this = $(this)
-
     if ($this.is('.disabled, :disabled')) return
 
     var $parent  = getParent($this)
@@ -242,8 +241,7 @@ var $ = window.$ = Zepto;
   }
 
   function clearMenus(e) {
-    if (e && e.which === 3) return
-    if (e && e.target){
+    if (e && e.which === 3) return    if (e && e.target){
     	var t = $(e.target);
     	for (var i = 0; i < 3; i ++) {
 	    	if (t.hasClass('clarinservices-dropdown-toggle'))return;
