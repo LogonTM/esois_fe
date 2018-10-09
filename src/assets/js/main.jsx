@@ -10,6 +10,7 @@ import EmbeddedFooter from "./components/embeddedfooter.jsx";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery';
+// import './main.js'
 
 // (function() {
 // "use strict";

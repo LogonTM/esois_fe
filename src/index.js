@@ -8,6 +8,7 @@ import Main from './assets/js/main.jsx';
 import './assets/adv.css';
 import './assets/CLARIN.css';
 import './assets/base.css';
+import 'bootstrap';
 import './assets/lib/bootstrap.min.css';
 import './assets/lib/font-awesome.min.css';
 

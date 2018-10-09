@@ -78,11 +78,11 @@ class AggregatorPage extends Component {
 	}
 
 	componentDidMount/*: function*/() {
-	        this.setState({_isMounted: true});
+		this.setState({_isMounted: true});
 			
-		// 	this.props.ajax({
-		// 	url: 'rest/init',
-		// 	success: function(json, textStatus, jqXHR) {
+		// this.props.json({
+		// url: 'rest/init',
+		// success: function(json, textStatus, jqXHR) {
 		// 		if (this.state._isMounted) {
 		// 			var corpora = new Corpora(json.corpora, this.updateCorpora);
 		// 			window.MyAggregator.corpora = json.corpora;
@@ -96,24 +96,23 @@ class AggregatorPage extends Component {
 		// 			json['x-aggregation-context'] = {
 		// 				'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
 		// 			};
-
-		// 	    	if (this.state.aggregationContext && !json['x-aggregation-context']) {
-		// 			json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-		// 			console.log(json['x-aggregation-context']);
-		// 	    	}
-		// 	    	if (json['x-aggregation-context']) {
-		// 			window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-		// 			corpora.setAggregationContext(json["x-aggregation-context"]);
+		// 			if (this.state.aggregationContext && !json['x-aggregation-context']) {
+		// 				json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
+		// 				console.log(json['x-aggregation-context']);
+		// 			}
+		// 			if (json['x-aggregation-context']) {
+		// 				window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
+		// 				corpora.setAggregationContext(json["x-aggregation-context"]);
 		// 				if (!corpora.getSelectedIds().length) {
 		// 					this.props.error("Cannot find the required collection, will search all collections instead");
 		// 					corpora.recurse(function(corpus) { corpus.selected = true; });
 		// 				}
-		// 			corpora.update();
+		// 				corpora.update();
 		// 			}
-		// 	    	// Setting visibility, e.g. only corpora 
-		// 	    	// from v2.0 endpoints for fcs v2.0
-		// 		    this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-		// 		    corpora.update();
+		// 			// Setting visibility, e.g. only corpora 
+		// 			// from v2.0 endpoints for fcs v2.0
+		// 			this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+		// 			corpora.update();
 
 		// 			if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
 		// 				window.MyAggregator.mode = 'search';
@@ -407,9 +406,9 @@ class AggregatorPage extends Component {
 							    query={this.state.query}
 							    embedded={this.props.embedded}
 							    placeholder={queryType.searchPlaceholder}
-							    onChange={this.onADVQuery}
+							    onChange={this.onADVQuery.bind(this)}
 		                                            onQuery={this.onQuery}
-							    onKeyDown={this.handleKey} />
+							    onKeyDown={this.handleKey.bind(this)} />
 
 							<div className="input-group-btn">
 								{this.renderSearchButtonOrLink()}
@@ -428,7 +427,7 @@ class AggregatorPage extends Component {
 
 								<div className="input-group-btn">
 									<button className="form-control btn btn-default"
-											onClick={this.toggleLanguageSelection}>
+											onClick={this.toggleLanguageSelection.bind(this)}>
 										{this.state.language[1]} <span className="caret"/>
 									</button>
 									<span/>
@@ -448,13 +447,14 @@ class AggregatorPage extends Component {
 											aria-expanded="false" data-toggle="dropdown" >
 										{queryType.name} <span className="caret"/>
 									</button>
+
 								</div>
 
 							</div>
 
 							<div className="input-group hidden-xs">
 								<span className="input-group-addon nobkg">in</span>
-								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection}>
+								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection.bind(this)}>
 									{this.state.corpora.getSelectedMessage()} <span className="caret"/>
 								</button>
 							</div>
@@ -464,8 +464,8 @@ class AggregatorPage extends Component {
 								<div className="input-group-btn">
 									<input type="number" className="form-control input" min="10" max="250"
 										style={{width:60}}
-										onChange={this.setNumberOfResults} value={this.state.numberOfResults}
-										onKeyPress={this.stop}/>
+										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
+										onKeyPress={this.stop.bind(this)}/>
 								</div>
 								<span className="input-group-addon nobkg">hits per endpoint</span>
 							</div>
@@ -483,7 +483,7 @@ class AggregatorPage extends Component {
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
 									  languageFilter={this.state.languageFilter}
-									  languageChangeHandler={this.setLanguageAndFilter} />
+									  		languageChangeHandler={this.setLanguageAndFilter} />
 				</Modal>
 
 				<Modal ref="resultModal" title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}>
@@ -494,7 +494,7 @@ class AggregatorPage extends Component {
 								  searchedLanguage={this.state.language}
 								  weblichtLanguages={this.state.weblichtLanguages}
 								  languageMap={this.state.languageMap} 
-						                  queryTypeId={this.state.queryTypeId} />
+						          		queryTypeId={this.state.queryTypeId} />
 				</Modal>
 
 				<div className="top-gap">
@@ -503,7 +503,7 @@ class AggregatorPage extends Component {
 							 getDownloadLink={this.getDownloadLink}
 							 getToWeblichtLink={this.getToWeblichtLink}
 							 searchedLanguage={this.state.language}
-					                 queryTypeId={this.state.queryTypeId}/>
+					         		queryTypeId={this.state.queryTypeId}/>
 				</div>
 			</div>
 			);

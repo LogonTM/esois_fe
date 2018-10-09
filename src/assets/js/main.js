@@ -27157,7 +27157,7 @@ function Corpora(corpora, updateFn) {
 	this.corpora.sort(sortFn);
 
 	this.recurse(function (corpus, index) {
-		corpus.visible = true; // visible in the corpus view
+		corpus.visible = true; // visible in the corpus views
 		corpus.selected = true; // selected in the corpus view
 		corpus.expanded = false; // not expanded in the corpus view
 		corpus.priority = 1; // used for ordering search results in corpus view

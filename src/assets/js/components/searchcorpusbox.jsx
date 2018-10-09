@@ -45,7 +45,7 @@ class SearchCorpusBox extends Component {
 		return 	<div className="form-group">
 					<input className="form-control search search-collection" type="text" 
 						value={this.state.query} placeholder="Search for collection" 
-						onChsange={this.handleChange} />
+						onChange={this.handleChange.bind(this)} />
 				</div>;
 	}
 }//);

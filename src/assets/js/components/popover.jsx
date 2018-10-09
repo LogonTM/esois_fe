@@ -19,10 +19,10 @@ class Popover extends Component {}
 
 	handleClick/*: function*/(e) {
 		e.stopPropagation();
-	};//,
+	}//;//,
 
 	render/*: function*/() {
-		return	<button className={this.props.triggerButtonClass} onClick={this.handleClick}>
+		return	<button className={this.props.triggerButtonClass} onClick={this.handleClick.bind(this)}>
 					{this.props.triggerButtonContent}
 				</button>;
 	}
