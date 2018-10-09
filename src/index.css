@@ -18,6 +18,11 @@ code {
   border: 2px solid rgb(220, 133, 46) !important;
 }
 
+div.navbar {
+  background-color: white;
+  border-bottom: 0px;
+}
+
 #footer {
   border-top: 0px solid #e7e7e7;
   background-color: white;

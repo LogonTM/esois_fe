@@ -199,19 +199,23 @@ class Main extends Component {
 				<div className="navbar navbar-default navbar-static-top" role="navigation">
 					<div className="container">
 						<div className="navbar-header">
+							<header className="inline">
+								<img height="75px" src="img/logo.png" />
+							</header>
 							<button type="button" className="navbar-toggle" onClick={this.toggleCollapse}>
 								<span className="sr-only">Toggle navigation</span>
 								<span className="icon-bar"></span>
 								<span className="icon-bar"></span>
 								<span className="icon-bar"></span>
 							</button>
-							<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-								<img width="28px" height="28px" src="../img/magglass1.png"/>
+							{/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
+								<img width="28px" height="28px" src="img/magglass1.png"/>
 								<header className="inline"> Content Search </header>
-							</a>
+							</a> */}
 						</div>
 						{this.renderCollapsible()}
 					</div>
+					<hr className="orange-line"></hr>
 				</div>
 
 				<ErrorPane errorMessages={this.state.errorMessages} />
