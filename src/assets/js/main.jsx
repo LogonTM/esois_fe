@@ -175,16 +175,31 @@ class Main extends Component {
 		var classname = "navbar-collapse collapse " + (this.state.navbarCollapse?"in":"");
 		return (
 			<div className={classname}>
-				<ul className="nav navbar-nav">
+				{/* <ul className="nav navbar-nav">
 					<li className={this.state.navbarPageFn === this.renderAggregator ? "active":""}>
 						<a className="link" tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>Aggregator</a>
 					</li>
 					<li className={this.state.navbarPageFn === this.renderHelp ? "active":""}>
 						<a className="link" tabIndex="-1" onClick={this.toHelp.bind(this, true)}>Help</a>
 					</li>
-				</ul>
-				<ul className="nav navbar-nav navbar-right">
-					<li> <div id="clarinservices" style={{padding:4}}/> </li>
+				</ul> */}
+				<ul className="nav navbar-nav navbar-right" id="navbar-right">
+					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
+						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
+							<img className="ico" src="img/ee-icon.png" alt="" /></a>&nbsp;
+					</li>
+					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
+						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
+							<img className="ico" src="img/gb-icon.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</li>
+					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
+						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
+							<img height="99%" src="img/login-icon.png" alt="" /></a>&nbsp;
+					</li>
+					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
+						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
+							<img height="99%" src="img/settings-icon.png" alt="" /></a>&nbsp;
+					</li>
 					{this.renderLogin()}
 				</ul>
 			</div>
@@ -200,11 +215,14 @@ class Main extends Component {
 				<div className="navbar navbar-default navbar-static-top" role="navigation">
 					<div className="container">
 						<div className="navbar-header">
-							<header className="inline">
-								<img height="75px" src="img/logo.png" />
-							</header>
+							{/* <header className="inline"> */}
+								<img height="75px" src="img/logo.png" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<img height="75px" src="img/el-reg-fondv.png" alt="Euroopa Liidu regionaalfond" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<img height="75px" src="img/clarindLogo.png" alt="Clarin" />
+							{/* </header> */}
 							<button type="button" className="navbar-toggle" onClick={this.toggleCollapse}>
 								<span className="sr-only">Toggle navigation</span>
+								<span className="icon-bar"></span>
 								<span className="icon-bar"></span>
 								<span className="icon-bar"></span>
 								<span className="icon-bar"></span>

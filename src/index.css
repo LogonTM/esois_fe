@@ -1,11 +1,12 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  border: 0px;
 }
 
 code {
@@ -23,9 +24,40 @@ div.navbar {
   border-bottom: 0px;
 }
 
-#footer {
-  border-top: 0px solid #e7e7e7;
-  background-color: white;
+/* .navbar-header {
+  width: 700px;
+} */
+
+#navbar-right {
+  margin-top: 1.5%;
+}
+
+.navbar-brand {
+  padding: 12px !important;
+}
+
+.input-group .form-control, .form-control, .input-group-addon, .btn-default {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143) !important;
+}
+
+.nobkg {
+  border: 0px !important;
+  background-color: white !important;
+}
+
+.ico {
+  border: 0; 
+  height: 80%;
+  margin-top: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+div#footer {
+  border-top: 0px solid #fafafa;
+  background-color: #fafafa;
+  border: 0px;
+  height: 0px;
 }
 
 .footer-img {
@@ -38,11 +70,14 @@ div.navbar {
 }
 
 .footer {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143);
   position: absolute;
   bottom: 50px;
   width: 100%;
+  border: 0px;
 }
 
-.footer-link {
-  color: black
+#footer a{
+  color: rgb(40,85,143) !important;
 }

@@ -13,7 +13,7 @@ class SearchCorpusBox extends Component {
 	// 	search: PT.func.isRequired,
 	// },
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			query: ""
 		};

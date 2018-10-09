@@ -56,7 +56,7 @@ class AggregatorPage extends Component {
 	
 
 	constructor/*: function */(props) {
-		super(props)
+		super(props);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
@@ -315,19 +315,19 @@ class AggregatorPage extends Component {
 		};
 	}
 
-	toggleLanguageSelection/*: function*/(e) {
+	toggleLanguageSelection/*: function*/= e => {
 	    $(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
 
-	toggleCorpusSelection/*: function*/(e) {
+	toggleCorpusSelection/*: function*/ = e => {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
 
-	toggleResultModal/*: function*/(e, corpusHit) {
+	toggleResultModal/*: function*/= (e, corpusHit) => {
 	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
@@ -338,7 +338,7 @@ class AggregatorPage extends Component {
 		this.setState({query: event.target.value});
 	}//,
 
-        onADVQuery/*: function*/(fcsql) {
+    onADVQuery/*: function*/(fcsql) {
 	    this.setState({query: fcsql.target.value});
 	}//,
 
@@ -348,7 +348,7 @@ class AggregatorPage extends Component {
 		}
 	}//,
 
-        handleADVKe/*: function*/(event) {
+    handleADVKey/*: function*/(event) {
 	    if (event.keyCode === 13) {
 		this.addADVToken();
 	    }
@@ -361,7 +361,7 @@ class AggregatorPage extends Component {
 					{corpus.title}
 					{ corpus.landingPage ?
 						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-							<span> â€“ Homepage </span>
+							<span> - Homepage </span>
 							<i className="glyphicon glyphicon-home"/>
 						</a>: false}				</h3>);
 	}//,
@@ -737,7 +737,7 @@ var queryTypes = [
 		name: "Text layer Contextual Query Language (CQL)",
 		searchPlaceholder: "Elephant",
 		searchLabel: "Text layer CQL query",
-		searchLabelBkColor: "#fed",
+		searchLabelBkColor: "rgba(220, 133, 46, .3)",
 		className: '',
 	},
 	{
@@ -745,7 +745,7 @@ var queryTypes = [
 		name: "Multi-layer Federated Content Search Query Language (FCS-QL)",
 		searchPlaceholder: "[word = 'annotation'][word = 'focused']",
 		searchLabel: "Multi-layer FCS query",
-		searchLabelBkColor: "#efd",
+		searchLabelBkColor: "rgba(40, 85, 143, .3)",
 		disabled: false,
 	},
 ];
