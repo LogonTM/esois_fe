@@ -55,16 +55,16 @@ class QueryInput extends Component {
 
 //var ADVTokens = createReactClass({
 class ADVTokens extends Component {
-
-    // propTypes: {
-	// query: PT.string
-    // }//,
+    static propTypes = {
+	query: PT.string
+    }//,
 	constructor(props) {
 		super(props)
 		this.state = {
 			tokenCounter: 1,
 			tokens: ["token1"],
 		};
+		this.removeADVToken = this.removeADVToken.bind(this);
 	}
     // getInitialState/*: function */() {
 	// return { 
@@ -113,10 +113,10 @@ class ADVTokens extends Component {
 
 //var ADVToken = createReactClass({
 class ADVToken extends Component {
-    // propTypes: {
-	// parentToken: PT.string.isRequired,
-	// handleRemoveADVToken: PT.func.isRequired,
-    // },
+    static propTypes = {
+	parentToken: PT.string.isRequired,
+	handleRemoveADVToken: PT.func.isRequired,
+    }//,
     render/*: function*/() {
 	return (<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
 	    <div className="token_header">
@@ -245,11 +245,11 @@ class ADVTokenMenu extends Component {
 
 //var ANDQueryORArgs = createReactClass({
 class ANDQueryORArgs extends Component{
-    // propTypes: {
-	// numAnds: PT.number.isRequired,
-	// parentAnd: PT.string.isRequired,
-	// handleRemoveADVAnd: PT.func.isRequired,
-	// },
+    static propTypes = {
+	numAnds: PT.number.isRequired,
+	parentAnd: PT.string.isRequired,
+	handleRemoveADVAnd: PT.func.isRequired,
+	}//,
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -332,13 +332,13 @@ class ANDQueryORArgs extends Component{
 
 //var ORArg = createReactClass({
 class ORArg extends Component {
-    // propTypes: {
-	// data: PT.object.isRequired,
-	// handleRemoveADVOr: PT.func.isRequired,
-	// handleSetADVInputDefault: PT.func.isRequired,
-	// handleSetADVTokenOp: PT.func.isRequired,
-	// handleValidateADV: PT.func.isRequired,
-    // }//,
+    static propTypes = {
+	data: PT.object.isRequired,
+	handleRemoveADVOr: PT.func.isRequired,
+	handleSetADVInputDefault: PT.func.isRequired,
+	handleSetADVTokenOp: PT.func.isRequired,
+	handleValidateADV: PT.func.isRequired,
+    }//,
 
     render/*: function*/() {
 	return (<div className="or or_arg">

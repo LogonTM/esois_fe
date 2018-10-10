@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import jQuery from 'jquery';
 // import classNames from "classnames";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 
 // var PT = PropTypes;
