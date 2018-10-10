@@ -7,6 +7,8 @@ import StatisticsPage from "./pages/statisticspage.jsx";
 import ErrorPane from "./components/errorpane.jsx";
 import Footer from "./components/footer.jsx";
 import EmbeddedFooter from "./components/embeddedfooter.jsx";
+import logo from "../img/clarindLogo.png";
+import ELlogo from "../img/el-reg-fond.png";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery';
@@ -64,11 +66,11 @@ class Main extends Component {
 	// 	};
 	// }//,
 	constructor(props){
-		super(props)
+		super(props);
 		this.state = { 
 			navbarCollapse: false,
 			navbarPageFn: this.renderAggregator,
-			errorMessages: []
+			errorMessages: [],
 		};
 	}
 
@@ -217,8 +219,8 @@ class Main extends Component {
 						<div className="navbar-header">
 							{/* <header className="inline"> */}
 								<img height="75px" src="img/logo.png" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<img height="75px" src="img/el-reg-fondv.png" alt="Euroopa Liidu regionaalfond" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<img height="75px" src="img/clarindLogo.png" alt="Clarin" />
+								<img src={ELlogo} alt="Euroopa Liidu regionaalfond" style={{height:75}}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<img src={logo} alt="CLARIN ERIC logo" style={{height:75}}/>
 							{/* </header> */}
 							<button type="button" className="navbar-toggle" onClick={this.toggleCollapse}>
 								<span className="sr-only">Toggle navigation</span>

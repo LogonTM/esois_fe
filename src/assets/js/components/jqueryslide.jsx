@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import jQuery from 'jquery';
 // import classNames from "classnames";
-import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
+// import PropTypes from "prop-types";
+// import createReactClass from "create-react-class";
 
-var PT = PropTypes;
+// var PT = PropTypes;
 
 // var JQuerySlide = createReactClass({
 //fixme! - class JQuerySlide extends React.Component {
@@ -19,12 +19,14 @@ class JQuerySlide extends Component {
 			callback();
 		});
 	}//,
+
 	componentWillLeave/*: function*/(callback){
 		var $el = jQuery(ReactDOM.findDOMNode(this));
 		$el.slideUp(function(){
 			callback();
 		});
 	}//,
+	
 	render/*: function*/(){
 		return this.transferPropsTo(this.props.component({style: {display: 'none'}}));
 	}

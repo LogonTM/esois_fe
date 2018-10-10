@@ -1,6 +1,6 @@
 // "use strict";
 import React, { Component } from 'react';
-// import classNames from "classnames";
+import classNames from "classnames";
 import JQueryFade from "./jqueryfade.jsx";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
@@ -11,10 +11,9 @@ var PT = PropTypes;
 // var ErrorPane = createReactClass({
     //fixme! - class ErrorPane extends React.Component {
 class ErrorPane extends Component{
-	propTypes = {
+	static propTypes = {
 		errorMessages: PT.array.isRequired,
 	}//,
-
 	
 	renderErrorMessage/*: function*/(errorMessage, index) {
 		return errorMessage ? 

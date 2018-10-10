@@ -22,11 +22,11 @@ var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // 
 // var AggregatorPage = createReactClass({
 // fixme! - class AggregatorPage extends React.Component {
 class AggregatorPage extends Component {
-	// propTypes: {
-	// 	ajax: PT.func.isRequired,
-	// 	error: PT.func.isRequired,
-	//         embedded: PT.bool.isRequired
-	// }//, 
+	static propTypes: {
+	 	ajax: PT.func.isRequired,
+	 	error: PT.func.isRequired,
+	         embedded: PT.bool.isRequired,
+	}//, 
 
 	nohits = {
 		results: null,
@@ -73,7 +73,7 @@ class AggregatorPage extends Component {
 			hits: this.nohits,
 
 			zoomedCorpusHit: null,
-		        _isMounted: false
+		        _isMounted: false,
 		};
 	}
 
@@ -168,6 +168,7 @@ class AggregatorPage extends Component {
 			}.bind(this),
 		});
 	}
+	
 	nextResults/*: function*/(corpusId) {
 		// console.log("searching next results in corpus:", corpusId);
 		this.props.ajax({
