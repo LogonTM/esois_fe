@@ -1,27 +1,27 @@
 "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 import _ from "../components/results.jsx";
 
-// var PT = PropTypes;
+var PT = PropTypes;
 
 //var StatisticsPage = createReactClass({
 // fixme! - class StatisticsPage extends React.Component {
 class StatisticsPage extends Component {
-	// propTypes: {
-	// 	ajax: PT.func.isRequired,
-	// },
+	static propTypes = {
+		ajax: PT.func.isRequired,
+	}//,
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		stats: {},
-	// 		activeTab: 0,
-	// 		// searchStats: {},
-	// 		// lastScanStats: {},
-	// 	};
-	// }//,
+	getInitialState/*: function */() {
+		return {
+			stats: {},
+			activeTab: 0,
+			// searchStats: {},
+			// lastScanStats: {},
+		};
+	}//,
 	constructor(props){
 		super(props)
 		this.state = {

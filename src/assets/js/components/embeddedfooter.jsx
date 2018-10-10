@@ -9,7 +9,7 @@ var PT = PropTypes;
 //var EmbeddedFooter = createReactClass({
 //fixme! - class EmbeddedFooter extends React.Component { 
 class EmbeddedFooter extends Component { 
-    propTypes = {
+    static propTypes = {
 	URLROOT: PT.string.isRequired,
 	}//,
 

@@ -10,16 +10,16 @@ var PT = PropTypes;
 
 //var ZoomedResult = createReactClass({
 class ZoomedResult extends Component {
-	// propTypes: {
-	// 	corpusHit: PT.object,
-	// 	nextResults: PT.func.isRequired,
-	// 	languageMap: PT.object.isRequired,
-	// 	weblichtLanguages: PT.array.isRequired,
-	// 	searchedLanguage: PT.array.isRequired,
-	// 	getDownloadLink: PT.func.isRequired,
-	// 	getToWeblichtLink: PT.func.isRequired,
-	//         queryTypeId: PT.string.isRequired,
-	// }//,
+	static propTypes = {
+		corpusHit: PT.object,
+		nextResults: PT.func.isRequired,
+		languageMap: PT.object.isRequired,
+		weblichtLanguages: PT.array.isRequired,
+		searchedLanguage: PT.array.isRequired,
+		getDownloadLink: PT.func.isRequired,
+		getToWeblichtLink: PT.func.isRequired,
+	        queryTypeId: PT.string.isRequired,
+	}//,
 	mixins: [ResultMixin];
 	constructor(props) {
 		super(props)

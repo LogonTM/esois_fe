@@ -9,9 +9,9 @@ var PT = PropTypes;
 //var AboutPage = createReactClass({
 //fixme! - class AboutPage extends React.Component { 
 class AboutPage extends Component {
-    // propTypes: {
-	// toStatistics: PT.func.isRequired,
-    // },
+    static propTypes = {
+	toStatistics: PT.func.isRequired,
+    }//,
 
     render/*: function*/() {
 	return	(<div>

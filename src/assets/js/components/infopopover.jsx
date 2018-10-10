@@ -8,7 +8,7 @@ var PT = PropTypes;
 
 // var InfoPopover = createReactClass({
 class InfoPopover extends Component {
-	propTypes = {
+	static propTypes = {
 		title: PT.string.isRequired,
 	}//,
 	mixins: [PopoverMixin];

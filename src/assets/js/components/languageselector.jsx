@@ -10,13 +10,13 @@ var PT = PropTypes;
 
 //var LanguageSelector = createReactClass({
 class LanguageSelector extends Component {
-	// propTypes: {
-	// 	anyLanguage: PT.array.isRequired,
-	// 	languageMap: PT.object.isRequired,
-	// 	selectedLanguage: PT.array.isRequired,
-	// 	languageFilter: PT.string.isRequired,
-	// 	languageChangeHandler: PT.func.isRequired,
-	// }//,
+	static propTypes = {
+		anyLanguage: PT.array.isRequired,
+		languageMap: PT.object.isRequired,
+		selectedLanguage: PT.array.isRequired,
+		languageFilter: PT.string.isRequired,
+		languageChangeHandler: PT.func.isRequired,
+	}//,
 //	mixins: [LinkedStateMixin];
 //fixme! - react-addons-linked-state-mixin - Explicitly set the value and onChange handler instead.
 	selectLang/*: function*/(language) {

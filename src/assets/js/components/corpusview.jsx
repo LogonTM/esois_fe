@@ -10,10 +10,10 @@ var PT = PropTypes;
 // var CorpusView = createReactClass({
 //fixme! - class CorpusView extends React.Component {
 class CorpusView extends Component {
-	// propTypes: {
-	// 	corpora: PT.object.isRequired,
-	// 	languageMap: PT.object.isRequired,
-	// }//,
+	static propTypes = {
+		corpora: PT.object.isRequired,
+		languageMap: PT.object.isRequired,
+	}//,
 
 	toggleSelection/*: function */(corpus, e) {
 		var s = !corpus.selected;

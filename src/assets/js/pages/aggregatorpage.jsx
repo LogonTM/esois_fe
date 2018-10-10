@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 import $ from 'jquery';
 import _ from "../components/results.jsx";
+import 'bootstrap';
 
 var PT = PropTypes;
 
@@ -22,10 +23,10 @@ var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // 
 // var AggregatorPage = createReactClass({
 // fixme! - class AggregatorPage extends React.Component {
 class AggregatorPage extends Component {
-	static propTypes: {
+	static propTypes = {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
-	         embedded: PT.bool.isRequired,
+		embedded: PT.bool.isRequired,
 	}//, 
 
 	nohits = {
@@ -80,7 +81,7 @@ class AggregatorPage extends Component {
 	componentDidMount/*: function*/() {
 		this.setState({_isMounted: true});
 			
-		// this.props.json({
+		// this.props.ajax({
 		// url: 'rest/init',
 		// success: function(json, textStatus, jqXHR) {
 		// 		if (this.state._isMounted) {

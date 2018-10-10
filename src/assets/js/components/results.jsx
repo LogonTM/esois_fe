@@ -11,14 +11,14 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 var PT = PropTypes;
 
 class Results extends Component {
-	// propTypes: {
-	// 	collhits: PT.object.isRequired,
-	// 	searchedLanguage: PT.array.isRequired,
-	// 	toggleResultModal: PT.func.isRequired,
-	// 	getDownloadLink: PT.func.isRequired,
-	// 	getToWeblichtLink: PT.func.isRequired,
-	//         queryTypeId: PT.string.isRequired, 
-	// }//,
+	static propTypes = {
+		collhits: PT.object.isRequired,
+		searchedLanguage: PT.array.isRequired,
+		toggleResultModal: PT.func.isRequired,
+		getDownloadLink: PT.func.isRequired,
+		getToWeblichtLink: PT.func.isRequired,
+	        queryTypeId: PT.string.isRequired, 
+	}//,
 	mixins: [ResultMixin];
 
 	renderPanelInfo/*: function*/(corpusHit) {

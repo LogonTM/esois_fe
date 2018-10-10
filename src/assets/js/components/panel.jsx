@@ -9,10 +9,10 @@ var PT = PropTypes;
 //var Panel = createReactClass({
 //fixme! - class Panel extends React.Component {
 class Panel extends Component {
-	// propTypes: {
-	// 	title: PT.object.isRequired,
-	// 	info: PT.object.isRequired,
-	// }//,
+	static propTypes = {
+		title: PT.object.isRequired,
+		info: PT.object.isRequired,
+	}//,
 
 	// getInitialState/*: function*/() {
 	// 	return {

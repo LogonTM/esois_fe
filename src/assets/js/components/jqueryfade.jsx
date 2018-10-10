@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import classNames from "classnames";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 import jQuery from 'jquery';
 
-// var PT = PropTypes;
+var PT = PropTypes;
 
 // var JQueryFade = createReactClass({
 //fixme! - class JQueryFade extends React.Component {

@@ -9,10 +9,10 @@ var PT = PropTypes;
 
 //var Popover = createReactClass({
 class Popover extends Component {}
-	propTypes: {
-		placement: PT.string;
-		title: PT.string;
-		triggerButtonClass: PT.string;
+	static propTypes = {
+		placement: PT.string,
+		title: PT.string,
+		triggerButtonClass: PT.string,
 		triggerButtonContent: PT.element.isRequired
 	}//,
 	mixins: [PopoverMixin];//,

@@ -1,17 +1,17 @@
 // "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 
-// var PT = PropTypes;
+var PT = PropTypes;
 
 //var SearchCorpusBox = createReactClass({
 //fixme! - class SearchCorpusBox extends React.Component {
 class SearchCorpusBox extends Component {
-	// propTypes: {
-	// 	search: PT.func.isRequired,
-	// },
+	static propTypes = {
+		search: PT.func.isRequired,
+	}//,
 	constructor(props) {
 		super(props);
 		this.state = {

@@ -10,16 +10,16 @@ var PT = PropTypes;
 // var QueryInput = createReactClass({
     //fixme! - class QueryInput extends React.Component {
 class QueryInput extends Component {
-    // propTypes = {
-	// searchedLanguage: PT.array,
-	// queryTypeId: PT.string.isRequired, 
-	// query: PT.string,
-	// embedded: PT.bool.isRequired,
-	// placeholder: PT.string,
-	// onChange: PT.func.isRequired,
-	// onQuery: PT.func.isRequired,
-	// onKeyDown: PT.func.isRequired
-    // }//,
+    static propTypes = {
+	searchedLanguage: PT.array,
+	queryTypeId: PT.string.isRequired, 
+	query: PT.string,
+	embedded: PT.bool.isRequired,
+	placeholder: PT.string,
+	onChange: PT.func.isRequired,
+	onQuery: PT.func.isRequired,
+	onKeyDown: PT.func.isRequired
+    }//,
 
     render/*: function*/() {
 	if (this.props.queryTypeId === "cql") {
