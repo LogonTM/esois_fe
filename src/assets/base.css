@@ -411,6 +411,13 @@ div.popover {
 
 /*** zoomed result ***/
 
+/*** Getting modal open and transition smoothly - JK ***/
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
+/*** Getting modal open and transition smoothly - JK ***/
+
 .modal-body .corpusDescription {
 	padding-left: 15px;
 }

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import $ from 'jquery';
-import 'bootstrap';
+// import 'bootstrap';
 
 var PT = PropTypes;
 // var Modal = createReactClass({
@@ -25,7 +25,7 @@ class Modal extends Component {
 	}//,
 	render/*: function*/() {
 		return (
-			<div onClick={this.handleClick} className="modal fade" role="dialog" aria-hidden="true">
+			<div onClick={this.handleClick} className="modal" id="modal-display" role="dialog" aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
