@@ -22,9 +22,9 @@ class ZoomedResult extends Component {
 	}//,
 	mixins: [ResultMixin];
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
-			forceUpdate: 1
+			forceUpdate: 1,
 		};
 	}
 	// getInitialState/*: function*/() {

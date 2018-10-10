@@ -8,12 +8,12 @@ import PropTypes from "prop-types";
 var PT = PropTypes;
 
 //var Popover = createReactClass({
-class Popover extends Component {}
+class Popover extends Component {
 	static propTypes = {
 		placement: PT.string,
 		title: PT.string,
 		triggerButtonClass: PT.string,
-		triggerButtonContent: PT.element.isRequired
+		triggerButtonContent: PT.element.isRequired,
 	}//,
 	mixins: [PopoverMixin];//,
 

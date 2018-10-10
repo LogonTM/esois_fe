@@ -81,54 +81,54 @@ class AggregatorPage extends Component {
 	componentDidMount/*: function*/() {
 		this.setState({_isMounted: true});
 			
-		// this.props.ajax({
-		// url: 'rest/init',
-		// success: function(json, textStatus, jqXHR) {
-		// 		if (this.state._isMounted) {
-		// 			var corpora = new Corpora(json.corpora, this.updateCorpora);
-		// 			window.MyAggregator.corpora = json.corpora;
-		// 			this.setState({
-		// 				corpora : corpora,
-		// 				languageMap: json.languages,
-		// 				weblichtLanguages: json.weblichtLanguages,
-		// 				query: this.state.query || json.query || '',
-		// 			});
-		// 			// for testing aggregation context
-		// 			json['x-aggregation-context'] = {
-		// 				'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
-		// 			};
-		// 			if (this.state.aggregationContext && !json['x-aggregation-context']) {
-		// 				json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-		// 				console.log(json['x-aggregation-context']);
-		// 			}
-		// 			if (json['x-aggregation-context']) {
-		// 				window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-		// 				corpora.setAggregationContext(json["x-aggregation-context"]);
-		// 				if (!corpora.getSelectedIds().length) {
-		// 					this.props.error("Cannot find the required collection, will search all collections instead");
-		// 					corpora.recurse(function(corpus) { corpus.selected = true; });
-		// 				}
-		// 				corpora.update();
-		// 			}
-		// 			// Setting visibility, e.g. only corpora 
-		// 			// from v2.0 endpoints for fcs v2.0
-		// 			this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-		// 			corpora.update();
+	/* 	this.props.ajax({
+			url: 'rest/init',
+			success: (json, textStatus, jqXHR) => {
+				if (this.state._isMounted) {
+					var corpora = new Corpora(json.corpora, this.updateCorpora);
+					window.MyAggregator.corpora = json.corpora;
+					this.setState({
+						corpora : corpora,
+						languageMap: json.languages,
+						weblichtLanguages: json.weblichtLanguages,
+						query: this.state.query || json.query || '',
+					});
+					// for testing aggregation context
+					json['x-aggregation-context'] = {
+						'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
+					};
+					if (this.state.aggregationContext && !json['x-aggregation-context']) {
+						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
+						console.log(json['x-aggregation-context']);
+					}
+					if (json['x-aggregation-context']) {
+						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
+						corpora.setAggregationContext(json["x-aggregation-context"]);
+						if (!corpora.getSelectedIds().length) {
+							this.props.error("Cannot find the required collection, will search all collections instead");
+							corpora.recurse(function(corpus) { corpus.selected = true; });
+						}
+						corpora.update();
+					}
+					// Setting visibility, e.g. only corpora 
+					// from v2.0 endpoints for fcs v2.0
+					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+					corpora.update();
 
-		// 			if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
-		// 				window.MyAggregator.mode = 'search';
-		// 				this.search();
-		// 			}
-		// 		}
-		// 	}.bind(this),
-		// });
+					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
+						window.MyAggregator.mode = 'search';
+						this.search();
+					}
+				}
+			}
+		}); */
 	}
 
-	updateCorpora/*: function*/(corpora) {
+	updateCorpora = corpora => {
 		this.setState({corpora:corpora});
 	}
 
-	search/*: function*/() {
+	search = () => {
 		var query = this.state.query;
 		var queryTypeId = this.state.queryTypeId;
 		if (!query || this.props.embedded) {
@@ -153,7 +153,7 @@ class AggregatorPage extends Component {
 				numberOfResults: this.state.numberOfResults,
 				corporaIds: selectedIds,
 			},
-			success: function(searchId, textStatus, jqXHR) {
+			success: (searchId, textStatus, jqXHR) => {
 				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
 			        //Piwik.getAsyncTracker().trackSiteSearch(query, queryTypeId);
 			        // automatic inclusion of piwik in prod
@@ -166,11 +166,11 @@ class AggregatorPage extends Component {
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId: searchId, timeout: timeout });
-			}.bind(this),
+			}
 		});
 	}
-	
-	nextResults/*: function*/(corpusId) {
+
+	nextResults = corpusId => {
 		// console.log("searching next results in corpus:", corpusId);
 		this.props.ajax({
 			url: 'rest/search/'+this.state.searchId,
@@ -179,22 +179,22 @@ class AggregatorPage extends Component {
 				corpusId: corpusId,
 				numberOfResults: this.state.numberOfResults,
 			},
-			success: function(searchId, textStatus, jqXHR) {
+			success: (searchId, textStatus, jqXHR) => {
 				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId: searchId, timeout: timeout });
-			}.bind(this),
+			}
 		});
 	}
 
-	refreshSearchResults/*: function*/() {
+	refreshSearchResults = () => {
 		if (!this.state.searchId || !this.state._isMounted) {
 			return;
 		}
 		this.props.ajax({
 			url: 'rest/search/'+this.state.searchId,
-			success: function(json, textStatus, jqXHR) {
+			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
 					if (timeout < 10000) {
@@ -216,11 +216,11 @@ class AggregatorPage extends Component {
 					}
 				}
 				this.setState({ hits: json, timeout: timeout, zoomedCorpusHit: corpusHit});
-			}.bind(this),
+			}
 		});
 	}
 
-	getExportParams/*: function*/(corpusId, format, filterLanguage) {
+	getExportParams = (corpusId, format, filterLanguage) => {
 		var params = corpusId ? {corpusId:corpusId}:{};
 		if (format) params.format = format;
 		if (filterLanguage) {
@@ -231,17 +231,17 @@ class AggregatorPage extends Component {
 		return encodeQueryData(params);
 	}
 
-	getDownloadLink/*: function*/(corpusId, format) {
-		return 'rest/search/'+this.state.searchId+'/download?' +
+	getDownloadLink = (corpusId, format) => {
+		return 'rest/search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
-	getToWeblichtLink/*: function*/(corpusId, forceLanguage) {
-		return 'rest/search/'+this.state.searchId+'/toWeblicht?' +
+	getToWeblichtLink = (corpusId, forceLanguage) => {
+		return 'rest/search/' + this.state.searchId + '/toWeblicht?' +
 			this.getExportParams(corpusId, null, forceLanguage);
 	}
 
-	setLanguageAndFilter/*: function*/(languageObj, languageFilter) {
+	setLanguageAndFilter = (languageObj, languageFilter) => {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
 			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
 		this.setState({
@@ -251,7 +251,7 @@ class AggregatorPage extends Component {
 		});
 	}
 
-	setQueryType/*: function*/(queryTypeId) {
+	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
 		this.setState({
 			queryTypeId: queryTypeId,
@@ -262,7 +262,7 @@ class AggregatorPage extends Component {
 		});
 	}
 
-	setNumberOfResults/*: function*/(e) {
+	setNumberOfResults = e => {
 		var n = e.target.value;
 		if (n < 10) n = 10;
 		if (n > 250) n = 250;
@@ -275,7 +275,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	filterResults/*: function*/() {
+	filterResults = () => {
 		var noLangFiltering = this.state.languageFilter === 'byMeta';
 		var langCode = this.state.language[0];
 		var results = null, inProgress = 0, hits = 0;
@@ -317,46 +317,46 @@ class AggregatorPage extends Component {
 		};
 	}
 
-	toggleLanguageSelection/*: function*/= e => {
+	toggleLanguageSelection = e => {
 	    $(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
 
-	toggleCorpusSelection/*: function*/ = e => {
+	toggleCorpusSelection = e => {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
 
-	toggleResultModal/*: function*/= (e, corpusHit) => {
+	toggleResultModal = (e, corpusHit) => {
 	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
 
-	onQuery/*: function*/(event) {
+	onQuery = event => {
 		this.setState({query: event.target.value});
 	}//,
 
-    onADVQuery/*: function*/(fcsql) {
+    onADVQuery = fcsql => {
 	    this.setState({query: fcsql.target.value});
 	}//,
 
-	handleKey/*: function*/(event) {
+	handleKey = event => {
 		if (event.keyCode === 13) {
 			this.search();
 		}
 	}//,
 
-    handleADVKey/*: function*/(event) {
+    handleADVKey = event => {
 	    if (event.keyCode === 13) {
-		this.addADVToken();
+			this.addADVToken();
 	    }
 	}//,
 
-	renderZoomedResultTitle/*: function*/(corpusHit) {
+	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
 		return (<h3 style={{fontSize:'1em'}}>
@@ -365,17 +365,17 @@ class AggregatorPage extends Component {
 						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
 							<span> - Homepage </span>
 							<i className="glyphicon glyphicon-home"/>
-						</a>: false}				</h3>);
+						</a>: false} </h3>);
 	}//,
 
-	renderSearchButtonOrLink/*: function*/() {
+	renderSearchButtonOrLink = () => {
 		if (this.props.embedded) {
 			var query = this.state.query;
 			var queryTypeId = this.state.queryTypeId;
-		        var btnClass = classNames({
+		    var btnClass = classNames({
 			    'btn': true,
 			    'btn-default': queryTypeId === 'cql',
-			    'input-lg': true
+			    'input-lg': true,
 			});
 			var newurl = !query ? "#" :
 				(window.MyAggregator.URLROOT + "?" + encodeQueryData({queryType:queryTypeId, query:query, mode:'search'}));

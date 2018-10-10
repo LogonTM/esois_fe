@@ -11,7 +11,7 @@ var NO_MORE_RECORDS_DIAGNOSTIC_URI = window.MyAggregator.NO_MORE_RECORDS_DIAGNOS
 //var ResultMixin = {
 class ResultMixin extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			displayKwic: false,
 			displayADV: false,
@@ -118,7 +118,7 @@ class ResultMixin extends Component {
 	renderPanelBody/*: function*/(corpusHit) {
 	    var fulllength = {width:"100%"};
 
-            if (this.state.displayADV) {
+        if (this.state.displayADV) {
 		return 	(<div>
 			    {this.renderErrors(corpusHit)}
 			    {this.renderDiagnostics(corpusHit)}

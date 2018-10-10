@@ -1,32 +1,31 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import AboutPage from "./pages/aboutpage.jsx";
-import AggregatorPage from "./pages/aggregatorpage.jsx";
-import HelpPage from "./pages/helppage.jsx";
-import StatisticsPage from "./pages/statisticspage.jsx";
-import ErrorPane from "./components/errorpane.jsx";
-import Footer from "./components/footer.jsx";
-import EmbeddedFooter from "./components/embeddedfooter.jsx";
-import logo from "../img/clarindLogo.png";
-import ELlogo from "../img/el-reg-fond.png";
-import PropTypes from "prop-types";
+import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+import AboutPage from './pages/aboutpage.jsx'
+import AggregatorPage from './pages/aggregatorpage.jsx'
+import HelpPage from './pages/helppage.jsx'
+import StatisticsPage from './pages/statisticspage.jsx'
+import ErrorPane from './components/errorpane.jsx'
+import Footer from './components/footer.jsx'
+import EmbeddedFooter from './components/embeddedfooter.jsx'
+import logo from '../img/clarindLogo.png'
+import ELlogo from '../img/el-reg-fond.png'
+import PropTypes from 'prop-types'
 //import createReactClass from "create-react-class";
-import jQuery from 'jquery';
+import jQuery from 'jquery'
 // import './main.js'
 
 // (function() {
 // "use strict";
 
-window.MyAggregator = window.MyAggregator || {};
+window.MyAggregator = window.MyAggregator || {}
 
-var VERSION = window.MyAggregator.VERSION = "v.2.9.91-57";
+var VERSION = (window.MyAggregator.VERSION = 'v.2.9.91-57')
 
-var URLROOT = window.MyAggregator.URLROOT =
-	//window.location.pathname.substring(0, window.location.pathname.indexOf("/",2)) ||
-window.location.pathname ||
-	"/Aggregator";
+var URLROOT = (window.MyAggregator.URLROOT =
+  //window.location.pathname.substring(0, window.location.pathname.indexOf("/",2)) ||
+  window.location.pathname || '/Aggregator')
 
-var PT = PropTypes;
+var PT = PropTypes
 
 /**
 The FCS Aggregator UI is based on reactjs.
@@ -54,50 +53,50 @@ The top-most component, Main, tracks of the window's location URL and, depending
 //var Main = createReactClass({
 // fixme! - class Main extends React.Component {
 class Main extends Component {
-	componentWillMount/*: function*/() {
-		routeFromLocation.bind(this)();
-	}//,
+  componentWillMount /*: function*/() {
+    routeFromLocation.bind(this)()
+  } //,
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		navbarCollapse: false,
-	// 		navbarPageFn: this.renderAggregator,
-	// 		errorMessages: [],
-	// 	};
-	// }//,
-	constructor(props){
-		super(props);
-		this.state = { 
-			navbarCollapse: false,
-			navbarPageFn: this.renderAggregator,
-			errorMessages: [],
-		};
-	}
+  // getInitialState/*: function */() {
+  // 	return {
+  // 		navbarCollapse: false,
+  // 		navbarPageFn: this.renderAggregator,
+  // 		errorMessages: [],
+  // 	};
+  // }//,
+  constructor(props) {
+    super(props)
+    this.state = {
+      navbarCollapse: false,
+      navbarPageFn: this.renderAggregator,
+      errorMessages: []
+    }
+  }
 
-	error/*: function*/(errObj) {
-		var err = "";
-		if (typeof errObj === 'string' || errObj instanceof String) {
-			err = errObj;
-		} else if (typeof errObj === 'object' && errObj.statusText) {
-			console.log("ERROR: jqXHR = ", errObj);
-			err = errObj.statusText;
-		} else {
-			return;
-		}
+  error = errObj => {
+    var err = ''
+    if (typeof errObj === 'string' || errObj instanceof String) {
+      err = errObj
+    } else if (typeof errObj === 'object' && errObj.statusText) {
+      console.log('ERROR: jqXHR = ', errObj)
+      err = errObj.statusText
+    } else {
+      return
+    }
 
-		var that = this;
-		var errs = this.state.errorMessages.slice();
-		errs.push(err);
-		this.setState({errorMessages: errs});
+    // var that = this;
+    var errs = this.state.errorMessages.slice()
+    errs.push(err)
+    this.setState({ errorMessages: errs })
 
-		setTimeout(function() {
-			var errs = that.state.errorMessages.slice();
-			errs.shift();
-			that.setState({errorMessages: errs});
-		}, 10000);
-	}//,
+    setTimeout(() => {
+      var errs = this.state.errorMessages.slice()
+      errs.shift()
+      this.setState({ errorMessages: errs })
+    }, 10000)
+  } //,
 
-	ajax/*: function*/(ajaxObject) {
+  /* 	ajax/*: function(ajaxObject) {
 		var that = this;
 		if (!ajaxObject.error) {
 			ajaxObject.error = function(jqXHR, textStatus, error) {
@@ -113,71 +112,106 @@ class Main extends Component {
 		}
 		// console.log("ajax", ajaxObject);
 		jQuery.ajax(ajaxObject);
-	}//,
+	}//, */
 
-	toggleCollapse/*: function*/() {
-		this.setState({navbarCollapse: !this.state.navbarCollapse});
-	}//,
+  ajax = ajaxObject => {
+    ajaxObject.error = ajaxObject.error || this.handleAjaxError
+    jQuery.ajax(ajaxObject)
+  }
 
-	renderAggregator/*: function*/() {
-		return <AggregatorPage ajax={this.ajax} error={this.error} embedded={false}/>;
-	}//,
+  handleAjaxError = (jqXHR, textStatus, error) => {
+    if (jqXHR.readyState === 0) {
+      this.error('Network error, please check your internet connection')
+    } else if (jqXHR.responseText) {
+      this.error(jqXHR.responseText + ' (' + error + ')')
+    } else {
+      this.error(error + ' (' + textStatus + ')')
+    }
+    console.log('ajax error, jqXHR: ', jqXHR)
+  }
 
-	renderHelp/*: function*/() {
-		return <HelpPage />;
-	}//,
+  toggleCollapse = () => {
+    this.setState({ navbarCollapse: !this.state.navbarCollapse })
+  } //,
 
-	renderAbout/*: function*/() {
-		return <AboutPage toStatistics={this.toStatistics} />;
-	}//,
+  renderAggregator = () => {
+    return (
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} />
+    )
+  } //,
 
-	renderStatistics/*: function*/() {
-		return <StatisticsPage ajax={this.ajax} />;
-	}//,
+  renderHelp /*: function*/() {
+    return <HelpPage />
+  } //,
 
-	renderEmbedded/*: function*/() {
-		return <AggregatorPage ajax={this.ajax} error={this.error} embedded={true}/>;
-	}//,
+  renderAbout = () => {
+    return <AboutPage toStatistics={this.toStatistics} />
+  } //,
 
-	getPageFns/*: function*/() {
-		return {
-			'': this.renderAggregator,
-			'help': this.renderHelp,
-			'about': this.renderAbout,
-			'stats': this.renderStatistics,
-			'embed': this.renderEmbedded,
-		};
-	}//,
+  renderStatistics = () => {
+    return <StatisticsPage ajax={this.ajax} />
+  } //,
 
-	gotoPage/*: function*/(doPushHistory, pageFnName) {
-		var pageFn = this.getPageFns()[pageFnName];
-		if (this.state.navbarPageFn !== pageFn) {
-			if (doPushHistory) {
-				window.history.pushState({page:pageFnName}, '', URLROOT+"/"+pageFnName);
-			}
-			this.setState({navbarPageFn: pageFn});
-			console.log("new page: " + document.location + ", name: " + pageFnName);
-		}
-	}//,
+  renderEmbedded = () => {
+    return (
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={true} />
+    )
+  } //,
 
-	toAggregator/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, ''); }
-	toHelp/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'help'); }
-	toAbout/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'about'); }
-	toStatistics/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'stats'); }
-	toEmbedded/*: function*/(doPushHistory) { this.gotoPage(doPushHistory, 'embed'); }
+  getPageFns = () => {
+    return {
+      '': this.renderAggregator,
+      help: this.renderHelp,
+      about: this.renderAbout,
+      stats: this.renderStatistics,
+      embed: this.renderEmbedded
+    }
+  } //,
 
-	renderLogin/*: function*/() {
-		return false;
-		// return  <li className="unauthenticated">
-		// 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
-		// 		</li>;
-	}//,
+  gotoPage = (doPushHistory, pageFnName) => {
+    var pageFn = this.getPageFns()[pageFnName]
+    if (this.state.navbarPageFn !== pageFn) {
+      if (doPushHistory) {
+        window.history.pushState(
+          { page: pageFnName },
+          '',
+          URLROOT + '/' + pageFnName
+        )
+      }
+      this.setState({ navbarPageFn: pageFn })
+      console.log('new page: ' + document.location + ', name: ' + pageFnName)
+    }
+  } //,
 
-	renderCollapsible/*: function*/() {
-		var classname = "navbar-collapse collapse " + (this.state.navbarCollapse?"in":"");
-		return (
-			<div className={classname}>
-				{/* <ul className="nav navbar-nav">
+  toAggregator = doPushHistory => {
+    this.gotoPage(doPushHistory, '')
+  }
+  toHelp = doPushHistory => {
+    this.gotoPage(doPushHistory, 'help')
+  }
+  toAbout = doPushHistory => {
+    this.gotoPage(doPushHistory, 'about')
+  }
+  toStatistics = doPushHistory => {
+    this.gotoPage(doPushHistory, 'stats')
+  }
+  toEmbedded = doPushHistory => {
+    this.gotoPage(doPushHistory, 'embed')
+  }
+
+  renderLogin /*: function*/() {
+    return false
+    // return  <li className="unauthenticated">
+    // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
+    // 		</li>;
+  } //,
+
+  renderCollapsible = () => {
+    var classname =
+      'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'in' : '')
+    return (
+      <div className={classname}>
+        {/* <ul className="nav navbar-nav">
 					<li className={this.state.navbarPageFn === this.renderAggregator ? "active":""}>
 						<a className="link" tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>Aggregator</a>
 					</li>
@@ -185,81 +219,107 @@ class Main extends Component {
 						<a className="link" tabIndex="-1" onClick={this.toHelp.bind(this, true)}>Help</a>
 					</li>
 				</ul> */}
-				<ul className="nav navbar-nav navbar-right" id="navbar-right">
-					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
-						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-							<img className="ico" src="img/ee-icon.png" alt="" /></a>&nbsp;
-					</li>
-					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
-						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-							<img className="ico" src="img/gb-icon.png" alt="" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					</li>
-					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
-						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-							<img height="99%" src="img/login-icon.png" alt="" /></a>&nbsp;
-					</li>
-					<li> {/* <div id="clarinservices" style={{padding:4}}/> */}
-						<a className="navbar-brand" href={URLROOT} tabIndex="-1">
-							<img height="99%" src="img/settings-icon.png" alt="" /></a>&nbsp;
-					</li>
-					{this.renderLogin()}
-				</ul>
-			</div>
-		);
-	}//,
+        <ul className='nav navbar-nav navbar-right' id='navbar-right'>
+          <li>
+            {' '}
+            {/* <div id="clarinservices" style={{padding:4}}/> */}
+            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+              <img className='ico' src='img/ee-icon.png' alt='' />
+            </a>
+            &nbsp;
+          </li>
+          <li>
+            {' '}
+            {/* <div id="clarinservices" style={{padding:4}}/> */}
+            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+              <img className='ico' src='img/gb-icon.png' alt='' />
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </li>
+          <li>
+            {' '}
+            {/* <div id="clarinservices" style={{padding:4}}/> */}
+            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+              <img height='99%' src='img/login-icon.png' alt='' />
+            </a>
+            &nbsp;
+          </li>
+          <li>
+            {' '}
+            {/* <div id="clarinservices" style={{padding:4}}/> */}
+            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+              <img height='99%' src='img/settings-icon.png' alt='' />
+            </a>
+            &nbsp;
+          </li>
+          {this.renderLogin()}
+        </ul>
+      </div>
+    )
+  } //,
 
-	renderTop/*: function*/() {
-		if (this.state.navbarPageFn === this.renderEmbedded) {
-			return false;
-		}
-		return	(
-			<div>
-				<div className="navbar navbar-default navbar-static-top" role="navigation">
-					<div className="container">
-						<div className="navbar-header">
-							{/* <header className="inline"> */}
-								<img height="75px" src="img/logo.png" alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<img src={ELlogo} alt="Euroopa Liidu regionaalfond" style={{height:75}}/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<img src={logo} alt="CLARIN ERIC logo" style={{height:75}}/>
-							{/* </header> */}
-							<button type="button" className="navbar-toggle" onClick={this.toggleCollapse}>
-								<span className="sr-only">Toggle navigation</span>
-								<span className="icon-bar"></span>
-								<span className="icon-bar"></span>
-								<span className="icon-bar"></span>
-								<span className="icon-bar"></span>
-							</button>
-							{/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
+  renderTop = () => {
+    if (this.state.navbarPageFn === this.renderEmbedded) {
+      return false
+    }
+    return (
+      <div>
+        <div
+          className='navbar navbar-default navbar-static-top'
+          role='navigation'
+        >
+          <div className='container'>
+            <div className='navbar-header'>
+              {/* <header className="inline"> */}
+              <img height='75px' src='img/logo.png' alt='' />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <img
+                src={ELlogo}
+                alt='Euroopa Liidu regionaalfond'
+                style={{ height: 75 }}
+              />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <img src={logo} alt='CLARIN ERIC logo' style={{ height: 75 }} />
+              {/* </header> */}
+              <button
+                type='button'
+                className='navbar-toggle'
+                onClick={this.toggleCollapse}
+              >
+                <span className='sr-only'>Toggle navigation</span>
+                <span className='icon-bar' />
+                <span className='icon-bar' />
+                <span className='icon-bar' />
+                <span className='icon-bar' />
+              </button>
+              {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
 								<img width="28px" height="28px" src="img/magglass1.png"/>
 								<header className="inline"> Content Search </header>
 							</a> */}
-						</div>
-						{this.renderCollapsible()}
-					</div>
-					<hr className="orange-line"></hr>
-				</div>
+            </div>
+            {this.renderCollapsible()}
+          </div>
+          <hr className='orange-line' />
+        </div>
 
-				<ErrorPane errorMessages={this.state.errorMessages} />
+        <ErrorPane errorMessages={this.state.errorMessages} />
+      </div>
+    )
+  } //,
 
-			</div>
-		);
-	}//,
+  render /*: function*/() {
+    return (
+      <div>
+        <div> {this.renderTop()} </div>
 
-	render/*: function*/() {
-		return	(
-			<div>
-				<div> { this.renderTop() } </div>
-
-				<div id="push">
-					<div className="container">
-						{this.state.navbarPageFn()}
-		 			</div>
-		 			<div className="top-gap" />
-				</div>
-			</div>
-		);
-	}
-}//);
+        <div id='push'>
+          <div className='container'>{this.state.navbarPageFn()}</div>
+          <div className='top-gap' />
+        </div>
+      </div>
+    )
+  }
+} //);
 
 // StatisticsPage
 
@@ -272,47 +332,55 @@ class Main extends Component {
 // EmbeddedFooter
 
 function isEmbeddedView() {
-	var path = window.location.pathname.split('/');
-	return (path.length >= 3 && path[path.length - 1] === 'embed');
+  var path = window.location.pathname.split('/')
+  return path.length >= 3 && path[path.length - 1] === 'embed'
 }
 
 function endsWith(str, suffix) {
-    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  return str.indexOf(suffix, str.length - suffix.length) !== -1
 }
 
 var routeFromLocation = function() {
-	console.log("routeFromLocation: " + document.location);
-	if (!this) throw "routeFromLocation must be bound to main";
-	var path = window.location.pathname.split('/');
-        console.log("path: " + path);
-	if (path.length >= 3) {
-		var p = path[path.length - 1];
-		if (p === 'help') {
-			this.toHelp(false);
-		} else if (p === 'about') {
-			this.toAbout(false);
-		} else if (p === 'stats') {
-			this.toStatistics(false);
-		} else if (p === 'embed') {
-			this.toEmbedded(false);
-		} else {
-			this.toAggregator(false);
-		}
-	} else {
-		this.toAggregator(false);
-	}
-};
-
-var main = ReactDOM.render(<Main />,  document.getElementById('body'));
-if (!isEmbeddedView()) {
-	ReactDOM.render(<Footer VERSION={VERSION} toAbout={main.toAbout}/>, document.getElementById('footer') );
-} else {
-	ReactDOM.render(<EmbeddedFooter URLROOT={URLROOT} />, document.getElementById('footer') );
-	if (jQuery) { jQuery('body, #footer').addClass('embedded'); }
+  console.log('routeFromLocation: ' + document.location)
+  if (!this) throw 'routeFromLocation must be bound to main'
+  var path = window.location.pathname.split('/')
+  console.log('path: ' + path)
+  if (path.length >= 3) {
+    var p = path[path.length - 1]
+    if (p === 'help') {
+      this.toHelp(false)
+    } else if (p === 'about') {
+      this.toAbout(false)
+    } else if (p === 'stats') {
+      this.toStatistics(false)
+    } else if (p === 'embed') {
+      this.toEmbedded(false)
+    } else {
+      this.toAggregator(false)
+    }
+  } else {
+    this.toAggregator(false)
+  }
 }
 
-window.onpopstate = routeFromLocation.bind(main);
+var main = ReactDOM.render(<Main />, document.getElementById('body'))
+if (!isEmbeddedView()) {
+  ReactDOM.render(
+    <Footer VERSION={VERSION} toAbout={main.toAbout} />,
+    document.getElementById('footer')
+  )
+} else {
+  ReactDOM.render(
+    <EmbeddedFooter URLROOT={URLROOT} />,
+    document.getElementById('footer')
+  )
+  if (jQuery) {
+    jQuery('body, #footer').addClass('embedded')
+  }
+}
+
+window.onpopstate = routeFromLocation.bind(main)
 
 // })();
 
-export default Main;
+export default Main

@@ -36,7 +36,7 @@ div.navbar {
   padding: 12px !important;
 }
 
-.input-group .form-control, .form-control, .input-group-addon, .btn-default {
+.input-group .form-control, .form-control, .input-group-addon, .btn-default, .modal, .form label {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(40,85,143) !important;
 }

@@ -11,14 +11,14 @@ var PT = PropTypes;
     //fixme! - class QueryInput extends React.Component {
 class QueryInput extends Component {
     static propTypes = {
-	searchedLanguage: PT.array,
-	queryTypeId: PT.string.isRequired, 
-	query: PT.string,
-	embedded: PT.bool.isRequired,
-	placeholder: PT.string,
-	onChange: PT.func.isRequired,
-	onQuery: PT.func.isRequired,
-	onKeyDown: PT.func.isRequired
+		searchedLanguage: PT.array,
+		queryTypeId: PT.string.isRequired,
+		query: PT.string,
+		embedded: PT.bool.isRequired,
+		placeholder: PT.string,
+		onChange: PT.func.isRequired,
+		onQuery: PT.func.isRequired,
+		onKeyDown: PT.func.isRequired,
     }//,
 
     render/*: function*/() {
@@ -56,15 +56,15 @@ class QueryInput extends Component {
 //var ADVTokens = createReactClass({
 class ADVTokens extends Component {
     static propTypes = {
-	query: PT.string
+		query: PT.string,
     }//,
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			tokenCounter: 1,
 			tokens: ["token1"],
 		};
-		this.removeADVToken = this.removeADVToken.bind(this);
+		// this.removeADVToken = this.removeADVToken.bind(this);
 	}
     // getInitialState/*: function */() {
 	// return { 
@@ -74,20 +74,19 @@ class ADVTokens extends Component {
     // }//,
 
     addADVToken/*: function*/() {
-	var i = this.state.tokenCounter + 1;
-	this.state.tokens.push('token' + i);
-	this.setState({tokenCounter: i, tokens: this.state.tokens});
+		var i = this.state.tokenCounter + 1;
+		this.state.tokens.push('token' + i);
+		this.setState({tokenCounter: i, tokens: this.state.tokens});
     }//,
     
-    removeADVToken/*: function*/(id) {
-	var tokens = this.state.tokens;
-	var i = tokens.indexOf(id);
-	if (tokens.length > 1) {
-	    var one = tokens;
-	    var two = one.slice(0, i - 1)
-			 .concat(one.slice(i));;
-	    this.setState({tokens: two});
-	}
+    removeADVToken = id => {
+		var tokens = this.state.tokens;
+		var i = tokens.indexOf(id);
+		if (tokens.length > 1) {
+			var one = tokens;
+			var two = one.slice(0, i - 1).concat(one.slice(i));;
+			this.setState({tokens: two});
+		}
     }//,
 
     render/*: function*/() {
@@ -114,8 +113,8 @@ class ADVTokens extends Component {
 //var ADVToken = createReactClass({
 class ADVToken extends Component {
     static propTypes = {
-	parentToken: PT.string.isRequired,
-	handleRemoveADVToken: PT.func.isRequired,
+		parentToken: PT.string.isRequired,
+		handleRemoveADVToken: PT.func.isRequired,
     }//,
     render/*: function*/() {
 	return (<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
@@ -138,7 +137,7 @@ class ADVToken extends Component {
 //var ADVTokenMenu = createReactClass({
 class ADVTokenMenu extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			"hideRepeatMenu": true,
 		};
@@ -166,17 +165,17 @@ class ADVTokenMenu extends Component {
 	    </div>
 	    </div>);
 	}
-    }//);
+}//);
 
-    //var ANDQueryArgs = createReactClass({
-	class ANDQueryArgs extends Component {
-		constructor(props) {
-			super(props)
-			this.state = {
-				andCounter: 1,
-				ands: ["and1"]
-			};
-		}
+//var ANDQueryArgs = createReactClass({
+class ANDQueryArgs extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			andCounter: 1,
+			ands: ["and1"],
+		};
+	}
 	// getInitialState/*: function*/() {
 	//     return {
 	// 	andCounter: 1,
@@ -185,7 +184,7 @@ class ADVTokenMenu extends Component {
 	// }//,
 	
 	setADVTokenLayer/*: function*/(layer) {
-	    //fixme! - check agains valid layers
+	    //fixme! - check against valid layers
 	    return;
 	}//,
 
@@ -201,8 +200,7 @@ class ADVTokenMenu extends Component {
 	    var i = ands.indexOf(id);
 	    if (ands.length > 1) {
 		var one = ands;
-		var two = one.slice(0, i - 1)
-			     .concat(one.slice(i));;
+		var two = one.slice(0, i - 1).concat(one.slice(i));;
 		this.setState({ands: two});
 	    }
 	}//,
@@ -246,15 +244,15 @@ class ADVTokenMenu extends Component {
 //var ANDQueryORArgs = createReactClass({
 class ANDQueryORArgs extends Component{
     static propTypes = {
-	numAnds: PT.number.isRequired,
-	parentAnd: PT.string.isRequired,
-	handleRemoveADVAnd: PT.func.isRequired,
+		numAnds: PT.number.isRequired,
+		parentAnd: PT.string.isRequired,
+		handleRemoveADVAnd: PT.func.isRequired,
 	}//,
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			orCounter: 1,
-			ors: [{id: "or1", layerType: "string:lemma", placeholder: "Bagdad"}]
+			ors: [{id: "or1", layerType: "string:lemma", placeholder: "Bagdad"}],
 		};
 	}
     // getInitialState/*: function*/() {
@@ -269,7 +267,7 @@ class ANDQueryORArgs extends Component{
     //},
 
     setADVTokenOp/*: function*/(op) {
-	//fixme! - check agains valid layers
+	//fixme! - check against valid layers
 	return;
     }//,
 
@@ -284,22 +282,21 @@ class ANDQueryORArgs extends Component{
     }//,
 
     addADVOr/*: function*/(e) {
-	var i = this.state.orCounter + 1;
-	this.state.ors.push({id: 'or' + i, layerType: "string:pos", placeholder: "PROPN"});
-	this.setState({orCounter: i, ors: this.state.ors});
+		var i = this.state.orCounter + 1;
+		this.state.ors.push({id: 'or' + i, layerType: "string:pos", placeholder: "PROPN"});
+		this.setState({orCounter: i, ors: this.state.ors});
     }//,
 
     removeADVOr/*: function*/(id, e) {
-	var ors = this.state.ors;
-	var i = ors.indexOf(id);
-	if (ors.length > 1) {
-	    var one = ors;
-	    var two = one.slice(0, i - 1)
-			 .concat(one.slice(i));;
-	    this.setState({ors: two});
-	} else if (ors.length === 1 && this.props.numAnds > 1) {
-	    this.props.handleRemoveADVAnd(this.props.parentAnd);
-	}
+		var ors = this.state.ors;
+		var i = ors.indexOf(id);
+		if (ors.length > 1) {
+			var one = ors;
+			var two = one.slice(0, i - 1).concat(one.slice(i));;
+			this.setState({ors: two});
+		} else if (ors.length === 1 && this.props.numAnds > 1) {
+			this.props.handleRemoveADVAnd(this.props.parentAnd);
+		}
     }//,
 
     render/*: function */() {
@@ -333,11 +330,11 @@ class ANDQueryORArgs extends Component{
 //var ORArg = createReactClass({
 class ORArg extends Component {
     static propTypes = {
-	data: PT.object.isRequired,
-	handleRemoveADVOr: PT.func.isRequired,
-	handleSetADVInputDefault: PT.func.isRequired,
-	handleSetADVTokenOp: PT.func.isRequired,
-	handleValidateADV: PT.func.isRequired,
+		data: PT.object.isRequired,
+		handleRemoveADVOr: PT.func.isRequired,
+		handleSetADVInputDefault: PT.func.isRequired,
+		handleSetADVTokenOp: PT.func.isRequired,
+		handleValidateADV: PT.func.isRequired,
     }//,
 
     render/*: function*/() {

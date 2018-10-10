@@ -25,7 +25,7 @@ class Modal extends Component {
 	}//,
 	render/*: function*/() {
 		return (
-			<div onClick={this.handleClick} className="modal" role="dialog" aria-hidden="true">
+			<div onClick={this.handleClick} className="modal fade in" id="modal-display" role="dialog" aria-hidden="true" keyboard="true" tabIndex="-1">
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">

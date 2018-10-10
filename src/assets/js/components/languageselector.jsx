@@ -19,6 +19,12 @@ class LanguageSelector extends Component {
 	}//,
 //	mixins: [LinkedStateMixin];
 //fixme! - react-addons-linked-state-mixin - Explicitly set the value and onChange handler instead.
+
+	constructor(props) {
+		super(props);
+		
+	}
+
 	selectLang/*: function*/(language) {
 		this.props.languageChangeHandler(language, this.props.languageFilter);
 	}//,
@@ -64,21 +70,21 @@ class LanguageSelector extends Component {
 					<form className="form" role="form">
 						<div className="input-group">
 							<div>
-							<label style={{color:'black'}}>
+							<label>
 								{ this.renderRadio('byMeta') }{" "}
-								Use the collections{"'"} specified language to filter results
+								&nbsp;Use the collections{"'"} specified language to filter results
 							</label>
 							</div>
 							<div>
-							<label style={{color:'black'}}>
+							<label>
 								{ this.renderRadio('byGuess') }{" "}
-								Filter results by using a language detector
+								&nbsp;Filter results by using a language detector
 							</label>
 							</div>
 							<div>
-							<label style={{color:'black'}}>
+							<label>
 								{ this.renderRadio('byMetaAndGuess') }{" "}
-								First use the collections{"'"} specified language then also use a language detector
+								&nbsp;First use the collections{"'"} specified language then also use a language detector
 							</label>
 							</div>
 						</div>
