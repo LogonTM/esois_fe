@@ -29,11 +29,11 @@ class ResultMixin extends Component {
 	// 	};
 	// }//,
 
-	toggleKwic/*: function*/() {
+	toggleKwic/*: function*/ = () => {
 		this.setState({displayKwic:!this.state.displayKwic});
 	}//,
 
-	toggleADV/*: function*/() {
+	toggleADV/*: function*/ = () => {
 	 	this.setState({displayADV:!this.state.displayADV});
 	}//,
 
@@ -115,7 +115,7 @@ class ResultMixin extends Component {
 		);
 	}//,
 
-	renderPanelBody/*: function*/(corpusHit) {
+	renderPanelBody/*: function*/ = corpusHit => {
 	    var fulllength = {width:"100%"};
 
         if (this.state.displayADV) {
@@ -143,7 +143,7 @@ class ResultMixin extends Component {
 	    }
 	}//,
 
-	renderDisplayKWIC/*: function*/() {
+	renderDisplayKWIC/*: function*/ = () => {
 		return 	(<div className="inline btn-group" style={{display:"inline-block"}}>
 					<label htmlFor="inputKwic" className="btn btn-flat">
 						{ this.state.displayKwic ?
@@ -156,7 +156,7 @@ class ResultMixin extends Component {
 				</div>);
 	}//,
 
-	renderDisplayADV/*: function*/() {
+	renderDisplayADV/*: function*/ = () => {
 	 	return 	(<div className="inline btn-group" style={{display:"inline-block"}}>
 	 				<label htmlFor="inputADV" className="btn btn-flat">
 	 					{ this.state.displayADV ?
@@ -169,7 +169,7 @@ class ResultMixin extends Component {
 	 			</div>);
 	}//,
 
-	renderDownloadLinks/*: function*/(corpusId) {
+	renderDownloadLinks/*: function*/ = (corpusId) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -193,7 +193,7 @@ class ResultMixin extends Component {
 		);
 	}//,
 
-	renderToWeblichtLinks/*: function*/(corpusId, forceLanguage, error) {
+	renderToWeblichtLinks/*: function*/ = (corpusId, forceLanguage, error) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">

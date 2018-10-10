@@ -26,7 +26,7 @@ class Panel extends Component {
 		};
 	}
 
-	toggleState/*: function*/(e) {
+	toggleState/*: function*/ = (e) => {
 		this.setState({open: !this.state.open});
 	}//,
 

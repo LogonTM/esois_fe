@@ -15,24 +15,24 @@ class CorpusView extends Component {
 		languageMap: PT.object.isRequired,
 	}//,
 
-	toggleSelection/*: function */(corpus, e) {
+	toggleSelection/*: function */ = (corpus, e) => {
 		var s = !corpus.selected;
 		this.props.corpora.recurseCorpus(corpus, function(c) { c.selected = s; });
 		this.props.corpora.update();
 		this.stop(e);
 	}//,
 
-	toggleExpansion/*: function */(corpus) {
+	toggleExpansion/*: function */ = (corpus) => {
 		corpus.expanded = !corpus.expanded;
 		this.props.corpora.update();
 	}//,
 
-	selectAll/*: function*/(value) {
+	selectAll/*: function*/ = (value) => {
 		this.props.corpora.recurse(function(c) { c.selected = value; });
 		this.props.corpora.update();
 	}//,
 
-	searchCorpus/*: function*/(query) {
+	searchCorpus/*: function*/ = (query) => {
 		// sort fn: descending priority, stable sort
 		var sortFn = function(a, b){
 			if (b.priority === a.priority) {
@@ -107,7 +107,7 @@ class CorpusView extends Component {
 		e.stopPropagation();
 	}//,
 
-	getMinMaxPriority/*: function*/() {
+	getMinMaxPriority/*: function*/ = () => {
 		var min = 1, max = 0;
 		this.props.corpora.recurse(function(c) { 
 			if (c.priority < min) min = c.priority;
@@ -140,14 +140,14 @@ class CorpusView extends Component {
 				</div>;
 	}//,
 
-	renderLanguages/*: function*/(languages) {
+	renderLanguages/*: function*/ = (languages) => {
 		return languages
 				.map(function(l) { return this.props.languageMap[l]; }.bind(this))
 				.sort()
 				.join(", ");
 	}//,
 
-	renderFilteredMessage/*: function*/() {
+	renderFilteredMessage/*: function*/ = () => {
 		var total = 0;
 		var visible = 0;
 		this.props.corpora.recurse(function(corpus){
@@ -164,7 +164,7 @@ class CorpusView extends Component {
 		return 	<div> Showing {visible} out of {total} (sub)collections. </div>;
 	}//,
 
-	renderCorpus/*: function*/(level, minmaxp, corpus) {
+	renderCorpus/*: function*/ = (level, minmaxp, corpus) => {
 		if (!corpus.visible || corpus.priority <= 0) {
 			return false;
 		}

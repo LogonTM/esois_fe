@@ -25,15 +25,15 @@ class LanguageSelector extends Component {
 		
 	}
 
-	selectLang/*: function*/(language) {
+	selectLang/*: function*/ = language => {
 		this.props.languageChangeHandler(language, this.props.languageFilter);
 	}//,
 
-	setFilter/*: function*/(filter) {
+	setFilter/*: function*/ = filter => {
 		this.props.languageChangeHandler(this.props.selectedLanguage, filter);
 	}//,
 
-	renderLanguageObject/*: function*/(lang) {
+	renderLanguageObject/*: function*/ = lang => {
 		var desc = lang[1] + " [" + lang[0] + "]";
 		var style = {
 			whiteSpace: "nowrap",
@@ -44,7 +44,7 @@ class LanguageSelector extends Component {
 				</div>);
 	}//,
 
-	renderRadio/*: function*/(option) {
+	renderRadio/*: function*/ = option => {
 		return	this.props.languageFilter === option ?
 				<input type="radio" name="filterOpts" value={option} checked onChange={this.setFilter.bind(this, option)}/>
 				: <input type="radio" name="filterOpts" value={option} onChange={this.setFilter.bind(this, option)} />;

@@ -17,7 +17,7 @@ class JQueryFade extends Component {
 		el.fadeIn(500, callback);
 	}//,
 
-	componentWillLeave/*: function*/(callback){
+	componentWillLeave/*: function*/ = (callback) => {
 		jQuery(ReactDOM.findDOMNode(this)).fadeOut(500, callback);
 	}//,
 

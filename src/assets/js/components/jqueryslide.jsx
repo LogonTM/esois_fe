@@ -20,7 +20,7 @@ class JQuerySlide extends Component {
 		});
 	}//,
 
-	componentWillLeave/*: function*/(callback){
+	componentWillLeave/*: function*/ = (callback) => {
 		var $el = jQuery(ReactDOM.findDOMNode(this));
 		$el.slideUp(function(){
 			callback();

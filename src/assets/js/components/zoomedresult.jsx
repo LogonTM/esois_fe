@@ -33,20 +33,20 @@ class ZoomedResult extends Component {
 	// 	};
 	// }//,
 
-	nextResults/*: function*/(e) {
+	nextResults/*: function*/ = e => {
 		this.props.corpusHit.inProgress = true;
 		this.setState({forceUpdate: this.state.forceUpdate+1});
 		this.props.nextResults(this.props.corpusHit.corpus.id);
 	}//,
 
-	renderLanguages/*: function*/(languages) {
+	renderLanguages/*: function*/ = languages => {
 		return languages
 				.map(function(l) { return this.props.languageMap[l]; }.bind(this))
 				.sort()
 				.join(", ");
 	}//,
 
-	renderMoreResults/*: function*/(){
+	renderMoreResults/*: function*/ = () => {
 		if (this.props.corpusHit.inProgress)
 			return (<span style={{fontStyle:'italic'}}>Retrieving results, please wait...</span>);
 

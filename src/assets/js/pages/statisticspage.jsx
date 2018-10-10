@@ -14,14 +14,14 @@ class StatisticsPage extends Component {
 		ajax: PT.func.isRequired,
 	}//,
 
-	getInitialState/*: function */() {
-		return {
-			stats: {},
-			activeTab: 0,
-			// searchStats: {},
-			// lastScanStats: {},
-		};
-	}//,
+	// getInitialState/*: function */() {
+	// 	return {
+	// 		stats: {},
+	// 		activeTab: 0,
+	// 		// searchStats: {},
+	// 		// lastScanStats: {},
+	// 	};
+	// }//,
 	constructor(props){
 		super(props)
 		this.state = {
@@ -36,7 +36,7 @@ class StatisticsPage extends Component {
 		this.refreshStats();
 	}//,
 
-	refreshStats/*: function*/() {
+	refreshStats/*: function*/= () => {
 		this.props.ajax({
 			url: 'rest/statistics',
 			success: function(json, textStatus, jqXHR) {
@@ -109,7 +109,7 @@ class StatisticsPage extends Component {
 				</div>;
 	}//,
 
-	renderEndpoint/*: function*/(isScan, endpoint) {
+	renderEndpoint/*: function*/ = (isScan, endpoint) => {
 		var stat = endpoint[1];
 		var errors = _.values(stat.errors);
 		var diagnostics = _.values(stat.diagnostics);
@@ -149,7 +149,7 @@ class StatisticsPage extends Component {
 				</div>;
 	}//,
 
-	renderInstitution/*: function*/(isScan, inst) {
+	renderInstitution/*: function*/ = (isScan, inst) => {
 		return 	<div style={{marginTop:30}} key={inst[0]}>
 					<h4>{inst[0]}</h4>
 					<div style={{marginLeft:20}}> {_.pairs(inst[1]).map(this.renderEndpoint.bind(this, isScan)) }</div>

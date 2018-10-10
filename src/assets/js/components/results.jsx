@@ -35,7 +35,7 @@ class Results extends Component {
 				</div>);
 	}//,
 
-	renderResultPanel/*: function*/(corpusHit) {
+	renderResultPanel/*: function*/ = corpusHit => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
@@ -48,7 +48,7 @@ class Results extends Component {
 				</Panel></CSSTransition>);
 	}//,
 
-	renderProgressMessage/*: function*/() {
+	renderProgressMessage/*: function*/ = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
 		var msg = collhits.hits + " matching collections found in " + done + " searched collections";

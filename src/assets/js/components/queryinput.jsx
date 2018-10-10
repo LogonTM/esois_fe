@@ -73,7 +73,7 @@ class ADVTokens extends Component {
 	// };
     // }//,
 
-    addADVToken/*: function*/() {
+    addADVToken/*: function*/ = () => {
 		var i = this.state.tokenCounter + 1;
 		this.state.tokens.push('token' + i);
 		this.setState({tokenCounter: i, tokens: this.state.tokens});
@@ -146,7 +146,7 @@ class ADVTokenMenu extends Component {
 	//     return {"hideRepeatMenu": true};
 	// }//,
 
-	toggleRepeatMenu/*: function*/(e) {
+	toggleRepeatMenu/*: function*/ = e => {
 	    this.setState({"hideRepeatMenu": !this.state.hideRepeatMenu});
 	    e.preventDefault();
 	}//,
@@ -188,14 +188,14 @@ class ANDQueryArgs extends Component {
 	    return;
 	}//,
 
-	addADVAnd/*: function*/() {
+	addADVAnd/*: function*/ = () => {
 	    var i = this.state.andCounter + 1;
 	    this.state.ands.push('and' + i);
 	    this.setState({andCounter: i, ands: this.state.ands});
 
 	}//,
 
-	removeADVAnd/*: function*/(id) {
+	removeADVAnd/*: function*/ = id => {
 	    var ands = this.state.ands;
 	    var i = ands.indexOf(id);
 	    if (ands.length > 1) {
@@ -205,7 +205,7 @@ class ANDQueryArgs extends Component {
 	    }
 	}//,
 
-	renderANDTokenFooter/*: function */() {
+	renderANDTokenFooter/*: function */ = () => {
 	    return (<div className="token_footer">
 		<button className="btn btn-xs btn-default image_button insert_arg" onClick={this.addADVAnd} ref="addAndButton">
 		    <i className="glyphicon glyphicon-plus"/>
@@ -215,7 +215,7 @@ class ANDQueryArgs extends Component {
 	    </div>);
 	}//,
 
-	renderANDQueryArg/*: function */(and) {
+	renderANDQueryArg/*: function */ = and => {
 	    return (<div className="and query_arg">
 		<span className="hidden">and</span>
 		<ANDQueryORArgs 
@@ -281,13 +281,13 @@ class ANDQueryORArgs extends Component{
 	return;
     }//,
 
-    addADVOr/*: function*/(e) {
+    addADVOr/*: function*/ = e => {
 		var i = this.state.orCounter + 1;
 		this.state.ors.push({id: 'or' + i, layerType: "string:pos", placeholder: "PROPN"});
 		this.setState({orCounter: i, ors: this.state.ors});
     }//,
 
-    removeADVOr/*: function*/(id, e) {
+    removeADVOr/*: function*/ = (id, e) => {
 		var ors = this.state.ors;
 		var i = ors.indexOf(id);
 		if (ors.length > 1) {

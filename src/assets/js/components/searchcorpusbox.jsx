@@ -25,7 +25,7 @@ class SearchCorpusBox extends Component {
 	// 	};
 	// }//,c
 
-	handleChange/*: function*/(event) {
+	handleChange/*: function*/ = event => {
 		var query = event.target.value;
 		this.setState({query: query});
 
@@ -35,7 +35,7 @@ class SearchCorpusBox extends Component {
 		event.stopPropagation();
 	}//,
 
-	handleKey/*: function*/(event) {
+	handleKey/*: function*/ = event => {
 		if (event.keyCode === 13) {
 			this.props.search(event.target.value);
 		}
