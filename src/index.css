@@ -9,8 +9,13 @@ body {
   border: 0px;
 }
 
+#main-container {
+  min-height:100%;
+  position:relative;
+}
+
 #body {
-  padding-bottom:74px;   /* Height of the footer */
+  padding-bottom:122px;   /* Height of the footer */
 }
 
 code {
@@ -27,10 +32,6 @@ div.navbar {
   background-color: white;
   border-bottom: 0px;
 }
-
-/* .navbar-header {
-  width: 700px;
-} */
 
 #navbar-right {
   margin-top: 1.5%;

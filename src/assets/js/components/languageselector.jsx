@@ -20,11 +20,6 @@ class LanguageSelector extends Component {
 //	mixins: [LinkedStateMixin];
 //fixme! - react-addons-linked-state-mixin - Explicitly set the value and onChange handler instead.
 
-	constructor(props) {
-		super(props);
-		
-	}
-
 	selectLang/*: function*/ = language => {
 		this.props.languageChangeHandler(language, this.props.languageFilter);
 	}//,
@@ -33,6 +28,14 @@ class LanguageSelector extends Component {
 		this.props.languageChangeHandler(this.props.selectedLanguage, filter);
 	}//,
 
+	handleRadioChange = e => {
+		this.setFilter(e.target.value);
+	}
+	
+	handleLanguageClick = e => {
+		this.selectLang(e.target.dataset.language);
+	}
+
 	renderLanguageObject/*: function*/ = lang => {
 		var desc = lang[1] + " [" + lang[0] + "]";
 		var style = {
@@ -40,11 +43,14 @@ class LanguageSelector extends Component {
 			fontWeight: lang[0] === this.props.selectedLanguage[0] ? "bold" : "normal",
 		};
 		return	(<div key={lang[0]}>
-					<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
+					<a tabIndex="-1" href="#" style={style} data-language={lang} onClick={this.handleLanguageClick}>{desc}</a>
 				</div>);
 	}//,
 
-/* 	renderRadio/*: function = option => {
+/* 	
+	<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
+
+	renderRadio/*: function = option => {
 		return	this.props.languageFilter === option ?
 				<input 
 				type="radio" 
@@ -63,11 +69,11 @@ class LanguageSelector extends Component {
 
 	renderRadio = option => (
 		<input
-		type="radio"
+		type="radio" 
 		name="filterOpts"
 		value={option}
 		checked={this.props.languageFilter === option}
-		onChange={this.setFilter.bind(this, option)}
+		onChange={this.handleRadioChange}
 		/>
 	);
 
