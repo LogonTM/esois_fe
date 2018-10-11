@@ -46,8 +46,18 @@ class LanguageSelector extends Component {
 
 /* 	renderRadio/*: function = option => {
 		return	this.props.languageFilter === option ?
-				<input type="radio" name="filterOpts" value={option} checked onChange={this.setFilter.bind(this, option)}/>
-				: <input type="radio" name="filterOpts" value={option} onChange={this.setFilter.bind(this, option)} />;
+				<input 
+				type="radio" 
+				name="filterOpts" 
+				value={option} 
+				checked 
+				onChange={this.setFilter.bind(this, option)}/>
+				: 
+				<input 
+				type="radio" 
+				name="filterOpts" 
+				value={option} 
+				onChange={this.setFilter.bind(this, option)} />;
 	}//,
  */
 

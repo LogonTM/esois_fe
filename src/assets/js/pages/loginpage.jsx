@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AggregorPage from './aggregatorpage.jsx';
 
 class LoginPage extends Component {
 	constructor(props) {
@@ -19,7 +20,8 @@ class LoginPage extends Component {
 
 	handleUsernameChange = event => {
 		var username = event.target.value;
-		this.setState({username: username})	
+		this.setState({username: username})
+		event.stopPropagation();	
 	}
 
 	handlePasswordChange = event => {
