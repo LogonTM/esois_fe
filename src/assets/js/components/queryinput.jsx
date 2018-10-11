@@ -22,7 +22,7 @@ class QueryInput extends Component {
     }//,
 
     render/*: function*/() {
-	if (this.props.queryTypeId === "cql") {
+	// if (this.props.queryTypeId === "cql") {
 	    return (
 		<input className="form-control input-lg search" 
 		       id="query-cql" name="query-cql" type="text"
@@ -32,7 +32,7 @@ class QueryInput extends Component {
 		       onKeyDown={this.props.onKeyDown} 
 		       ref="cqlOrEmbeddedQuery"/>
 	    );
-	} else if (this.props.embedded && this.props.queryTypeId === "fcs") {
+	/* } else if (this.props.embedded && this.props.queryTypeId === "fcs") {
 	    return (
 		<textarea className="form-control input-lg search"
 		       id="query-fcs" name="query-fcs"
@@ -49,7 +49,7 @@ class QueryInput extends Component {
 	                query={this.props.query}
 	                ref="fcsGQB"
 	            />
-	</div>);
+	</div>); */
     }
 }//);
 

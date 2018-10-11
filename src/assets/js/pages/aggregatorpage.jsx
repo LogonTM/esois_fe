@@ -60,7 +60,7 @@ class AggregatorPage extends Component {
 		super(props);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
-			languageMap: {},
+			languageMap: {est: "Eesti", fin: "Soome", rus: "Vene", eng: "Inglise", swe: "Rootsi", alb: "Albaania"},
 			weblichtLanguages: [],
 	                queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
