@@ -37,18 +37,29 @@ class LanguageSelector extends Component {
 		var desc = lang[1] + " [" + lang[0] + "]";
 		var style = {
 			whiteSpace: "nowrap",
-			fontWeight: lang[0] === this.props.selectedLanguage[0] ? "bold":"normal",
+			fontWeight: lang[0] === this.props.selectedLanguage[0] ? "bold" : "normal",
 		};
 		return	(<div key={lang[0]}>
 					<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
 				</div>);
 	}//,
 
-	renderRadio/*: function*/ = option => {
+/* 	renderRadio/*: function = option => {
 		return	this.props.languageFilter === option ?
 				<input type="radio" name="filterOpts" value={option} checked onChange={this.setFilter.bind(this, option)}/>
 				: <input type="radio" name="filterOpts" value={option} onChange={this.setFilter.bind(this, option)} />;
 	}//,
+ */
+
+	renderRadio = option => (
+		<input
+		type="radio"
+		name="filterOpts"
+		value={option}
+		checked={this.props.languageFilter === option}
+		onChange={this.setFilter.bind(this, option)}
+		/>
+	);
 
 	render/*: function*/() {
 		var languages = /*_.*/pairs(this.props.languageMap)

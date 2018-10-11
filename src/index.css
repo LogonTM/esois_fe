@@ -9,6 +9,10 @@ body {
   border: 0px;
 }
 
+#body {
+  padding-bottom:74px;   /* Height of the footer */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -76,6 +80,7 @@ div#footer {
   bottom: 50px;
   width: 100%;
   border: 0px;
+  height: 74px;
 }
 
 #footer a{
