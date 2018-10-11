@@ -141,11 +141,11 @@ class Main extends Component {
     )
   } //,
 
-  renderHelp /*: function*/ () {
+  renderHelp  () {
     return <HelpPage />
   } //,
 
-  renderLogin /*:*/ () {
+  renderLogin () {
     return <LoginPage />
   }
 
