@@ -10,7 +10,11 @@ class LoginPage extends Component {
 	}
 	
 	logIn () {
-		
+		// TODO
+	}
+
+	backToAggregator () {
+		// TODO
 	}
 
 	handleUsernameChange = event => {
@@ -28,20 +32,19 @@ class LoginPage extends Component {
 		return	(
 			<div>
 				<div className="top-gap">
-					<h1>Login</h1>
 					<input className="form-control search search-collection" type="text" 
 						value={this.state.username} placeholder="Username" 
 						onChange={this.handleUsernameChange.bind(this)} />
-						<input className="form-control search search-collection" type="text" 
+						<input className="form-control search search-collection" type="password" name="password"
 						value={this.state.password} placeholder="Password" 
 						onChange={this.handlePasswordChange.bind(this)} />
 					<button type="button" className="btn btn-default btn-lg" onClick={this.logIn} >
 						<span aria-hidden="true"></span>
 						&nbsp;Login
 					</button>
-					<button type="button" className="btn btn-default btn-lg" onClick={this.logIn} >
+					<button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
 						<span aria-hidden="true"></span>
-						&nbsp;Tagasi otsima
+						&nbsp;Tagasi aggregaatorisse
 					</button>
 				</div>
 			</div>
