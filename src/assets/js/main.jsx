@@ -141,12 +141,12 @@ class Main extends Component {
     )
   } //,
 
-  renderHelp /*: function*/() {
+  renderHelp /*: function*/ () {
     return <HelpPage />
   } //,
 
-  renderLogin () {
-    // return <LoginPage />
+  renderLogin /*:*/ () {
+    return <LoginPage />
   }
 
   renderAbout = () => {
@@ -261,7 +261,7 @@ class Main extends Component {
             </a>
             &nbsp;
           </li>
-          {this.renderLogin()}
+          {/* {this.renderLogin()} */}
         </ul>
       </div>
     )
