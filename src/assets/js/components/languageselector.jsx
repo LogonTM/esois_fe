@@ -54,7 +54,7 @@ class LanguageSelector extends Component {
 		var languages = /*_.*/pairs(this.props.languageMap)
 						 .sort(function(l1, l2){return l1[1].localeCompare(l2[1]); });
 		languages.unshift(this.props.anyLanguage);
-		// languages = languages.map(this.renderLanguageObject);
+		languages = languages.map(this.renderLanguageObject);
 		var third = Math.round(languages.length/3);
 		var l1 = languages.slice(0, third);
 		var l2 = languages.slice(third, 2*third);

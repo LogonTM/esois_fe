@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import AboutPage from './pages/aboutpage.jsx'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
+import LoginPage from './pages/loginpage.jsx'
 import StatisticsPage from './pages/statisticspage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
@@ -144,6 +145,10 @@ class Main extends Component {
     return <HelpPage />
   } //,
 
+  renderLogin () {
+    // return <LoginPage />
+  }
+
   renderAbout = () => {
     return <AboutPage toStatistics={this.toStatistics} />
   } //,
@@ -164,47 +169,51 @@ class Main extends Component {
       help: this.renderHelp,
       about: this.renderAbout,
       stats: this.renderStatistics,
-      embed: this.renderEmbedded
+      embed: this.renderEmbedded,
+      login: this.renderLogin //Added this line to allow finding of login - JK
     }
   } //,
 
-  gotoPage = (doPushHistory, pageFnName) => {
+  gotoPage = (/*doPushHistory,*/ pageFnName) => {
     var pageFn = this.getPageFns()[pageFnName]
     if (this.state.navbarPageFn !== pageFn) {
-      if (doPushHistory) {
-        window.history.pushState(
-          { page: pageFnName },
-          '',
-          URLROOT + '/' + pageFnName
-        )
-      }
+      // if (doPushHistory) {
+      //   window.history.pushState(
+      //     { page: pageFnName },
+      //     '',
+      //     URLROOT + '/' + pageFnName
+      //   )
+      // }
       this.setState({ navbarPageFn: pageFn })
       console.log('new page: ' + document.location + ', name: ' + pageFnName)
     }
   } //,
 
-  toAggregator = doPushHistory => {
-    this.gotoPage(doPushHistory, '')
+  toAggregator = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ '')
   }
-  toHelp = doPushHistory => {
-    this.gotoPage(doPushHistory, 'help')
+  toHelp = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ 'help')
   }
-  toAbout = doPushHistory => {
-    this.gotoPage(doPushHistory, 'about')
+  toAbout = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ 'about')
   }
-  toStatistics = doPushHistory => {
-    this.gotoPage(doPushHistory, 'stats')
+  toStatistics = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ 'stats')
   }
-  toEmbedded = doPushHistory => {
-    this.gotoPage(doPushHistory, 'embed')
+  toEmbedded = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ 'embed')
   }
+  toLogin = /*doPushHistory*/ () => {
+    this.gotoPage(/*doPushHistory,*/ 'login')
+  } 
 
-  renderLogin /*: function*/() {
-    return false
-    // return  <li className="unauthenticated">
-    // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
-    // 		</li>;
-  } //,
+  // renderLogin /*: function*/() {
+  //   // return /*false*/ <LoginPage /> // Changed this line to enable later, go to login page to be created - JK
+  //   // return  <li className="unauthenticated">
+  //   // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
+  //   // 		</li>;
+  // } //,
 
   renderCollapsible = () => {
     var classname =
@@ -239,7 +248,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
               <img height='99%' src='img/login-icon.png' alt='' />
             </a>
             &nbsp;
@@ -247,7 +256,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
               <img height='99%' src='img/settings-icon.png' alt='' />
             </a>
             &nbsp;
