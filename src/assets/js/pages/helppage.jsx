@@ -64,9 +64,8 @@ class HelpPage extends Component {
 					rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter"</p>
 
 					<p>
-					When the search starts, the page will start filling in with the corpora responses.
-					After the entire search process has ended you have the option to download the results
-					in various formats.
+					Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevates korpustest. 
+					Otsinguprotsessi lõppedes on võimalik otsingutulemused ka erinevates formaatides alla laadida.
 					</p>
 
 					<p>
