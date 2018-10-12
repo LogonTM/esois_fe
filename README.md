@@ -1,17 +1,8 @@
-Allpool kommentaare ja mõtisklusi asjadest, mis vajavad hetkel veel tegemist. Olgu nad siis üleliigsed, vajalikud, või mis täpsemalt, ei tea veel öelda.
+Antud versioon töötab juba päris ilusasti. Vaja veel kohendada ja detaile ümber siluda. Mängida ja testida potentsiaalsete keelte ja korpustega. Olemas on ka esmane sisse logimise ankeet ning abileht kasutamise jaoks. Vajab ka veidi tõlget.
 
-Vähemalt õnnestus täitsa normaalsel kujul tööle saada aggregatorpage ja see ära kohandada modernsemaks, eelnevaid vigu ja puudujääke tänapäevaga võrreldes välja triikida, nüüd saab hakata vaikselt rohkem EKRK moodi teda ajama. 
+Jätkuvalt on huvipakkuvad read 'aggregatorpage.jsx' failis read 84-124 (this.props.ajax).
 
-Aggregatorpage: antud koodis read 81-122 kommenteerisin hetkel välja, sest andis veateate this.props.ajax is not a function, kuigi erinevalt mängides ja võrreldes teiste kohtadega, ta justkui peaks töötama.
-Aggregatorpage: mis on _paq?
-languageselector: välja kommenteeritud hetkel rida 51
-modal: välja kommenteeritud töötamiseks hetkel rida 17
-mixins: [LinkedStateMixin]; languageselectori lehelt ja resultmixin results.jsx ning resultmixin.jsx lehek�ljelt?? Vajavad ilmselt mingit mudimist või täiesti kõrvale jätmist? Koodis endas on ka kommentaar nende parandamise vajaduse järele.
-var _ : lehel results.jsx on defineeritud var _ = {...}, mis hõlmab endas mäningaid funktsioone, mida kasutavad teised lehek�ljed. Näiteks _.pairs (Aggregatorpage) ja _.uniq (ZoomedResults).
-        Huvitaval kombel _ otsene importimine ei saa k�tte vastavaid funktsioone, annab veateate, et tegemist pole funktsiooniga. Kui funktsioon välja tõsta, siis saab aga hakkama.
-
-Eks lammutame koodi julgesti edasi.
-
+Lammutame koodi julgesti edasi. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

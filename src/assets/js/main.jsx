@@ -248,7 +248,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' href="#" tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
+            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
               <img height='75%' src='img/login-icon.png' alt='Login' />
             </a>
             &nbsp;&nbsp;&nbsp;
@@ -256,7 +256,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' href="#" tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
+            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
               <img height='75%' src='img/settings-icon.png' alt='Help' />
             </a>
             &nbsp;
