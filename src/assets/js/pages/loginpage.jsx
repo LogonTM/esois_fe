@@ -14,9 +14,9 @@ class LoginPage extends Component {
 		// TODO
 	}
 
-	backToAggregator () {
-		// TODO
-	}
+	// backToAggregator () {
+	// 	// TODO
+	// }
 
 	handleUsernameChange = event => {
 		var username = event.target.value;
@@ -34,20 +34,22 @@ class LoginPage extends Component {
 		return	(
 			<div>
 				<div className="top-gap">
-					<input className="form-control search search-collection" type="text" 
-						value={this.state.username} placeholder="Username" 
-						onChange={this.handleUsernameChange.bind(this)} />
-						<input className="form-control search search-collection" type="password" name="password"
-						value={this.state.password} placeholder="Password" 
-						onChange={this.handlePasswordChange.bind(this)} />
-					<button type="button" className="btn btn-default btn-lg" onClick={this.logIn} >
-						<span aria-hidden="true"></span>
-						&nbsp;Login
-					</button>
-					<button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
-						<span aria-hidden="true"></span>
-						&nbsp;Tagasi aggregaatorisse
-					</button>
+					<div className="login-panel">
+						<input className="form-control" type="text" 
+							value={this.state.username} placeholder="Username" 
+							onChange={this.handleUsernameChange.bind(this)} />
+							<input className="form-control" type="password" name="password"
+							value={this.state.password} placeholder="Password" 
+							onChange={this.handlePasswordChange.bind(this)} />
+						<button type="button" className="btn btn-default btn-lg" onClick={this.logIn} >
+							<span aria-hidden="true"></span>
+							Login
+						</button>
+						{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
+							<span aria-hidden="true"></span>
+							Tagasi aggregaatorisse
+						</button> */}
+					</div>
 				</div>
 			</div>
 		);
