@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {IntlProvider} from "react-intl";
 import './index.css';
 //import App from './App';
 import Main from './assets/js/main.jsx';
@@ -15,7 +16,11 @@ import './assets/lib/font-awesome.min.css';
 
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Main />, document.getElementById('body'));
+ReactDOM.render(
+    <IntlProvider locale='en'>
+        <Main />
+    </IntlProvider>, 
+    document.getElementById('body'));
 
 
 // ReactDOM.render(<AggregatorPage />, document.getElementById('body'));
