@@ -11,6 +11,7 @@ import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
 // import createReactClass from "create-react-class";
 import $ from 'jquery';
+import jQuery from 'jquery';
 import _ from "../components/results.jsx";
 import 'bootstrap';
 
@@ -62,7 +63,7 @@ class AggregatorPage extends Component {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {est: "Eesti", fin: "Soome", rus: "Vene", eng: "Inglise", swe: "Rootsi", alb: "Albaania"},
 			weblichtLanguages: [],
-	                queryTypeId: getQueryVariable('queryType') || 'cql',
+	        queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
 			aggregationContext: getQueryVariable('x-aggregation-context') || '',
 			language: this.anyLanguage,
@@ -74,14 +75,14 @@ class AggregatorPage extends Component {
 			hits: this.nohits,
 
 			zoomedCorpusHit: null,
-		        _isMounted: false,
+		    _isMounted: false,
 		};
 	}
 
 	componentDidMount/*: function*/() {
 		this.setState({_isMounted: true});
 			
-	/* 	this.props.ajax({
+/* 		this.props.ajax({
 			url: 'rest/init',
 			success: (json, textStatus, jqXHR) => {
 				if (this.state._isMounted) {
@@ -147,8 +148,8 @@ class AggregatorPage extends Component {
 			url: 'rest/search',
 			type: "POST",
 			data: {
-			        query: query,
-	                        queryType: queryTypeId,
+				query: query,
+				queryType: queryTypeId,
 				language: this.state.language[0],
 				numberOfResults: this.state.numberOfResults,
 				corporaIds: selectedIds,
@@ -176,8 +177,8 @@ class AggregatorPage extends Component {
 			url: 'rest/search/'+this.state.searchId,
 			type: "POST",
 			data: {
-				corpusId: corpusId,
-				numberOfResults: this.state.numberOfResults,
+			corpusId: corpusId,
+			numberOfResults: this.state.numberOfResults,
 			},
 			success: (searchId, textStatus, jqXHR) => {
 				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
@@ -257,7 +258,7 @@ class AggregatorPage extends Component {
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
 			searchId: null,
-		        displayADV: queryTypeId === "fcs" ? true : false,
+		    displayADV: queryTypeId === "fcs" ? true : false,
 			corpora: this.state.corpora, // === this.state.corpora.update();
 		});
 	}
@@ -356,6 +357,45 @@ class AggregatorPage extends Component {
 	    }
 	}//,
 
+	error = errObj => {
+		var err = ''
+		if (typeof errObj === 'string' || errObj instanceof String) {
+		    err = errObj
+		} else if (typeof errObj === 'object' && errObj.statusText) {
+		    console.log('ERROR: jqXHR = ', errObj)
+		    err = errObj.statusText
+		} else {
+		    return
+		}
+	
+		// var that = this;
+		var errs = this.state.errorMessages.slice()
+		errs.push(err)
+		this.setState({ errorMessages: errs })
+	
+		setTimeout(() => {
+		    var errs = this.state.errorMessages.slice()
+		    errs.shift()
+		    this.setState({ errorMessages: errs })
+		}, 10000)
+	} //,
+	
+	ajax = ajaxObject => {
+		ajaxObject.error = ajaxObject.error || this.handleAjaxError
+		jQuery.ajax(ajaxObject)
+	}
+	
+	handleAjaxError = (jqXHR, textStatus, error) => {
+		if (jqXHR.readyState === 0) {
+		  this.error('Network error, please check your internet connection')
+		} else if (jqXHR.responseText) {
+		  this.error(jqXHR.responseText + ' (' + error + ')')
+		} else {
+		  this.error(error + ' (' + textStatus + ')')
+		}
+		console.log('ajax error, jqXHR: ', jqXHR)
+	}
+	
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
@@ -409,7 +449,7 @@ class AggregatorPage extends Component {
 							    embedded={this.props.embedded}
 							    placeholder={queryType.searchPlaceholder}
 							    onChange={this.onADVQuery.bind(this)}
-		                                            onQuery={this.onQuery}
+		                        onQuery={this.onQuery}
 							    onKeyDown={this.handleKey.bind(this)} />
 
 							<div className="input-group-btn">
@@ -485,7 +525,7 @@ class AggregatorPage extends Component {
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
 									  languageFilter={this.state.languageFilter}
-									  		languageChangeHandler={this.setLanguageAndFilter} />
+									  languageChangeHandler={this.setLanguageAndFilter} />
 				</Modal>
 
 				<Modal ref="resultModal" title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}>
@@ -496,7 +536,7 @@ class AggregatorPage extends Component {
 								  searchedLanguage={this.state.language}
 								  weblichtLanguages={this.state.weblichtLanguages}
 								  languageMap={this.state.languageMap} 
-						          		queryTypeId={this.state.queryTypeId} />
+						          queryTypeId={this.state.queryTypeId} />
 				</Modal>
 
 				<div className="top-gap">
@@ -505,7 +545,7 @@ class AggregatorPage extends Component {
 							 getDownloadLink={this.getDownloadLink}
 							 getToWeblichtLink={this.getToWeblichtLink}
 							 searchedLanguage={this.state.language}
-					         		queryTypeId={this.state.queryTypeId}/>
+					         queryTypeId={this.state.queryTypeId}/>
 				</div>
 			</div>
 			);
@@ -513,11 +553,14 @@ class AggregatorPage extends Component {
 }//);
 
 function Corpora(corpora, updateFn) {
-	var that = this;
+/* 	var that = this;
 	this.corpora = corpora;
 	this.update = function() {
 		updateFn(that);
-	};
+	}; */
+
+	this.corpora = corpora;
+	this.update = () => updateFn(this);
 
 	var sortFn = function(x, y) {
 		var r = x.institution.name.localeCompare(y.institution.name);
@@ -625,7 +668,7 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 				if (corpus.handle === handle) {
 					corporaToSelect.push(corpus);
 				}
-			}.bind(this));
+			});
 		}.bind(this));
 	}.bind(this));
 

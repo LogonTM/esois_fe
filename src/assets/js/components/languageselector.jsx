@@ -32,10 +32,6 @@ class LanguageSelector extends Component {
 		this.setFilter(e.target.value);
 	}
 	
-/* 	handleLanguageClick = e => {
-		this.selectLang(e.target.dataset.language);
-	}
- */
 	renderLanguageObject/*: function*/ = lang => {
 		var desc = lang[1] + " [" + lang[0] + "]";
 		var style = {
@@ -48,8 +44,6 @@ class LanguageSelector extends Component {
 	}//,
 
 /* 	
-	
-<a tabIndex="-1" href="#" style={style} data-language={lang} onClick={this.handleLanguageClick}>{desc}</a>
 	renderRadio/*: function = option => {
 		return	this.props.languageFilter === option ?
 				<input 
