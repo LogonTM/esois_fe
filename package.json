@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "4.1.2",
+    "bootstrap": "4",
+    "jquery": "^3.3.1",
     "react": "^16.5.2",
+    "react-addons-linked-state-mixin": "^15.6.2",
     "react-cookie": "2.2.0",
     "react-dom": "^16.5.2",
+    "react-intl": "^2.7.1",
     "react-router-dom": "4.3.1",
     "react-scripts": "2.0.3",
-    "reactstrap": "6.3.0"
+    "react-transition-group": "^2.5.0",
+    "reactstrap": "^6.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

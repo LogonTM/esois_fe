@@ -1,25 +1,27 @@
-"use strict";
+// "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import ResultMixin from "./resultmixin.jsx";
 import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+//var Results = createReactClass({
 
 var PT = PropTypes;
 
-var Results = createReactClass({
-	propTypes: {
+class Results extends Component {
+	static propTypes = {
 		collhits: PT.object.isRequired,
 		searchedLanguage: PT.array.isRequired,
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
 		getToWeblichtLink: PT.func.isRequired,
 	        queryTypeId: PT.string.isRequired, 
-	},
-	mixins: [ResultMixin],
+	}//,
+	mixins: [ResultMixin];
 
-	renderPanelInfo: function(corpusHit) {
+	renderPanelInfo/*: function*/(corpusHit) {
 		var corpus = corpusHit.corpus;
 		var inline = {display:"inline-block"};
 		return	(<div>
@@ -31,9 +33,9 @@ var Results = createReactClass({
 						</button>
 					</div>
 				</div>);
-	},
+	}//,
 
-	renderResultPanel: function(corpusHit) {
+	renderResultPanel/*: function*/ = corpusHit => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
@@ -44,9 +46,9 @@ var Results = createReactClass({
 						info={this.renderPanelInfo(corpusHit)}>
 					{this.renderPanelBody(corpusHit)}
 				</Panel></CSSTransition>);
-	},
+	}//,
 
-	renderProgressMessage: function() {
+	renderProgressMessage/*: function*/ = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
 		var msg = collhits.hits + " matching collections found in " + done + " searched collections";
@@ -66,9 +68,9 @@ var Results = createReactClass({
 						</div> :
 						false}
 				</div>);
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		var collhits = this.props.collhits;
 		if (!collhits.results) {
 			return false;
@@ -100,10 +102,11 @@ var Results = createReactClass({
 		    </TransitionGroup>
 				</div>);
 	}
-});
+}//);
 
-var _ = window._ = window._ || {
-	keys: function() {
+var _ =window._ = window._ || {
+
+	keys/*: function*/(o) {
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -113,7 +116,7 @@ var _ = window._ = window._ || {
 		return ret;
 	},
 
-	pairs: function(o){
+	pairs/*: function*/(o){
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -123,7 +126,7 @@ var _ = window._ = window._ || {
 		return ret;
 	},
 
-	values: function(o){
+	values/*: function*/(o){
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -133,7 +136,7 @@ var _ = window._ = window._ || {
 		return ret;
 	},
 
-	uniq: function(a) {
+	uniq/*: function*/(a) {
 		var r = [];
 		for (var i = 0; i < a.length; i++) {
 			if (r.indexOf(a[i]) < 0) {
@@ -144,4 +147,5 @@ var _ = window._ = window._ || {
 	},
 };
 
-module.exports = Results;
+// module.exports = Results;
+export default Results;

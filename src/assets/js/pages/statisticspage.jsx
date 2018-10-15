@@ -1,30 +1,42 @@
 "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+// import createReactClass from "create-react-class";
+import _ from "../components/results.jsx";
 
 var PT = PropTypes;
 
-var StatisticsPage = createReactClass({
+//var StatisticsPage = createReactClass({
 // fixme! - class StatisticsPage extends React.Component {
-	propTypes: {
+class StatisticsPage extends Component {
+	static propTypes = {
 		ajax: PT.func.isRequired,
-	},
+	}//,
 
-	getInitialState: function () {
-		return {
+	// getInitialState/*: function */() {
+	// 	return {
+	// 		stats: {},
+	// 		activeTab: 0,
+	// 		// searchStats: {},
+	// 		// lastScanStats: {},
+	// 	};
+	// }//,
+	constructor(props){
+		super(props)
+		this.state = {
 			stats: {},
 			activeTab: 0,
 			// searchStats: {},
 			// lastScanStats: {},
-		};
-	},
+		}
+	}
 
-	componentDidMount: function() {
+	componentDidMount/*: function*/() {
 		this.refreshStats();
-	},
+	}//,
 
-	refreshStats: function() {
+	refreshStats/*: function*/= () => {
 		this.props.ajax({
 			url: 'rest/statistics',
 			success: function(json, textStatus, jqXHR) {
@@ -32,9 +44,9 @@ var StatisticsPage = createReactClass({
 				// console.log("stats:", json);
 			}.bind(this),
 		});
-	},
+	}//,
 
-	renderWaitTimeSecs: function(t) {
+	renderWaitTimeSecs/*: function*/(t) {
 		var hue = t * 4;
 		if (hue > 120) {
 			hue = 120;
@@ -45,9 +57,9 @@ var StatisticsPage = createReactClass({
 		return	<span className="badge" style={{backgroundColor:shue, color:"black"}}>
 					{t.toFixed(3)}s
 				</span>;
-	},
+	}//,
 
-	renderCollections: function(colls) {
+	renderCollections/*: function*/(colls) {
 		return	<div style={{marginLeft:40}}>
 					{ colls.length === 0 ?
 						<div style={{color:"#a94442"}}>NO collections found</div>
@@ -60,9 +72,9 @@ var StatisticsPage = createReactClass({
 						</div>
 					}
 				</div>;
-	},
+	}//,
 
-	renderDiagnostic: function(d) {
+	renderDiagnostic/*: function*/(d) {
 		var classes = "inline alert alert-warning " + (d.diagnostic.uri === 'LEGACY' ? "legacy" : "");
 		return 	<div key={d.diagnostic.uri}>
 					<div className={classes} >
@@ -77,9 +89,9 @@ var StatisticsPage = createReactClass({
 						<div>Context: <a href={d.context}>{d.context}</a></div>
 					</div>
 				</div>;
-	},
+	}//,
 
-	renderError: function(e) {
+	renderError/*: function*/(e) {
 		var xc = e.exception;
 		return 	<div key={xc.message}>
 					<div className="inline alert alert-danger" role="alert">
@@ -95,9 +107,9 @@ var StatisticsPage = createReactClass({
 						{ xc.cause ? <div>Caused by: {xc.cause}</div> : false}
 					</div>
 				</div>;
-	},
+	}//,
 
-	renderEndpoint: function(isScan, endpoint) {
+	renderEndpoint/*: function*/ = (isScan, endpoint) => {
 		var stat = endpoint[1];
 		var errors = _.values(stat.errors);
 		var diagnostics = _.values(stat.diagnostics);
@@ -135,16 +147,16 @@ var StatisticsPage = createReactClass({
 						</div> : false
 					}
 				</div>;
-	},
+	}//,
 
-	renderInstitution: function(isScan, inst) {
+	renderInstitution/*: function*/ = (isScan, inst) => {
 		return 	<div style={{marginTop:30}} key={inst[0]}>
 					<h4>{inst[0]}</h4>
 					<div style={{marginLeft:20}}> {_.pairs(inst[1]).map(this.renderEndpoint.bind(this, isScan)) }</div>
  				</div>;
-	},
+	}//,
 
-	renderStatistics: function(stats) {
+	renderStatistics/*: function*/(stats) {
 		return 	<div className="container statistics" style={{marginTop:20}}>
 					<div>
 						<div>Start date: {new Date(stats.date).toLocaleString()}</div>
@@ -153,13 +165,13 @@ var StatisticsPage = createReactClass({
 					<div> { _.pairs(stats.institutions).map(this.renderInstitution.bind(this, stats.isScan)) } </div>
 				</div>
 				 ;
-	},
+	}//,
 
-	setTab: function(idx) {
+	setTab/*: function*/(idx) {
 		this.setState({activeTab:idx});
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		return	(
 			<div>
 				<div className="top-gap">
@@ -189,7 +201,8 @@ var StatisticsPage = createReactClass({
 				</div>
 			</div>
 			);
-	},
-});
+	}//,
+}//);
 
-module.exports = StatisticsPage;
+// module.exports = StatisticsPage;
+export default StatisticsPage;

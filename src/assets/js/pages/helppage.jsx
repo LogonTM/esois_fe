@@ -1,22 +1,24 @@
 "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+// import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var HelpPage = createReactClass({
+//var HelpPage = createReactClass({
 //fixme! - class HelpPage extends React.Component {
-	openHelpDesk: function() {
-		window.open('http://support.clarin-d.de/mail/form.php?queue=Aggregator&lang=en',
-			'_blank', 'height=560,width=370');
-	},
+class HelpPage extends Component {
+	// openHelpDesk/*: function*/() {
+	// 	window.open('http://support.clarin-d.de/mail/form.php?queue=Aggregator&lang=en',
+	// 		'_blank', 'height=560,width=370');
+	// }//,
 
-	render: function() {
+	render/*: function*/() {
 		return	(
 			<div>
 				<div className="top-gap">
-					<h1>Help</h1>
+					{/* <h1>Help</h1>
 					<h3>Performing search in Federated Content Search corpora</h3>
 					<p>To perform a simple keyword search in all CLARIN Federated Content Search centres
 					and their corpora, go to the search field at the top of the page,
@@ -53,11 +55,36 @@ var HelpPage = createReactClass({
 					<button type="button" className="btn btn-default btn-lg" onClick={this.openHelpDesk} >
 						<span className="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
 						&nbsp;HelpDesk
-					</button>
+					</button> */}
+					<h1>Abileht ja seadmed</h1>
+					<h3>Kuidas otsida</h3>
+					<p>Teostamaks lihtsat sõnaotsingut (CQL) üle kõikvõimalike korpuste, tuleb sisestada otsinguväljale otsitav 
+					sõna ning vajutada otsingu nupule või vajutada klaviatuuril "Enter".</p>
+					<p>Teostamaks laiendatud otsinguid kaasates otsingusse ka annotatsioonid (FCS-QL), tuleb valida vastav otsingumood 
+					rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter"</p>
+
+					<p>
+					Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevatest korpustest. 
+					Otsinguprotsessi lõppedes on võimalik otsingutulemused ka erinevates formaatides alla laadida.
+					</p>
+
+					<p>
+					Mõne korpuse vastete lähema tutvumise jaoks tuleb vajutada vastavate tulemuste juures olevale "Vaatle" nupule.
+					Vastavas suurendatud vaates on võimalik saadud tulemused alla laadida vajutades nuppu "Download".
+					</p>
+
+
+					<h3>Otsingukriteeriumite muutmine</h3>
+					<p>
+					FCS aggregaator võimaldab valida spetsiifilisi korpuseid vastavalt nende nimele või kasutatavale 
+					keelele ning määratleda vastete arvu korpuse kohta, mida ühel lehel näidatakse.
+					Kasutajaliides, mis vastavaid valikuid võimaldavad teha asetsevad otsinguvälja all.
+					</p>
 				</div>
 			</div>
 		);
 	}
-});
+}//);
 
-module.exports = HelpPage;
+// module.exports = HelpPage;
+export default HelpPage;

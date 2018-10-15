@@ -57,6 +57,18 @@ body.embedded #footer {
 	margin-top: 64px;
 }
 
+.login-panel{
+	border-radius: 2px;
+	margin: 10px auto 30px;
+	max-width: 38%;
+	padding: 50px 70px 70px 71px;
+	font-size: 14px;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	padding: 0;
+}
+
 .inline {
 	display:inline-block;
 }
@@ -410,6 +422,13 @@ div.popover {
 }
 
 /*** zoomed result ***/
+
+/*** Getting modal open and transition smoothly ***/
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
+/*** Getting modal open and transition smoothly ***/
 
 .modal-body .corpusDescription {
 	padding-left: 15px;

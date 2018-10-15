@@ -1,36 +1,38 @@
-"use strict";
+// "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+// import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var CorpusView = createReactClass({
+// var CorpusView = createReactClass({
 //fixme! - class CorpusView extends React.Component {
-	propTypes: {
+class CorpusView extends Component {
+	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
-	},
+	}//,
 
-	toggleSelection: function (corpus, e) {
+	toggleSelection/*: function */ = (corpus, e) => {
 		var s = !corpus.selected;
 		this.props.corpora.recurseCorpus(corpus, function(c) { c.selected = s; });
 		this.props.corpora.update();
 		this.stop(e);
-	},
+	}//,
 
-	toggleExpansion: function (corpus) {
+	toggleExpansion/*: function */ = (corpus) => {
 		corpus.expanded = !corpus.expanded;
 		this.props.corpora.update();
-	},
+	}//,
 
-	selectAll: function(value) {
+	selectAll/*: function*/ = (value) => {
 		this.props.corpora.recurse(function(c) { c.selected = value; });
 		this.props.corpora.update();
-	},
+	}//,
 
-	searchCorpus: function(query) {
+	searchCorpus/*: function*/ = (query) => {
 		// sort fn: descending priority, stable sort
 		var sortFn = function(a, b){
 			if (b.priority === a.priority) {
@@ -99,31 +101,31 @@ var CorpusView = createReactClass({
 
 		// display
 		this.props.corpora.update();
-	},
+	}//,
 
-	stop: function(e) {
+	stop/*: function*/(e) {
 		e.stopPropagation();
-	},
+	}//,
 
-	getMinMaxPriority: function() {
+	getMinMaxPriority/*: function*/ = () => {
 		var min = 1, max = 0;
 		this.props.corpora.recurse(function(c) { 
 			if (c.priority < min) min = c.priority;
 			if (max < c.priority) max = c.priority;
 		});
 		return [min, max];
-	},
+	}//,
 
-	renderCheckbox: function(corpus) {
+	renderCheckbox/*: function*/(corpus) {
 		return	<button className="btn btn-default">
 					{ corpus.selected ?
 						<span className="glyphicon glyphicon-check" aria-hidden="true"/> :
 						<span className="glyphicon glyphicon-unchecked" aria-hidden="true"/>
 					}
 				</button>;
-	},
+	}//,
 
-	renderExpansion: function(corpus) {
+	renderExpansion/*: function*/(corpus) {
 		if (!corpus.subCorpora || corpus.subCorpora.length === 0) {
 			return false;
 		}
@@ -136,16 +138,16 @@ var CorpusView = createReactClass({
 						{corpus.expanded ? " Collapse ":" Expand "} ({corpus.subCorpora.length} subcollections)
 					</a>
 				</div>;
-	},
+	}//,
 
-	renderLanguages: function(languages) {
+	renderLanguages/*: function*/ = (languages) => {
 		return languages
 				.map(function(l) { return this.props.languageMap[l]; }.bind(this))
 				.sort()
 				.join(", ");
-	},
+	}//,
 
-	renderFilteredMessage: function() {
+	renderFilteredMessage/*: function*/ = () => {
 		var total = 0;
 		var visible = 0;
 		this.props.corpora.recurse(function(corpus){
@@ -160,9 +162,9 @@ var CorpusView = createReactClass({
 			return false;
 		}
 		return 	<div> Showing {visible} out of {total} (sub)collections. </div>;
-	},
+	}//,
 
-	renderCorpus: function(level, minmaxp, corpus) {
+	renderCorpus/*: function*/ = (level, minmaxp, corpus) => {
 		if (!corpus.visible || corpus.priority <= 0) {
 			return false;
 		}
@@ -209,9 +211,9 @@ var CorpusView = createReactClass({
 					</div>
 					{corpus.expanded ? corpus.subCorpora.map(this.renderCorpus.bind(this, level+1, minmaxp)) : false}
 				</div>;
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		var minmaxp = this.getMinMaxPriority();
 		return	<div style={{margin: "0 30px"}}>
 					<div className="row">
@@ -237,6 +239,7 @@ var CorpusView = createReactClass({
 					{this.props.corpora.corpora.map(this.renderCorpus.bind(this, 0, minmaxp))}
 				</div>;
 	}
-});
+}//);
 
-module.exports = CorpusView;
+// module.exports = CorpusView;
+export default CorpusView;

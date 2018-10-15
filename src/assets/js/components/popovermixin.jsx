@@ -1,22 +1,26 @@
 "use strict";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+// import classNames from "classnames";
 import PropTypes from "prop-types";
+import $ from 'jquery';
 
 var PT = PropTypes;
 
-var PopoverMixin = {
-	getDefaultProps: function(){
+// var PopoverMixin = {
+class PopoverMixin extends Component {
+	getDefaultProps/*: function*/(){
 		return {hasPopover: true};
-	},
+	}//,
  
-	componentDidMount: function() {
+	componentDidMount/*: function*/() {
 		this.refresh();
-	},
-	componentDidUpdate: function() {
+	}//,
+	componentDidUpdate/*: function*/() {
 		this.refresh();
-	},
+	}//,
 
-	refresh: function() {
+	refresh/*: function*/ = () => {
 		$(ReactDOM.findDOMNode(this)).popover('destroy');
 
 		var content;
@@ -34,11 +38,12 @@ var PopoverMixin = {
 			trigger: 'focus',
 			html: true,
 		});
-	},
+	}//,
 
-	componentWillUnmount: function() {
+	componentWillUnmount/*: function*/() {
 		$(ReactDOM.findDOMNode(this)).popover('destroy');
-	},	
+	}//,	
 };
 
-module.exports = PopoverMixin;
+// module.exports = PopoverMixin;
+export default PopoverMixin;

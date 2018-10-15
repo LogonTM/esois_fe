@@ -1,17 +1,19 @@
 "use strict";
+import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var EmbeddedFooter = createReactClass({
+//var EmbeddedFooter = createReactClass({
 //fixme! - class EmbeddedFooter extends React.Component { 
-    propTypes: {
+class EmbeddedFooter extends Component { 
+    static propTypes = {
 	URLROOT: PT.string.isRequired,
-    },
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		return (
 			<div className="container" style={{textAlign:'center'}}>
 				<div className="row">
@@ -27,6 +29,7 @@ var EmbeddedFooter = createReactClass({
 			</div>
 		);
 	}
-});
+}//);
 
-module.exports = EmbeddedFooter;
+// module.exports = EmbeddedFooter;
+export default EmbeddedFooter;

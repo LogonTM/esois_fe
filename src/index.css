@@ -1,14 +1,86 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  height: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  border: 0px;
+}
+
+#body {
+  padding-bottom: 100px;   /* Height of the footer */
+}
+
+#main-container {
+  min-height:100%;
+  position:relative;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.orange-line {
+  background-color: rgb(220, 133, 46) !important;
+  border: 2px solid rgb(220, 133, 46) !important;
+}
+
+div.navbar {
+  background-color: white;
+  border-bottom: 0px;
+}
+
+#navbar-right {
+  margin-top: 1.5%;
+}
+
+.navbar-brand {
+  padding: 6px !important;
+  margin: 6px;
+}
+
+.input-group .form-control, .form-control, .input-group-addon, .btn-default, .modal, .form label {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143) !important;
+}
+
+.nobkg {
+  border: 0px !important;
+  background-color: white !important;
+}
+
+.ico {
+  border: 0; 
+  height: 55%;
+  margin-top: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+div#footer {
+  border-top: 0px solid white;
+  background-color: white;
+  border: 0px;
+  height: 100px;
+  bottom: 0px;
+  width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143);
+  position: absolute;
+}
+
+.footer-img {
+  position: absolute;
+  bottom: 0px;
+  right: 3%;
+  border: 0;
+  height: 200%;
+  opacity: 0.5;
+}
+
+#footer a{
+  color: rgb(40,85,143) !important;
 }

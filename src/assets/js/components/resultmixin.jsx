@@ -1,44 +1,54 @@
-"use strict";
+// "use strict";
+import React, { Component } from 'react'
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
 var PT = PropTypes;
 
-window.MyAggregator = window.MyAggragtor || {};
+window.MyAggregator = window.MyAggregator || {};
 var NO_MORE_RECORDS_DIAGNOSTIC_URI = window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI = "info:srw/diagnostic/1/61";
 
-var ResultMixin = {
-	// getDefaultProps: function(){
-	// 	return {hasPopover: true};
-	// },
-
-	getInitialState: function () {
-		return {
+//var ResultMixin = {
+class ResultMixin extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
 			displayKwic: false,
 			displayADV: false,
 		};
-	},
+	}
 
-	toggleKwic: function() {
+	getDefaultProps/*: function*/(){
+		return {hasPopover: true};
+	}//,
+
+	// getInitialState/*: function */() {
+	// 	return {
+	// 		displayKwic: false,
+	// 		displayADV: false,
+	// 	};
+	// }//,
+
+	toggleKwic/*: function*/ = () => {
 		this.setState({displayKwic:!this.state.displayKwic});
-	},
+	}//,
 
-	toggleADV: function() {
+	toggleADV/*: function*/ = () => {
 	 	this.setState({displayADV:!this.state.displayADV});
-	},
+	}//,
 
-	renderPanelTitle: function(corpus) {
+	renderPanelTitle/*: function*/(corpus) {
 		return	(<div className='inline'>
 					<span className="corpusName"> {corpus.title}</span>
 					<span className="institutionName"> — {corpus.institution.name}</span>
 				</div>);
-	},
+	}//,
 
-	renderRowLanguage: function(hit) {
+	renderRowLanguage/*: function*/(hit) {
 		return false; //<span style={{fontFace:"Courier",color:"black"}}>{hit.language} </span> ;
-	},
+	}//,
 
-	renderRowsAsHits: function(hit,i) {
+	renderRowsAsHits/*: function*/(hit,i) {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
@@ -46,9 +56,9 @@ var ResultMixin = {
 					{this.renderRowLanguage(hit)}
 					{hit.fragments.map(renderTextFragments)}
 				</p>);
-	},
+	}//,
 
-	renderRowsAsKwic: function(hit,i) {
+	renderRowsAsKwic/*: function*/(hit,i) {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -58,9 +68,9 @@ var ResultMixin = {
 					<td style={scenter} className="keyword">{hit.keyword}</td>
 					<td style={sleft}>{hit.right}</td>
 				</tr>);
-	},
+	}//,
 
-	renderRowsAsADV: function(hit,i) {
+	renderRowsAsADV/*: function*/(hit,i) {
 	    var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 	    var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 	    var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -74,25 +84,25 @@ var ResultMixin = {
 	              <td style={sleft}>{hit.reference}</td>
 	              {hit.spans.map(renderSpans)}
 	           </tr>);
-	},
+	}//,
 
-	renderDiagnostic: function(d, key) {
+	renderDiagnostic/*: function*/(d, key) {
 		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
 			return false;
 		}
 		return 	(<div className="alert alert-warning" key={key}>
 					<div>{d.message}</div>
 				</div>);
-	},
+	}//,
 
-	renderDiagnostics: function(corpusHit) {
+	renderDiagnostics/*: function*/(corpusHit) {
 		if (!corpusHit.diagnostics || corpusHit.diagnostics.length === 0) {
 			return false;
 		}
 		return corpusHit.diagnostics.map(this.renderDiagnostic);
-	},
+	}//,
 
-	renderErrors: function(corpusHit) {
+	renderErrors/*: function*/(corpusHit) {
 		var xc = corpusHit.exception;
 		if (!xc) {
 			return false;
@@ -103,12 +113,12 @@ var ResultMixin = {
 				{ xc.cause ? <div>Caused by: {xc.cause}</div> : false}
 			</div>
 		);
-	},
+	}//,
 
-	renderPanelBody: function(corpusHit) {
+	renderPanelBody/*: function*/ = corpusHit => {
 	    var fulllength = {width:"100%"};
 
-            if (this.state.displayADV) {
+        if (this.state.displayADV) {
 		return 	(<div>
 			    {this.renderErrors(corpusHit)}
 			    {this.renderDiagnostics(corpusHit)}
@@ -131,9 +141,9 @@ var ResultMixin = {
 		    {corpusHit.kwics.map(this.renderRowsAsHits)}
 		</div>);
 	    }
-	},
+	}//,
 
-	renderDisplayKWIC: function() {
+	renderDisplayKWIC/*: function*/ = () => {
 		return 	(<div className="inline btn-group" style={{display:"inline-block"}}>
 					<label htmlFor="inputKwic" className="btn btn-flat">
 						{ this.state.displayKwic ?
@@ -144,9 +154,9 @@ var ResultMixin = {
 						Display as Key Word In Context
 					</label>
 				</div>);
-	},
+	}//,
 
-	renderDisplayADV: function() {
+	renderDisplayADV/*: function*/ = () => {
 	 	return 	(<div className="inline btn-group" style={{display:"inline-block"}}>
 	 				<label htmlFor="inputADV" className="btn btn-flat">
 	 					{ this.state.displayADV ?
@@ -157,9 +167,9 @@ var ResultMixin = {
 	 					Display as AdvancedDataView (ADV)
 	 				</label>
 	 			</div>);
-	},
+	}//,
 
-	renderDownloadLinks: function(corpusId) {
+	renderDownloadLinks/*: function*/ = (corpusId) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -181,9 +191,9 @@ var ResultMixin = {
 				</ul>
 			</div>
 		);
-	},
+	}//,
 
-	renderToWeblichtLinks: function(corpusId, forceLanguage, error) {
+	renderToWeblichtLinks/*: function*/ = (corpusId, forceLanguage, error) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -202,8 +212,9 @@ var ResultMixin = {
 				</ul>
 			</div>
 		);
-	},
+	}//,
 
 };
 
-module.exports = ResultMixin;
+// module.exports = ResultMixin;
+export default ResultMixin;

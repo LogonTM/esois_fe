@@ -1,26 +1,29 @@
-"use strict";
-import classNames from "classnames";
+// "use strict";
+import React, { Component } from 'react';
+// import classNames from "classnames";
 import PropTypes from "prop-types";
-import createReactClass from "create-react-class";
+//import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-var InfoPopover = createReactClass({
-	propTypes: {
+// var InfoPopover = createReactClass({
+class InfoPopover extends Component {
+	static propTypes = {
 		title: PT.string.isRequired,
-	},
-	mixins: [PopoverMixin],
+	}//,
+	mixins: [PopoverMixin];
 
-	handleClick: function(e) {
+	handleClick/* function*/(e) {
 		e.stopPropagation();
-	},
+	}//,
 
-	render: function() {
+	render/*: function*/() {
 		var inline = {display:"inline-block"};
 		return	<button style={inline} className="btn btn-default btn-xs" onClick={this.handleClick}>
 					<span className="glyphicon glyphicon-info-sign"/>
 				</button>;
 	}
-});
+}//);
 
-module.exports = InfoPopover;
+// module.exports = InfoPopover;
+export default InfoPopover;
