@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import $ from 'jquery';
 import _ from "../components/results.jsx";
 import 'bootstrap';
+import {FormattedMessage} from 'react-intl';
 
 var PT = PropTypes;
 
@@ -469,7 +470,13 @@ class AggregatorPage extends Component {
 										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
 										onKeyPress={this.stop.bind(this)}/>
 								</div>
-								<span className="input-group-addon nobkg">hits per endpoint</span>
+								<span className="input-group-addon nobkg">
+								<FormattedMessage 
+									id="endpoint.translation"
+									description="hits per endoint translation"
+									defaultMessage='hits per endpoint'
+								/>
+								</span>
 							</div>
 
 						</form>
