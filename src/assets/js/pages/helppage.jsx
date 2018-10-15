@@ -64,7 +64,7 @@ class HelpPage extends Component {
 					rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter"</p>
 
 					<p>
-					Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevates korpustest. 
+					Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevatest korpustest. 
 					Otsinguprotsessi lõppedes on võimalik otsingutulemused ka erinevates formaatides alla laadida.
 					</p>
 

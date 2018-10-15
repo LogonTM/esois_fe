@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AggregorPage from './aggregatorpage.jsx';
+import AggregatorPage from './aggregatorpage.jsx';
 
 class LoginPage extends Component {
 	constructor(props) {
