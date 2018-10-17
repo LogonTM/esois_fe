@@ -11,12 +11,27 @@ import EmbeddedFooter from './components/embeddedfooter.jsx'
 import logo from '../img/clarindLogo.png'
 import ELlogo from '../img/el-reg-fond.png'
 import PropTypes from 'prop-types'
+import {IntlProvider} from "react-intl";
+import { addLocaleData } from 'react-intl';
+import locale_en from 'react-intl/locale-data/en';
+import locale_ee from 'react-intl/locale-data/ee';
+import messages_en from "../../en.js"
+import messages_ee from "../../ee.js"
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery'
 // import './main.js'
 
 // (function() {
 // "use strict";
+
+addLocaleData([...locale_ee, ...locale_en])
+
+// var language = 'ee';
+
+const messages = {
+    'ee': messages_ee,
+    'en': messages_en
+};
 
 window.MyAggregator = window.MyAggregator || {}
 
@@ -70,7 +85,8 @@ class Main extends Component {
     this.state = {
       navbarCollapse: false,
       navbarPageFn: this.renderAggregator,
-      errorMessages: []
+      errorMessages: [],
+      language: 'ee'
     }
   }
 
@@ -209,11 +225,34 @@ class Main extends Component {
   } 
 
   // renderLogin /*: function*/() {
-  //   // return /*false*/ <LoginPage /> // Changed this line to enable later, go to login page to be created - JK
+  //   // return /*false*/ <LoginPage />
   //   // return  <li className="unauthenticated">
   //   // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
   //   // 		</li>;
   // } //,
+
+  changeToEE = () => {
+    console.log(this.state.language)
+    
+    this.setState({
+      language: 'ee'
+    })
+
+    console.log(this.state.language)
+    
+  }
+
+  changeToEN = (event) => {
+    console.log(this.state.language)
+    // language = 'en'
+
+    this.setState({
+      language: 'en'
+    })
+
+    console.log(this.state.language)
+
+  }
 
   renderCollapsible = () => {
     var classname =
@@ -232,7 +271,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+            <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1'onClick={this.changeToEE.bind(this)}>
               <img className='ico' src='img/ee-icon.png' alt='EST' />
             </a>
             &nbsp;&nbsp;&nbsp;
@@ -240,7 +279,7 @@ class Main extends Component {
           <li>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
+            <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1'onClick={this.changeToEN.bind(this)}>
               <img className='ico' src='img/gb-icon.png' alt='ENG' />
             </a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -310,7 +349,6 @@ class Main extends Component {
           </div>
           <hr className='orange-line' />
         </div>
-
         <ErrorPane errorMessages={this.state.errorMessages} />
       </div>
     )
@@ -318,14 +356,15 @@ class Main extends Component {
 
   render /*: function*/() {
     return (
+      <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
       <div>
         <div> {this.renderTop()} </div>
-
         <div id='push'>
           <div className='container'>{this.state.navbarPageFn()}</div>
           <div className='top-gap' />
         </div>
       </div>
+      </IntlProvider>
     )
   }
 } //);
