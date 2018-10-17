@@ -4,6 +4,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+import { FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
 
@@ -91,22 +92,23 @@ class ADVTokens extends Component {
 
     render/*: function*/() {
 	var i = 0;
-	var tokens = this.state.tokens.map(function (token, i) {
+	var tokens = this.state.tokens.map((token, i) => {
 	    return (
-	       <CSSTransition key={i} classNames="token" timeout={{enter: 250, exit: 250}}>
-		  <ADVToken 
-			key={token}
-			parentToken={token}
-		        handleRemoveADVToken={this.removeADVToken} />
-	       </CSSTransition>);
-	}.bind(this));
+			<CSSTransition key={i} classNames="token" timeout={{enter: 250, exit: 250}}>
+				<ADVToken 
+					key={token}
+					parentToken={token}
+					handleRemoveADVToken={this.removeADVToken} />
+			</CSSTransition>);
+	});
 
-	return (<div>
-	    <TransitionGroup>{tokens}</TransitionGroup>
-		<button className="btn btn-xs btn-default image_button insert_token" type="button" onClick={this.addADVToken} ref="addToken">
-		    <i className="glyphicon glyphicon-plus"></i>
-		</button>
-	</div>);
+	return (
+		<div>
+			<TransitionGroup>{tokens}</TransitionGroup>
+			<button className="btn btn-xs btn-default image_button insert_token" type="button" onClick={this.addADVToken} ref="addToken">
+				<i className="glyphicon glyphicon-plus"></i>
+			</button>
+		</div>);
     }
 }//);
 
@@ -117,20 +119,22 @@ class ADVToken extends Component {
 		handleRemoveADVToken: PT.func.isRequired,
     }//,
     render/*: function*/() {
-	return (<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
-	    <div className="token_header">
-	       <button className="btn btn-xs btn-default image_button close_btn" type="button" onClick={this.props.handleRemoveADVToken(this.props.parentToken)} ref="removeToken">
-	          <i className="glyphicon glyphicon-remove-circle" />
-	       </button>
-	       <div style={{clear:"both"}} />
-	       </div>
-	       <div className="args">
-	       { /* and.query_arg* and token_footer */ }
-	         <ANDQueryArgs />
-	       <div className="lower_footer">
-	       </div>
-	    </div>
-	</div>);
+	return (
+		<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
+			<div className="token_header">
+				<button className="btn btn-xs btn-default image_button close_btn" type="button"
+					onClick={this.props.handleRemoveADVToken(this.props.parentToken)} ref="removeToken">
+					<i className="glyphicon glyphicon-remove-circle" />
+				</button>
+				<div style={{clear:"both"}} />
+			</div>
+			<div className="args">
+					{ /* and.query_arg* and token_footer */ }
+					<ANDQueryArgs />
+				<div className="lower_footer">
+				</div>
+			</div>
+		</div>);
     }
 }//);
 
@@ -152,17 +156,36 @@ class ADVTokenMenu extends Component {
 	}//,
 	
 	render/*: function*/() {
-	    return (<div>
-	    <button className="btn btn-xs btn-default image_button repeat_menu" onClick={this.toggleRepeatMenu} ref="repeatMenu">
-		<i className="fa fa-cog" />
-	    </button>
-	    <div id="repeatMenu" className={"repeat hide-" + this.state.hideRepeatMenu}>
-		<span>repeat</span>
-		<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
-		<span>to</span>
-		<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
-		<span>times</span>
-	    </div>
+	    return (
+		<div>
+			<button className="btn btn-xs btn-default image_button repeat_menu" onClick={this.toggleRepeatMenu} ref="repeatMenu">
+				<i className="fa fa-cog" />
+			</button>
+			<div id="repeatMenu" className={"repeat hide-" + this.state.hideRepeatMenu}>
+				<span>
+					<FormattedMessage
+						id='repeatMenu.repeat'
+						description='repeat translation'
+						defaultMessage='repeat'
+					/>
+				</span>
+				<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
+				<span>
+					<FormattedMessage
+						id='repeatMenu.to'
+						description='to translation'
+						defaultMessage='to'
+					/>
+				</span>
+				<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
+				<span>
+					<FormattedMessage
+						id='repeatMenu.times'
+						description='times translation'
+						defaultMessage='times'
+					/>
+				</span>
+			</div>
 	    </div>);
 	}
 }//);
@@ -199,45 +222,59 @@ class ANDQueryArgs extends Component {
 	    var ands = this.state.ands;
 	    var i = ands.indexOf(id);
 	    if (ands.length > 1) {
-		var one = ands;
-		var two = one.slice(0, i - 1).concat(one.slice(i));;
-		this.setState({ands: two});
+			var one = ands;
+			var two = one.slice(0, i - 1).concat(one.slice(i));;
+			this.setState({ands: two});
 	    }
 	}//,
 
 	renderANDTokenFooter/*: function */ = () => {
-	    return (<div className="token_footer">
-		<button className="btn btn-xs btn-default image_button insert_arg" onClick={this.addADVAnd} ref="addAndButton">
-		    <i className="glyphicon glyphicon-plus"/>
-		</button>
-		<ADVTokenMenu/>
-		<div style={{clear:"both"}}/>
-	    </div>);
+	    return (
+			<div className="token_footer">
+				<button className="btn btn-xs btn-default image_button insert_arg"
+					onClick={this.addADVAnd} ref="addAndButton">
+					<i className="glyphicon glyphicon-plus"/>
+				</button>
+				<ADVTokenMenu/>
+				<div style={{clear:"both"}}/>
+			</div>
+		);
 	}//,
 
 	renderANDQueryArg/*: function */ = and => {
-	    return (<div className="and query_arg">
-		<span className="hidden">and</span>
-		<ANDQueryORArgs 
-		numAnds={this.state.ands.length}
-		parentAnd={and}
-		handleRemoveADVAnd={this.removeADVAnd}/>
-	    </div>);
+	    return (
+			<div className="and query_arg">
+				<span className="hidden">
+					<FormattedMessage
+						id='and'
+						description='and translation'
+						defaultMessage='and'
+					/>
+				</span>
+				<ANDQueryORArgs 
+					numAnds={this.state.ands.length}
+					parentAnd={and}
+					handleRemoveADVAnd={this.removeADVAnd}/>
+			</div>
+		);
 	}//,
 	
 	render/*: function */() {
-	    var andQueryArgs = this.state.ands.map(function (and, i) {
+	    var andQueryArgs = this.state.ands.map((and, i) => {
 	    return (
-		<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
-		   <div key={and}>{this.renderANDQueryArg(and)}</div>
-		</CSSTransition>);
-	    }.bind(this));
-	    return (<div>
-		<TransitionGroup>
-		   {andQueryArgs}
-		</TransitionGroup>
-		{this.renderANDTokenFooter()}
-		</div>);
+			<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
+				<div key={and}>{this.renderANDQueryArg(and)}</div>
+			</CSSTransition>);
+			}
+		);
+	    return (
+			<div>
+				<TransitionGroup>
+					{andQueryArgs}
+				</TransitionGroup>
+				{this.renderANDTokenFooter()}
+			</div>
+		);
     }
 }//);
 
@@ -268,17 +305,17 @@ class ANDQueryORArgs extends Component{
 
     setADVTokenOp/*: function*/(op) {
 	//fixme! - check against valid layers
-	return;
+		return;
     }//,
 
     setADVInputDefault/*: function*/(or) {
 	//fixme! - disable SearchButton if not atleast 1 token is in the query filter
-	return;
+		return;
     }//,
 
     validateADV/*: function*/(value) {
 	//fixme! - disable SearchButton if not atleast 1 token is in the query filter
-	return;
+		return;
     }//,
 
     addADVOr/*: function*/ = e => {
@@ -300,30 +337,39 @@ class ANDQueryORArgs extends Component{
     }//,
 
     render/*: function */() {
-	var orArgs = this.state.ors.map(function (or, i) {
-	    return ( 		
-		<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
-		   <ORArg key={or.id} 
-	                  data={or} 
-                          handleRemoveADVOr={this.removeADVOr}
-	                  handleSetADVInputDefault={this.setADVInputDefault}
-	                  handleSetADVTokenOp={this.setADVTokenOp}
-	                  handleValidateADV={this.validateADV}
-	           />
-		</CSSTransition>
-	    )
-	}.bind(this));
-	return (<div>
-	    <div className="or_container">
-	       <TransitionGroup>
-	          {orArgs}
-	       </TransitionGroup>
-	    </div>
-	    <div className="arg_footer">
-		<span className="link" onClick={this.addADVOr} ref={'addOR' + this.props.numAnds}>or</span>
-		<div style={{clear:"both"}}/>
-	    </div>
-	</div>);
+		var orArgs = this.state.ors.map(function (or, i) {
+			return ( 		
+				<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
+					<ORArg 
+						key={or.id} 
+						data={or} 
+						handleRemoveADVOr={this.removeADVOr}
+						handleSetADVInputDefault={this.setADVInputDefault}
+						handleSetADVTokenOp={this.setADVTokenOp}
+						handleValidateADV={this.validateADV}
+					/>
+				</CSSTransition>
+			)
+		}.bind(this));
+		return (
+			<div>
+				<div className="or_container">
+					<TransitionGroup>
+						{orArgs}
+					</TransitionGroup>
+				</div>
+				<div className="arg_footer">
+					<span className="link" onClick={this.addADVOr} ref={'addOR' + this.props.numAnds}>
+						<FormattedMessage
+							id='or'
+							description='or translation'
+							defaultMessage='or'
+						/>
+					</span>
+					<div style={{clear:"both"}}/>
+				</div>
+			</div>
+		);
     }
 }//);
 
@@ -338,42 +384,88 @@ class ORArg extends Component {
     }//,
 
     render/*: function*/() {
-	return (<div className="or or_arg">
-	    <div className="left_col" >
-		<button className="btn btn-xs btn-default image_button remove_arg" onClick={this.props.handleRemoveADVOr.bind(null, this.props.data.id)} ref={'removeADVOr_' + this.props.data.id}>
-		    <i className="glyphicon glyphicon-minus"></i>
-		</button>
-	    </div>
-	    <div className="right_col inline_block" style={{display:"inline-block"}}> { /* , margin-left: "5px" */ }
-		<div className="arg_selects lemma">
-		    <select className="arg_type" onChange={this.props.handleSetADVInputDefault("or")} defaultValue={this.props.data.layerType} ref={'ANDLayerType_' + this.props.data.id}>
-			{ /* onChange={this.handleSetADVTokenLayer("value")} */}
-			<optgroup label="word">
-			    { /* ::before */ }
-			    <option value="string:word" label="word">word</option>
-			</optgroup>
-			<optgroup label="wordAttribute">
-			    { /* ::before */ }
-			    <option value="string:pos">part-of-speech</option>
-			    <option value="string:lemma">lemma</option>
-			</optgroup>
-			<optgroup label="textAttribute">
-			    <option value="string:_.text_language" label="language">language</option>
-			</optgroup>
-		    </select>
-		    <select className="arg_opts" defaultValue="string:contains" onChange={this.props.handleSetADVTokenOp("op")}>
-			<option value="string:contains" label="is">is</option>
-			<option value="string:not contains" label="is not">is not</option>
-		    </select>
-		</div>
-		<div className="arg_val_container">
-	 	    <input id={'inputADV_' + this.props.data.id} type="text" defaultValue={this.props.data.placeholder} onChange={this.props.handleValidateADV} ref={'textEntry_' + this.props.data.id}/>
-		</div>
-	       <select> 
-		<option label="PROPN" value="string:PROPN">Proper Noun</option>
-	       </select>
-	    </div>
-	    </div>);
+	return (
+		<div className="or or_arg">
+			<div className="left_col" >
+				<button className="btn btn-xs btn-default image_button remove_arg" onClick={this.props.handleRemoveADVOr.bind(null, this.props.data.id)}
+					ref={'removeADVOr_' + this.props.data.id}>
+					<i className="glyphicon glyphicon-minus"></i>
+				</button>
+			</div>
+			<div className="right_col inline_block" style={{display:"inline-block"}}> { /* , margin-left: "5px" */ }
+				<div className="arg_selects lemma">
+					<select className="arg_type" onChange={this.props.handleSetADVInputDefault("or")} defaultValue={this.props.data.layerType}
+						ref={'ANDLayerType_' + this.props.data.id}>
+						{ /* onChange={this.handleSetADVTokenLayer("value")} */}
+						<optgroup label="word">
+							{ /* ::before */ }
+							<option value="string:word" label="word">
+								<FormattedMessage
+									id='orarg.word'
+									description='word in ORArg translation'
+									defaultMessage='word'
+								/>
+							</option>
+						</optgroup>
+						<optgroup label="wordAttribute">
+							{ /* ::before */ }
+							<option value="string:pos">
+								<FormattedMessage
+									id='orarg.partofspeech'
+									description='part-of-speech in ORArg translation'
+									defaultMessage='part-of-speech'
+								/>
+							</option>
+							<option value="string:lemma">
+								<FormattedMessage
+									id='orarg.lemma'
+									description='lemma in ORArg translation'
+									defaultMessage='lemma'
+								/>
+							</option>
+						</optgroup>
+						<optgroup label="textAttribute">
+							<option value="string:_.text_language" label="language">
+								<FormattedMessage
+									id='orarg.language'
+									description='language in ORArg translation'
+									defaultMessage='language'
+								/>
+							</option>
+						</optgroup>
+					</select>
+					<select className="arg_opts" defaultValue="string:contains" onChange={this.props.handleSetADVTokenOp("op")}>
+						<option value="string:contains" label="is">
+							<FormattedMessage
+								id='is'
+								description='is translation'
+								defaultMessage='is'
+							/>
+						</option>
+						<option value="string:not contains" label="is not">
+							<FormattedMessage
+								id='is.not'
+								description='is not translation'
+								defaultMessage='is not'
+							/>
+						</option>
+					</select>
+				</div>
+				<div className="arg_val_container">
+					<input id={'inputADV_' + this.props.data.id} type="text" defaultValue={this.props.data.placeholder}
+						onChange={this.props.handleValidateADV} ref={'textEntry_' + this.props.data.id}/>
+				</div>
+				<select> 
+					<option label="PROPN" value="string:PROPN">
+						<FormattedMessage
+							id='orarg.properNoun'
+							description='proper noun in ORArg translation'
+							defaultMessage='Proper Noun'
+						/>
+					</option>
+				</select>
+			</div>
+		</div>);
     }
 }//);
 

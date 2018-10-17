@@ -6,6 +6,7 @@ import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+import { FormattedMessage } from 'react-intl';
 //var Results = createReactClass({
 
 var PT = PropTypes;
@@ -24,28 +25,39 @@ class Results extends Component {
 	renderPanelInfo/*: function*/(corpusHit) {
 		var corpus = corpusHit.corpus;
 		var inline = {display:"inline-block"};
-		return	(<div>
-					{" "}
-					<div style={inline}>
-						<button className="btn btn-default zoomResultButton"
-								onClick={function(e){this.props.toggleResultModal(e,corpusHit)}.bind(this)}>
-								<span className="glyphicon glyphicon-eye-open"/> View
-						</button>
-					</div>
-				</div>);
+		return (
+			<div>
+				{" "}
+				<div style={inline}>
+					<button className="btn btn-default zoomResultButton"
+							onClick={function(e){this.props.toggleResultModal(e,corpusHit)}.bind(this)}>
+						<span className="glyphicon glyphicon-eye-open"/>
+						<FormattedMessage
+							id='results.view.button'
+							description='view translation'
+							defaultMessage='View'
+						/>
+					</button>
+				</div>
+			</div>
+		);
 	}//,
 
 	renderResultPanel/*: function*/ = corpusHit => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
-				return false;
+			return false;
 		}
-		return 	(<CSSTransition key={corpusHit.corpus.id} classNames="fade" timeout={{enter: 200, exit: 200}}><Panel key={corpusHit.corpus.id}
+		return (
+			<CSSTransition key={corpusHit.corpus.id} classNames="fade" timeout={{enter: 200, exit: 200}}>
+				<Panel key={corpusHit.corpus.id}
 						title={this.renderPanelTitle(corpusHit.corpus)}
 						info={this.renderPanelInfo(corpusHit)}>
 					{this.renderPanelBody(corpusHit)}
-				</Panel></CSSTransition>);
+				</Panel>
+			</CSSTransition>
+		);
 	}//,
 
 	renderProgressMessage/*: function*/ = () => {
@@ -54,20 +66,22 @@ class Results extends Component {
 		var msg = collhits.hits + " matching collections found in " + done + " searched collections";
 		var percents = Math.round(100 * collhits.hits / collhits.results.length);
 		var styleperc = {width: percents+"%"};
-		return 	(<div style={{marginTop:10}}>
-					<div>{msg}</div>
-					{collhits.inProgress > 0 ?
-						<div className="progress" style={{marginBottom:10}}>
+		return (
+			<div style={{marginTop:10}}>
+				<div>{msg}</div>
+				{collhits.inProgress > 0 ?
+					<div className="progress" style={{marginBottom:10}}>
+						<div className="progress-bar progress-bar-striped active" role="progressbar"
+							aria-valuenow={percents} aria-valuemin="0" aria-valuemax="100" style={styleperc} />
+						{percents > 2 ? false :
 							<div className="progress-bar progress-bar-striped active" role="progressbar"
-								aria-valuenow={percents} aria-valuemin="0" aria-valuemax="100" style={styleperc} />
-							{percents > 2 ? false :
-								<div className="progress-bar progress-bar-striped active" role="progressbar"
-									aria-valuenow='100' aria-valuemin="0" aria-valuemax="100"
-									style={{width: '100%', backgroundColor:'#888'}} />
-							}
-						</div> :
-						false}
-				</div>);
+								aria-valuenow='100' aria-valuemin="0" aria-valuemax="100"
+								style={{width: '100%', backgroundColor:'#888'}} />
+						}
+					</div> :
+					false}
+			</div>
+		);
 	}//,
 
 	render/*: function*/() {
@@ -77,7 +91,8 @@ class Results extends Component {
 		}
 		var showprogress = collhits.inProgress > 0;
 	     
-		return 	(<div>
+		return (
+			<div>
 				{ showprogress ? this.renderProgressMessage() : <div style={{height:20}} />}
 				<div style={{marginBottom:2}}>
 					{ showprogress ? false :
@@ -89,18 +104,19 @@ class Results extends Component {
 							   {this.renderDisplayKWIC()}
 							   {this.props.queryTypeId !== "fcs" ? "" : this.renderDisplayADV()}
 								{ collhits.inProgress === 0 ?
-											<div className="inline"> {this.renderDownloadLinks()} </div>
-											:false
-										}
-									</div>
-								</div>
-							}
-							<div style={{clear:'both'}}/>
+									<div className="inline"> {this.renderDownloadLinks()} </div>
+									:false
+								}
+							</div>
 						</div>
-		    <TransitionGroup>
-						{collhits.results.map(this.renderResultPanel)}
-		    </TransitionGroup>
-				</div>);
+					}
+					<div style={{clear:'both'}}/>
+				</div>
+				<TransitionGroup>
+					{collhits.results.map(this.renderResultPanel)}
+				</TransitionGroup>
+			</div>
+		);
 	}
 }//);
 

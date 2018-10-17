@@ -269,7 +269,7 @@ div.corpus button {
 
 div.corpus .glyphicon {
 	font-size: 12px;
-	color: #B27000;
+	color: rgb(220, 133, 46);
 
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
@@ -282,11 +282,11 @@ div.corpus .glyphicon {
 
 div.corpus button .glyphicon.glyphicon-check {
 	font-size: 20px;
-	color: #B27000;
+	color: rgb(220, 133, 46);
 }
 div.corpus button .glyphicon.glyphicon-unchecked {
 	font-size: 20px;
-	color: #036;
+	color: rgb(40,85,143);
 }
 
 div.corpus .fa.fa-institution {
@@ -330,7 +330,7 @@ div.panel-title {
 }
 div.panel:hover .zoomResultButton {
 	color: white;
-	background-color: #036;
+	background-color: rgb(40,85,143);
 	border: 1px solid black;
 }
 
@@ -366,7 +366,7 @@ div.panel-title span.institutionName{
 }
 
 .panel-body td.keyword {
-	color: #036;
+	color: rgb(40,85,143);
 	font-weight: bold;
 	font-weight: bold;
 }
@@ -375,7 +375,7 @@ div.panel-title span.institutionName{
 	padding: 0 20px;
 	margin: 0 0 20px 0;
 	border: 1px solid #ddd;
-	border-left: 5px solid #00406F; /*blue*/
+	border-left: 5px solid rgb(40,85,143); /*blue*/
 	border-radius: 4px;
 }
 .bs-callout .panel-heading {
@@ -384,7 +384,7 @@ div.panel-title span.institutionName{
 	padding: 10px 15px 4px;
 }
 .bs-callout .panel-title {
-	color: #B27000;
+	color: rgb(220, 133, 46);
 }
 .panel-body {
 	border-top: 1px solid #ddd;
@@ -440,7 +440,7 @@ div.popover {
 .modal-body .corpusResults {
 	padding: 15px;
 	border: 1px solid #ddd;
-	border-left: 5px solid #036;
+	border-left: 5px solid rgb(40,85,143);
 	border-radius: 4px;
 }
 

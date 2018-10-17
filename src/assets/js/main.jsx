@@ -20,6 +20,7 @@ import messages_ee from "../../ee.js"
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery'
 // import './main.js'
+import {FormattedMessage} from 'react-intl';
 
 // (function() {
 // "use strict";
@@ -138,7 +139,13 @@ class Main extends Component {
 
   handleAjaxError = (jqXHR, textStatus, error) => {
     if (jqXHR.readyState === 0) {
-      this.error('Network error, please check your internet connection')
+      this.error(
+        <FormattedMessage
+          id='ajax.network.error'
+          description='no network connection error translation'
+          defaultMessage='Network error, please check your internet connection'
+        />
+      )
     } else if (jqXHR.responseText) {
       this.error(jqXHR.responseText + ' (' + error + ')')
     } else {
@@ -411,7 +418,7 @@ var routeFromLocation = function() {
   }
 }
 
-var main = ReactDOM.render(<Main />, document.getElementById('body'))
+var main = ReactDOM.render(<IntlProvider locale='en'><Main /></IntlProvider>, document.getElementById('body'))
 if (!isEmbeddedView()) {
   ReactDOM.render(
     <Footer VERSION={VERSION} toAbout={main.toAbout} />,

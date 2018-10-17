@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import _ from "./results.jsx";
+import { FormattedMessage } from 'react-intl';
+
 var PT = PropTypes;
 
 //var ZoomedResult = createReactClass({
@@ -18,9 +20,10 @@ class ZoomedResult extends Component {
 		searchedLanguage: PT.array.isRequired,
 		getDownloadLink: PT.func.isRequired,
 		getToWeblichtLink: PT.func.isRequired,
-	        queryTypeId: PT.string.isRequired,
+		queryTypeId: PT.string.isRequired,
 	}//,
 	mixins: [ResultMixin];
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -35,20 +38,28 @@ class ZoomedResult extends Component {
 
 	nextResults/*: function*/ = e => {
 		this.props.corpusHit.inProgress = true;
-		this.setState({forceUpdate: this.state.forceUpdate+1});
+		this.setState({forceUpdate: this.state.forceUpdate + 1});
 		this.props.nextResults(this.props.corpusHit.corpus.id);
 	}//,
 
 	renderLanguages/*: function*/ = languages => {
 		return languages
-				.map(function(l) { return this.props.languageMap[l]; }.bind(this))
+				.map(l => this.props.languageMap[l])
 				.sort()
 				.join(", ");
 	}//,
 
 	renderMoreResults/*: function*/ = () => {
 		if (this.props.corpusHit.inProgress)
-			return (<span style={{fontStyle:'italic'}}>Retrieving results, please wait...</span>);
+			return (
+				<span style={{fontStyle:'italic'}}>
+					<FormattedMessage
+						id='zoomedresult.pleaseWait'
+						description='retrieving results, please wait translation'
+						defaultMessage='Retrieving results, please wait...'
+					/>
+				</span>
+			);
 
 		var moreResults = true;
 		for (var i = 0; i < this.props.corpusHit.diagnostics.length; i++) {
@@ -58,11 +69,27 @@ class ZoomedResult extends Component {
 				break;
 			}
 		}
+
 		if (!moreResults)
-			return (<span style={{fontStyle:'italic'}}>No other results available for this query</span>);
-		return	(<button className="btn btn-default" onClick={this.nextResults}>
-					<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true"/> More Results
-				</button>);
+			return (
+				<span style={{fontStyle:'italic'}}>
+					<FormattedMessage
+						id='zoomedresult.noMoreResults'
+						description='no other results available for this query translation'
+						defaultMessage='No other results available for this query'
+					/>
+				</span>
+			);
+		return (
+			<button className="btn btn-default" onClick={this.nextResults}>
+				<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true"/>
+				<FormattedMessage
+					id='zoomedresult.moreResults'
+					description='more results translation'
+					defaultMessage='More Results'
+				/>
+			</button>
+		);
 	}//,
 
 	render/*: function*/() {
@@ -90,47 +117,48 @@ class ZoomedResult extends Component {
 			}
 		}
 		var corpus = corpusHit.corpus;
-		return 	(<div>
-						<div className='corpusDescription'>
-							<p><i className="fa fa-institution"/> {corpus.institution.name}</p>
-							{corpus.description ?
-								<p><i className="glyphicon glyphicon-info-sign"/> {corpus.description}</p>: false}
-							<p><i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}</p>
+		return (
+			<div>
+				<div className='corpusDescription'>
+					<p><i className="fa fa-institution"/> {corpus.institution.name}</p>
+					{corpus.description ?
+						<p><i className="glyphicon glyphicon-info-sign"/> {corpus.description}</p>: false}
+					<p><i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}</p>
+				</div>
+				<div style={{marginBottom:2}}>
+					<div className="float-right">
+						<div>
+							{this.renderDisplayKWIC()}
+							{this.props.queryTypeId !== "fcs" ? "" : this.renderDisplayADV()}
+							<div className="inline"> {this.renderDownloadLinks(corpusHit.corpus.id)} </div>
+							{/* <div className="inline"> {this.renderToWeblichtLinks(corpus.id, forceLanguage, wlerror)} </div> */}
 						</div>
-						<div style={{marginBottom:2}}>
-							<div className="float-right">
-								<div>
-									{this.renderDisplayKWIC()}
-								    {this.props.queryTypeId !== "fcs" ? "" : this.renderDisplayADV()}
-									<div className="inline"> {this.renderDownloadLinks(corpusHit.corpus.id)} </div>
-									<div className="inline"> {this.renderToWeblichtLinks(corpus.id, forceLanguage, wlerror)} </div>
-								</div>
-							</div>
-							<div style={{clear:'both'}}/>
-						</div>
-		    <TransitionGroup>
-		      <CSSTransition classNames="fade" timeout={{enter: 200, exit: 200}}>
+					</div>
+					<div style={{clear:'both'}}/>
+				</div>
+				<TransitionGroup>
+					<CSSTransition classNames="fade" timeout={{enter: 200, exit: 200}}>
 						<div className="panel">
 							<div className="panel-body corpusResults">{this.renderPanelBody(corpusHit)}</div>
 						</div>
-		       </CSSTransition>
-		    </TransitionGroup>
-						<div style={{textAlign:'center', marginTop:10}}>
-							{ this.renderMoreResults() }
-						</div>
-
-				</div>);
+					</CSSTransition>
+				</TransitionGroup>
+				<div style={{textAlign:'center', marginTop:10}}>
+					{ this.renderMoreResults() }
+				</div>
+			</div>
+		);
 	}//,
 }//);
 
 function uniq/*: function*/(a) {
-		var r = [];
-		for (var i = 0; i < a.length; i++) {
-			if (r.indexOf(a[i]) < 0) {
-				r.push(a[i]);
-			}
+	var r = [];
+	for (var i = 0; i < a.length; i++) {
+		if (r.indexOf(a[i]) < 0) {
+			r.push(a[i]);
 		}
-		return r;
+	}
+	return r;
 }
 
 // module.exports = ZoomedResult;

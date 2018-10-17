@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 
-var PT = PropTypes;
+// var PT = PropTypes;
 
 // var InfoPopover = createReactClass({
 class InfoPopover extends Component {
 	static propTypes = {
-		title: PT.string.isRequired,
+		title: PropTypes.string.isRequired,
 	}//,
 	mixins: [PopoverMixin];
 
@@ -19,9 +19,11 @@ class InfoPopover extends Component {
 
 	render/*: function*/() {
 		var inline = {display:"inline-block"};
-		return	<button style={inline} className="btn btn-default btn-xs" onClick={this.handleClick}>
-					<span className="glyphicon glyphicon-info-sign"/>
-				</button>;
+		return (
+			<button style={inline} className="btn btn-default btn-xs" onClick={this.handleClick}>
+				<span className="glyphicon glyphicon-info-sign"/>
+			</button>
+		);
 	}
 }//);
 

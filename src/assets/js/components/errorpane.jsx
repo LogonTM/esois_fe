@@ -6,13 +6,13 @@ import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 
-var PT = PropTypes;
+// var PT = PropTypes;
 
 // var ErrorPane = createReactClass({
     //fixme! - class ErrorPane extends React.Component {
 class ErrorPane extends Component{
 	static propTypes = {
-		errorMessages: PT.array.isRequired,
+		errorMessages: PropTypes.array.isRequired,
 	}//,
 	
 	renderErrorMessage/*: function*/(errorMessage, index) {
@@ -24,13 +24,15 @@ class ErrorPane extends Component{
 	}//,
 
 	render/*: function*/() {
-		return	<div className="container errorDiv">
-					<div className="row errorRow">
-						<TransitionGroup component="div">
-							{this.props.errorMessages.map(this.renderErrorMessage)}
-						</TransitionGroup>
-					</div>
-				</div>;
+		return	(
+			<div className="container errorDiv">
+				<div className="row errorRow">
+					<TransitionGroup component="div">
+						{this.props.errorMessages.map(this.renderErrorMessage)}
+					</TransitionGroup>
+				</div>
+			</div>
+		);
 	}
 }//);
 

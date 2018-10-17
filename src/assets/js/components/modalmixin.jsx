@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import classNames from "classnames";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import $ from 'jquery';
+import { FormattedMessage } from 'react-intl';
 
-var PT = PropTypes;
+// var PT = PropTypes;
 
 // var ModalMixin = {
 class ModalMixin extends Component {
@@ -27,7 +28,13 @@ class ModalMixin extends Component {
 						<div className="modal-header">
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
-								<span className="sr-only">Close</span>
+								<span className="sr-only">
+									<FormattedMessage
+										id='close.button'
+										description='close button translation'
+										defaultMessage='Close'
+									/>
+								</span>
 							</button>
 							<h2 className="modal-title">{title}</h2>
 						</div>
@@ -35,7 +42,13 @@ class ModalMixin extends Component {
 							{content}
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" className="btn btn-default" data-dismiss="modal">
+								<FormattedMessage
+									id='close.button'
+									description='close button translation'
+									defaultMessage='Close'
+								/>
+							</button>
 						</div>
 					</div>
 				</div>

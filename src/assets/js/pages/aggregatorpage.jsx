@@ -14,7 +14,7 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import _ from "../components/results.jsx";
 import 'bootstrap';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
 
 var PT = PropTypes;
 
@@ -34,7 +34,12 @@ class AggregatorPage extends Component {
 	nohits = {
 		results: null,
 	}//,
-	anyLanguage = [multipleLanguageCode, "Any Language"];//,
+	anyLanguage = [multipleLanguageCode, 
+		<FormattedMessage
+			id='any.language'
+			description='Any Language translation'
+			defaultMessage='Any Language'
+		/>];//,
 
 	// getInitialState/*: function */() {
 	// 	return {
@@ -139,7 +144,13 @@ class AggregatorPage extends Component {
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error("Please select a collection to search into");
+			this.props.error(
+				<FormattedMessage
+					id='select.corpora.error'
+					description='please select a collection for search translation'
+					defaultMessage='Please select a collection to search into'
+				/>	
+			);
 			return;
 		}
 
@@ -388,11 +399,17 @@ class AggregatorPage extends Component {
 	
 	handleAjaxError = (jqXHR, textStatus, error) => {
 		if (jqXHR.readyState === 0) {
-		  this.error('Network error, please check your internet connection')
+			this.error(
+				<FormattedMessage
+					id='ajax.network.error'
+					description='no network connection error translation'
+					defaultMessage='Network error, please check your internet connection'
+				/>
+			)
 		} else if (jqXHR.responseText) {
-		  this.error(jqXHR.responseText + ' (' + error + ')')
+			this.error(jqXHR.responseText + ' (' + error + ')')
 		} else {
-		  this.error(error + ' (' + textStatus + ')')
+			this.error(error + ' (' + textStatus + ')')
 		}
 		console.log('ajax error, jqXHR: ', jqXHR)
 	}
@@ -435,6 +452,11 @@ class AggregatorPage extends Component {
 
 	render/*: function*/() {
 		var queryType = queryTypeMap[this.state.queryTypeId];
+		console.log(<FormattedMessage
+			id='search.for'
+			description='Search for translation'
+			defaultMessage='Search for'
+		/>);
 		return	(
 			<div className="top-gap">
 				<div className="row">
@@ -466,7 +488,13 @@ class AggregatorPage extends Component {
 
 							<div className="input-group">
 
-								<span className="input-group-addon nobkg" >Search for</span>
+								<span className="input-group-addon nobkg" >
+									<FormattedMessage
+										id='search.for'
+										description='Search for translation'
+										defaultMessage='Search for'
+									/>
+								</span>
 
 								<div className="input-group-btn">
 									<button className="form-control btn btn-default"
@@ -496,14 +524,26 @@ class AggregatorPage extends Component {
 							</div>
 
 							<div className="input-group hidden-xs">
-								<span className="input-group-addon nobkg">in</span>
+								<span className="input-group-addon nobkg">
+									<FormattedMessage
+										id='in'
+										description='in translation'
+										defaultMessage='in'
+									/>
+									</span>
 								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection.bind(this)}>
 									{this.state.corpora.getSelectedMessage()} <span className="caret"/>
 								</button>
 							</div>
 
 							<div className="input-group hidden-xs hidden-sm">
-								<span className="input-group-addon nobkg">and show up to</span>
+								<span className="input-group-addon nobkg">
+									<FormattedMessage
+										id='and.show.up.to'
+										description='and show up to translation'
+										defaultMessage='and show up to'
+									/>
+									</span>
 								<div className="input-group-btn">
 									<input type="number" className="form-control input" min="10" max="250"
 										style={{width:60}}
@@ -512,8 +552,8 @@ class AggregatorPage extends Component {
 								</div>
 								<span className="input-group-addon nobkg">
 								<FormattedMessage 
-									id="endpoint.translation"
-									description="hits per endoint translation"
+									id='endpoint.translation'
+									description='hits per endoint translation'
 									defaultMessage='hits per endpoint'
 								/>
 								</span>
@@ -523,11 +563,23 @@ class AggregatorPage extends Component {
 					</div>
 				</div>
 
-				<Modal ref="corporaModal" title={<span>Collections</span>}>
+				<Modal ref="corporaModal" title={<span>
+					<FormattedMessage
+						id='collections'
+						description='collections translation'
+						defaultMessage='Collections'
+					/>
+					</span>}>
 					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} />
 				</Modal>
 
-				<Modal ref="languageModal" title={<span>Select Language</span>}>
+				<Modal ref="languageModal" title={<span>
+					<FormattedMessage
+						id='select.language'
+						description='select language translation'
+						defaultMessage='Select Language'
+					/>
+					</span>}>
 					<LanguageSelector anyLanguage={this.anyLanguage}
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
@@ -696,14 +748,27 @@ Corpora.prototype.getSelectedIds = function() {
 	return ids;
 };
 
+const messages = defineMessages({
+	selectedCollections: {
+		id: 'getSelectedMessage.allCollections',
+		description: 'all available collections translation',
+		defaultMessage: 'All available collections ({amount})',
+	},
+});
+
+/* function formatMessage(
+    messageDescriptor: MessageDescriptor,
+    values?: object
+): string; */
+
 Corpora.prototype.getSelectedMessage = function() {
 	var selected = this.getSelectedIds().length;
 	if (this.corpora.length === selected) {
-		return "All available collections (" + selected + ")";
+		return 'All available collections (' + selected + ')';
 	} else if (selected === 1) {
-		return "1 selected collection";
+		return '1 selected collection';
 	}
-	return selected + " selected collections";
+	return selected + ' selected collections';
 };
 
 // function Corpora(corpora, updateFn) {
@@ -783,20 +848,61 @@ function encodeQueryData(data)
 	return ret.join("&");
 }
 
+/* const CqlDefaultMessage = ({intl}) => {
+	const placeholder = intl.formatMessage({id: 'cql.query.searchPlaceholder'})
+	return (
+		<input placeholder={placeholder} />
+	);
+}
+
+CqlDefaultMessage.propTypes = {
+	intl: intlShape.isRequired
+} */
+
 var queryTypes = [
 	{
-		id: "cql",
-		name: "Text layer Contextual Query Language (CQL)",
-		searchPlaceholder: "Elephant",
-		searchLabel: "Text layer CQL query",
-		searchLabelBkColor: "rgba(220, 133, 46, .3)",
+		id: 'cql',
+		name: 
+			<FormattedMessage
+				id='cql.query.name' 
+				description='CQL query name translation'
+				defaultMessage='Text layer Contextual Query Language (CQL)'
+			/>,
+		searchPlaceholder: 
+			String(<FormattedMessage
+				id='cql.query.searchPlaceholder'
+				description='placeholder in CQL search field translation'
+				defaultMessage='Elephant'
+			/>),
+		searchLabel:
+			<FormattedMessage
+				id='cql.query.searchLabel'
+				description='search label for CQL query translation'
+				defaultMessage='Text layer CQL query'
+			/>,
+		searchLabelBkColor: 'rgba(220, 133, 46, .3)',
 		className: '',
 	},
 	{
 		id: "fcs",
-		name: "Multi-layer Federated Content Search Query Language (FCS-QL)",
-		searchPlaceholder: "[word = 'annotation'][word = 'focused']",
-		searchLabel: "Multi-layer FCS query",
+		name: 
+			<FormattedMessage
+				id='fcsql.query.name'
+				description='FCS-QL query name translation'
+				defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
+			/>,
+		searchPlaceholder: 
+			<FormattedMessage
+				id='fcsql.query.searchPlaceholder'
+				description='placeholder in FCS-QL search field translation'
+				defaultMessage="[word = 'annotation'][word = 'focused']"
+			/>,
+		searchLabel: 
+			<FormattedMessage
+				id='fcsql.query.searchLabel'
+				description='search label for FCS-QL query translation'
+				defaultMessage='Multi-layer FCS query'
+			/>,
 		searchLabelBkColor: "rgba(40, 85, 143, .3)",
 		disabled: false,
 	},

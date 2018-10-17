@@ -2,15 +2,14 @@
 import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { FormattedMessage } from 'react-intl';
 //import createReactClass from "create-react-class";
-
-var PT = PropTypes;
 
 //var SearchCorpusBox = createReactClass({
 //fixme! - class SearchCorpusBox extends React.Component {
 class SearchCorpusBox extends Component {
 	static propTypes = {
-		search: PT.func.isRequired,
+		search: PropTypes.func.isRequired,
 	}//,
 	constructor(props) {
 		super(props);
@@ -42,11 +41,23 @@ class SearchCorpusBox extends Component {
 	}//,
 
 	render/*: function*/() {
-		return 	<div className="form-group">
-					<input className="form-control search search-collection" type="text" 
-						value={this.state.query} placeholder="Search for collection" 
-						onChange={this.handleChange.bind(this)} />
-				</div>;
+		return (
+			<div className="form-group">
+				<input
+					className="form-control search search-collection"
+					type="text" 
+					value={this.state.query}
+					placeholder={
+						<FormattedMessage 
+							id='corpus.search.corpusbox'
+							description='placeholder for search for collections translation'
+							defaultMessage='Search for collection'
+						/>
+					}
+					onChange={this.handleChange.bind(this)}
+				/>
+			</div>
+		);
 	}
 }//);
 

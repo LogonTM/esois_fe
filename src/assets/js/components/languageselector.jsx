@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 //import createReactClass from "create-react-class";
 //import LinkedStateMixin from "react-addons-linked-state-mixin";
 import _ from "./results.jsx";
+import { FormattedMessage } from 'react-intl';
+
 
 var PT = PropTypes;
 
@@ -63,11 +65,11 @@ class LanguageSelector extends Component {
 
 	renderRadio = option => (
 		<input
-		type="radio" 
-		name="filterOpts"
-		value={option}
-		checked={this.props.languageFilter === option}
-		onChange={this.handleRadioChange}
+			type="radio" 
+			name="filterOpts"
+			value={option}
+			checked={this.props.languageFilter === option}
+			onChange={this.handleRadioChange}
 		/>
 	);
 
@@ -81,36 +83,50 @@ class LanguageSelector extends Component {
 		var l2 = languages.slice(third, 2*third);
 		var l3 = languages.slice(2*third, languages.length);
 
-		return	(<div>
-					<div className="row">
-						<div className="col-sm-4">{l1}</div>
-						<div className="col-sm-4">{l2}</div>
-						<div className="col-sm-4">{l3}</div>
-						<div className="col-sm-12" style={{marginTop:10, marginBottom:10, borderBottom:"1px solid #eee"}}/>
-					</div>
-					<form className="form" role="form">
-						<div className="input-group">
-							<div>
-							<label>
-								{ this.renderRadio('byMeta') }{" "}
-								&nbsp;Use the collections{"'"} specified language to filter results
-							</label>
-							</div>
-							<div>
-							<label>
-								{ this.renderRadio('byGuess') }{" "}
-								&nbsp;Filter results by using a language detector
-							</label>
-							</div>
-							<div>
-							<label>
-								{ this.renderRadio('byMetaAndGuess') }{" "}
-								&nbsp;First use the collections{"'"} specified language then also use a language detector
-							</label>
-							</div>
+		return (
+			<div>
+				<div className="row">
+					<div className="col-sm-4">{l1}</div>
+					<div className="col-sm-4">{l2}</div>
+					<div className="col-sm-4">{l3}</div>
+					<div className="col-sm-12" style={{marginTop:10, marginBottom:10, borderBottom:"1px solid #eee"}}/>
+				</div>
+				<form className="form" role="form">
+					<div className="input-group">
+						<div>
+						<label>
+							{ this.renderRadio('byMeta') }&nbsp;
+							<FormattedMessage
+								id='language.radio.byMeta'
+								description='language selection by using collections specified language translation'
+								defaultMessage='Use the collections specified language to filter results'
+							/>
+						</label>
 						</div>
-					</form>
-				</div>);
+						<div>
+						<label>
+							{ this.renderRadio('byGuess') }&nbsp;
+							<FormattedMessage
+								id='language.radio.byGuess'
+								description='language selection by using a language detector translation'
+								defaultMessage='Filter results by using a language detector'
+							/>
+						</label>
+						</div>
+						<div>
+						<label>
+							{ this.renderRadio('byMetaAndGuess') }&nbsp;
+							<FormattedMessage
+								id='language.radio.byMetaAndGuess'
+								description='language selection by first using collections language then also using a language detector translation'
+								defaultMessage='First use the collections specified language then also use a language detector'
+							/>
+						</label>
+						</div>
+					</div>
+				</form>
+			</div>
+		);
 	}
 }//);
 
