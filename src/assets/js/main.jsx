@@ -11,7 +11,7 @@ import EmbeddedFooter from './components/embeddedfooter.jsx'
 import logo from '../img/clarindLogo.png'
 import ELlogo from '../img/el-reg-fond.png'
 import PropTypes from 'prop-types'
-import {IntlProvider} from "react-intl";
+import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
 import locale_en from 'react-intl/locale-data/en';
 import locale_ee from 'react-intl/locale-data/ee';
@@ -20,7 +20,7 @@ import messages_ee from "../../ee.js"
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery'
 // import './main.js'
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 // (function() {
 // "use strict";
@@ -244,7 +244,7 @@ class Main extends Component {
     }) 
   }
 
-  changeToEN = (event) => {
+  changeToEN = () => {
     this.setState({
       language: 'en'
     })

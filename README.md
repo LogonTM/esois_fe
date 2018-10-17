@@ -1,8 +1,4 @@
-Antud versioon töötab juba päris ilusasti. Vaja veel kohendada ja detaile ümber siluda. Mängida ja testida potentsiaalsete keelte ja korpustega. Olemas on ka esmane sisse logimise ankeet ning abileht kasutamise jaoks. Vajab ka veidi tõlget.
-
-Jätkuvalt on huvipakkuvad read 'aggregatorpage.jsx' failis read 84-124 (this.props.ajax).
-
-Lammutame koodi julgesti edasi. 
+ESOIS Front-End
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

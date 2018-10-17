@@ -869,11 +869,11 @@ var queryTypes = [
 				defaultMessage='Text layer Contextual Query Language (CQL)'
 			/>,
 		searchPlaceholder: 
-			String(<FormattedMessage
+			<FormattedMessage
 				id='cql.query.searchPlaceholder'
 				description='placeholder in CQL search field translation'
 				defaultMessage='Elephant'
-			/>),
+			/>,
 		searchLabel:
 			<FormattedMessage
 				id='cql.query.searchLabel'
