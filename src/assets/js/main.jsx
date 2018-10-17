@@ -239,26 +239,15 @@ class Main extends Component {
   // } //,
 
   changeToEE = () => {
-    console.log(this.state.language)
-    
     this.setState({
       language: 'ee'
-    })
-
-    console.log(this.state.language)
-    
+    }) 
   }
 
   changeToEN = (event) => {
-    console.log(this.state.language)
-    // language = 'en'
-
     this.setState({
       language: 'en'
     })
-
-    console.log(this.state.language)
-
   }
 
   renderCollapsible = () => {
@@ -418,7 +407,7 @@ var routeFromLocation = function() {
   }
 }
 
-var main = ReactDOM.render(<IntlProvider locale='en'><Main /></IntlProvider>, document.getElementById('body'))
+var main = ReactDOM.render(<Main />, document.getElementById('body'))
 if (!isEmbeddedView()) {
   ReactDOM.render(
     <Footer VERSION={VERSION} toAbout={main.toAbout} />,
