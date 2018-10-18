@@ -146,7 +146,15 @@ class CorpusView extends Component {
 								id='corpusview.expand'
 								description='expand translation'
 								defaultMessage=' Expand '
-							/>} ({corpus.subCorpora.length} subcollections)
+							/>}
+						<FormattedMessage
+							id='corpusview.amountOfSubcollections'
+							description='amount of subcollections translation'
+							defaultMessage='({amount} subcollections)'
+							values= {{
+								amount: corpus.subCorpora.length
+							}}
+						/>
 					</a>
 				</div>);
 	}//,
@@ -172,7 +180,19 @@ class CorpusView extends Component {
 		if (visible === total) {
 			return false;
 		}
-		return 	<div> Showing {visible} out of {total} (sub)collections. </div>;
+		return (
+			<div>
+				<FormattedMessage
+					id='corpusview.howManyCollectionsAreShown'
+					description='showing so many collections out of all translation'
+					defaultMessage='Showing {visible} out of {total} (sub)collections.'
+					values= {{
+						visible: visible,
+						total: total
+					}}
+				/>
+			</div>
+		);
 	}//,
 
 	renderCorpus/*: function*/ = (level, minmaxp, corpus) => {
@@ -181,88 +201,93 @@ class CorpusView extends Component {
 		}
 
 		var indent = {marginLeft:level*50};
-		var corpusContainerClass = "corpus-container "+(corpus.priority>0?"":"dimmed");
+		var corpusContainerClass = "corpus-container " + (corpus.priority > 0 ? "" : "dimmed");
 
 		var hue = 120 * corpus.priority / minmaxp[1];
 		var color = minmaxp[0] === minmaxp[1] ? 'transparent' : 'hsl('+hue+', 50%, 50%)';
 		var priorityStyle = {paddingBottom: 4, paddingLeft: 2, borderBottom: '3px solid '+color };
 		var expansive = corpus.expanded ? {overflow:'hidden'} 
 			: {whiteSpace:'nowrap', overflow:'hidden', textOverflow: 'ellipsis'};
-		return	(<div className={corpusContainerClass} key={corpus.id}>
-					<div className="row corpus" onClick={this.toggleExpansion.bind(this, corpus)}>
-						<div className="col-sm-1 vcenter">
-								<div className="inline" style={priorityStyle} onClick={this.toggleSelection.bind(this,corpus)}>
-									{this.renderCheckbox(corpus)}
-								</div>
-						</div>
-						<div className="col-sm-8 vcenter">
-							<div style={indent}>
-								<h3 style={expansive}> 
-									{corpus.title}
-									{ corpus.landingPage ? 
-										<a href={corpus.landingPage} onClick={this.stop}>
-											<span style={{fontSize:12}}>
-												<FormattedMessage 
-													id='corpusview.homepage'
-													description='homepage translation'
-													defaultMessage='– Homepage'
-												/>
-												</span>
-											<i className="glyphicon glyphicon-home"/>
-										</a>: false}
-								</h3>
-								<p style={expansive}>{corpus.description}</p>
-								{this.renderExpansion(corpus)}
+		return	(
+			<div className={corpusContainerClass} key={corpus.id}>
+				<div className="row corpus" onClick={this.toggleExpansion.bind(this, corpus)}>
+					<div className="col-sm-1 vcenter">
+							<div className="inline" style={priorityStyle} onClick={this.toggleSelection.bind(this,corpus)}>
+								{this.renderCheckbox(corpus)}
 							</div>
-						</div>
-						<div className="col-sm-3 vcenter">
-							<p style={expansive}>
-								<i className="fa fa-institution"/> {corpus.institution.name}
-							</p>
-							<p style={expansive}>
-								<i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}
-							</p>
+					</div>
+					<div className="col-sm-8 vcenter">
+						<div style={indent}>
+							<h3 style={expansive}> 
+								{corpus.title}
+								{ corpus.landingPage ? 
+									<a href={corpus.landingPage} onClick={this.stop}>
+										<span style={{fontSize:12}}>
+											<FormattedMessage 
+												id='corpusview.homepage'
+												description='homepage translation'
+												defaultMessage='– Homepage'
+											/>
+											</span>
+										<i className="glyphicon glyphicon-home"/>
+									</a>: false
+								}
+							</h3>
+							<p style={expansive}>{corpus.description}</p>
+							{this.renderExpansion(corpus)}
 						</div>
 					</div>
-					{corpus.expanded ? corpus.subCorpora.map(this.renderCorpus.bind(this, level+1, minmaxp)) : false}
-				</div>);
+					<div className="col-sm-3 vcenter">
+						<p style={expansive}>
+							<i className="fa fa-institution"/> {corpus.institution.name}
+						</p>
+						<p style={expansive}>
+							<i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}
+						</p>
+					</div>
+				</div>
+				{corpus.expanded ? corpus.subCorpora.map(this.renderCorpus.bind(this, level+1, minmaxp)) : false}
+			</div>
+		);
 	}//,
 
 	render/*: function*/() {
 		var minmaxp = this.getMinMaxPriority();
-		return	(<div style={{margin: "0 30px"}}>
-					<div className="row">
-						<div className="float-left inline">
-							<h3 style={{marginTop:10}}>
-								{this.props.corpora.getSelectedMessage()}
-							</h3>
-						</div>
-						<div className="float-right inline">
-							<button className="btn btn-default" style={{ marginRight: 10 }} onClick={this.selectAll.bind(this,true)}>
-								{ <FormattedMessage
-									id='select.all'
-									description='select all translation'
-									defaultMessage=' Select all'
-								/> }
-							</button>
-							<button className="btn btn-default" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
-								{ <FormattedMessage
-									id='deselect.all'
-									description='deselect all translation'
-									defaultMessage=' Deselect all' 
-								/>}
-							</button>
-						</div>
-						<div className="float-right inline">
-							<div className="inline" style={{ marginRight: 20 }} >
-								<SearchCorpusBox search={this.searchCorpus}/>
-								{this.renderFilteredMessage()}
-							</div>
+		return	(
+			<div style={{margin: "0 30px"}}>
+				<div className="row">
+					<div className="float-left inline">
+						<h3 style={{marginTop:10}}>
+							{this.props.corpora.getSelectedMessage()}
+						</h3>
+					</div>
+					<div className="float-right inline">
+						<button className="btn btn-default" style={{ marginRight: 10 }} onClick={this.selectAll.bind(this,true)}>
+							{ <FormattedMessage
+								id='select.all'
+								description='select all translation'
+								defaultMessage=' Select all'
+							/> }
+						</button>
+						<button className="btn btn-default" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
+							{ <FormattedMessage
+								id='deselect.all'
+								description='deselect all translation'
+								defaultMessage=' Deselect all' 
+							/>}
+						</button>
+					</div>
+					<div className="float-right inline">
+						<div className="inline" style={{ marginRight: 20 }} >
+							<SearchCorpusBox search={this.searchCorpus}/>
+							{this.renderFilteredMessage()}
 						</div>
 					</div>
-					
-					{this.props.corpora.corpora.map(this.renderCorpus.bind(this, 0, minmaxp))}
-				</div>);
+				</div>
+				
+				{this.props.corpora.corpora.map(this.renderCorpus.bind(this, 0, minmaxp))}
+			</div>
+		);
 	}
 }//);
 

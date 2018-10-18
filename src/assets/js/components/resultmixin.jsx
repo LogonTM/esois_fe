@@ -134,7 +134,8 @@ class ResultMixin extends Component {
 							description='caused by translation'
 							defaultMessage='Caused by: '
 						/>{xc.cause}
-					</div> : false}
+					</div> : false
+				}
 			</div>
 		);
 	}//,

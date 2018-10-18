@@ -18,7 +18,7 @@ class Results extends Component {
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
 		getToWeblichtLink: PT.func.isRequired,
-	        queryTypeId: PT.string.isRequired, 
+	    queryTypeId: PT.string.isRequired, 
 	}//,
 	mixins: [ResultMixin];
 
@@ -63,7 +63,15 @@ class Results extends Component {
 	renderProgressMessage/*: function*/ = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
-		var msg = collhits.hits + " matching collections found in " + done + " searched collections";
+		var msg = <FormattedMessage
+					id='results.renderProgressMessage'
+					description='how many matching collections found in how many searched collections translation'
+					defaultMessage='{found} matching collections found in {done} searched collections'
+					values= {{
+						found: collhits.hits,
+						done: done
+					}}
+			 	/>;
 		var percents = Math.round(100 * collhits.hits / collhits.results.length);
 		var styleperc = {width: percents+"%"};
 		return (
@@ -96,7 +104,16 @@ class Results extends Component {
 				{ showprogress ? this.renderProgressMessage() : <div style={{height:20}} />}
 				<div style={{marginBottom:2}}>
 					{ showprogress ? false :
-						<div className="float-left"> {collhits.hits + " matching collections found"} </div>
+						<div className="float-left">
+							<FormattedMessage
+								id='results.howManyMatchingCollectionsFound'
+								description='so many matching collections found translation'
+								defaultMessage='{amount} matching collections found'
+								values= {{
+									amount: collhits.hits
+								}}
+							/>
+						</div>
 					}
 					{ collhits.hits === 0 ? false :
 						<div className="float-right">

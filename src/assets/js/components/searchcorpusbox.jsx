@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, formatMessage } from 'react-intl';
 //import createReactClass from "create-react-class";
 
 //var SearchCorpusBox = createReactClass({
@@ -43,19 +43,21 @@ class SearchCorpusBox extends Component {
 	render/*: function*/() {
 		return (
 			<div className="form-group">
-				<input
-					className="form-control search search-collection"
-					type="text" 
-					value={this.state.query}
-					placeholder={
-						<FormattedMessage 
-							id='corpus.search.corpusbox'
-							description='placeholder for search for collections translation'
-							defaultMessage='Search for collection'
+				<FormattedMessage
+					id='corpus.search.corpusbox'
+					description='placeholder for search for collections translation'
+					defaultMessage='Search for collection'
+				>
+					{text => (
+						<input
+							className="form-control search search-collection"
+							type="text" 
+							value={this.state.query}
+							placeholder={text}
+							onChange={this.handleChange.bind(this)}
 						/>
-					}
-					onChange={this.handleChange.bind(this)}
-				/>
+					)}
+				</FormattedMessage>
 			</div>
 		);
 	}

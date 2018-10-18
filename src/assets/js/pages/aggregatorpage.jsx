@@ -452,11 +452,6 @@ class AggregatorPage extends Component {
 
 	render/*: function*/() {
 		var queryType = queryTypeMap[this.state.queryTypeId];
-		console.log(<FormattedMessage
-			id='search.for'
-			description='Search for translation'
-			defaultMessage='Search for'
-		/>);
 		return	(
 			<div className="top-gap">
 				<div className="row">
@@ -505,12 +500,12 @@ class AggregatorPage extends Component {
 								</div>
 								<div className="input-group-btn hidden-xxs">
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	queryTypes.map(function(l) {
+										{ 	queryTypes.map((l) => {
 												var cls = l.disabled ? 'disabled':'';
-												var handler = function() { if (!l.disabled) this.setQueryType(l.id); }.bind(this);
+												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
 												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
 													onClick={handler}> {l.name} </a></li>);
-											}.bind(this))
+											})
 										}
 									</ul>
 
@@ -530,7 +525,7 @@ class AggregatorPage extends Component {
 										description='in translation'
 										defaultMessage='in'
 									/>
-									</span>
+								</span>
 								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection.bind(this)}>
 									{this.state.corpora.getSelectedMessage()} <span className="caret"/>
 								</button>
@@ -702,10 +697,10 @@ Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode) 
 
 Corpora.prototype.setVisibility = function(queryTypeId, languageCode) {
 	// top level
-	this.corpora.forEach(function(corpus) {
+	this.corpora.forEach((corpus) => {
 		corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode);
 		this.recurseCorpora(corpus.subCorpora, function(c) { c.visible = corpus.visible; });
-	}.bind(this));
+	});
 };
 
 Corpora.prototype.setAggregationContext = function(endpoints2handles) {
@@ -717,19 +712,19 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 	this.corpora.forEach(selectSubTree.bind(this, false));
 
 	var corporaToSelect = [];
-	_.pairs(endpoints2handles).forEach(function(endp){
+	_.pairs(endpoints2handles).forEach((endp) => {
 		var endpoint = endp[0];
 		var handles = endp[1];
 	    console.log(endp);
 	    console.log(handles);
-		handles.forEach(function(handle){
+		handles.forEach((handle) => {
 			this.recurse(function(corpus){
 				if (corpus.handle === handle) {
 					corporaToSelect.push(corpus);
 				}
 			});
-		}.bind(this));
-	}.bind(this));
+		});
+	});
 
 	corporaToSelect.forEach(selectSubTree.bind(this, true));
 };
@@ -748,27 +743,38 @@ Corpora.prototype.getSelectedIds = function() {
 	return ids;
 };
 
-const messages = defineMessages({
-	selectedCollections: {
-		id: 'getSelectedMessage.allCollections',
-		description: 'all available collections translation',
-		defaultMessage: 'All available collections ({amount})',
-	},
-});
-
-/* function formatMessage(
-    messageDescriptor: MessageDescriptor,
-    values?: object
-): string; */
-
 Corpora.prototype.getSelectedMessage = function() {
-	var selected = this.getSelectedIds().length;
-	if (this.corpora.length === selected) {
-		return 'All available collections (' + selected + ')';
-	} else if (selected === 1) {
-		return '1 selected collection';
+	var selectedIdsCount = this.getSelectedIds().length;
+	if (this.corpora.length === selectedIdsCount) {
+		return (
+			<FormattedMessage
+				id='front.page.all.collections.selected'
+				description='all available collections translation'
+				defaultMessage='All available collections ({amount})'
+				values= {{
+					amount: selectedIdsCount
+				}}
+			/>
+		);
+	} else if (selectedIdsCount === 1) {
+		return (
+			<FormattedMessage
+				id='front.page.one.collection.selected'
+				description='one selected collection translation'
+				defaultMessage='1 selected collection'
+			/>
+		);
 	}
-	return selected + ' selected collections';
+	return (
+		<FormattedMessage
+			id='front.page.some.collections.selected'
+			description='some collections selected translation'
+			defaultMessage='{amount} selected collections'
+			values= {{
+				amount: selectedIdsCount
+			}}
+		/>
+	);
 };
 
 // function Corpora(corpora, updateFn) {
