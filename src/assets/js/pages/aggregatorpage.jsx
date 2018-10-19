@@ -29,11 +29,13 @@ class AggregatorPage extends Component {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		embedded: PT.bool.isRequired,
+		languageFromMain: PT.string.isRequired
 	}//, 
 
 	nohits = {
 		results: null,
 	}//,
+	
 	anyLanguage = [multipleLanguageCode, 
 		<FormattedMessage
 			id='any.language'
@@ -135,6 +137,11 @@ class AggregatorPage extends Component {
 		this.setState({corpora:corpora});
 	}
 
+	languageForTranslation = () => {
+		var currentLanguage = this.props.languageFromMain;
+		return currentLanguage;
+	}
+
 	search = () => {
 		var query = this.state.query;
 		var queryTypeId = this.state.queryTypeId;
@@ -144,13 +151,7 @@ class AggregatorPage extends Component {
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error(
-				<FormattedMessage
-					id='select.corpora.error'
-					description='please select a collection for search translation'
-					defaultMessage='Please select a collection to search into'
-				/>	
-			);
+			this.props.error('Please select a collection to search into');
 			return;
 		}
 
@@ -399,13 +400,7 @@ class AggregatorPage extends Component {
 	
 	handleAjaxError = (jqXHR, textStatus, error) => {
 		if (jqXHR.readyState === 0) {
-			this.error(
-				<FormattedMessage
-					id='ajax.network.error'
-					description='no network connection error translation'
-					defaultMessage='Network error, please check your internet connection'
-				/>
-			)
+			this.error('Network error, please check your internet connection')
 		} else if (jqXHR.responseText) {
 			this.error(jqXHR.responseText + ' (' + error + ')')
 		} else {
@@ -458,7 +453,7 @@ class AggregatorPage extends Component {
 					<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
 						<div className="input-group">
 							<span className="input-group-addon" style={{backgroundColor:queryType.searchLabelBkColor}}>
-								{queryType.searchLabel}
+								{queryType.searchLabel}{this.props.languageFromMain}
 							</span>
 							<QueryInput 
 							    searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
@@ -508,7 +503,7 @@ class AggregatorPage extends Component {
 											})
 										}
 									</ul>
-
+										
 									<button className="form-control btn btn-default"
 											aria-expanded="false" data-toggle="dropdown" >
 										{queryType.name} <span className="caret"/>
@@ -861,9 +856,23 @@ function encodeQueryData(data)
 	);
 }
 
+			<FormattedMessage
+				id='cql.query.searchPlaceholder'
+				description='placeholder in CQL search field translation'
+				defaultMessage='Elephant'
+			/>,
+
 CqlDefaultMessage.propTypes = {
 	intl: intlShape.isRequired
 } */
+
+const thatThing = {
+	ee: 'Koer',
+	en: 'Elephant'
+}
+
+
+let thisThing = 'Elephant';
 
 var queryTypes = [
 	{
@@ -874,12 +883,7 @@ var queryTypes = [
 				description='CQL query name translation'
 				defaultMessage='Text layer Contextual Query Language (CQL)'
 			/>,
-		searchPlaceholder: 
-			<FormattedMessage
-				id='cql.query.searchPlaceholder'
-				description='placeholder in CQL search field translation'
-				defaultMessage='Elephant'
-			/>,
+		searchPlaceholder: thatThing['ee'],
 		searchLabel:
 			<FormattedMessage
 				id='cql.query.searchLabel'

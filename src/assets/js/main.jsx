@@ -10,6 +10,9 @@ import Footer from './components/footer.jsx'
 import EmbeddedFooter from './components/embeddedfooter.jsx'
 import logo from '../img/clarindLogo.png'
 import ELlogo from '../img/el-reg-fond.png'
+import EeEKRKlogo from '../img/logo.png'
+import EnEKRKlogo from '../img/logo-eng.png'
+import Magglass from '../img/magglass.png'
 import PropTypes from 'prop-types'
 import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
@@ -32,6 +35,11 @@ addLocaleData([...locale_ee, ...locale_en])
 const messages = {
     'ee': messages_ee,
     'en': messages_en
+};
+
+const logoIntl = {
+  ee: EeEKRKlogo,
+  en: EnEKRKlogo
 };
 
 window.MyAggregator = window.MyAggregator || {}
@@ -160,16 +168,16 @@ class Main extends Component {
 
   renderAggregator = () => {
     return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} />
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
     )
   } //,
 
-  renderHelp  () {
+  renderHelp = () => {
     return <HelpPage />
   } //,
 
-  renderLogin () {
-    return <LoginPage />
+  renderLogin = () => {
+    return <LoginPage languageFromMain={this.state.language} />
   }
 
   renderAbout = () => {
@@ -232,7 +240,6 @@ class Main extends Component {
   } 
 
   // renderLogin /*: function*/() {
-  //   // return /*false*/ <LoginPage />
   //   // return  <li className="unauthenticated">
   //   // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
   //   // 		</li>;
@@ -255,49 +262,48 @@ class Main extends Component {
       'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'in' : '')
     return (
       <div className={classname}>
-        {/* <ul className="nav navbar-nav">
-					<li className={this.state.navbarPageFn === this.renderAggregator ? "active":""}>
-						<a className="link" tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>Aggregator</a>
-					</li>
-					<li className={this.state.navbarPageFn === this.renderHelp ? "active":""}>
-						<a className="link" tabIndex="-1" onClick={this.toHelp.bind(this, true)}>Help</a>
-					</li>
-				</ul> */}
+      <nav className='navbar'>
         <ul className='nav navbar-nav navbar-right' id='navbar-right'>
-          <li>
+          <li className='nav-item'>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1'onClick={this.changeToEE.bind(this)}>
-              <img className='ico' src='img/ee-icon.png' alt='EST' />
-            </a>
-            &nbsp;&nbsp;&nbsp;
+              <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE.bind(this)}>
+                <img className='ico' src='img/ee-icon.png' alt='EST' />
+              </a>
           </li>
-          <li>
+          <li className='nav-item'>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1'onClick={this.changeToEN.bind(this)}>
-              <img className='ico' src='img/gb-icon.png' alt='ENG' />
-            </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN.bind(this)}>
+                <img className='ico' src='img/gb-icon.png' alt='ENG' />
+              </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </li>
-          <li>
+          <li className='nav-item'>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
-              <img height='75%' src='img/login-icon.png' alt='Login' />
+            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
+              <img className='symbols' src={Magglass} alt='Search' />
             </a>
-            &nbsp;&nbsp;&nbsp;
           </li>
-          <li>
+          <li className='nav-item'>
             {' '}
             {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
-              <img height='75%' src='img/settings-icon.png' alt='Help' />
+            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
+              <img className='symbols' src='img/login-icon.png' alt='Login' />
+            </a>
+          </li>
+          <li className='nav-item'>
+            {' '}
+            {/* <div id="clarinservices" style={{padding:4}}/> */}
+            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
+              <img className='symbols' src='img/settings-icon.png' alt='Help' />
             </a>
             &nbsp;
           </li>
           {/* {this.renderLogin()} */}
         </ul>
+      </nav>
       </div>
     )
   } //,
@@ -310,28 +316,36 @@ class Main extends Component {
       <div>
         <div
           className='navbar navbar-default navbar-static-top'
-          role='navigation'
-        >
+          role='navigation'>
           <div className='container'>
-            <div className='navbar-header'>
-              {/* <header className="inline"> */}
-              <img height='75px' src='img/logo.png' alt='' />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <img
-                src={ELlogo}
-                alt='Euroopa Liidu regionaalfond'
-                style={{ height: 75 }}
-              />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <img src={logo} alt='CLARIN ERIC logo' style={{ height: 75 }} />
-              {/* </header> */}
+            <div className='navbar-nav' id='navbar-images'>
+              <header className="inline">
+                <nav className='navbar'>
+                  <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
+                    <img className='logo' src={logoIntl[this.state.language]} alt='Eesti Keeleressursside Keskus' />
+                  </a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <img
+                    className='logo2'
+                    src={ELlogo}
+                    alt='Euroopa Liidu regionaalfond'
+                  />
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a tabIndex="-1" href="https://clarin.eu/" target="_blank">
+                    <img 
+                      className='logo2'
+                      src={logo}
+                      alt='CLARIN ERIC logo'
+                    />
+                  </a>
+                </nav>
+              </header>
               <button
                 type='button'
                 className='navbar-toggle'
                 onClick={this.toggleCollapse}
               >
                 <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar' />
                 <span className='icon-bar' />
                 <span className='icon-bar' />
                 <span className='icon-bar' />
@@ -357,8 +371,8 @@ class Main extends Component {
         <div> {this.renderTop()} </div>
         <div id='push'>
           <div className='container'>{this.state.navbarPageFn()}</div>
-          <div className='top-gap' />
         </div>
+        <Footer />
       </div>
       </IntlProvider>
     )
@@ -408,7 +422,7 @@ var routeFromLocation = function() {
 }
 
 var main = ReactDOM.render(<Main />, document.getElementById('body'))
-if (!isEmbeddedView()) {
+/* if (!isEmbeddedView()) {
   ReactDOM.render(
     <Footer VERSION={VERSION} toAbout={main.toAbout} />,
     document.getElementById('footer')
@@ -421,7 +435,7 @@ if (!isEmbeddedView()) {
   if (jQuery) {
     jQuery('body, #footer').addClass('embedded')
   }
-}
+} */
 
 window.onpopstate = routeFromLocation.bind(main)
 

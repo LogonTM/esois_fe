@@ -98,7 +98,7 @@ class ZoomedResult extends Component {
 			return false;
 		}
 
-		var forceLanguage = null, wlerror = null;
+/* 		var forceLanguage = null, wlerror = null;
 		if (this.props.weblichtLanguages.indexOf(this.props.searchedLanguage[0]) < 0) {
 			// the search language is either AnyLanguage or unsupported
 			if (this.props.searchedLanguage[0] === window.MyAggregator.multipleLanguageCode) {
@@ -106,7 +106,7 @@ class ZoomedResult extends Component {
 					forceLanguage = corpusHit.corpus.languages[0];
 				} else {
 					var langs = corpusHit.kwics.map(function(kwic) {return kwic.language;});
-					langs = /*_.*/uniq(langs.filter(function(l){ return l !== null; }));
+					langs = /*_.*uniq(langs.filter(function(l){ return l !== null; }));
 					if (langs.length === 1) {
 						forceLanguage = langs[0];
 					}
@@ -115,7 +115,7 @@ class ZoomedResult extends Component {
 			if (!forceLanguage) {
 				wlerror = "Cannot use WebLicht: unsupported language ("+this.props.searchedLanguage[1]+")";
 			}
-		}
+		} */
 		var corpus = corpusHit.corpus;
 		return (
 			<div>
@@ -151,7 +151,7 @@ class ZoomedResult extends Component {
 	}//,
 }//);
 
-function uniq/*: function*/(a) {
+/* function uniq/*: function*(a) {
 	var r = [];
 	for (var i = 0; i < a.length; i++) {
 		if (r.indexOf(a[i]) < 0) {
@@ -159,7 +159,7 @@ function uniq/*: function*/(a) {
 		}
 	}
 	return r;
-}
+} */
 
 // module.exports = ZoomedResult;
 export default ZoomedResult;

@@ -11,7 +11,7 @@ body {
 }
 
 #body {
-  padding-bottom: 100px;   /* Height of the footer */
+  padding-bottom: 120px;   /* Height of the footer */
 }
 
 #main-container {
@@ -31,19 +31,57 @@ code {
 
 div.navbar {
   background-color: white;
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 
-#navbar-right {
-  margin-top: 1.5%;
+.navbar {
+  margin-bottom: 0 !important;
+  border: 0 !important;
+}
+
+#navbar-right{
+  margin-top: 0.8%;
+/*   width: 315px; */
+}
+
+#navbar-images {
+  float: left;
+  width: 74%;
+  margin-top: 0.8%;
 }
 
 .navbar-brand {
-  padding: 6px !important;
-  margin: 6px;
+  padding: 0.5em 0.6em 0.5em 0.6em !important;
+  margin: 0.1em;
+  margin-left: 0.1em !important;
 }
 
-.input-group .form-control, .form-control, .input-group-addon, .btn-default, .modal, .form label {
+#navbar-flags {
+  padding: 0.3em;
+}
+
+.ico {
+  border: 0; 
+  height: 55%;
+  margin-top: 0.4em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+
+.symbols {
+  height: 75%;
+  margin-top: 0.35em;
+  cursor: pointer;
+}
+
+.logo {
+  width: 24%;
+}
+
+.logo2 {
+  width: 13%;
+}
+.input-group .form-control, .form-control, .input-group-addon, .btn-default, .modal, .form label, .top-gap {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(40,85,143) !important;
 }
@@ -53,18 +91,11 @@ div.navbar {
   background-color: white !important;
 }
 
-.ico {
-  border: 0; 
-  height: 55%;
-  margin-top: 3px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-div#footer {
+div#new-footer {
   border-top: 0px solid white;
   background-color: white;
   border: 0px;
-  height: 100px;
+  height: 120px;
   bottom: 0px;
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -77,10 +108,10 @@ div#footer {
   bottom: 0px;
   right: 3%;
   border: 0;
-  height: 200%;
+  height: 180%;
   opacity: 0.5;
 }
 
-#footer a{
+#new-footer a{
   color: rgb(40,85,143) !important;
 }

@@ -33,7 +33,7 @@ class QueryInput extends Component {
 		       onKeyDown={this.props.onKeyDown} 
 		       ref="cqlOrEmbeddedQuery"/>
 	    );
-	/* } else if (this.props.embedded && this.props.queryTypeId === "fcs") {
+/* 	} else if (this.props.embedded && this.props.queryTypeId === "fcs") {
 	    return (
 		<textarea className="form-control input-lg search"
 		       id="query-fcs" name="query-fcs"
@@ -397,58 +397,94 @@ class ORArg extends Component {
 					<select className="arg_type" onChange={this.props.handleSetADVInputDefault("or")} defaultValue={this.props.data.layerType}
 						ref={'ANDLayerType_' + this.props.data.id}>
 						{ /* onChange={this.handleSetADVTokenLayer("value")} */}
-						<optgroup label="word">
-							{ /* ::before */ }
-							<option value="string:word" label="word">
-								<FormattedMessage
-									id='orarg.word'
-									description='word in ORArg translation'
-									defaultMessage='word'
-								/>
-							</option>
-						</optgroup>
-						<optgroup label="wordAttribute">
-							{ /* ::before */ }
-							<option value="string:pos">
-								<FormattedMessage
-									id='orarg.partofspeech'
-									description='part-of-speech in ORArg translation'
-									defaultMessage='part-of-speech'
-								/>
-							</option>
-							<option value="string:lemma">
-								<FormattedMessage
-									id='orarg.lemma'
-									description='lemma in ORArg translation'
-									defaultMessage='lemma'
-								/>
-							</option>
-						</optgroup>
-						<optgroup label="textAttribute">
-							<option value="string:_.text_language" label="language">
-								<FormattedMessage
-									id='orarg.language'
-									description='language in ORArg translation'
-									defaultMessage='language'
-								/>
-							</option>
-						</optgroup>
+						<FormattedMessage
+							id='orarg.word'
+							description='word in ORArg translation'
+							defaultMessage='word'
+						>
+							{word => (
+								<optgroup label={word}>
+									{ /* ::before */ }
+									<FormattedMessage
+										id='orarg.word'
+										description='word in ORArg translation'
+										defaultMessage='word'
+									>
+										{text => (
+											<option value="string:word">{text}</option>
+										)}
+									</FormattedMessage>
+								</optgroup>
+							)}
+						</FormattedMessage>
+						<FormattedMessage
+							id='orarg.wordAttribute'
+							description='word attribute translation'
+							defaultMessage='wordAttribute'
+						>
+							{wordAttribute => (
+								<optgroup label={wordAttribute}>
+									{ /* ::before */ }
+									<FormattedMessage
+										id='orarg.partofspeech'
+										description='part-of-speech in ORArg translation'
+										defaultMessage='part-of-speech'
+									>
+										{pos => (
+											<option value="string:pos" label="word">{pos}</option>
+										)}
+									</FormattedMessage>
+									<FormattedMessage
+										id='orarg.lemma'
+										description='lemma in ORArg translation'
+										defaultMessage='lemma'
+									>
+										{lemma => (
+											<option value="string:lemma">{lemma}</option>
+										)}
+									</FormattedMessage>
+								</optgroup>
+							)}
+						</FormattedMessage>
+						<FormattedMessage
+							id='orarg.textAttribute'
+							description='text attribute translation'
+							defaultMessage='textAttribute'
+						>
+							{textAttribute => (
+								<optgroup label={textAttribute}>
+									<FormattedMessage
+										id='orarg.language'
+										description='language in ORArg translation'
+										defaultMessage='language'
+									>
+										{language => (
+											<option value="string:_.text_language" label="language">{language}</option>
+										)}
+									</FormattedMessage>
+								</optgroup>
+							)}
+						</FormattedMessage>
 					</select>
 					<select className="arg_opts" defaultValue="string:contains" onChange={this.props.handleSetADVTokenOp("op")}>
-						<option value="string:contains" label="is">
-							<FormattedMessage
-								id='is'
-								description='is translation'
-								defaultMessage='is'
-							/>
-						</option>
-						<option value="string:not contains" label="is not">
-							<FormattedMessage
-								id='is.not'
-								description='is not translation'
-								defaultMessage='is not'
-							/>
-						</option>
+						<FormattedMessage
+							id='is'
+							description='is translation'
+							defaultMessage='is'
+						>
+							{is => (
+								<option value="string:contains" label="is">{is}</option>
+							)}
+						</FormattedMessage>
+						<FormattedMessage
+							id='is.not'
+							description='is not translation'
+							defaultMessage='is not'
+						>
+							{isnot => (
+								<option value="string:not contains" label="is not">{isnot}</option>
+							)}
+						</FormattedMessage>
 					</select>
 				</div>
 				<div className="arg_val_container">
@@ -456,13 +492,15 @@ class ORArg extends Component {
 						onChange={this.props.handleValidateADV} ref={'textEntry_' + this.props.data.id}/>
 				</div>
 				<select> 
-					<option label="PROPN" value="string:PROPN">
-						<FormattedMessage
-							id='orarg.properNoun'
-							description='proper noun in ORArg translation'
-							defaultMessage='Proper Noun'
-						/>
-					</option>
+					<FormattedMessage
+						id='orarg.properNoun'
+						description='proper noun in ORArg translation'
+						defaultMessage='Proper Noun'
+					>
+						{propn => (
+							<option label="PROPN" value="string:PROPN">{propn}</option>
+						)}
+					</FormattedMessage>
 				</select>
 			</div>
 		</div>);
