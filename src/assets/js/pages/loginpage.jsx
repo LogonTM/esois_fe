@@ -103,9 +103,10 @@ class LoginPage extends Component {
 		};
 	}
 	
-	logInOut = () => {
+	logInOut = (event) => {
 		// TODO
-		if (this.state.logedInStatus === false && this.state.username === 'Kristi' && this.state.password === 'parool') {
+		event.preventDefault();
+		if (this.state.logedInStatus === false && this.state.username === '' && this.state.password === '') {
 			this.setState({
 				logedInStatus: true
 			})
@@ -138,20 +139,51 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<input className="form-control" type="text" 
-								value={this.state.username} placeholder="Username" 
-								onChange={this.handleUsernameChange.bind(this)} />
-								<input className="form-control" type="password" name="password"
-								value={this.state.password} placeholder="Password" 
-								onChange={this.handlePasswordChange.bind(this)} />
-							<button type="button" className="btn btn-default btn-lg" onClick={this.logInOut} >
+							<form onSubmit={this.logInOut}>
+								<FormattedMessage
+									id='login.username'
+									description='username translation'
+									defaultMessage='Username'
+								>
+									{username => (
+										<input
+											className="form-control"
+											type="text" 
+											value={this.state.username}
+											placeholder={username} 
+											onChange={this.handleUsernameChange.bind(this)}
+										/>
+									)}
+								</FormattedMessage>
+								<FormattedMessage
+									id='login.password'
+									description='password translation'
+									defaultMessage='Password'
+								>	
+								{password => (
+									<input
+										className="form-control"
+										type="password"
+										name="password"
+										value={this.state.password}
+										placeholder={password} 
+										onChange={this.handlePasswordChange.bind(this)}
+									/>
+								)}
+								</FormattedMessage>
+								<button type="submit" className="btn btn-default btn-lg" onClick={this.logIn} >
 								<span aria-hidden="true"></span>
-								Login {this.props.languageFromMain}
-							</button>
-							{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
-								<span aria-hidden="true"></span>
-								Tagasi aggregaatorisse
-							</button> */}
+									<FormattedMessage
+										id='login.loginButton'
+										description='login translation'
+										defaultMessage='Login'
+									/>
+								</button>
+									{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
+										<span aria-hidden="true"></span>
+										Tagasi aggregaatorisse
+									</button> */}
+							</form>
 						</div>
 					</div>
 				</div>
@@ -161,7 +193,7 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">Tere Kristi, you are logged in!</span>
+							<span aria-hidden="true">Tere Kasutaja, you are logged in!</span>
 							<div><button type="button" className="btn btn-default btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
 								Log out! 
