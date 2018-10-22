@@ -95,7 +95,8 @@ class Main extends Component {
       navbarCollapse: false,
       navbarPageFn: this.renderAggregator,
       errorMessages: [],
-      language: 'ee'
+      language: 'ee',
+      logedInStatus: false
     }
   }
 
@@ -168,7 +169,7 @@ class Main extends Component {
 
   renderAggregator = () => {
     return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} />
     )
   } //,
 
@@ -176,8 +177,13 @@ class Main extends Component {
     return <HelpPage />
   } //,
 
+  getUserLoginStatus = (userStatus) => {
+    console.log('From main: ' + userStatus)
+    this.setState({logedInStatus: userStatus})
+  }
+
   renderLogin = () => {
-    return <LoginPage languageFromMain={this.state.language} />
+    return <LoginPage languageFromMain={this.state.language} isUserLogedIn={this.state.logedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
   }
 
   renderAbout = () => {

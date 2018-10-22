@@ -29,7 +29,7 @@ class AggregatorPage extends Component {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		embedded: PT.bool.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string
 	}//, 
 
 	nohits = {

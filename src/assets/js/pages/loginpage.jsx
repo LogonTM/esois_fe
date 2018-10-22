@@ -91,7 +91,9 @@ var PT = PropTypes
 
 class LoginPage extends Component {
 	static propTypes = {
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string,
+		isUserLogedIn: PT.bool,
+		getStatus: PT.func
 	}
 
 	constructor(props) {
@@ -99,7 +101,7 @@ class LoginPage extends Component {
 		this.state = {
 			username: "",
 			password: "",
-			logedInStatus: false
+			logedInStatus: this.props.isUserLogedIn
 		};
 	}
 	
@@ -110,10 +112,12 @@ class LoginPage extends Component {
 			this.setState({
 				logedInStatus: true
 			})
+			this.props.getStatus(true)
 		} else {
 			this.setState({
 				logedInStatus: false
 			})
+			this.props.getStatus(false)
 		}
 	}
 
@@ -160,25 +164,25 @@ class LoginPage extends Component {
 									description='password translation'
 									defaultMessage='Password'
 								>	
-								{password => (
-									<input
-										className="form-control"
-										type="password"
-										name="password"
-										value={this.state.password}
-										placeholder={password} 
-										onChange={this.handlePasswordChange.bind(this)}
-									/>
-								)}
+									{password => (
+										<input
+											className="form-control"
+											type="password"
+											name="password"
+											value={this.state.password}
+											placeholder={password} 
+											onChange={this.handlePasswordChange.bind(this)}
+										/>
+									)}
 								</FormattedMessage>
-								<button type="submit" className="btn btn-default btn-lg" onClick={this.logIn} >
+								<button type="submit" className="btn btn-default btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
 									<FormattedMessage
 										id='login.loginButton'
 										description='login translation'
 										defaultMessage='Login'
 									/>
-								</button>
+								</button> 
 									{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
 										<span aria-hidden="true"></span>
 										Tagasi aggregaatorisse
@@ -194,10 +198,12 @@ class LoginPage extends Component {
 					<div className="top-gap">
 						<div className="login-panel">
 							<span aria-hidden="true">Tere Kasutaja, you are logged in!</span>
-							<div><button type="button" className="btn btn-default btn-lg" onClick={this.logInOut} >
+							<div>
+								<button type="button" className="btn btn-default btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
-								Log out! 
-							</button></div>
+									Log out!
+								</button>
+							</div>
 							{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >
 								<span aria-hidden="true"></span>
 								Tagasi aggregaatorisse
