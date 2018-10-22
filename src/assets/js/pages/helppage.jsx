@@ -79,6 +79,7 @@ class HelpPage extends Component {
 					keelele ning määratleda vastete arvu korpuse kohta, mida ühel lehel näidatakse.
 					Kasutajaliides, mis vastavaid valikuid võimaldavad teha asetsevad otsinguvälja all.
 					</p>
+					<div className='bottom-gap'></div>
 				</div>
 			</div>
 		);

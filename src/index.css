@@ -10,8 +10,12 @@ body {
   border: 0px;
 }
 
-#body {
-  padding-bottom: 120px;   /* Height of the footer */
+/* #body {
+  padding-bottom: 120px;   /* Height of the footer *
+} */
+
+#push {
+  padding-bottom: 120px;
 }
 
 #main-container {
@@ -40,14 +44,20 @@ div.navbar {
 }
 
 #navbar-right{
-  margin-top: 0.8%;
+  margin-top: 1%;
 /*   width: 315px; */
 }
+
+/* @media {
+  #navbar-right {
+    width: 160px;
+  }
+} */
 
 #navbar-images {
   float: left;
   width: 74%;
-  margin-top: 0.8%;
+  margin-top: 0.6%;
 }
 
 .navbar-brand {
@@ -63,24 +73,28 @@ div.navbar {
 .ico {
   border: 0; 
   height: 55%;
-  margin-top: 0.4em;
+  margin-top: 0.42em;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
 }
 
 .symbols {
   height: 75%;
-  margin-top: 0.35em;
+  margin-top: 0.3em;
   cursor: pointer;
 }
 
 .logo {
-  width: 24%;
+/*   width: 26%; */
+  height: 72px;
 }
 
 .logo2 {
+  min-width: 60px;
   width: 13%;
+  margin-left: 1.5em;
 }
+
 .input-group .form-control, .form-control, .input-group-addon, .btn-default, .modal, .form label, .top-gap {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(40,85,143) !important;

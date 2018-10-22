@@ -169,7 +169,7 @@ class Main extends Component {
 
   renderAggregator = () => {
     return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} />
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
     )
   } //,
 
@@ -268,48 +268,23 @@ class Main extends Component {
       'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'in' : '')
     return (
       <div className={classname}>
-      <nav className='navbar'>
-        <ul className='nav navbar-nav navbar-right' id='navbar-right'>
-          <li className='nav-item'>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-              <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE.bind(this)}>
-                <img className='ico' src='img/ee-icon.png' alt='EST' />
-              </a>
-          </li>
-          <li className='nav-item'>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-              <a className='navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN.bind(this)}>
-                <img className='ico' src='img/gb-icon.png' alt='ENG' />
-              </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </li>
-          <li className='nav-item'>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
-              <img className='symbols' src={Magglass} alt='Search' />
-            </a>
-          </li>
-          <li className='nav-item'>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
-              <img className='symbols' src='img/login-icon.png' alt='Login' />
-            </a>
-          </li>
-          <li className='nav-item'>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*href={URLROOT}*/ className='navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
-              <img className='symbols' src='img/settings-icon.png' alt='Help' />
-            </a>
-            &nbsp;
-          </li>
-          {/* {this.renderLogin()} */}
-        </ul>
-      </nav>
+        <div className='nav navbar-nav navbar-right' id='navbar-right'>
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE.bind(this)}>
+            <img className='ico' src='img/ee-icon.png' alt='EST' />
+          </a>
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN.bind(this)}>
+            <img className='ico' src='img/gb-icon.png' alt='ENG' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
+            <img className='symbols' src={Magglass} alt='Search' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
+            <img className='symbols' src='img/login-icon.png' alt='Login' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
+            <img className='symbols' src='img/settings-icon.png' alt='Help' />
+          </a>
+        </div>
       </div>
     )
   } //,
@@ -320,23 +295,21 @@ class Main extends Component {
     }
     return (
       <div>
-        <div
-          className='navbar navbar-default navbar-static-top'
-          role='navigation'>
-          <div className='container'>
-            <div className='navbar-nav' id='navbar-images'>
-              <header className="inline">
-                <nav className='navbar'>
+        <nav className='navbar'>
+          <div
+            className='navbar navbar-default navbar-static-top'
+            role='navigation'>
+            <div className='container'>
+              <div className='nav navbar-nav navbar-left' id='navbar-images'>
+                <header className="inline">
                   <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
                     <img className='logo' src={logoIntl[this.state.language]} alt='Eesti Keeleressursside Keskus' />
                   </a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
                   <img
                     className='logo2'
                     src={ELlogo}
                     alt='Euroopa Liidu regionaalfond'
                   />
-                  &nbsp;&nbsp;&nbsp;&nbsp;
                   <a tabIndex="-1" href="https://clarin.eu/" target="_blank">
                     <img 
                       className='logo2'
@@ -344,8 +317,12 @@ class Main extends Component {
                       alt='CLARIN ERIC logo'
                     />
                   </a>
-                </nav>
-              </header>
+                </header>
+                {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
+                  <img width="28px" height="28px" src="img/magglass1.png"/>
+                  <header className="inline"> Content Search </header>
+                </a> */}
+              </div>
               <button
                 type='button'
                 className='navbar-toggle'
@@ -356,15 +333,11 @@ class Main extends Component {
                 <span className='icon-bar' />
                 <span className='icon-bar' />
               </button>
-              {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
-								<img width="28px" height="28px" src="img/magglass1.png"/>
-								<header className="inline"> Content Search </header>
-							</a> */}
+              {this.renderCollapsible()}
             </div>
-            {this.renderCollapsible()}
+            <hr className='orange-line' />
           </div>
-          <hr className='orange-line' />
-        </div>
+        </nav>
         <ErrorPane errorMessages={this.state.errorMessages} />
       </div>
     )

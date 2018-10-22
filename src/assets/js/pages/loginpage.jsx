@@ -188,6 +188,7 @@ class LoginPage extends Component {
 										Tagasi aggregaatorisse
 									</button> */}
 							</form>
+							<div className="bottom-gap"></div>
 						</div>
 					</div>
 				</div>

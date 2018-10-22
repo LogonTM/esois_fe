@@ -29,7 +29,7 @@ class AggregatorPage extends Component {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		embedded: PT.bool.isRequired,
-		languageFromMain: PT.string
+		languageFromMain: PT.string.isRequired,
 	}//, 
 
 	nohits = {
@@ -42,6 +42,60 @@ class AggregatorPage extends Component {
 			description='Any Language translation'
 			defaultMessage='Any Language'
 		/>];//,
+
+	placeholderForCQL = {
+		ee: 'Koer',
+		en: 'Elephant'
+	}
+
+	placeholderForFCSQL = {
+		ee: "[sõna = 'märkus'][sõna = 'keskendunud']",
+		en: "[word = 'annotation'][word = 'focused']"
+	}
+
+	queryTypes = [
+		{
+			id: 'cql',
+			name: 
+				<FormattedMessage
+					id='cql.query.name' 
+					description='CQL query name translation'
+					defaultMessage='Text layer Contextual Query Language (CQL)'
+				/>,
+			searchPlaceholder: this.placeholderForCQL[this.props.languageFromMain],
+			searchLabel:
+				<FormattedMessage
+					id='cql.query.searchLabel'
+					description='search label for CQL query translation'
+					defaultMessage='Text layer CQL query'
+				/>,
+			searchLabelBkColor: 'rgba(220, 133, 46, .3)',
+			className: '',
+		},
+		{
+			id: "fcs",
+			name: 
+				<FormattedMessage
+					id='fcsql.query.name'
+					description='FCS-QL query name translation'
+					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
+				/>,
+			searchPlaceholder: this.placeholderForFCSQL[this.props.languageFromMain],
+			searchLabel: 
+				<FormattedMessage
+					id='fcsql.query.searchLabel'
+					description='search label for FCS-QL query translation'
+					defaultMessage='Multi-layer FCS query'
+				/>,
+			searchLabelBkColor: "rgba(40, 85, 143, .3)",
+			disabled: false,
+		},
+	];
+	
+	queryTypeMap = {
+			 cql: this.queryTypes[0],
+			 fcs: this.queryTypes[1],
+	};
 
 	// getInitialState/*: function */() {
 	// 	return {
@@ -446,14 +500,14 @@ class AggregatorPage extends Component {
 	}//,
 
 	render/*: function*/() {
-		var queryType = queryTypeMap[this.state.queryTypeId];
+		var queryType = this.queryTypeMap[this.state.queryTypeId];
 		return	(
 			<div className="top-gap">
 				<div className="row">
 					<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
 						<div className="input-group">
 							<span className="input-group-addon" style={{backgroundColor:queryType.searchLabelBkColor}}>
-								{queryType.searchLabel}{this.props.languageFromMain}
+								{queryType.searchLabel}
 							</span>
 							<QueryInput 
 							    searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
@@ -495,7 +549,7 @@ class AggregatorPage extends Component {
 								</div>
 								<div className="input-group-btn hidden-xxs">
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	queryTypes.map((l) => {
+										{ 	this.queryTypes.map((l) => {
 												var cls = l.disabled ? 'disabled':'';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
 												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
@@ -866,13 +920,12 @@ CqlDefaultMessage.propTypes = {
 	intl: intlShape.isRequired
 } */
 
-const thatThing = {
+/* const thatThing = {
 	ee: 'Koer',
 	en: 'Elephant'
 }
 
-
-let thisThing = 'Elephant';
+const 
 
 var queryTypes = [
 	{
@@ -921,7 +974,7 @@ var queryTypes = [
 var queryTypeMap = {
      	cql: queryTypes[0],
      	fcs: queryTypes[1],
-};
+}; */
 
 // module.exports = AggregatorPage;
 export default AggregatorPage;
