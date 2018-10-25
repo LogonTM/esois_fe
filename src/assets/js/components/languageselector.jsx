@@ -91,37 +91,37 @@ class LanguageSelector extends Component {
 					<div className="col-sm-4">{l3}</div>
 					<div className="col-sm-12" style={{marginTop:10, marginBottom:10, borderBottom:"1px solid #eee"}}/>
 				</div>
-				<form className="form" role="form">
-					<div className="input-group">
-						<div>
-						<label>
-							{ this.renderRadio('byMeta') }&nbsp;
-							<FormattedMessage
-								id='language.radio.byMeta'
-								description='language selection by using collections specified language translation'
-								defaultMessage='Use the collections specified language to filter results'
-							/>
-						</label>
+				<form className="form">
+					<div>
+						<div className="custom-control custom-radio">
+							<label>
+								{ this.renderRadio('byMeta') }&nbsp;
+								<FormattedMessage
+									id='language.radio.byMeta'
+									description='language selection by using collections specified language translation'
+									defaultMessage='Use the collections specified language to filter results'
+								/>
+							</label>
 						</div>
-						<div>
-						<label>
-							{ this.renderRadio('byGuess') }&nbsp;
-							<FormattedMessage
-								id='language.radio.byGuess'
-								description='language selection by using a language detector translation'
-								defaultMessage='Filter results by using a language detector'
-							/>
-						</label>
+						<div className="custom-control custom-radio">
+							<label>
+								{ this.renderRadio('byGuess') }&nbsp;
+								<FormattedMessage
+									id='language.radio.byGuess'
+									description='language selection by using a language detector translation'
+									defaultMessage='Filter results by using a language detector'
+								/>
+							</label>
 						</div>
-						<div>
-						<label>
-							{ this.renderRadio('byMetaAndGuess') }&nbsp;
-							<FormattedMessage
-								id='language.radio.byMetaAndGuess'
-								description='language selection by first using collections language then also using a language detector translation'
-								defaultMessage='First use the collections specified language then also use a language detector'
-							/>
-						</label>
+						<div className="custom-control custom-radio">
+							<label>
+								{ this.renderRadio('byMetaAndGuess') }&nbsp;
+								<FormattedMessage
+									id='language.radio.byMetaAndGuess'
+									description='language selection by first using collections language then also using a language detector translation'
+									defaultMessage='First use the collections specified language then also use a language detector'
+								/>
+							</label>
 						</div>
 					</div>
 				</form>

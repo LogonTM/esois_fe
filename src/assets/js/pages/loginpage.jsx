@@ -175,7 +175,7 @@ class LoginPage extends Component {
 										/>
 									)}
 								</FormattedMessage>
-								<button type="submit" className="btn btn-default btn-lg" onClick={this.logInOut} >
+								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
 									<FormattedMessage
 										id='login.loginButton'
@@ -200,7 +200,7 @@ class LoginPage extends Component {
 						<div className="login-panel">
 							<span aria-hidden="true">Tere Kasutaja, you are logged in!</span>
 							<div>
-								<button type="button" className="btn btn-default btn-lg" onClick={this.logInOut} >
+								<button type="button" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
 									Log out!
 								</button>

@@ -16,10 +16,10 @@ class ZoomedResult extends Component {
 		corpusHit: PT.object,
 		nextResults: PT.func.isRequired,
 		languageMap: PT.object.isRequired,
-		weblichtLanguages: PT.array.isRequired,
+/* 		weblichtLanguages: PT.array.isRequired, */
 		searchedLanguage: PT.array.isRequired,
 		getDownloadLink: PT.func.isRequired,
-		getToWeblichtLink: PT.func.isRequired,
+/* 		getToWeblichtLink: PT.func.isRequired, */
 		queryTypeId: PT.string.isRequired,
 	}//,
 	mixins: [ResultMixin];
@@ -81,8 +81,8 @@ class ZoomedResult extends Component {
 				</span>
 			);
 		return (
-			<button className="btn btn-default" onClick={this.nextResults}>
-				<span className="glyphicon glyphicon-option-horizontal" aria-hidden="true"/>
+			<button className="btn btn-outline-secondary" onClick={this.nextResults}>
+				<span className="fa fa-ellipsis-h" aria-hidden="true"/>
 				<FormattedMessage
 					id='zoomedresult.moreResults'
 					description='more results translation'

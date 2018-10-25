@@ -26,6 +26,7 @@ class ModalMixin extends Component {
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
+							<h2 className="modal-title">{title}</h2>
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
 								<span className="sr-only">
@@ -36,13 +37,12 @@ class ModalMixin extends Component {
 									/>
 								</span>
 							</button>
-							<h2 className="modal-title">{title}</h2>
 						</div>
 						<div className="modal-body">
 							{content}
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-default" data-dismiss="modal">
+							<button type="button" className="btn btn-outline-secondary" data-dismiss="modal">
 								<FormattedMessage
 									id='close.button'
 									description='close button translation'

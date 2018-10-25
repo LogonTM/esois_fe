@@ -17,7 +17,7 @@ class Results extends Component {
 		searchedLanguage: PT.array.isRequired,
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
-		getToWeblichtLink: PT.func.isRequired,
+/* 		getToWeblichtLink: PT.func.isRequired, */
 	    queryTypeId: PT.string.isRequired, 
 	}//,
 	mixins: [ResultMixin];
@@ -29,7 +29,7 @@ class Results extends Component {
 			<div>
 				{" "}
 				<div style={inline}>
-					<button className="btn btn-default zoomResultButton"
+					<button className="btn btn-outline-secondary zoomResultButton"
 							onClick={function(e){this.props.toggleResultModal(e,corpusHit)}.bind(this)}>
 						<span className="glyphicon glyphicon-eye-open"/>
 						<FormattedMessage

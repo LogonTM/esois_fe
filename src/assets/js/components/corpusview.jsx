@@ -256,31 +256,33 @@ class CorpusView extends Component {
 		return	(
 			<div style={{margin: "0 30px"}}>
 				<div className="row">
-					<div className="float-left inline">
-						<h3 style={{marginTop:10}}>
-							{this.props.corpora.getSelectedMessage()}
-						</h3>
-					</div>
-					<div className="float-right inline">
-						<button className="btn btn-default" style={{ marginRight: 10 }} onClick={this.selectAll.bind(this,true)}>
-							{ <FormattedMessage
-								id='select.all'
-								description='select all translation'
-								defaultMessage=' Select all'
-							/> }
-						</button>
-						<button className="btn btn-default" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
-							{ <FormattedMessage
-								id='deselect.all'
-								description='deselect all translation'
-								defaultMessage=' Deselect all' 
-							/>}
-						</button>
-					</div>
-					<div className="float-right inline">
-						<div className="inline" style={{ marginRight: 20 }} >
-							<SearchCorpusBox search={this.searchCorpus}/>
-							{this.renderFilteredMessage()}
+					<div className="col">
+						<div className="float-left inline">
+							<h3 style={{marginTop:10}}>
+								{this.props.corpora.getSelectedMessage()}
+							</h3>
+						</div>
+						<div className="float-right inline">
+							<button className="btn btn-outline-secondary" style={{ marginRight: 10 }} onClick={this.selectAll.bind(this,true)}>
+								{ <FormattedMessage
+									id='select.all'
+									description='select all translation'
+									defaultMessage=' Select all'
+								/> }
+							</button>
+							<button className="btn btn-outline-secondary" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
+								{ <FormattedMessage
+									id='deselect.all'
+									description='deselect all translation'
+									defaultMessage=' Deselect all' 
+								/>}
+							</button>
+						</div>
+						<div className="float-right inline">
+							<div className="inline" style={{ marginRight: 20 }} >
+								<SearchCorpusBox search={this.searchCorpus}/>
+								{this.renderFilteredMessage()}
+							</div>
 						</div>
 					</div>
 				</div>

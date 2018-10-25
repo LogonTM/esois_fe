@@ -265,14 +265,15 @@ class Main extends Component {
 
   renderCollapsible = () => {
     var classname =
-      'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'in' : '')
+      'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'show' : '')
     return (
-      <div className={classname}>
-        <div className='nav navbar-nav navbar-right' id='navbar-right'>
-          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE.bind(this)}>
+      <div className={classname} id='navMenu'>
+        <div className='navbar-nav navbar-right' id='navbar-right'>
+          <div className="d-flex flex-nowrap w-100">
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE}>
             <img className='ico' src='img/ee-icon.png' alt='EST' />
           </a>
-          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN.bind(this)}>
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN}>
             <img className='ico' src='img/gb-icon.png' alt='ENG' />
           </a>
           <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
@@ -284,6 +285,7 @@ class Main extends Component {
           <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
             <img className='symbols' src='img/settings-icon.png' alt='Help' />
           </a>
+          </div>
         </div>
       </div>
     )
@@ -295,15 +297,20 @@ class Main extends Component {
     }
     return (
       <div>
-        <nav className='navbar'>
-          <div
+      <div className='container'>
+        <nav className='navbar navbar-expand-md'>
+{/*           <div
             className='navbar navbar-default navbar-static-top'
-            role='navigation'>
-            <div className='container'>
-              <div className='nav navbar-nav navbar-left' id='navbar-images'>
-                <header className="inline">
+            role='navigation'> */}
+            
+{/*               <div className='navbar-brand' id='navbar-images'> */}
+                <header className="inline navbar-brand" id='navbar-images'>
                   <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
-                    <img className='logo' src={logoIntl[this.state.language]} alt='Eesti Keeleressursside Keskus' />
+                    <img
+                      className='logo'
+                      src={logoIntl[this.state.language]}
+                      alt='Eesti Keeleressursside Keskus'
+                    />
                   </a>
                   <img
                     className='logo2'
@@ -317,27 +324,35 @@ class Main extends Component {
                       alt='CLARIN ERIC logo'
                     />
                   </a>
-                </header>
+                  </header>
                 {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
                   <img width="28px" height="28px" src="img/magglass1.png"/>
                   <header className="inline"> Content Search </header>
+                                  onClick={this.toggleCollapse}
                 </a> */}
-              </div>
+{/*               </div> */}
               <button
                 type='button'
-                className='navbar-toggle'
-                onClick={this.toggleCollapse}
+                className='navbar-toggler'
+                data-toggle='collapse'
+                data-target='#navMenu'
+                aria-controls="navMenu"
+
+                aria-expanded="false"
+                aria-label="Toggle navigation"
               >
                 <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar' />
-                <span className='icon-bar' />
-                <span className='icon-bar' />
+                <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
+
+
               </button>
               {this.renderCollapsible()}
-            </div>
-            <hr className='orange-line' />
-          </div>
+
+
+{/*           </div> */}
         </nav>
+        </div>
+        <hr className='orange-line' />
         <ErrorPane errorMessages={this.state.errorMessages} />
       </div>
     )

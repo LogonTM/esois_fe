@@ -36,6 +36,11 @@ class AggregatorPage extends Component {
 		results: null,
 	}//,
 	
+	anyLanguages = {
+		ee: 'igas keeles',
+		en: 'Any language'
+	}
+
 	anyLanguage = [multipleLanguageCode, 
 		<FormattedMessage
 			id='any.language'
@@ -43,14 +48,20 @@ class AggregatorPage extends Component {
 			defaultMessage='Any Language'
 		/>];//,
 
-	placeholderForCQL = {
-		ee: 'Koer',
-		en: 'Elephant'
-	}
+	searchPlaceholders = [
+		{
+			ee: 'Koer',
+			en: 'Elephant'
+		},
+		{
+			ee: "[sõna = 'märkus'][sõna = 'keskendunud']",
+			en: "[word = 'annotation'][word = 'focused']"
+		}
+	]
 
-	placeholderForFCSQL = {
-		ee: "[sõna = 'märkus'][sõna = 'keskendunud']",
-		en: "[word = 'annotation'][word = 'focused']"
+	placeholderMap = {
+		cql: this.searchPlaceholders[0],
+		fcs: this.searchPlaceholders[1]
 	}
 
 	queryTypes = [
@@ -62,7 +73,7 @@ class AggregatorPage extends Component {
 					description='CQL query name translation'
 					defaultMessage='Text layer Contextual Query Language (CQL)'
 				/>,
-			searchPlaceholder: this.placeholderForCQL[this.props.languageFromMain],
+/* 			searchPlaceholder: this.placeholderForCQL[this.props.languageFromMain], */
 			searchLabel:
 				<FormattedMessage
 					id='cql.query.searchLabel'
@@ -80,7 +91,7 @@ class AggregatorPage extends Component {
 					description='FCS-QL query name translation'
 					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
 				/>,
-			searchPlaceholder: this.placeholderForFCSQL[this.props.languageFromMain],
+/* 			searchPlaceholder: this.placeholderForFCSQL[this.props.languageFromMain], */
 			searchLabel: 
 				<FormattedMessage
 					id='fcsql.query.searchLabel'
@@ -191,11 +202,11 @@ class AggregatorPage extends Component {
 		this.setState({corpora:corpora});
 	}
 
-	languageForTranslation = () => {
+/* 	languageForTranslation = () => {
 		var currentLanguage = this.props.languageFromMain;
 		return currentLanguage;
 	}
-
+ */
 	search = () => {
 		var query = this.state.query;
 		var queryTypeId = this.state.queryTypeId;
@@ -304,10 +315,10 @@ class AggregatorPage extends Component {
 			this.getExportParams(corpusId, format);
 	}
 
-	getToWeblichtLink = (corpusId, forceLanguage) => {
+/* 	getToWeblichtLink = (corpusId, forceLanguage) => {
 		return 'rest/search/' + this.state.searchId + '/toWeblicht?' +
 			this.getExportParams(corpusId, null, forceLanguage);
-	}
+	} */
 
 	setLanguageAndFilter = (languageObj, languageFilter) => {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
@@ -386,7 +397,7 @@ class AggregatorPage extends Component {
 	}
 
 	toggleLanguageSelection = e => {
-	    $(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
+		$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
@@ -488,121 +499,139 @@ class AggregatorPage extends Component {
 				(window.MyAggregator.URLROOT + "?" + encodeQueryData({queryType:queryTypeId, query:query, mode:'search'}));
 			return ( <a className={btnClass} style={{paddingTop:13}}
 					type="button" target="_blank" href={newurl}>
-					<i className="glyphicon glyphicon-search"></i>
+					<i className="fa fa-search"></i>
 				</a>
 			);
 		}
 		return (
-		    <button className="btn btn-default input-lg image_button" type="button" onClick={this.search}>
-				<i className="glyphicon glyphicon-search"></i>
+		    <button className="btn btn-outline-secondary" type="button" onClick={this.search}>
+				<i className="fa fa-search"></i>
 		    </button>
 		);
 	}//,
 
 	render/*: function*/() {
 		var queryType = this.queryTypeMap[this.state.queryTypeId];
+		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
 		return	(
-			<div className="top-gap">
-				<div className="row">
-					<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
-						<div className="input-group">
-							<span className="input-group-addon" style={{backgroundColor:queryType.searchLabelBkColor}}>
-								{queryType.searchLabel}
-							</span>
-							<QueryInput 
-							    searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
-							    queryTypeId={this.state.queryTypeId}
-							    query={this.state.query}
-							    embedded={this.props.embedded}
-							    placeholder={queryType.searchPlaceholder}
-							    onChange={this.onADVQuery.bind(this)}
-		                        onQuery={this.onQuery}
-							    onKeyDown={this.handleKey.bind(this)} />
+			<div className="container">
+				<div className="row justify-content-center" style={{marginTop:64}}>
+					<div className="col-12">
+						<div className="aligncenter">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
+										{queryType.searchLabel}
+									</span>
+								</div>
+								<QueryInput 
+									searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
+									queryTypeId={this.state.queryTypeId}
+									query={this.state.query}
+									embedded={this.props.embedded}
+									placeholder={correctPlaceholder[this.props.languageFromMain]}
+									onChange={this.onADVQuery}
+									onQuery={this.onQuery}
+									onKeyDown={this.handleKey} />
 
-							<div className="input-group-btn">
-								{this.renderSearchButtonOrLink()}
+								<div className="input-group-append">
+									{this.renderSearchButtonOrLink()}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="wel" style={{marginTop:20}}>
-					<div className="aligncenter" >
-						<form className="form-inline" role="form">
-
-							<div className="input-group">
-
-								<span className="input-group-addon nobkg" >
-									<FormattedMessage
-										id='search.for'
-										description='Search for translation'
-										defaultMessage='Search for'
-									/>
-								</span>
-
-								<div className="input-group-btn">
-									<button className="form-control btn btn-default"
-											onClick={this.toggleLanguageSelection.bind(this)}>
-										{this.state.language[1]} <span className="caret"/>
-									</button>
-									<span/>
+				<div className="row justify-content-center align-items-center" style={{marginTop:20}}>
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='search.for'
+											description='Search for translation'
+											defaultMessage='Search for'
+										/>
+									</span>
 								</div>
-								<div className="input-group-btn hidden-xxs">
+								<div className="input-group">
+									<button className="btn btn-outline-secondary dropdown-toggle"
+											onClick={this.toggleLanguageSelection}>
+										{this.state.language[1]} 
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group">
+									<button className="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+											aria-expanded="false"
+											data-toggle="dropdown">
+										{queryType.name}
+									</button>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
 										{ 	this.queryTypes.map((l) => {
-												var cls = l.disabled ? 'disabled':'';
+												var cls = l.disabled ? 'disabled':'dropdown-item';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
 												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
 													onClick={handler}> {l.name} </a></li>);
 											})
 										}
 									</ul>
-										
-									<button className="form-control btn btn-default"
-											aria-expanded="false" data-toggle="dropdown" >
-										{queryType.name} <span className="caret"/>
-									</button>
-
 								</div>
-
 							</div>
-
-							<div className="input-group hidden-xs">
-								<span className="input-group-addon nobkg">
-									<FormattedMessage
-										id='in'
-										description='in translation'
-										defaultMessage='in'
-									/>
-								</span>
-								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection.bind(this)}>
-									{this.state.corpora.getSelectedMessage()} <span className="caret"/>
-								</button>
-							</div>
-
-							<div className="input-group hidden-xs hidden-sm">
-								<span className="input-group-addon nobkg">
-									<FormattedMessage
-										id='and.show.up.to'
-										description='and show up to translation'
-										defaultMessage='and show up to'
-									/>
+						</form>
+					</div>
+				</div>
+				<div className="row justify-content-center" >
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='in'
+											description='in translation'
+											defaultMessage='in'
+										/>
 									</span>
-								<div className="input-group-btn">
+								</div>
+								<div className="input-group">
+									<button	type="button"
+											className="btn btn-outline-secondary dropdown-toggle"
+											onClick={this.toggleCorpusSelection}>
+										{this.state.corpora.getSelectedMessage()}
+									</button>
+								</div>
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='and.show.up.to'
+											description='and show up to translation'
+											defaultMessage='and show up to'
+										/>
+									</span>
+								</div>
+								<div className="input-group">
 									<input type="number" className="form-control input" min="10" max="250"
 										style={{width:60}}
 										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
 										onKeyPress={this.stop.bind(this)}/>
 								</div>
-								<span className="input-group-addon nobkg">
-								<FormattedMessage 
-									id='endpoint.translation'
-									description='hits per endoint translation'
-									defaultMessage='hits per endpoint'
-								/>
-								</span>
+								<div className="input-group-append">
+									<span className="input-group-text nobkg">
+										<FormattedMessage 
+											id='endpoint.translation'
+											description='hits per endoint translation'
+											defaultMessage='hits per endpoint'
+										/>
+									</span>
+								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
@@ -624,7 +653,7 @@ class AggregatorPage extends Component {
 						defaultMessage='Select Language'
 					/>
 					</span>}>
-					<LanguageSelector anyLanguage={this.anyLanguage}
+					<LanguageSelector anyLanguage={[multipleLanguageCode, this.anyLanguages[this.props.languageFromMain]]}
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
 									  languageFilter={this.state.languageFilter}
@@ -635,9 +664,7 @@ class AggregatorPage extends Component {
 					<ZoomedResult corpusHit={this.state.zoomedCorpusHit}
 								  nextResults={this.nextResults}
 								  getDownloadLink={this.getDownloadLink}
-								  getToWeblichtLink={this.getToWeblichtLink}
 								  searchedLanguage={this.state.language}
-								  weblichtLanguages={this.state.weblichtLanguages}
 								  languageMap={this.state.languageMap} 
 						          queryTypeId={this.state.queryTypeId} />
 				</Modal>
@@ -646,7 +673,6 @@ class AggregatorPage extends Component {
 					<Results collhits={this.filterResults()}
 							 toggleResultModal={this.toggleResultModal}
 							 getDownloadLink={this.getDownloadLink}
-							 getToWeblichtLink={this.getToWeblichtLink}
 							 searchedLanguage={this.state.language}
 					         queryTypeId={this.state.queryTypeId}/>
 				</div>
