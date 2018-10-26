@@ -40,9 +40,11 @@ class LanguageSelector extends Component {
 			whiteSpace: "nowrap",
 			fontWeight: lang[0] === this.props.selectedLanguage[0] ? "bold" : "normal",
 		};
-		return	(<div key={lang[0]}>
-					<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
-				</div>);
+		return (
+			<div key={lang[0]}>
+				<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
+			</div>
+		);
 	}//,
 
 /* 	

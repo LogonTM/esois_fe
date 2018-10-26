@@ -108,7 +108,7 @@ class LoginPage extends Component {
 	logInOut = (event) => {
 		// TODO
 		event.preventDefault();
-		if (this.state.logedInStatus === false && this.state.username === '' && this.state.password === '') {
+		if (this.state.logedInStatus === false && this.state.username === 'mina' && this.state.password === '') {
 			this.setState({
 				logedInStatus: true
 			})
@@ -198,11 +198,15 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">Tere Kasutaja, you are logged in!</span>
+							<span aria-hidden="true">Tere {this.state.username}, you are logged in!</span>
 							<div>
 								<button type="button" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
 								<span aria-hidden="true"></span>
-									Log out!
+									<FormattedMessage
+										id='login.logoutButton'
+										description='log out translation'
+										defaultMessage='Log out'
+									/>
 								</button>
 							</div>
 							{/* <button type="button" className="btn btn-default btn-lg" onClick={this.backToAggregator} >

@@ -297,60 +297,60 @@ class Main extends Component {
     }
     return (
       <div>
-      <div className='container'>
-        <nav className='navbar navbar-expand-md'>
+        <div className='container'>
+          <nav className='navbar navbar-expand-md'>
 {/*           <div
             className='navbar navbar-default navbar-static-top'
             role='navigation'> */}
             
 {/*               <div className='navbar-brand' id='navbar-images'> */}
-                <header className="inline navbar-brand" id='navbar-images'>
-                  <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
-                    <img
-                      className='logo'
-                      src={logoIntl[this.state.language]}
-                      alt='Eesti Keeleressursside Keskus'
-                    />
-                  </a>
-                  <img
-                    className='logo2'
-                    src={ELlogo}
-                    alt='Euroopa Liidu regionaalfond'
-                  />
-                  <a tabIndex="-1" href="https://clarin.eu/" target="_blank">
-                    <img 
-                      className='logo2'
-                      src={logo}
-                      alt='CLARIN ERIC logo'
-                    />
-                  </a>
-                  </header>
+            <header className="inline navbar-brand" id='navbar-images'>
+              <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
+                <img
+                  className='logo'
+                  src={logoIntl[this.state.language]}
+                  alt='Eesti Keeleressursside Keskus'
+                />
+              </a>
+              <img
+                className='logo2'
+                src={ELlogo}
+                alt='Euroopa Liidu regionaalfond'
+              />
+              <a tabIndex="-1" href="https://clarin.eu/" target="_blank">
+                <img 
+                  className='logo2'
+                  src={logo}
+                  alt='CLARIN ERIC logo'
+                />
+              </a>
+            </header>
                 {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
                   <img width="28px" height="28px" src="img/magglass1.png"/>
                   <header className="inline"> Content Search </header>
                                   onClick={this.toggleCollapse}
                 </a> */}
 {/*               </div> */}
-              <button
-                type='button'
-                className='navbar-toggler'
-                data-toggle='collapse'
-                data-target='#navMenu'
-                aria-controls="navMenu"
+            <button
+              type='button'
+              className='navbar-toggler'
+              data-toggle='collapse'
+              data-target='#navMenu'
+              aria-controls="navMenu"
 
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className='sr-only'>Toggle navigation</span>
-                <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className='sr-only'>Toggle navigation</span>
+              <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
 
 
-              </button>
-              {this.renderCollapsible()}
+            </button>
+            {this.renderCollapsible()}
 
 
 {/*           </div> */}
-        </nav>
+          </nav>
         </div>
         <hr className='orange-line' />
         <ErrorPane errorMessages={this.state.errorMessages} />
@@ -361,13 +361,13 @@ class Main extends Component {
   render /*: function*/() {
     return (
       <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
-      <div>
-        <div> {this.renderTop()} </div>
-        <div id='push'>
-          <div className='container'>{this.state.navbarPageFn()}</div>
+        <div>
+          <div> {this.renderTop()} </div>
+          <div id='push'>
+            <div className='container'>{this.state.navbarPageFn()}</div>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
       </IntlProvider>
     )
   }

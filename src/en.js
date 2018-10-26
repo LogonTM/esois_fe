@@ -32,6 +32,7 @@ var messages_en = {
     'language.radio.byMeta': 'Use the collections\' specified language to filter results',
     'language.radio.byMetaAndGuess': 'First use the collections specified language then also use a language detector',
     'login.loginButton': 'Login',
+    'login.logoutButton': 'Log out',
     'login.password': 'Password',
     'login.username': 'Username',
     'or': 'or',

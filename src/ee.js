@@ -32,6 +32,7 @@ var messages_ee = {
     'language.radio.byMeta': 'Kasuta korpuses täpsustatud keelt tulemuste filtreerimiseks',
     'language.radio.byMetaAndGuess': 'Esmalt kasuta filtreerimiseks korpuses täpsustatud keelt ja seejärel kasuta ka keele tuvastajat',
     'login.loginButton': 'Sisene',
+    'login.logoutButton': 'Välju',
     'login.password': 'Salasõna',
     'login.username': 'Kasutajanimi',
     'or': 'või',
