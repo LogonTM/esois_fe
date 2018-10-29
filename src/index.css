@@ -1,3 +1,8 @@
+html {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143) !important;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -91,7 +96,7 @@ div.navbar {
   border-color: lightgray !important;
 }
 
-.btn-outline-secondary:hover, .btn-outline-secondary:focus, .dropdown-item:hover, .dropdown-item:focus {
+.btn-outline-secondary:hover, .btn-outline-secondary:focus, .dropdown-item:hover, .dropdown-item:focus, .show > .btn-outline-secondary.dropdown-toggle {
   background-color: rgba(40,85,143, .2) !important;
 }
 

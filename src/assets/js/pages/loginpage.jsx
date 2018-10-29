@@ -92,7 +92,7 @@ var PT = PropTypes
 class LoginPage extends Component {
 	static propTypes = {
 		languageFromMain: PT.string,
-		isUserLogedIn: PT.bool,
+		isUserloggedIn: PT.bool,
 		getStatus: PT.func
 	}
 
@@ -101,21 +101,21 @@ class LoginPage extends Component {
 		this.state = {
 			username: "",
 			password: "",
-			logedInStatus: this.props.isUserLogedIn
+			loggedInStatus: this.props.isUserloggedIn
 		};
 	}
 	
 	logInOut = (event) => {
 		// TODO
 		event.preventDefault();
-		if (this.state.logedInStatus === false && this.state.username === 'mina' && this.state.password === '') {
+		if (this.state.loggedInStatus === false && this.state.username === 'mina' && this.state.password === '') {
 			this.setState({
-				logedInStatus: true
+				loggedInStatus: true
 			})
 			this.props.getStatus(true)
 		} else {
 			this.setState({
-				logedInStatus: false
+				loggedInStatus: false
 			})
 			this.props.getStatus(false)
 		}
@@ -138,7 +138,7 @@ class LoginPage extends Component {
 	}
 
 	render () {
-		if (this.state.logedInStatus === false) {
+		if (this.state.loggedInStatus === false) {
 			return	(
 				<div>
 					<div className="top-gap">

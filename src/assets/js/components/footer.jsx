@@ -14,7 +14,7 @@ class Footer extends Component {
 							<p>
 								© 2018
 								<FormattedMessage
-									id='ekrk'
+									id='footer.ekrk'
 									description='Eesti Keeleressursside Keskus translation'
 									defaultMessage=' Center of Estonian Language Resources '
 								/>
@@ -24,7 +24,7 @@ class Footer extends Component {
 							<p>
 								&nbsp;| Liivi 2-340, Tartu 50409
 								<FormattedMessage
-									id='estonia'
+									id='footer.estonia'
 									description='Estonia for page in English'
 									defaultMessage=' '
 								/>

@@ -33,8 +33,8 @@ addLocaleData([...locale_ee, ...locale_en])
 // var language = 'ee';
 
 const messages = {
-    'ee': messages_ee,
-    'en': messages_en
+  'ee': messages_ee,
+  'en': messages_en
 };
 
 const logoIntl = {
@@ -96,7 +96,8 @@ class Main extends Component {
       navbarPageFn: this.renderAggregator,
       errorMessages: [],
       language: 'ee',
-      logedInStatus: false
+      loggedInStatus: false,
+      userName: ''
     }
   }
 
@@ -179,11 +180,11 @@ class Main extends Component {
 
   getUserLoginStatus = (userStatus) => {
     console.log('From main: ' + userStatus)
-    this.setState({logedInStatus: userStatus})
+    this.setState({loggedInStatus: userStatus})
   }
 
   renderLogin = () => {
-    return <LoginPage languageFromMain={this.state.language} isUserLogedIn={this.state.logedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+    return <LoginPage languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
   }
 
   renderAbout = () => {

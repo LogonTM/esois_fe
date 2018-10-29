@@ -594,7 +594,7 @@ class AggregatorPage extends Component {
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
 										<FormattedMessage
-											id='in'
+											id='aggregatorpage.in'
 											description='in translation'
 											defaultMessage='in'
 										/>
@@ -610,7 +610,7 @@ class AggregatorPage extends Component {
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
 										<FormattedMessage
-											id='and.show.up.to'
+											id='aggregatorpage.andShowUpTo'
 											description='and show up to translation'
 											defaultMessage='and show up to'
 										/>
@@ -625,7 +625,7 @@ class AggregatorPage extends Component {
 								<div className="input-group-append">
 									<span className="input-group-text nobkg">
 										<FormattedMessage 
-											id='endpoint.translation'
+											id='aggregatorpage.hitsPerEndpoint'
 											description='hits per endoint translation'
 											defaultMessage='hits per endpoint'
 										/>
