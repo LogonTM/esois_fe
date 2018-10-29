@@ -102,7 +102,7 @@ class HelpPage extends Component {
 						<FormattedMessage
 							id='helpPage.howToSearch.paragraph4'
 							description='view the search results translation'
-							defaultMessage="If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'Watch' button. In this view mode you can also download the results."
+							defaultMessage="If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button. In this view mode you can also download the results."
 						/>
 					</p>
 

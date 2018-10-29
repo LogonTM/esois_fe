@@ -32,7 +32,7 @@ var messages_en = {
     'helpPage.howToSearch.paragraph1': "To perform a simple keyword search in all corpora, go to the search field at the top of the page, enter your query, and click the 'search' button or press the 'Enter' key.",
     'helpPage.howToSearch.paragraph2': "To perform an advanced search on multiple annotation layers in corpora that support this, switch to Multi-layer Federated Content Search (FCS) in the dropdown list, enter a FCS query in the search field at the top of the page, and click the 'search' button or press the 'Enter' key.",
     'helpPage.howToSearch.paragraph3': 'When the search starts, the page will start filling in with the corpora responses. After the entire search process has ended you have the option to download the results in various formats.',
-    'helpPage.howToSearch.paragraph4': "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'Watch' button. In this view mode you can also download the results.",
+    'helpPage.howToSearch.paragraph4': "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button. In this view mode you can also download the results.",
     'helpPage.mainTitle': 'Help',
     'is': 'is',
     'is.not': 'is not',
