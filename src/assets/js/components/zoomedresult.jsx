@@ -122,7 +122,7 @@ class ZoomedResult extends Component {
 				<div className='corpusDescription'>
 					<p><i className="fa fa-institution"/> {corpus.institution.name}</p>
 					{corpus.description ?
-						<p><i className="glyphicon glyphicon-info-sign"/> {corpus.description}</p>: false}
+						<p><i className="fa fa-info-circle"/> {corpus.description}</p>: false}
 					<p><i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}</p>
 				</div>
 				<div style={{marginBottom:2}}>

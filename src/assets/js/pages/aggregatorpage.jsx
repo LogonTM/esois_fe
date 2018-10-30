@@ -153,60 +153,55 @@ class AggregatorPage extends Component {
 	}
 
 	componentDidMount/*: function*/() {
-		this.setState({_isMounted: true});
+		// this.setState({_isMounted: true});
 			
-/* 		this.props.ajax({
-			url: 'rest/init',
+		this.props.ajax({
+			url: 'init',
 			success: (json, textStatus, jqXHR) => {
-				if (this.state._isMounted) {
-					var corpora = new Corpora(json.corpora, this.updateCorpora);
-					window.MyAggregator.corpora = json.corpora;
-					this.setState({
-						corpora : corpora,
-						languageMap: json.languages,
-						weblichtLanguages: json.weblichtLanguages,
-						query: this.state.query || json.query || '',
-					});
-					// for testing aggregation context
-					json['x-aggregation-context'] = {
-						'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
-					};
-					if (this.state.aggregationContext && !json['x-aggregation-context']) {
-						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-						console.log(json['x-aggregation-context']);
-					}
-					if (json['x-aggregation-context']) {
-						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-						corpora.setAggregationContext(json["x-aggregation-context"]);
-						if (!corpora.getSelectedIds().length) {
-							this.props.error("Cannot find the required collection, will search all collections instead");
-							corpora.recurse(function(corpus) { corpus.selected = true; });
-						}
-						corpora.update();
-					}
-					// Setting visibility, e.g. only corpora 
-					// from v2.0 endpoints for fcs v2.0
-					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-					corpora.update();
-
-					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
-						window.MyAggregator.mode = 'search';
-						this.search();
-					}
+				// if (this.state._isMounted) {
+				var corpora = new Corpora(json.corpora, this.updateCorpora);
+				window.MyAggregator.corpora = json.corpora;
+				this.setState({
+					corpora : corpora,
+					languageMap: json.languages,
+					// weblichtLanguages: json.weblichtLanguages,
+					query: this.state.query || json.query || '',
+				});
+				// for testing aggregation context
+				json['x-aggregation-context'] = {
+					'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
+				};
+				if (this.state.aggregationContext && !json['x-aggregation-context']) {
+					json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
+					console.log(json['x-aggregation-context']);
 				}
+				if (json['x-aggregation-context']) {
+					window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
+					corpora.setAggregationContext(json["x-aggregation-context"]);
+					if (!corpora.getSelectedIds().length) {
+						this.props.error("Cannot find the required collection, will search all collections instead");
+						corpora.recurse(function(corpus) { corpus.selected = true; });
+					}
+					corpora.update();
+				}
+				// Setting visibility, e.g. only corpora 
+				// from v2.0 endpoints for fcs v2.0
+				this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+				// corpora.update();
+
+				if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
+					window.MyAggregator.mode = 'search';
+					this.search();
+				}
+				// }
 			}
-		}); */
+		});
 	}
 
 	updateCorpora = corpora => {
-		this.setState({corpora:corpora});
+		this.setState({corpora});
 	}
 
-/* 	languageForTranslation = () => {
-		var currentLanguage = this.props.languageFromMain;
-		return currentLanguage;
-	}
- */
 	search = () => {
 		var query = this.state.query;
 		var queryTypeId = this.state.queryTypeId;
@@ -482,7 +477,7 @@ class AggregatorPage extends Component {
 					{ corpus.landingPage ?
 						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
 							<span> - Homepage </span>
-							<i className="glyphicon glyphicon-home"/>
+							<i className="fa fa-home"/>
 						</a>: false} </h3>);
 	}//,
 
@@ -497,7 +492,8 @@ class AggregatorPage extends Component {
 			});
 			var newurl = !query ? "#" :
 				(window.MyAggregator.URLROOT + "?" + encodeQueryData({queryType:queryTypeId, query:query, mode:'search'}));
-			return ( <a className={btnClass} style={{paddingTop:13}}
+			return (
+				<a className={btnClass} style={{paddingTop:13}}
 					type="button" target="_blank" href={newurl}>
 					<i className="fa fa-search"></i>
 				</a>
@@ -787,7 +783,7 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 	this.corpora.forEach(selectSubTree.bind(this, false));
 
 	var corporaToSelect = [];
-	_.pairs(endpoints2handles).forEach((endp) => {
+	pairs(endpoints2handles).forEach((endp) => {
 		var endpoint = endp[0];
 		var handles = endp[1];
 	    console.log(endp);
@@ -803,6 +799,16 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 
 	corporaToSelect.forEach(selectSubTree.bind(this, true));
 };
+
+function pairs(o) {
+	var ret = [];
+	for (var x in o) {
+		if (o.hasOwnProperty(x)) {
+			ret.push([x, o[x]]);
+		}
+	}
+	return ret;
+}
 
 Corpora.prototype.getSelectedIds = function() {
 	var ids = [];

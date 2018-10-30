@@ -216,7 +216,7 @@ class ResultMixin extends Component {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
-					<span className="glyphicon glyphicon-download-alt" aria-hidden="true"/>{" "}
+					<span className="fa fa-download" aria-hidden="true"/>{" "}
 						<FormattedMessage
 							id='resultmixin.download'
 							description='download translation'

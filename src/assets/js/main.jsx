@@ -342,7 +342,13 @@ class Main extends Component {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className='sr-only'>Toggle navigation</span>
+              <span className='sr-only'>
+                <FormattedMessage
+                  id='toggle.navigation'
+                  description='toggle navigation translation'
+                  defaultMessage='Toggle navigation'
+                />
+              </span>
               <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
 
 

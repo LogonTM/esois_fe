@@ -31,7 +31,7 @@ class Panel extends Component {
 	}//,
 
 	render/*: function*/() {
-		var chevron = "glyphicon glyphicon-chevron-" + (this.state.open ? "down":"right");
+		var chevron = "fa fa-chevron-" + (this.state.open ? "down":"right");
 		return (
 			<div className="bs-callout bs-callout-info"> 
 				<div className="panel">

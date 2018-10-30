@@ -106,7 +106,7 @@ class ADVTokens extends Component {
 		<div>
 			<TransitionGroup>{tokens}</TransitionGroup>
 			<button className="btn btn-xs btn-default image_button insert_token" type="button" onClick={this.addADVToken} ref="addToken">
-				<i className="glyphicon glyphicon-plus"></i>
+				<i className="fa fa-plus"></i>
 			</button>
 		</div>);
     }
@@ -124,7 +124,7 @@ class ADVToken extends Component {
 			<div className="token_header">
 				<button className="btn btn-xs btn-default image_button close_btn" type="button"
 					onClick={this.props.handleRemoveADVToken(this.props.parentToken)} ref="removeToken">
-					<i className="glyphicon glyphicon-remove-circle" />
+					<i className="fa fa-minus-circle" />
 				</button>
 				<div style={{clear:"both"}} />
 			</div>
@@ -233,7 +233,7 @@ class ANDQueryArgs extends Component {
 			<div className="token_footer">
 				<button className="btn btn-xs btn-default image_button insert_arg"
 					onClick={this.addADVAnd} ref="addAndButton">
-					<i className="glyphicon glyphicon-plus"/>
+					<i className="fa fa-plus"/>
 				</button>
 				<ADVTokenMenu/>
 				<div style={{clear:"both"}}/>
@@ -389,7 +389,7 @@ class ORArg extends Component {
 			<div className="left_col" >
 				<button className="btn btn-xs btn-default image_button remove_arg" onClick={this.props.handleRemoveADVOr.bind(null, this.props.data.id)}
 					ref={'removeADVOr_' + this.props.data.id}>
-					<i className="glyphicon glyphicon-minus"></i>
+					<i className="fa fa-minus"></i>
 				</button>
 			</div>
 			<div className="right_col inline_block" style={{display:"inline-block"}}> { /* , margin-left: "5px" */ }

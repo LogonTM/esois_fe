@@ -21,7 +21,7 @@ class InfoPopover extends Component {
 		var inline = {display:"inline-block"};
 		return (
 			<button style={inline} className="btn btn-default btn-xs" onClick={this.handleClick}>
-				<span className="glyphicon glyphicon-info-sign"/>
+				<span className="fa fa-info-circle"/>
 			</button>
 		);
 	}

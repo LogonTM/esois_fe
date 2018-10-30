@@ -117,9 +117,9 @@ class StatisticsPage extends Component {
 					<ul className='list-inline list-unstyled' style={{marginBottom:0}}>
 						<li>
 							{ stat.version == "LEGACY" ?
-								<span style={{color:'#a94442'}}>legacy <i className="glyphicon glyphicon-thumbs-down"></i> </span>
-								: stat.version == "VERSION_1" ? <span style={{color:'#a94442'}}>version 1 <i className="glyphicon glyphicon-thumbs-down"></i></span> 
-							    : <span style={{color:'#3c763d'}}>version 2 <i className="glyphicon glyphicon-thumbs-up"></i> </span>
+								<span style={{color:'#a94442'}}>legacy <i className="fa fa-thumbs-down"></i> </span>
+								: stat.version == "VERSION_1" ? <span style={{color:'#a94442'}}>version 1 <i className="fa fa-thumbs-down"></i></span> 
+							    : <span style={{color:'#3c763d'}}>version 2 <i className="fa fa-thumbs-up"></i> </span>
 							}
 							{ " "+endpoint[0] }
 						</li>

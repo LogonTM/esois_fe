@@ -29,7 +29,7 @@ class CorpusView extends Component {
 	}//,
 
 	selectAll/*: function*/ = (value) => {
-		this.props.corpora.recurse(function(c) { c.selected = value; });
+		this.props.corpora.recurse( c => { c.selected = value; });
 		this.props.corpora.update();
 	}//,
 
@@ -118,10 +118,10 @@ class CorpusView extends Component {
 	}//,
 
 	renderCheckbox/*: function*/(corpus) {
-		return	<button className="btn btn-default">
+		return	<button className="btn btn-outline-secondary">
 					{ corpus.selected ?
-						<span className="glyphicon glyphicon-check" aria-hidden="true"/> :
-						<span className="glyphicon glyphicon-unchecked" aria-hidden="true"/>
+						<span className="fa fa-check-square" aria-hidden="true"/> :
+						<span className="fa fa-square" aria-hidden="true"/>
 					}
 				</button>;
 	}//,
@@ -130,33 +130,35 @@ class CorpusView extends Component {
 		if (!corpus.subCorpora || corpus.subCorpora.length === 0) {
 			return false;
 		}
-		return 	(<div className="expansion-handle" style={{}}>
-					<a>
-						{corpus.expanded ?
-							<span className="glyphicon glyphicon-minus" aria-hidden="true"/>:
-							<span className="glyphicon glyphicon-plus" aria-hidden="true"/>
-						} 
-						{corpus.expanded ? 
-							<FormattedMessage
-								id='corpusview.collapse'
-								description='collapse translation'
-								defaultMessage=' Collapse '
-							/> :
-							<FormattedMessage
-								id='corpusview.expand'
-								description='expand translation'
-								defaultMessage=' Expand '
-							/>}
+		return (
+			<div className="expansion-handle" style={{}}>
+				<a>
+					{corpus.expanded ?
+						<span className="fa fa-minus" aria-hidden="true"/>:
+						<span className="fa fa-plus" aria-hidden="true"/>
+					} 
+					{corpus.expanded ? 
 						<FormattedMessage
-							id='corpusview.amountOfSubcollections'
-							description='amount of subcollections translation'
-							defaultMessage='({amount} subcollections)'
-							values= {{
-								amount: corpus.subCorpora.length
-							}}
-						/>
-					</a>
-				</div>);
+							id='corpusview.collapse'
+							description='collapse translation'
+							defaultMessage=' Collapse '
+						/> :
+						<FormattedMessage
+							id='corpusview.expand'
+							description='expand translation'
+							defaultMessage=' Expand '
+						/>}
+					<FormattedMessage
+						id='corpusview.amountOfSubcollections'
+						description='amount of subcollections translation'
+						defaultMessage='({amount} subcollections)'
+						values= {{
+							amount: corpus.subCorpora.length
+						}}
+					/>
+				</a>
+			</div>
+		);
 	}//,
 
 	renderLanguages/*: function*/ = (languages) => {
@@ -229,7 +231,7 @@ class CorpusView extends Component {
 												defaultMessage='– Homepage'
 											/>
 											</span>
-										<i className="glyphicon glyphicon-home"/>
+										<i className="fa fa-home"/>
 									</a>: false
 								}
 							</h3>
