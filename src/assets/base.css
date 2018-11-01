@@ -333,12 +333,14 @@ div.panel-title {
 
 .zoomResultButton {
 	border: 1px solid transparent;
+	font-size: 0.9rem !important;
 }
-div.panel:hover .zoomResultButton {
+
+/* div.panel:hover .zoomResultButton {
 	color: white;
 	background-color: rgb(40,85,143);
 	border: 1px solid black;
-}
+} */
 
 div.panel-title span.institutionName{
 	font-size: 12px;

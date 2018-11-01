@@ -22,7 +22,7 @@ class ZoomedResult extends Component {
 /* 		getToWeblichtLink: PT.func.isRequired, */
 		queryTypeId: PT.string.isRequired,
 	}//,
-	mixins: [ResultMixin];
+	// mixins: [ResultMixin];
 
 	constructor(props) {
 		super(props);
@@ -48,6 +48,192 @@ class ZoomedResult extends Component {
 				.sort()
 				.join(", ");
 	}//,
+
+	renderDisplayKWIC/*: function*/ = () => {
+		return (
+			<div className="inline btn-group" style={{display:"inline-block"}}>
+				<label htmlFor="inputKwic" className="btn btn-flat">
+					{ this.state.displayKwic ?
+						<input id="inputKwic" type="checkbox" value="kwic" checked onChange={this.toggleKwic} /> :
+						<input id="inputKwic" type="checkbox" value="kwic" onChange={this.toggleKwic} />
+					}
+					&nbsp;
+					<FormattedMessage
+						id='resultmixin.display.kwic'
+						description='display as key word in context translation'
+						defaultMessage='Display as Key Word In Context'
+					/>
+				</label>
+			</div>
+		);
+	}
+
+	renderDownloadLinks/*: function*/ = corpusId => {
+		return (
+			<div className="dropdown">
+				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
+					<span className="fa fa-download" aria-hidden="true"/>{" "}
+						<FormattedMessage
+							id='resultmixin.download'
+							description='download translation'
+							defaultMessage='Download'
+						/>{" "}
+					<span className="caret"/>
+				</button>
+				<ul className="dropdown-menu">
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
+							<FormattedMessage
+								id='resultmixin.download.csv'
+								description='as csv file translation'
+								defaultMessage='As CSV file'
+							/>
+						</a></li>
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
+					        <FormattedMessage
+								id='resultmixin.download.json'
+								description='as json file translation'
+								defaultMessage='As JSON file'
+							/>
+						</a></li>
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
+					        <FormattedMessage
+								id='resultmixin.download.xml'
+								description='as csv file translation'
+								defaultMessage='As XML file'
+							/>
+						</a></li>
+				</ul>
+			</div>
+		);
+	}
+
+	renderRowLanguage/*: function*/(hit) {
+		return false; //<span style={{fontFace:"Courier",color:"black"}}>{hit.language} </span> ;
+	}
+
+	renderRowsAsHits/*: function*/ = (hit,i) => {
+		function renderTextFragments(tf, idx) {
+			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
+		}
+		return (
+			<p key={i} className="hitrow">
+				{this.renderRowLanguage(hit)}
+				{hit.fragments.map(renderTextFragments)}
+			</p>
+		);
+	}//,
+
+	renderRowsAsKwic/*: function*/ = (hit,i) => {
+		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
+		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
+		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+		return	(
+			<tr key={i} className="hitrow">
+				<td>{this.renderRowLanguage(hit)}</td>
+				<td style={sright}>{hit.left}</td>
+				<td style={scenter} className="keyword">{hit.keyword}</td>
+				<td style={sleft}>{hit.right}</td>
+			</tr>
+		);
+	}//,
+
+	renderRowsAsADV/*: function*/ = (hit,i) => {
+	    var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
+	    var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
+	    var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+	    
+	    function renderSpans(span, idx) {
+		return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
+	    }
+	    return (
+			<tr key={i} className="hitrow">
+				{this.renderRowLanguage(hit)}
+				<td style={sleft}>{hit.pid}</td>
+				<td style={sleft}>{hit.reference}</td>
+				{hit.spans.map(renderSpans)}
+			</tr>
+		);
+	}
+
+	renderDiagnostic/*: function*/(d, key) {
+		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
+			return false;
+		}
+		return 	(
+			<div className="alert alert-warning" key={key}>
+				<div>{d.message}</div>
+			</div>
+		);
+	}//,
+
+	renderDiagnostics/*: function*/ = corpusHit => {
+		if (!corpusHit.diagnostics || corpusHit.diagnostics.length === 0) {
+			return false;
+		}
+		return corpusHit.diagnostics.map(this.renderDiagnostic);
+	}//,
+
+	renderErrors/*: function*/(corpusHit) {
+		var xc = corpusHit.exception;
+		if (!xc) {
+			return false;
+		}
+		return 	(
+			<div className="alert alert-danger" role="alert">
+				<div>
+					<FormattedMessage
+						id='resultmixin.exception'
+						description='exception translation'
+						defaultMessage='Exception:'
+					/>&nbsp;
+					{xc.message}</div>
+				{ xc.cause ? 
+					<div>
+						<FormattedMessage 
+							id='resultmixin.causedBy'
+							description='caused by translation'
+							defaultMessage='Caused by:'
+						/>&nbsp;
+						{xc.cause}
+					</div> : false
+				}
+			</div>
+		);
+	}//,
+
+	renderPanelBody/*: function*/ = corpusHit => {
+	    var fulllength = {width:"100%"};
+
+        if (this.state.displayADV) {
+			return (
+				<div>
+					{this.renderErrors(corpusHit)}
+					{this.renderDiagnostics(corpusHit)}
+					<table className="table table-condensed table-hover" style={fulllength}>
+						<tbody>{corpusHit.advancedLayers.map(this.renderRowsAsADV)}</tbody>
+					</table>
+				</div>
+			);
+	    } else if (this.state.displayKwic) {
+			return (
+				<div>
+					{this.renderErrors(corpusHit)}
+					{this.renderDiagnostics(corpusHit)}
+					<table className="table table-condensed table-hover" style={fulllength}>
+						<tbody>{corpusHit.kwics.map(this.renderRowsAsKwic)}</tbody>
+					</table>
+				</div>
+			);
+	    } else  {
+			return (
+				<div>
+					{this.renderErrors(corpusHit)}
+					{this.renderDiagnostics(corpusHit)}
+					{corpusHit.kwics.map(this.renderRowsAsHits)}
+				</div>
+			);
+	    }
+	}
 
 	renderMoreResults/*: function*/ = () => {
 		if (this.props.corpusHit.inProgress)

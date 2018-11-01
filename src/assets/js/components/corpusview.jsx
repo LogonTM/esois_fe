@@ -141,13 +141,14 @@ class CorpusView extends Component {
 						<FormattedMessage
 							id='corpusview.collapse'
 							description='collapse translation'
-							defaultMessage=' Collapse '
+							defaultMessage='Collapse'
 						/> :
 						<FormattedMessage
 							id='corpusview.expand'
 							description='expand translation'
-							defaultMessage=' Expand '
+							defaultMessage='Expand'
 						/>}
+					&nbsp;
 					<FormattedMessage
 						id='corpusview.amountOfSubcollections'
 						description='amount of subcollections translation'
@@ -183,7 +184,7 @@ class CorpusView extends Component {
 			return false;
 		}
 		return (
-			<div>
+			<div id="searchInCollections">
 				<FormattedMessage
 					id='corpusview.howManyCollectionsAreShown'
 					description='showing so many collections out of all translation'
@@ -213,18 +214,18 @@ class CorpusView extends Component {
 		return	(
 			<div className={corpusContainerClass} key={corpus.id}>
 				<div className="row corpus" onClick={this.toggleExpansion.bind(this, corpus)}>
-					<div className="col-sm-1 vcenter">
+					<div className="col-sm-2 col-lg-1 vcenter">
 							<div className="inline" style={priorityStyle} onClick={this.toggleSelection.bind(this,corpus)}>
 								{this.renderCheckbox(corpus)}
 							</div>
 					</div>
-					<div className="col-sm-8 vcenter">
+					<div className="col-sm-7 col-lg-8 vcenter">
 						<div style={indent}>
 							<h3 style={expansive}> 
 								{corpus.title}
 								{ corpus.landingPage ? 
 									<a href={corpus.landingPage} onClick={this.stop}>
-										<span style={{fontSize:12}}>
+										<span style={{fontSize:12}}>&nbsp;
 											<FormattedMessage 
 												id='corpusview.homepage'
 												description='homepage translation'
@@ -239,7 +240,7 @@ class CorpusView extends Component {
 							{this.renderExpansion(corpus)}
 						</div>
 					</div>
-					<div className="col-sm-3 vcenter">
+					<div className="col-sm-3 col-lg-3 vcenter">
 						<p style={expansive}>
 							<i className="fa fa-institution"/> {corpus.institution.name}
 						</p>
@@ -258,7 +259,7 @@ class CorpusView extends Component {
 		return	(
 			<div style={{margin: "0 30px"}}>
 				<div className="row">
-					<div className="col">
+					<div className="col" style={{ marginRight: -15, marginLeft: -15 }}>
 						<div className="float-left inline">
 							<h3 style={{marginTop:10}}>
 								{this.props.corpora.getSelectedMessage()}
@@ -269,14 +270,14 @@ class CorpusView extends Component {
 								{ <FormattedMessage
 									id='select.all'
 									description='select all translation'
-									defaultMessage=' Select all'
+									defaultMessage='Select all'
 								/> }
 							</button>
 							<button className="btn btn-outline-secondary" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
 								{ <FormattedMessage
 									id='deselect.all'
 									description='deselect all translation'
-									defaultMessage=' Deselect all' 
+									defaultMessage='Deselect all' 
 								/>}
 							</button>
 						</div>

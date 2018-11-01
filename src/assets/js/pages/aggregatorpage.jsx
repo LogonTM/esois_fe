@@ -153,47 +153,47 @@ class AggregatorPage extends Component {
 	}
 
 	componentDidMount/*: function*/() {
-		// this.setState({_isMounted: true});
+		this.setState({_isMounted: true});
 			
 		this.props.ajax({
 			url: 'init',
 			success: (json, textStatus, jqXHR) => {
-				// if (this.state._isMounted) {
-				var corpora = new Corpora(json.corpora, this.updateCorpora);
-				window.MyAggregator.corpora = json.corpora;
-				this.setState({
-					corpora : corpora,
-					languageMap: json.languages,
-					// weblichtLanguages: json.weblichtLanguages,
-					query: this.state.query || json.query || '',
-				});
-				// for testing aggregation context
-				json['x-aggregation-context'] = {
-					'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
-				};
-				if (this.state.aggregationContext && !json['x-aggregation-context']) {
-					json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-					console.log(json['x-aggregation-context']);
-				}
-				if (json['x-aggregation-context']) {
-					window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-					corpora.setAggregationContext(json["x-aggregation-context"]);
-					if (!corpora.getSelectedIds().length) {
-						this.props.error("Cannot find the required collection, will search all collections instead");
-						corpora.recurse(function(corpus) { corpus.selected = true; });
+				if (this.state._isMounted) {
+					var corpora = new Corpora(json.corpora, this.updateCorpora);
+					window.MyAggregator.corpora = json.corpora;
+					this.setState({
+						corpora : corpora,
+						languageMap: json.languages,
+						// weblichtLanguages: json.weblichtLanguages,
+						query: this.state.query || json.query || '',
+					});
+					// for testing aggregation context
+					// json['x-aggregation-context'] = {
+					// 	'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
+					// };
+					if (this.state.aggregationContext && !json['x-aggregation-context']) {
+						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
+						console.log(json['x-aggregation-context']);
 					}
-					corpora.update();
-				}
-				// Setting visibility, e.g. only corpora 
-				// from v2.0 endpoints for fcs v2.0
-				this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-				// corpora.update();
+					if (json['x-aggregation-context']) {
+						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
+						corpora.setAggregationContext(json["x-aggregation-context"]);
+						if (!corpora.getSelectedIds().length) {
+							this.props.error("Cannot find the required collection, will search all collections instead");
+							corpora.recurse(function(corpus) { corpus.selected = true; });
+						}
+						corpora.update();
+					}
+					// Setting visibility, e.g. only corpora 
+					// from v2.0 endpoints for fcs v2.0
+					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+					// corpora.update();
 
-				if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
-					window.MyAggregator.mode = 'search';
-					this.search();
+					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
+						window.MyAggregator.mode = 'search';
+						this.search();
+					}
 				}
-				// }
 			}
 		});
 	}
@@ -218,7 +218,7 @@ class AggregatorPage extends Component {
 		// console.log("searching in the following corpora:", selectedIds);
 		// console.log("searching with queryType:", queryTypeId);
 		this.props.ajax({
-			url: 'rest/search',
+			url: 'search',
 			type: "POST",
 			data: {
 				query: query,
@@ -228,7 +228,7 @@ class AggregatorPage extends Component {
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
+				console.log("search ["+query+"] ok: ", searchId, jqXHR);
 			        //Piwik.getAsyncTracker().trackSiteSearch(query, queryTypeId);
 			        // automatic inclusion of piwik in prod
 			        //console.log("location.hostname: " + location.hostname);
@@ -247,7 +247,7 @@ class AggregatorPage extends Component {
 	nextResults = corpusId => {
 		// console.log("searching next results in corpus:", corpusId);
 		this.props.ajax({
-			url: 'rest/search/'+this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -267,7 +267,7 @@ class AggregatorPage extends Component {
 			return;
 		}
 		this.props.ajax({
-			url: 'rest/search/'+this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
@@ -275,7 +275,7 @@ class AggregatorPage extends Component {
 						timeout = 1.5 * timeout;
 					}
 					setTimeout(this.refreshSearchResults, timeout);
-					// console.log("new search in: " + this.timeout + "ms");
+					console.log("new search in: " + this.timeout + "ms");
 				} else {
 					console.log("search ended; hits:", json);
 				}
@@ -306,7 +306,7 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return 'rest/search/' + this.state.searchId + '/download?' +
+		return 'search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
@@ -472,13 +472,16 @@ class AggregatorPage extends Component {
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
-		return (<h3 style={{fontSize:'1em'}}>
-					{corpus.title}
-					{ corpus.landingPage ?
-						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-							<span> - Homepage </span>
-							<i className="fa fa-home"/>
-						</a>: false} </h3>);
+		return (
+			<h3 style={{fontSize:'1em'}}>
+				{corpus.title}
+				{ corpus.landingPage ?
+					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
+						<span> - Homepage </span>
+						<i className="fa fa-home"/>
+					</a>: false}
+			</h3>
+		);
 	}//,
 
 	renderSearchButtonOrLink = () => {

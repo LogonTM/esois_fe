@@ -50,7 +50,7 @@ div.navbar {
 }
 
 .navbar-collapse.collapse.show, #navMenu {
-  width: 330px;
+  width: auto;
 }
 
 #navbar-images {
@@ -87,7 +87,7 @@ div.navbar {
   margin-right: 0.75em;
 }
 
-.input-group .form-control, .form-control, .input-group-prepend, .input-group-text, .btn-default, .btn-outline-secondary, .modal, .form label, .top-gap, .row a {
+.input-group .form-control, .form-control, .input-group-prepend, .input-group-text, .btn-default, .btn-outline-secondary, .modal, .form label, .top-gap, .row a, h3 a {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(40,85,143) !important;
 }
@@ -150,23 +150,35 @@ div#new-footer {
   padding-right: auto !important;
 }
 
-#left-column {
+/* #left-column {
   text-align: right;
-}
+} */
 
-#right-column {
+/* #right-column {
   text-align: left;
-}
+} */
 
 .form-inline {
   align-items: center;
   text-align: center;
 }
 
-#other-row {
+/* #other-row {
   width: auto !important;
+} */
+
+div.corpus h3 a, .modal-title a {
+  color: rgb(220, 133, 46) !important;
 }
 
-div.corpus h3 a {
-  color: rgb(220, 133, 46) !important;
+#searchInCollections {
+  font-size: 0.7em;
+}
+
+.fa {
+  margin: 0.2em;
+}
+
+.fa-plus, .fa-minus, .fa-ellipsis-h {
+  margin-right: 0.5em;
 }

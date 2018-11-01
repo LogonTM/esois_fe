@@ -12,11 +12,11 @@ class Footer extends Component {
 					<div className="row justify-content-center" id="footer-text">
 						<div className="col-auto">
 							<p>
-								© 2018
+								© 2018&nbsp;
 								<FormattedMessage
 									id='footer.ekrk'
 									description='Eesti Keeleressursside Keskus translation'
-									defaultMessage=' Center of Estonian Language Resources '
+									defaultMessage='Center of Estonian Language Resources'
 								/>
 							</p>
 						</div>

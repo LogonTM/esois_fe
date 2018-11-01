@@ -220,7 +220,7 @@ class ResultMixin extends Component {
 						<FormattedMessage
 							id='resultmixin.download'
 							description='download translation'
-							defaultMessage=' Download '
+							defaultMessage='Download'
 						/>{" "}
 					<span className="caret"/>
 				</button>

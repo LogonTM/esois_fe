@@ -167,18 +167,18 @@ class ADVTokenMenu extends Component {
 						id='repeatMenu.repeat'
 						description='repeat translation'
 						defaultMessage='repeat'
-					/>
+					/>&nbsp;
 				</span>
 				<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
-				<span>
+				<span>&nbsp;
 					<FormattedMessage
 						id='repeatMenu.to'
 						description='to translation'
 						defaultMessage='to'
-					/>
+					/>&nbsp;
 				</span>
 				<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
-				<span>
+				<span>&nbsp;
 					<FormattedMessage
 						id='repeatMenu.times'
 						description='times translation'
