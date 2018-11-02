@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 // import classNames from "classnames";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import $ from 'jquery';
 
-var PT = PropTypes;
+// var PT = PropTypes;
 
 // var PopoverMixin = {
 class PopoverMixin extends Component {

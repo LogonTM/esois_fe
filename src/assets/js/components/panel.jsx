@@ -31,26 +31,27 @@ class Panel extends Component {
 	}//,
 
 	render/*: function*/() {
-		var chevron = "glyphicon glyphicon-chevron-" + (this.state.open ? "down":"right");
-		return 	<div className="bs-callout bs-callout-info"> 
-					<div className="panel">
-						<div className="panel-heading unselectable row" onClick={this.toggleState}>
-							<div className="panel-title unselectable col-sm-11">
-								<span className={chevron} style={{fontSize:12}} />&nbsp;
-								{this.props.title}
-							</div>
-							<div className='float-right'>
-								{this.props.info}
-							</div>
+		var chevron = "fa fa-chevron-" + (this.state.open ? "down":"right");
+		return (
+			<div className="bs-callout bs-callout-info"> 
+				<div className="panel">
+					<div className="panel-heading unselectable row" onClick={this.toggleState}>
+						<div className="panel-title unselectable col-sm-11">
+							<span className={chevron} style={{fontSize:12}} />&nbsp;
+							{this.props.title}
 						</div>
-						{ this.state.open ? 
-							<div className="panel-body">{this.props.children}</div> : 
-							false}
+						<div className='float-right'>
+							{this.props.info}
+						</div>
 					</div>
-				</div>;
+					{ this.state.open ? 
+						<div className="panel-body">{this.props.children}</div> : 
+						false}
+				</div>
+			</div>
+		);
 	}
 }//);
-
 
 // module.exports = Panel;
 export default Panel;

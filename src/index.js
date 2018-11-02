@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {IntlProvider} from "react-intl";
+// import messages_en from "./translations/en.json";
+// import messages_ee from "./translations/ee.json";
+// import {IntlProvider} from "react-intl";
+// import { addLocaleData } from 'react-intl';
+// import locale_en from 'react-intl/locale-data/en';
+// import locale_ee from 'react-intl/locale-data/ee';
+// import messages_en from "./en.js";
+// import messages_ee from "./ee.js";
 import './index.css';
 //import App from './App';
 import Main from './assets/js/main.jsx';
@@ -12,15 +19,18 @@ import './assets/base.css';
 import 'bootstrap';
 import './assets/lib/bootstrap.min.css';
 import './assets/lib/font-awesome.min.css';
-
-
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-    <IntlProvider locale='en'>
-        <Main />
-    </IntlProvider>, 
-    document.getElementById('body'));
+// addLocaleData([...locale_ee, ...locale_en])
+
+// const language = 'ee';
+
+// const messages = {
+//     'ee': messages_ee,
+//     'en': messages_en
+// };
+
+ReactDOM.render(<Main />, document.getElementById('body'));
 
 
 // ReactDOM.render(<AggregatorPage />, document.getElementById('body'));

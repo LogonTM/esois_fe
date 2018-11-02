@@ -14,6 +14,7 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import _ from "../components/results.jsx";
 import 'bootstrap';
+import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
 
 var PT = PropTypes;
 
@@ -28,12 +29,84 @@ class AggregatorPage extends Component {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		embedded: PT.bool.isRequired,
+		languageFromMain: PT.string.isRequired,
 	}//, 
 
 	nohits = {
 		results: null,
 	}//,
-	anyLanguage = [multipleLanguageCode, "Any Language"];//,
+	
+	anyLanguages = {
+		ee: 'igas keeles',
+		en: 'Any language'
+	}
+
+	anyLanguage = [multipleLanguageCode, 
+		<FormattedMessage
+			id='any.language'
+			description='Any Language translation'
+			defaultMessage='Any Language'
+		/>];//,
+
+	searchPlaceholders = [
+		{
+			ee: 'Koer',
+			en: 'Elephant'
+		},
+		{
+			ee: "[sõna = 'märkus'][sõna = 'keskendunud']",
+			en: "[word = 'annotation'][word = 'focused']"
+		}
+	]
+
+	placeholderMap = {
+		cql: this.searchPlaceholders[0],
+		fcs: this.searchPlaceholders[1]
+	}
+
+	queryTypes = [
+		{
+			id: 'cql',
+			name: 
+				<FormattedMessage
+					id='cql.query.name' 
+					description='CQL query name translation'
+					defaultMessage='Text layer Contextual Query Language (CQL)'
+				/>,
+/* 			searchPlaceholder: this.placeholderForCQL[this.props.languageFromMain], */
+			searchLabel:
+				<FormattedMessage
+					id='cql.query.searchLabel'
+					description='search label for CQL query translation'
+					defaultMessage='Text layer CQL query'
+				/>,
+			searchLabelBkColor: 'rgba(220, 133, 46, .3)',
+			className: '',
+		},
+		{
+			id: "fcs",
+			name: 
+				<FormattedMessage
+					id='fcsql.query.name'
+					description='FCS-QL query name translation'
+					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
+				/>,
+/* 			searchPlaceholder: this.placeholderForFCSQL[this.props.languageFromMain], */
+			searchLabel: 
+				<FormattedMessage
+					id='fcsql.query.searchLabel'
+					description='search label for FCS-QL query translation'
+					defaultMessage='Multi-layer FCS query'
+				/>,
+			searchLabelBkColor: "rgba(40, 85, 143, .3)",
+			disabled: false,
+		},
+	];
+	
+	queryTypeMap = {
+			 cql: this.queryTypes[0],
+			 fcs: this.queryTypes[1],
+	};
 
 	// getInitialState/*: function */() {
 	// 	return {
@@ -82,8 +155,8 @@ class AggregatorPage extends Component {
 	componentDidMount/*: function*/() {
 		this.setState({_isMounted: true});
 			
-/* 		this.props.ajax({
-			url: 'rest/init',
+		this.props.ajax({
+			url: 'init',
 			success: (json, textStatus, jqXHR) => {
 				if (this.state._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -91,13 +164,13 @@ class AggregatorPage extends Component {
 					this.setState({
 						corpora : corpora,
 						languageMap: json.languages,
-						weblichtLanguages: json.weblichtLanguages,
+						// weblichtLanguages: json.weblichtLanguages,
 						query: this.state.query || json.query || '',
 					});
 					// for testing aggregation context
-					json['x-aggregation-context'] = {
-						'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
-					};
+					// json['x-aggregation-context'] = {
+					// 	'EKUT': ["http://hdl.handle.net/11858/00-1778-0000-0001-DDAF-D"]
+					// };
 					if (this.state.aggregationContext && !json['x-aggregation-context']) {
 						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
 						console.log(json['x-aggregation-context']);
@@ -114,7 +187,7 @@ class AggregatorPage extends Component {
 					// Setting visibility, e.g. only corpora 
 					// from v2.0 endpoints for fcs v2.0
 					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-					corpora.update();
+					// corpora.update();
 
 					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
 						window.MyAggregator.mode = 'search';
@@ -122,11 +195,11 @@ class AggregatorPage extends Component {
 					}
 				}
 			}
-		}); */
+		});
 	}
 
 	updateCorpora = corpora => {
-		this.setState({corpora:corpora});
+		this.setState({corpora});
 	}
 
 	search = () => {
@@ -138,14 +211,14 @@ class AggregatorPage extends Component {
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error("Please select a collection to search into");
+			this.props.error('Please select a collection to search into');
 			return;
 		}
 
 		// console.log("searching in the following corpora:", selectedIds);
 		// console.log("searching with queryType:", queryTypeId);
 		this.props.ajax({
-			url: 'rest/search',
+			url: 'search',
 			type: "POST",
 			data: {
 				query: query,
@@ -155,7 +228,7 @@ class AggregatorPage extends Component {
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
+				console.log("search ["+query+"] ok: ", searchId, jqXHR);
 			        //Piwik.getAsyncTracker().trackSiteSearch(query, queryTypeId);
 			        // automatic inclusion of piwik in prod
 			        //console.log("location.hostname: " + location.hostname);
@@ -174,7 +247,7 @@ class AggregatorPage extends Component {
 	nextResults = corpusId => {
 		// console.log("searching next results in corpus:", corpusId);
 		this.props.ajax({
-			url: 'rest/search/'+this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -194,7 +267,7 @@ class AggregatorPage extends Component {
 			return;
 		}
 		this.props.ajax({
-			url: 'rest/search/'+this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
@@ -202,7 +275,7 @@ class AggregatorPage extends Component {
 						timeout = 1.5 * timeout;
 					}
 					setTimeout(this.refreshSearchResults, timeout);
-					// console.log("new search in: " + this.timeout + "ms");
+					console.log("new search in: " + this.timeout + "ms");
 				} else {
 					console.log("search ended; hits:", json);
 				}
@@ -233,14 +306,14 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return 'rest/search/' + this.state.searchId + '/download?' +
+		return 'search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
-	getToWeblichtLink = (corpusId, forceLanguage) => {
+/* 	getToWeblichtLink = (corpusId, forceLanguage) => {
 		return 'rest/search/' + this.state.searchId + '/toWeblicht?' +
 			this.getExportParams(corpusId, null, forceLanguage);
-	}
+	} */
 
 	setLanguageAndFilter = (languageObj, languageFilter) => {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
@@ -319,7 +392,7 @@ class AggregatorPage extends Component {
 	}
 
 	toggleLanguageSelection = e => {
-	    $(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
+		$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}//,
@@ -387,11 +460,11 @@ class AggregatorPage extends Component {
 	
 	handleAjaxError = (jqXHR, textStatus, error) => {
 		if (jqXHR.readyState === 0) {
-		  this.error('Network error, please check your internet connection')
+			this.error('Network error, please check your internet connection')
 		} else if (jqXHR.responseText) {
-		  this.error(jqXHR.responseText + ' (' + error + ')')
+			this.error(jqXHR.responseText + ' (' + error + ')')
 		} else {
-		  this.error(error + ' (' + textStatus + ')')
+			this.error(error + ' (' + textStatus + ')')
 		}
 		console.log('ajax error, jqXHR: ', jqXHR)
 	}
@@ -399,13 +472,16 @@ class AggregatorPage extends Component {
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
-		return (<h3 style={{fontSize:'1em'}}>
-					{corpus.title}
-					{ corpus.landingPage ?
-						<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-							<span> - Homepage </span>
-							<i className="glyphicon glyphicon-home"/>
-						</a>: false} </h3>);
+		return (
+			<h3 style={{fontSize:'1em'}}>
+				{corpus.title}
+				{ corpus.landingPage ?
+					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
+						<span> - Homepage </span>
+						<i className="fa fa-home"/>
+					</a>: false}
+			</h3>
+		);
 	}//,
 
 	renderSearchButtonOrLink = () => {
@@ -419,109 +495,164 @@ class AggregatorPage extends Component {
 			});
 			var newurl = !query ? "#" :
 				(window.MyAggregator.URLROOT + "?" + encodeQueryData({queryType:queryTypeId, query:query, mode:'search'}));
-			return ( <a className={btnClass} style={{paddingTop:13}}
+			return (
+				<a className={btnClass} style={{paddingTop:13}}
 					type="button" target="_blank" href={newurl}>
-					<i className="glyphicon glyphicon-search"></i>
+					<i className="fa fa-search"></i>
 				</a>
 			);
 		}
 		return (
-		    <button className="btn btn-default input-lg image_button" type="button" onClick={this.search}>
-				<i className="glyphicon glyphicon-search"></i>
+		    <button className="btn btn-outline-secondary" type="button" onClick={this.search}>
+				<i className="fa fa-search"></i>
 		    </button>
 		);
 	}//,
 
 	render/*: function*/() {
-		var queryType = queryTypeMap[this.state.queryTypeId];
+		var queryType = this.queryTypeMap[this.state.queryTypeId];
+		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
 		return	(
-			<div className="top-gap">
-				<div className="row">
-					<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
-						<div className="input-group">
-							<span className="input-group-addon" style={{backgroundColor:queryType.searchLabelBkColor}}>
-								{queryType.searchLabel}
-							</span>
-							<QueryInput 
-							    searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
-							    queryTypeId={this.state.queryTypeId}
-							    query={this.state.query}
-							    embedded={this.props.embedded}
-							    placeholder={queryType.searchPlaceholder}
-							    onChange={this.onADVQuery.bind(this)}
-		                        onQuery={this.onQuery}
-							    onKeyDown={this.handleKey.bind(this)} />
+			<div className="container">
+				<div className="row justify-content-center" style={{marginTop:64}}>
+					<div className="col-12">
+						<div className="aligncenter">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
+										{queryType.searchLabel}
+									</span>
+								</div>
+								<QueryInput 
+									searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
+									queryTypeId={this.state.queryTypeId}
+									query={this.state.query}
+									embedded={this.props.embedded}
+									placeholder={correctPlaceholder[this.props.languageFromMain]}
+									onChange={this.onADVQuery}
+									onQuery={this.onQuery}
+									onKeyDown={this.handleKey} />
 
-							<div className="input-group-btn">
-								{this.renderSearchButtonOrLink()}
+								<div className="input-group-append">
+									{this.renderSearchButtonOrLink()}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div className="wel" style={{marginTop:20}}>
-					<div className="aligncenter" >
-						<form className="form-inline" role="form">
-
-							<div className="input-group">
-
-								<span className="input-group-addon nobkg" >Search for</span>
-
-								<div className="input-group-btn">
-									<button className="form-control btn btn-default"
-											onClick={this.toggleLanguageSelection.bind(this)}>
-										{this.state.language[1]} <span className="caret"/>
-									</button>
-									<span/>
+				<div className="row justify-content-center align-items-center" style={{marginTop:20}}>
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='search.for'
+											description='Search for translation'
+											defaultMessage='Search for'
+										/>
+									</span>
 								</div>
-								<div className="input-group-btn hidden-xxs">
+								<div className="input-group">
+									<button className="btn btn-outline-secondary dropdown-toggle"
+											onClick={this.toggleLanguageSelection}>
+										{this.state.language[1]} 
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group">
+									<button className="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+											aria-expanded="false"
+											data-toggle="dropdown">
+										{queryType.name}
+									</button>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	queryTypes.map(function(l) {
-												var cls = l.disabled ? 'disabled':'';
-												var handler = function() { if (!l.disabled) this.setQueryType(l.id); }.bind(this);
+										{ 	this.queryTypes.map((l) => {
+												var cls = l.disabled ? 'disabled':'dropdown-item';
+												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
 												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
 													onClick={handler}> {l.name} </a></li>);
-											}.bind(this))
+											})
 										}
 									</ul>
-
-									<button className="form-control btn btn-default"
-											aria-expanded="false" data-toggle="dropdown" >
-										{queryType.name} <span className="caret"/>
-									</button>
-
 								</div>
-
 							</div>
-
-							<div className="input-group hidden-xs">
-								<span className="input-group-addon nobkg">in</span>
-								<button type="button" className="btn btn-default" onClick={this.toggleCorpusSelection.bind(this)}>
-									{this.state.corpora.getSelectedMessage()} <span className="caret"/>
-								</button>
-							</div>
-
-							<div className="input-group hidden-xs hidden-sm">
-								<span className="input-group-addon nobkg">and show up to</span>
-								<div className="input-group-btn">
+						</form>
+					</div>
+				</div>
+				<div className="row justify-content-center" >
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='aggregatorpage.in'
+											description='in translation'
+											defaultMessage='in'
+										/>
+									</span>
+								</div>
+								<div className="input-group">
+									<button	type="button"
+											className="btn btn-outline-secondary dropdown-toggle"
+											onClick={this.toggleCorpusSelection}>
+										{this.state.corpora.getSelectedMessage()}
+									</button>
+								</div>
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										<FormattedMessage
+											id='aggregatorpage.andShowUpTo'
+											description='and show up to translation'
+											defaultMessage='and show up to'
+										/>
+									</span>
+								</div>
+								<div className="input-group">
 									<input type="number" className="form-control input" min="10" max="250"
 										style={{width:60}}
 										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
 										onKeyPress={this.stop.bind(this)}/>
 								</div>
-								<span className="input-group-addon nobkg">hits per endpoint</span>
+								<div className="input-group-append">
+									<span className="input-group-text nobkg">
+										<FormattedMessage 
+											id='aggregatorpage.hitsPerEndpoint'
+											description='hits per endoint translation'
+											defaultMessage='hits per endpoint'
+										/>
+									</span>
+								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
 
-				<Modal ref="corporaModal" title={<span>Collections</span>}>
+				<Modal ref="corporaModal" title={<span>
+					<FormattedMessage
+						id='collections'
+						description='collections translation'
+						defaultMessage='Collections'
+					/>
+					</span>}>
 					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} />
 				</Modal>
 
-				<Modal ref="languageModal" title={<span>Select Language</span>}>
-					<LanguageSelector anyLanguage={this.anyLanguage}
+				<Modal ref="languageModal" title={<span>
+					<FormattedMessage
+						id='select.language'
+						description='select language translation'
+						defaultMessage='Select Language'
+					/>
+					</span>}>
+					<LanguageSelector anyLanguage={[multipleLanguageCode, this.anyLanguages[this.props.languageFromMain]]}
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
 									  languageFilter={this.state.languageFilter}
@@ -532,9 +663,7 @@ class AggregatorPage extends Component {
 					<ZoomedResult corpusHit={this.state.zoomedCorpusHit}
 								  nextResults={this.nextResults}
 								  getDownloadLink={this.getDownloadLink}
-								  getToWeblichtLink={this.getToWeblichtLink}
 								  searchedLanguage={this.state.language}
-								  weblichtLanguages={this.state.weblichtLanguages}
 								  languageMap={this.state.languageMap} 
 						          queryTypeId={this.state.queryTypeId} />
 				</Modal>
@@ -543,7 +672,6 @@ class AggregatorPage extends Component {
 					<Results collhits={this.filterResults()}
 							 toggleResultModal={this.toggleResultModal}
 							 getDownloadLink={this.getDownloadLink}
-							 getToWeblichtLink={this.getToWeblichtLink}
 							 searchedLanguage={this.state.language}
 					         queryTypeId={this.state.queryTypeId}/>
 				</div>
@@ -643,10 +771,10 @@ Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode) 
 
 Corpora.prototype.setVisibility = function(queryTypeId, languageCode) {
 	// top level
-	this.corpora.forEach(function(corpus) {
+	this.corpora.forEach((corpus) => {
 		corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode);
 		this.recurseCorpora(corpus.subCorpora, function(c) { c.visible = corpus.visible; });
-	}.bind(this));
+	});
 };
 
 Corpora.prototype.setAggregationContext = function(endpoints2handles) {
@@ -658,22 +786,32 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 	this.corpora.forEach(selectSubTree.bind(this, false));
 
 	var corporaToSelect = [];
-	_.pairs(endpoints2handles).forEach(function(endp){
+	pairs(endpoints2handles).forEach((endp) => {
 		var endpoint = endp[0];
 		var handles = endp[1];
 	    console.log(endp);
 	    console.log(handles);
-		handles.forEach(function(handle){
+		handles.forEach((handle) => {
 			this.recurse(function(corpus){
 				if (corpus.handle === handle) {
 					corporaToSelect.push(corpus);
 				}
 			});
-		}.bind(this));
-	}.bind(this));
+		});
+	});
 
 	corporaToSelect.forEach(selectSubTree.bind(this, true));
 };
+
+function pairs(o) {
+	var ret = [];
+	for (var x in o) {
+		if (o.hasOwnProperty(x)) {
+			ret.push([x, o[x]]);
+		}
+	}
+	return ret;
+}
 
 Corpora.prototype.getSelectedIds = function() {
 	var ids = [];
@@ -690,13 +828,37 @@ Corpora.prototype.getSelectedIds = function() {
 };
 
 Corpora.prototype.getSelectedMessage = function() {
-	var selected = this.getSelectedIds().length;
-	if (this.corpora.length === selected) {
-		return "All available collections (" + selected + ")";
-	} else if (selected === 1) {
-		return "1 selected collection";
+	var selectedIdsCount = this.getSelectedIds().length;
+	if (this.corpora.length === selectedIdsCount) {
+		return (
+			<FormattedMessage
+				id='front.page.all.collections.selected'
+				description='all available collections translation'
+				defaultMessage='All available collections ({amount})'
+				values= {{
+					amount: selectedIdsCount
+				}}
+			/>
+		);
+	} else if (selectedIdsCount === 1) {
+		return (
+			<FormattedMessage
+				id='front.page.one.collection.selected'
+				description='one selected collection translation'
+				defaultMessage='1 selected collection'
+			/>
+		);
 	}
-	return selected + " selected collections";
+	return (
+		<FormattedMessage
+			id='front.page.some.collections.selected'
+			description='some collections selected translation'
+			defaultMessage='{amount} selected collections'
+			values= {{
+				amount: selectedIdsCount
+			}}
+		/>
+	);
 };
 
 // function Corpora(corpora, updateFn) {
@@ -776,20 +938,69 @@ function encodeQueryData(data)
 	return ret.join("&");
 }
 
+/* const CqlDefaultMessage = ({intl}) => {
+	const placeholder = intl.formatMessage({id: 'cql.query.searchPlaceholder'})
+	return (
+		<input placeholder={placeholder} />
+	);
+}
+
+			<FormattedMessage
+				id='cql.query.searchPlaceholder'
+				description='placeholder in CQL search field translation'
+				defaultMessage='Elephant'
+			/>,
+
+CqlDefaultMessage.propTypes = {
+	intl: intlShape.isRequired
+} */
+
+/* const thatThing = {
+	ee: 'Koer',
+	en: 'Elephant'
+}
+
+const 
+
 var queryTypes = [
 	{
-		id: "cql",
-		name: "Text layer Contextual Query Language (CQL)",
-		searchPlaceholder: "Elephant",
-		searchLabel: "Text layer CQL query",
-		searchLabelBkColor: "rgba(220, 133, 46, .3)",
+		id: 'cql',
+		name: 
+			<FormattedMessage
+				id='cql.query.name' 
+				description='CQL query name translation'
+				defaultMessage='Text layer Contextual Query Language (CQL)'
+			/>,
+		searchPlaceholder: thatThing['ee'],
+		searchLabel:
+			<FormattedMessage
+				id='cql.query.searchLabel'
+				description='search label for CQL query translation'
+				defaultMessage='Text layer CQL query'
+			/>,
+		searchLabelBkColor: 'rgba(220, 133, 46, .3)',
 		className: '',
 	},
 	{
 		id: "fcs",
-		name: "Multi-layer Federated Content Search Query Language (FCS-QL)",
-		searchPlaceholder: "[word = 'annotation'][word = 'focused']",
-		searchLabel: "Multi-layer FCS query",
+		name: 
+			<FormattedMessage
+				id='fcsql.query.name'
+				description='FCS-QL query name translation'
+				defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
+			/>,
+		searchPlaceholder: 
+			<FormattedMessage
+				id='fcsql.query.searchPlaceholder'
+				description='placeholder in FCS-QL search field translation'
+				defaultMessage="[word = 'annotation'][word = 'focused']"
+			/>,
+		searchLabel: 
+			<FormattedMessage
+				id='fcsql.query.searchLabel'
+				description='search label for FCS-QL query translation'
+				defaultMessage='Multi-layer FCS query'
+			/>,
 		searchLabelBkColor: "rgba(40, 85, 143, .3)",
 		disabled: false,
 	},
@@ -798,7 +1009,7 @@ var queryTypes = [
 var queryTypeMap = {
      	cql: queryTypes[0],
      	fcs: queryTypes[1],
-};
+}; */
 
 // module.exports = AggregatorPage;
 export default AggregatorPage;

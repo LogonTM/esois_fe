@@ -22,9 +22,11 @@ class Popover extends Component {
 	}//;//,
 
 	render/*: function*/() {
-		return	<button className={this.props.triggerButtonClass} onClick={this.handleClick.bind(this)}>
-					{this.props.triggerButtonContent}
-				</button>;
+		return (
+			<button className={this.props.triggerButtonClass} onClick={this.handleClick.bind(this)}>
+				{this.props.triggerButtonContent}
+			</button>
+		);
 	}
 }//);
 

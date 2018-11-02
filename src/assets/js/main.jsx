@@ -10,13 +10,37 @@ import Footer from './components/footer.jsx'
 import EmbeddedFooter from './components/embeddedfooter.jsx'
 import logo from '../img/clarindLogo.png'
 import ELlogo from '../img/el-reg-fond.png'
+import EeEKRKlogo from '../img/logo.png'
+import EnEKRKlogo from '../img/logo-eng.png'
+import Magglass from '../img/magglass.png'
 import PropTypes from 'prop-types'
+import { IntlProvider } from "react-intl";
+import { addLocaleData } from 'react-intl';
+import locale_en from 'react-intl/locale-data/en';
+import locale_ee from 'react-intl/locale-data/ee';
+import messages_en from "../../en.js"
+import messages_ee from "../../ee.js"
 //import createReactClass from "create-react-class";
 import jQuery from 'jquery'
 // import './main.js'
+import { FormattedMessage } from 'react-intl';
 
 // (function() {
 // "use strict";
+
+addLocaleData([...locale_ee, ...locale_en])
+
+// var language = 'ee';
+
+const messages = {
+  'ee': messages_ee,
+  'en': messages_en
+};
+
+const logoIntl = {
+  ee: EeEKRKlogo,
+  en: EnEKRKlogo
+};
 
 window.MyAggregator = window.MyAggregator || {}
 
@@ -70,7 +94,10 @@ class Main extends Component {
     this.state = {
       navbarCollapse: false,
       navbarPageFn: this.renderAggregator,
-      errorMessages: []
+      errorMessages: [],
+      language: 'ee',
+      loggedInStatus: false,
+      userName: ''
     }
   }
 
@@ -122,7 +149,13 @@ class Main extends Component {
 
   handleAjaxError = (jqXHR, textStatus, error) => {
     if (jqXHR.readyState === 0) {
-      this.error('Network error, please check your internet connection')
+      this.error(
+        <FormattedMessage
+          id='ajax.network.error'
+          description='no network connection error translation'
+          defaultMessage='Network error, please check your internet connection'
+        />
+      )
     } else if (jqXHR.responseText) {
       this.error(jqXHR.responseText + ' (' + error + ')')
     } else {
@@ -137,16 +170,21 @@ class Main extends Component {
 
   renderAggregator = () => {
     return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} />
+      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
     )
   } //,
 
-  renderHelp  () {
+  renderHelp = () => {
     return <HelpPage />
   } //,
 
-  renderLogin () {
-    return <LoginPage />
+  getUserLoginStatus = (userStatus) => {
+    console.log('From main: ' + userStatus)
+    this.setState({loggedInStatus: userStatus})
+  }
+
+  renderLogin = () => {
+    return <LoginPage languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
   }
 
   renderAbout = () => {
@@ -209,60 +247,47 @@ class Main extends Component {
   } 
 
   // renderLogin /*: function*/() {
-  //   // return /*false*/ <LoginPage /> // Changed this line to enable later, go to login page to be created - JK
   //   // return  <li className="unauthenticated">
   //   // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
   //   // 		</li>;
   // } //,
 
+  changeToEE = () => {
+    this.setState({
+      language: 'ee'
+    }) 
+  }
+
+  changeToEN = () => {
+    this.setState({
+      language: 'en'
+    })
+  }
+
   renderCollapsible = () => {
     var classname =
-      'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'in' : '')
+      'navbar-collapse collapse ' + (this.state.navbarCollapse ? 'show' : '')
     return (
-      <div className={classname}>
-        {/* <ul className="nav navbar-nav">
-					<li className={this.state.navbarPageFn === this.renderAggregator ? "active":""}>
-						<a className="link" tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>Aggregator</a>
-					</li>
-					<li className={this.state.navbarPageFn === this.renderHelp ? "active":""}>
-						<a className="link" tabIndex="-1" onClick={this.toHelp.bind(this, true)}>Help</a>
-					</li>
-				</ul> */}
-        <ul className='nav navbar-nav navbar-right' id='navbar-right'>
-          <li>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
-              <img className='ico' src='img/ee-icon.png' alt='EST' />
-            </a>
-            &nbsp;&nbsp;&nbsp;
-          </li>
-          <li>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a className='navbar-brand' href={URLROOT} tabIndex='-1'>
-              <img className='ico' src='img/gb-icon.png' alt='ENG' />
-            </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </li>
-          <li>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
-              <img height='75%' src='img/login-icon.png' alt='Login' />
-            </a>
-            &nbsp;&nbsp;&nbsp;
-          </li>
-          <li>
-            {' '}
-            {/* <div id="clarinservices" style={{padding:4}}/> */}
-            <a /*className='navbar-brand' href={URLROOT} tabIndex='-1'*/ className='navbar-brand' /*href="#"*/ tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
-              <img height='75%' src='img/settings-icon.png' alt='Help' />
-            </a>
-            &nbsp;
-          </li>
-          {/* {this.renderLogin()} */}
-        </ul>
+      <div className={classname} id='navMenu'>
+        <div className='navbar-nav navbar-right' id='navbar-right'>
+          <div className="d-flex flex-nowrap w-100">
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE}>
+            <img className='ico' src='img/ee-icon.png' alt='EST' />
+          </a>
+          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN}>
+            <img className='ico' src='img/gb-icon.png' alt='ENG' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
+            <img className='symbols' src={Magglass} alt='Search' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
+            <img className='symbols' src='img/login-icon.png' alt='Login' />
+          </a>
+          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
+            <img className='symbols' src='img/settings-icon.png' alt='Help' />
+          </a>
+          </div>
+        </div>
       </div>
     )
   } //,
@@ -273,44 +298,68 @@ class Main extends Component {
     }
     return (
       <div>
-        <div
-          className='navbar navbar-default navbar-static-top'
-          role='navigation'
-        >
-          <div className='container'>
-            <div className='navbar-header'>
-              {/* <header className="inline"> */}
-              <img height='75px' src='img/logo.png' alt='' />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div className='container'>
+          <nav className='navbar navbar-expand-md'>
+{/*           <div
+            className='navbar navbar-default navbar-static-top'
+            role='navigation'> */}
+            
+{/*               <div className='navbar-brand' id='navbar-images'> */}
+            <header className="inline navbar-brand" id='navbar-images'>
+              <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
+                <img
+                  className='logo'
+                  src={logoIntl[this.state.language]}
+                  alt='Eesti Keeleressursside Keskus'
+                />
+              </a>
               <img
+                className='logo2'
                 src={ELlogo}
                 alt='Euroopa Liidu regionaalfond'
-                style={{ height: 75 }}
               />
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <img src={logo} alt='CLARIN ERIC logo' style={{ height: 75 }} />
-              {/* </header> */}
-              <button
-                type='button'
-                className='navbar-toggle'
-                onClick={this.toggleCollapse}
-              >
-                <span className='sr-only'>Toggle navigation</span>
-                <span className='icon-bar' />
-                <span className='icon-bar' />
-                <span className='icon-bar' />
-                <span className='icon-bar' />
-              </button>
-              {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
-								<img width="28px" height="28px" src="img/magglass1.png"/>
-								<header className="inline"> Content Search </header>
-							</a> */}
-            </div>
-            {this.renderCollapsible()}
-          </div>
-          <hr className='orange-line' />
-        </div>
+              <a tabIndex="-1" href="https://clarin.eu/" target="_blank">
+                <img 
+                  className='logo2'
+                  src={logo}
+                  alt='CLARIN ERIC logo'
+                />
+              </a>
+            </header>
+                {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
+                  <img width="28px" height="28px" src="img/magglass1.png"/>
+                  <header className="inline"> Content Search </header>
+                                  onClick={this.toggleCollapse}
+                </a> */}
+{/*               </div> */}
+            <button
+              type='button'
+              className='navbar-toggler'
+              data-toggle='collapse'
+              data-target='#navMenu'
+              aria-controls="navMenu"
 
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className='sr-only'>
+                <FormattedMessage
+                  id='toggle.navigation'
+                  description='toggle navigation translation'
+                  defaultMessage='Toggle navigation'
+                />
+              </span>
+              <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
+
+
+            </button>
+            {this.renderCollapsible()}
+
+
+{/*           </div> */}
+          </nav>
+        </div>
+        <hr className='orange-line' />
         <ErrorPane errorMessages={this.state.errorMessages} />
       </div>
     )
@@ -318,14 +367,15 @@ class Main extends Component {
 
   render /*: function*/() {
     return (
-      <div>
-        <div> {this.renderTop()} </div>
-
-        <div id='push'>
-          <div className='container'>{this.state.navbarPageFn()}</div>
-          <div className='top-gap' />
+      <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
+        <div>
+          <div> {this.renderTop()} </div>
+          <div id='push'>
+            <div className='container'>{this.state.navbarPageFn()}</div>
+          </div>
+          <Footer />
         </div>
-      </div>
+      </IntlProvider>
     )
   }
 } //);
@@ -373,7 +423,7 @@ var routeFromLocation = function() {
 }
 
 var main = ReactDOM.render(<Main />, document.getElementById('body'))
-if (!isEmbeddedView()) {
+/* if (!isEmbeddedView()) {
   ReactDOM.render(
     <Footer VERSION={VERSION} toAbout={main.toAbout} />,
     document.getElementById('footer')
@@ -386,7 +436,7 @@ if (!isEmbeddedView()) {
   if (jQuery) {
     jQuery('body, #footer').addClass('embedded')
   }
-}
+} */
 
 window.onpopstate = routeFromLocation.bind(main)
 
