@@ -1,26 +1,19 @@
-// "use strict";
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import classNames from "classnames";
-// import PropTypes from "prop-types";
 import $ from 'jquery';
 import { FormattedMessage } from 'react-intl';
 
-// var PT = PropTypes;
-
-// var ModalMixin = {
 class ModalMixin extends Component {
-
-	componentDidMount/*: function*/() {
+	componentDidMount() {
 		$(ReactDOM.findDOMNode(this)).modal({background: true, keyboard: true, show: false});
-	}//,
-	componentWillUnmount/*: function*/() {
+	}
+	componentWillUnmount() {
 		$(ReactDOM.findDOMNode(this)).off('hidden');
-	}//,
-	handleClick/*: function*/(e) {
+	}
+	handleClick(e) {
 		e.stopPropagation();
-	}//,
-	renderModal/*: function*/(title, content) {
+	}
+	renderModal(title, content) {
 		return (
 			<div onClick={this.handleClick} className="modal fade" role="dialog" aria-hidden="true">
 				<div className="modal-dialog">
@@ -55,7 +48,6 @@ class ModalMixin extends Component {
 			</div>
 		);
 	}
-};
+}
 
-// module.exports = ModalMixin;
 export default ModalMixin;

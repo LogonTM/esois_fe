@@ -1,13 +1,10 @@
-// "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
 import ResultMixin from "./resultmixin.jsx";
 import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import { FormattedMessage } from 'react-intl';
-//var Results = createReactClass({
 
 var PT = PropTypes;
 
@@ -17,10 +14,8 @@ class Results extends Component {
 		searchedLanguage: PT.array.isRequired,
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
-/* 		getToWeblichtLink: PT.func.isRequired, */
 	    queryTypeId: PT.string.isRequired, 
-	}//,
-	// mixins: [ResultMixin];
+	}
 
 	constructor(props) {
 		super(props);
@@ -30,7 +25,7 @@ class Results extends Component {
 		};
 	}
 
-	renderPanelInfo/*: function*/(corpusHit) {
+	renderPanelInfo(corpusHit) {
 		var corpus = corpusHit.corpus;
 		var inline = {display:"inline-block"};
 		return (
@@ -49,9 +44,9 @@ class Results extends Component {
 				</div>
 			</div>
 		);
-	}//,
+	}
 
-	renderResultPanel/*: function*/ = corpusHit => {
+	renderResultPanel = corpusHit => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
@@ -66,9 +61,9 @@ class Results extends Component {
 				</Panel>
 			</CSSTransition>
 		);
-	}//,
+	}
 
-	renderProgressMessage/*: function*/ = () => {
+	renderProgressMessage = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
 		var msg = <FormattedMessage
@@ -98,41 +93,34 @@ class Results extends Component {
 					false}
 			</div>
 		);
-	}//,
+	}
 
-	getDefaultProps/*: function*/(){
+	getDefaultProps(){
 		return {hasPopover: true};
-	}//,
+	}
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		displayKwic: false,
-	// 		displayADV: false,
-	// 	};
-	// }//,
-
-	toggleKwic/*: function*/ = () => {
+	toggleKwic = () => {
 		this.setState({displayKwic:!this.state.displayKwic});
-	}//,
+	}
 
-	toggleADV/*: function*/ = () => {
+	toggleADV = () => {
 		 this.setState({displayADV:!this.state.displayADV});
-	}//,
+	}
 
-	renderPanelTitle/*: function*/(corpus) {
+	renderPanelTitle(corpus) {
 		return	(
 			<div className='inline'>
 				<span className="corpusName"> {corpus.title}</span>
 				<span className="institutionName"> — {corpus.institution.name}</span>
 			</div>
 		);
-	}//,
+	}
 
-	renderRowLanguage/*: function*/(hit) {
-		return false; //<span style={{fontFace:"Courier",color:"black"}}>{hit.language} </span> ;
-	}//,
+	renderRowLanguage(hit) {
+		return false;
+	}
 
-	renderRowsAsHits/*: function*/ = (hit,i) => {
+	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
@@ -142,9 +130,9 @@ class Results extends Component {
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
-	}//,
+	}
 
-	renderRowsAsKwic/*: function*/ = (hit,i) => {
+	renderRowsAsKwic = (hit,i) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -156,9 +144,9 @@ class Results extends Component {
 				<td style={sleft}>{hit.right}</td>
 			</tr>
 		);
-	}//,
+	}
 
-	renderRowsAsADV/*: function*/ = (hit,i) => {
+	renderRowsAsADV = (hit,i) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -174,9 +162,9 @@ class Results extends Component {
 				{hit.spans.map(renderSpans)}
 			</tr>
 		);
-	}//,
+	}
 
-	renderDiagnostic/*: function*/(d, key) {
+	renderDiagnostic(d, key) {
 		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
 			return false;
 		}
@@ -185,16 +173,16 @@ class Results extends Component {
 				<div>{d.message}</div>
 			</div>
 		);
-	}//,
+	}
 
-	renderDiagnostics/*: function*/ = (corpusHit) => {
+	renderDiagnostics = (corpusHit) => {
 		if (!corpusHit.diagnostics || corpusHit.diagnostics.length === 0) {
 			return false;
 		}
 		return corpusHit.diagnostics.map(this.renderDiagnostic);
-	}//,
+	}
 
-	renderErrors/*: function*/(corpusHit) {
+	renderErrors(corpusHit) {
 		var xc = corpusHit.exception;
 		if (!xc) {
 			return false;
@@ -220,9 +208,9 @@ class Results extends Component {
 				}
 			</div>
 		);
-	}//,
+	}
 
-	renderPanelBody/*: function*/ = corpusHit => {
+	renderPanelBody = corpusHit => {
 		var fulllength = {width:"100%"};
 
 		if (this.state.displayADV) {
@@ -254,9 +242,9 @@ class Results extends Component {
 				</div>
 			);
 		}
-	}//,
+	}
 
-	renderDisplayKWIC/*: function*/ = () => {
+	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputKwic" className="btn btn-flat">
@@ -273,9 +261,9 @@ class Results extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDisplayADV/*: function*/ = () => {
+	renderDisplayADV = () => {
 		 return (
 			 <div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputADV" className="btn btn-flat">
@@ -292,9 +280,9 @@ class Results extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDownloadLinks/*: function*/ = (corpusId) => {
+	renderDownloadLinks = (corpusId) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -331,29 +319,9 @@ class Results extends Component {
 				</ul>
 			</div>
 		);
-	}//,
+	}
 
-/* 	renderToWeblichtLinks/*: function = (corpusId, forceLanguage, error) => {
-		return (
-			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
-					<span className="glyphicon glyphicon-export" aria-hidden="true"/>{" "} Use Weblicht {" "}
-					<span className="caret"/>
-				</button>
-				<ul className="dropdown-menu">
-					<li>
-						{error ?
-							<div className="alert alert-danger" style={{margin:10, width:200}}>{error}</div> :
-							<a href={this.props.getToWeblichtLink(corpusId, forceLanguage)} target="_blank">{" "}
-								Send to Weblicht</a>
-						}
-					</li>
-				</ul>
-			</div>
-		);
-	}//, */
-
-	render/*: function*/() {
+	render() {
 		var collhits = this.props.collhits;
 		if (!collhits.results) {
 			return false;
@@ -401,7 +369,7 @@ class Results extends Component {
 
 var _ =window._ = window._ || {
 
-	keys/*: function*/(o) {
+	keys(o) {
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -411,7 +379,7 @@ var _ =window._ = window._ || {
 		return ret;
 	},
 
-	pairs/*: function*/(o){
+	pairs(o){
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -421,7 +389,7 @@ var _ =window._ = window._ || {
 		return ret;
 	},
 
-	values/*: function*/(o){
+	values(o){
 		var ret = [];
 		for (var x in o) {
 			if (o.hasOwnProperty(x)) {
@@ -431,7 +399,7 @@ var _ =window._ = window._ || {
 		return ret;
 	},
 
-	uniq/*: function*/(a) {
+	uniq(a) {
 		var r = [];
 		for (var i = 0; i < a.length; i++) {
 			if (r.indexOf(a[i]) < 0) {
@@ -442,5 +410,4 @@ var _ =window._ = window._ || {
 	},
 };
 
-// module.exports = Results;
 export default Results;

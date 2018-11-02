@@ -1,16 +1,13 @@
-// "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { FormattedMessage, injectIntl, formatMessage } from 'react-intl';
-//import createReactClass from "create-react-class";
+import { FormattedMessage } from 'react-intl';
 
-//var SearchCorpusBox = createReactClass({
-//fixme! - class SearchCorpusBox extends React.Component {
 class SearchCorpusBox extends Component {
 	static propTypes = {
 		search: PropTypes.func.isRequired,
-	}//,
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -18,13 +15,7 @@ class SearchCorpusBox extends Component {
 		};
 	}
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		query: ""
-	// 	};
-	// }//,c
-
-	handleChange/*: function*/ = event => {
+	handleChange = event => {
 		var query = event.target.value;
 		this.setState({query: query});
 
@@ -32,15 +23,15 @@ class SearchCorpusBox extends Component {
 			this.props.search(query);
 		}
 		event.stopPropagation();
-	}//,
+	}
 
-	handleKey/*: function*/ = event => {
+	handleKey = event => {
 		if (event.keyCode === 13) {
 			this.props.search(event.target.value);
 		}
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		return (
 			<div className="form-group">
 				<FormattedMessage
@@ -61,7 +52,6 @@ class SearchCorpusBox extends Component {
 			</div>
 		);
 	}
-}//);
+}
 
-// module.exports = SearchCorpusBox;
 export default SearchCorpusBox;

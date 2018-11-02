@@ -3,18 +3,13 @@ import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
-//import createReactClass from "create-react-class";
 
-// var PT = PropTypes;
-
-//var EmbeddedFooter = createReactClass({
-//fixme! - class EmbeddedFooter extends React.Component { 
 class EmbeddedFooter extends Component { 
     static propTypes = {
 	URLROOT: PropTypes.string.isRequired,
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		return (
 			<div className="container" style={{textAlign:'center'}}>
 				<div className="row">
@@ -36,7 +31,6 @@ class EmbeddedFooter extends Component {
 			</div>
 		);
 	}
-}//);
+}
 
-// module.exports = EmbeddedFooter;
 export default EmbeddedFooter;

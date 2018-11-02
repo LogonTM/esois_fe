@@ -110,6 +110,14 @@ div.navbar {
   padding: 0.5em !important;
 }
 
+input[type="checkbox"] {
+  margin-top: 6px;
+}
+
+input[type="radio"] {
+  margin-top: 4px;
+}
+
 div#new-footer {
   border-top: 0px solid white;
   background-color: white;

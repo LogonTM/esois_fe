@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-//import logo from "../../img/clarindLogo.png";
 
 class Footer extends Component {
     render() {

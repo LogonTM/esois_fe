@@ -1,39 +1,35 @@
-// "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
-// import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-// var CorpusView = createReactClass({
-//fixme! - class CorpusView extends React.Component {
 class CorpusView extends Component {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
-	}//,
+	}
 
-	toggleSelection/*: function */ = (corpus, e) => {
+	toggleSelection = (corpus, e) => {
 		var s = !corpus.selected;
 		this.props.corpora.recurseCorpus(corpus, function(c) { c.selected = s; });
 		this.props.corpora.update();
 		this.stop(e);
-	}//,
+	}
 
-	toggleExpansion/*: function */ = (corpus) => {
+	toggleExpansion = (corpus) => {
 		corpus.expanded = !corpus.expanded;
 		this.props.corpora.update();
-	}//,
+	}
 
-	selectAll/*: function*/ = (value) => {
+	selectAll = (value) => {
 		this.props.corpora.recurse( c => { c.selected = value; });
 		this.props.corpora.update();
-	}//,
+	}
 
-	searchCorpus/*: function*/ = (query) => {
+	searchCorpus = (query) => {
 		// sort fn: descending priority, stable sort
 		var sortFn = function(a, b){
 			if (b.priority === a.priority) {
@@ -102,31 +98,31 @@ class CorpusView extends Component {
 
 		// display
 		this.props.corpora.update();
-	}//,
+	}
 
-	stop/*: function*/(e) {
+	stop(e) {
 		e.stopPropagation();
-	}//,
+	}
 
-	getMinMaxPriority/*: function*/ = () => {
+	getMinMaxPriority = () => {
 		var min = 1, max = 0;
 		this.props.corpora.recurse(function(c) { 
 			if (c.priority < min) min = c.priority;
 			if (max < c.priority) max = c.priority;
 		});
 		return [min, max];
-	}//,
+	}
 
-	renderCheckbox/*: function*/(corpus) {
+	renderCheckbox(corpus) {
 		return	<button className="btn btn-outline-secondary">
 					{ corpus.selected ?
 						<span className="fa fa-check-square" aria-hidden="true"/> :
 						<span className="fa fa-square" aria-hidden="true"/>
 					}
 				</button>;
-	}//,
+	}
 
-	renderExpansion/*: function*/(corpus) {
+	renderExpansion(corpus) {
 		if (!corpus.subCorpora || corpus.subCorpora.length === 0) {
 			return false;
 		}
@@ -160,16 +156,16 @@ class CorpusView extends Component {
 				</a>
 			</div>
 		);
-	}//,
+	}
 
-	renderLanguages/*: function*/ = (languages) => {
+	renderLanguages = (languages) => {
 		return languages
 				.map(l => this.props.languageMap[l])
 				.sort()
 				.join(", ");
-	}//,
+	}
 
-	renderFilteredMessage/*: function*/ = () => {
+	renderFilteredMessage = () => {
 		var total = 0;
 		var visible = 0;
 		this.props.corpora.recurse(function(corpus){
@@ -196,9 +192,9 @@ class CorpusView extends Component {
 				/>
 			</div>
 		);
-	}//,
+	}
 
-	renderCorpus/*: function*/ = (level, minmaxp, corpus) => {
+	renderCorpus = (level, minmaxp, corpus) => {
 		if (!corpus.visible || corpus.priority <= 0) {
 			return false;
 		}
@@ -252,9 +248,9 @@ class CorpusView extends Component {
 				{corpus.expanded ? corpus.subCorpora.map(this.renderCorpus.bind(this, level+1, minmaxp)) : false}
 			</div>
 		);
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		var minmaxp = this.getMinMaxPriority();
 		return	(
 			<div style={{margin: "0 30px"}}>
@@ -294,7 +290,6 @@ class CorpusView extends Component {
 			</div>
 		);
 	}
-}//);
+}
 
-// module.exports = CorpusView;
 export default CorpusView;

@@ -19,7 +19,6 @@ var messages_en = {
     'deselect.all': 'Deselect all',
     'fcsql.query.name': 'Multi-layer Federated Content Search Query Language (FCS-QL)',
     'fcsql.query.searchLabel': 'Multi-layer FCS query',
-    'fcsql.query.searchPlaceholder': "[word = 'annotation'][word = 'focused']",
     'federated.content.search': 'Federated Content Search',
     'footer.ekrk': 'Center of Estonian Language Resources',
     'footer.estonia': ', Estonia ',

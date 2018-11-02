@@ -1,23 +1,18 @@
-// "use strict";
+
 import React, { Component } from 'react';
-// import classNames from "classnames";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
 
-// var PT = PropTypes;
-
-// var InfoPopover = createReactClass({
 class InfoPopover extends Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
-	}//,
+	}
 	mixins: [PopoverMixin];
 
-	handleClick/* function*/(e) {
+	handleClick(e) {
 		e.stopPropagation();
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		var inline = {display:"inline-block"};
 		return (
 			<button style={inline} className="btn btn-default btn-xs" onClick={this.handleClick}>
@@ -25,7 +20,6 @@ class InfoPopover extends Component {
 			</button>
 		);
 	}
-}//);
+}
 
-// module.exports = InfoPopover;
 export default InfoPopover;

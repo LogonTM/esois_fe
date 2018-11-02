@@ -20,17 +20,10 @@ import locale_en from 'react-intl/locale-data/en';
 import locale_ee from 'react-intl/locale-data/ee';
 import messages_en from "../../en.js"
 import messages_ee from "../../ee.js"
-//import createReactClass from "create-react-class";
 import jQuery from 'jquery'
-// import './main.js'
 import { FormattedMessage } from 'react-intl';
 
-// (function() {
-// "use strict";
-
 addLocaleData([...locale_ee, ...locale_en])
-
-// var language = 'ee';
 
 const messages = {
   'ee': messages_ee,
@@ -75,20 +68,11 @@ The top-most component, Main, tracks of the window's location URL and, depending
 	  The embedded view is supposed to work like a YouTube embedded clip.
 */
 
-//var Main = createReactClass({
-// fixme! - class Main extends React.Component {
 class Main extends Component {
   componentWillMount /*: function*/() {
     routeFromLocation.bind(this)()
-  } //,
-
-  // getInitialState/*: function */() {
-  // 	return {
-  // 		navbarCollapse: false,
-  // 		navbarPageFn: this.renderAggregator,
-  // 		errorMessages: [],
-  // 	};
-  // }//,
+  }
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -112,7 +96,6 @@ class Main extends Component {
       return
     }
 
-    // var that = this;
     var errs = this.state.errorMessages.slice()
     errs.push(err)
     this.setState({ errorMessages: errs })
@@ -122,25 +105,7 @@ class Main extends Component {
       errs.shift()
       this.setState({ errorMessages: errs })
     }, 10000)
-  } //,
-
-  /* 	ajax/*: function(ajaxObject) {
-		var that = this;
-		if (!ajaxObject.error) {
-			ajaxObject.error = function(jqXHR, textStatus, error) {
-				if (jqXHR.readyState === 0) {
-					that.error("Network error, please check your internet connection");
-				} else if (jqXHR.responseText) {
-					that.error(jqXHR.responseText + " ("+error+")");
-				} else  {
-					that.error(error + " ("+textStatus+")");
-				}
-				console.log("ajax error, jqXHR: ", jqXHR);
-			};
-		}
-		// console.log("ajax", ajaxObject);
-		jQuery.ajax(ajaxObject);
-	}//, */
+  }
 
   ajax = ajaxObject => {
     ajaxObject.error = ajaxObject.error || this.handleAjaxError
@@ -166,17 +131,17 @@ class Main extends Component {
 
   toggleCollapse = () => {
     this.setState({ navbarCollapse: !this.state.navbarCollapse })
-  } //,
+  }
 
   renderAggregator = () => {
     return (
       <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
     )
-  } //,
+  }
 
   renderHelp = () => {
     return <HelpPage />
-  } //,
+  }
 
   getUserLoginStatus = (userStatus) => {
     console.log('From main: ' + userStatus)
@@ -189,17 +154,17 @@ class Main extends Component {
 
   renderAbout = () => {
     return <AboutPage toStatistics={this.toStatistics} />
-  } //,
+  }
 
   renderStatistics = () => {
     return <StatisticsPage ajax={this.ajax} />
-  } //,
+  }
 
   renderEmbedded = () => {
     return (
       <AggregatorPage ajax={this.ajax} error={this.error} embedded={true} />
     )
-  } //,
+  }
 
   getPageFns = () => {
     return {
@@ -210,7 +175,7 @@ class Main extends Component {
       embed: this.renderEmbedded,
       login: this.renderLogin //Added this line to allow finding of login - JK
     }
-  } //,
+  }
 
   gotoPage = (/*doPushHistory,*/ pageFnName) => {
     var pageFn = this.getPageFns()[pageFnName]
@@ -225,7 +190,7 @@ class Main extends Component {
       this.setState({ navbarPageFn: pageFn })
       console.log('new page: ' + document.location + ', name: ' + pageFnName)
     }
-  } //,
+  }
 
   toAggregator = /*doPushHistory*/ () => {
     this.gotoPage(/*doPushHistory,*/ '')
@@ -300,11 +265,6 @@ class Main extends Component {
       <div>
         <div className='container'>
           <nav className='navbar navbar-expand-md'>
-{/*           <div
-            className='navbar navbar-default navbar-static-top'
-            role='navigation'> */}
-            
-{/*               <div className='navbar-brand' id='navbar-images'> */}
             <header className="inline navbar-brand" id='navbar-images'>
               <a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
                 <img
@@ -326,12 +286,6 @@ class Main extends Component {
                 />
               </a>
             </header>
-                {/* <a className="navbar-brand" href={URLROOT} tabIndex="-1">
-                  <img width="28px" height="28px" src="img/magglass1.png"/>
-                  <header className="inline"> Content Search </header>
-                                  onClick={this.toggleCollapse}
-                </a> */}
-{/*               </div> */}
             <button
               type='button'
               className='navbar-toggler'
@@ -354,18 +308,15 @@ class Main extends Component {
 
             </button>
             {this.renderCollapsible()}
-
-
-{/*           </div> */}
           </nav>
         </div>
         <hr className='orange-line' />
         <ErrorPane errorMessages={this.state.errorMessages} />
       </div>
     )
-  } //,
+  }
 
-  render /*: function*/() {
+  render() {
     return (
       <IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
         <div>
@@ -378,7 +329,7 @@ class Main extends Component {
       </IntlProvider>
     )
   }
-} //);
+}
 
 // StatisticsPage
 
@@ -423,23 +374,7 @@ var routeFromLocation = function() {
 }
 
 var main = ReactDOM.render(<Main />, document.getElementById('body'))
-/* if (!isEmbeddedView()) {
-  ReactDOM.render(
-    <Footer VERSION={VERSION} toAbout={main.toAbout} />,
-    document.getElementById('footer')
-  )
-} else {
-  ReactDOM.render(
-    <EmbeddedFooter URLROOT={URLROOT} />,
-    document.getElementById('footer')
-  )
-  if (jQuery) {
-    jQuery('body, #footer').addClass('embedded')
-  }
-} */
 
 window.onpopstate = routeFromLocation.bind(main)
-
-// })();
 
 export default Main

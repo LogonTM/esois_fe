@@ -1,4 +1,3 @@
-// "use strict";
 import classNames from "classnames";
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -9,12 +8,11 @@ import Results from "../components/results.jsx";
 import QueryInput from "../components/queryinput.jsx";
 import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
-// import createReactClass from "create-react-class";
 import $ from 'jquery';
 import jQuery from 'jquery';
 import _ from "../components/results.jsx";
 import 'bootstrap';
-import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
+import {FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
 
@@ -22,19 +20,17 @@ var PT = PropTypes;
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
 
-// var AggregatorPage = createReactClass({
-// fixme! - class AggregatorPage extends React.Component {
 class AggregatorPage extends Component {
 	static propTypes = {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		embedded: PT.bool.isRequired,
 		languageFromMain: PT.string.isRequired,
-	}//, 
+	} 
 
 	nohits = {
 		results: null,
-	}//,
+	}
 	
 	anyLanguages = {
 		ee: 'igas keeles',
@@ -46,7 +42,7 @@ class AggregatorPage extends Component {
 			id='any.language'
 			description='Any Language translation'
 			defaultMessage='Any Language'
-		/>];//,
+		/>];
 
 	searchPlaceholders = [
 		{
@@ -54,7 +50,7 @@ class AggregatorPage extends Component {
 			en: 'Elephant'
 		},
 		{
-			ee: "[sõna = 'märkus'][sõna = 'keskendunud']",
+			ee: "[word = 'märkus'][word = 'keskendunud']",
 			en: "[word = 'annotation'][word = 'focused']"
 		}
 	]
@@ -73,7 +69,6 @@ class AggregatorPage extends Component {
 					description='CQL query name translation'
 					defaultMessage='Text layer Contextual Query Language (CQL)'
 				/>,
-/* 			searchPlaceholder: this.placeholderForCQL[this.props.languageFromMain], */
 			searchLabel:
 				<FormattedMessage
 					id='cql.query.searchLabel'
@@ -91,7 +86,6 @@ class AggregatorPage extends Component {
 					description='FCS-QL query name translation'
 					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
 				/>,
-/* 			searchPlaceholder: this.placeholderForFCSQL[this.props.languageFromMain], */
 			searchLabel: 
 				<FormattedMessage
 					id='fcsql.query.searchLabel'
@@ -108,29 +102,7 @@ class AggregatorPage extends Component {
 			 fcs: this.queryTypes[1],
 	};
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		corpora: new Corpora([], this.updateCorpora),
-	// 		languageMap: {},
-	// 		weblichtLanguages: [],
-	//                 queryTypeId: getQueryVariable('queryType') || 'cql',
-	// 		query: getQueryVariable('query') || '',
-	// 		aggregationContext: getQueryVariable('x-aggregation-context') || '',
-	// 		language: this.anyLanguage,
-	// 		languageFilter: 'byMeta',
-	// 		numberOfResults: 10,
-
-	// 		searchId: null,
-	// 		timeout: 0,
-	// 		hits: this.nohits,
-
-	// 		zoomedCorpusHit: null,
-	// 	        _isMounted: false
-	// 	};
-	// }
-	
-
-	constructor/*: function */(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
@@ -152,7 +124,7 @@ class AggregatorPage extends Component {
 		};
 	}
 
-	componentDidMount/*: function*/() {
+	componentDidMount() {
 		this.setState({_isMounted: true});
 			
 		this.props.ajax({
@@ -164,7 +136,6 @@ class AggregatorPage extends Component {
 					this.setState({
 						corpora : corpora,
 						languageMap: json.languages,
-						// weblichtLanguages: json.weblichtLanguages,
 						query: this.state.query || json.query || '',
 					});
 					// for testing aggregation context
@@ -187,7 +158,6 @@ class AggregatorPage extends Component {
 					// Setting visibility, e.g. only corpora 
 					// from v2.0 endpoints for fcs v2.0
 					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
-					// corpora.update();
 
 					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
 						window.MyAggregator.mode = 'search';
@@ -228,7 +198,7 @@ class AggregatorPage extends Component {
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-				console.log("search ["+query+"] ok: ", searchId, jqXHR);
+				// console.log("search ["+query+"] ok: ", searchId, jqXHR);
 			        //Piwik.getAsyncTracker().trackSiteSearch(query, queryTypeId);
 			        // automatic inclusion of piwik in prod
 			        //console.log("location.hostname: " + location.hostname);
@@ -310,11 +280,6 @@ class AggregatorPage extends Component {
 			this.getExportParams(corpusId, format);
 	}
 
-/* 	getToWeblichtLink = (corpusId, forceLanguage) => {
-		return 'rest/search/' + this.state.searchId + '/toWeblicht?' +
-			this.getExportParams(corpusId, null, forceLanguage);
-	} */
-
 	setLanguageAndFilter = (languageObj, languageFilter) => {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
 			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
@@ -345,7 +310,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	stop/*: function*/(e) {
+	stop(e) {
 		e.stopPropagation();
 	}
 
@@ -395,40 +360,40 @@ class AggregatorPage extends Component {
 		$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
-	}//,
+	}
 
 	toggleCorpusSelection = e => {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
-	}//,
+	}
 
 	toggleResultModal = (e, corpusHit) => {
 	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
 		e.stopPropagation();
-	}//,
+	}
 
 	onQuery = event => {
 		this.setState({query: event.target.value});
-	}//,
+	}
 
     onADVQuery = fcsql => {
 	    this.setState({query: fcsql.target.value});
-	}//,
+	}
 
 	handleKey = event => {
 		if (event.keyCode === 13) {
 			this.search();
 		}
-	}//,
+	}
 
     handleADVKey = event => {
 	    if (event.keyCode === 13) {
 			this.addADVToken();
 	    }
-	}//,
+	}
 
 	error = errObj => {
 		var err = ''
@@ -441,7 +406,6 @@ class AggregatorPage extends Component {
 		    return
 		}
 	
-		// var that = this;
 		var errs = this.state.errorMessages.slice()
 		errs.push(err)
 		this.setState({ errorMessages: errs })
@@ -451,7 +415,7 @@ class AggregatorPage extends Component {
 		    errs.shift()
 		    this.setState({ errorMessages: errs })
 		}, 10000)
-	} //,
+	} 
 	
 	ajax = ajaxObject => {
 		ajaxObject.error = ajaxObject.error || this.handleAjaxError
@@ -482,7 +446,7 @@ class AggregatorPage extends Component {
 					</a>: false}
 			</h3>
 		);
-	}//,
+	}
 
 	renderSearchButtonOrLink = () => {
 		if (this.props.embedded) {
@@ -507,9 +471,9 @@ class AggregatorPage extends Component {
 				<i className="fa fa-search"></i>
 		    </button>
 		);
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		var queryType = this.queryTypeMap[this.state.queryTypeId];
 		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
 		return	(
@@ -677,16 +641,10 @@ class AggregatorPage extends Component {
 				</div>
 			</div>
 			);
-	}//,
-}//);
+	}
+}
 
 function Corpora(corpora, updateFn) {
-/* 	var that = this;
-	this.corpora = corpora;
-	this.update = function() {
-		updateFn(that);
-	}; */
-
 	this.corpora = corpora;
 	this.update = () => updateFn(this);
 
@@ -861,33 +819,6 @@ Corpora.prototype.getSelectedMessage = function() {
 	);
 };
 
-// function Corpora(corpora, updateFn) {
-// 	var that = this;
-// 	this.corpora = corpora;
-// 	this.update = function() {
-// 		updateFn(that);
-// 	};
-
-// 	var sortFn = function(x, y) {
-// 		var r = x.institution.name.localeCompare(y.institution.name);
-// 		if (r !== 0) {
-// 			return r;
-// 		}
-// 		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
-// 	};
-
-// 	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
-// 	this.corpora.sort(sortFn);
-
-// 	this.recurse(function(corpus, index) {
-// 		corpus.visible = true; // visible in the corpus view
-// 		corpus.selected = true; // selected in the corpus view
-// 		corpus.expanded = false; // not expanded in the corpus view
-// 		corpus.priority = 1; // used for ordering search results in corpus view
-// 		corpus.index = index; // original order, used for stable sort
-// 	});
-// }
-
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
@@ -902,33 +833,6 @@ function getQueryVariable(variable) {
     return null;
 }
 
-// function Corpora(corpora, updateFn) {
-// 	var that = this;
-// 	this.corpora = corpora;
-// 	this.update = function() {
-// 		updateFn(that);
-// 	};
-
-// 	var sortFn = function(x, y) {
-// 		var r = x.institution.name.localeCompare(y.institution.name);
-// 		if (r !== 0) {
-// 			return r;
-// 		}
-// 		return x.title.toLowerCase().localeCompare(y.title.toLowerCase());
-// 	};
-
-// 	this.recurse(function(corpus) { corpus.subCorpora.sort(sortFn); });
-// 	this.corpora.sort(sortFn);
-
-// 	this.recurse(function(corpus, index) {
-// 		corpus.visible = true; // visible in the corpus view
-// 		corpus.selected = true; // selected in the corpus view
-// 		corpus.expanded = false; // not expanded in the corpus view
-// 		corpus.priority = 1; // used for ordering search results in corpus view
-// 		corpus.index = index; // original order, used for stable sort
-// 	});
-// }
-
 function encodeQueryData(data)
 {
 	var ret = [];
@@ -938,78 +842,4 @@ function encodeQueryData(data)
 	return ret.join("&");
 }
 
-/* const CqlDefaultMessage = ({intl}) => {
-	const placeholder = intl.formatMessage({id: 'cql.query.searchPlaceholder'})
-	return (
-		<input placeholder={placeholder} />
-	);
-}
-
-			<FormattedMessage
-				id='cql.query.searchPlaceholder'
-				description='placeholder in CQL search field translation'
-				defaultMessage='Elephant'
-			/>,
-
-CqlDefaultMessage.propTypes = {
-	intl: intlShape.isRequired
-} */
-
-/* const thatThing = {
-	ee: 'Koer',
-	en: 'Elephant'
-}
-
-const 
-
-var queryTypes = [
-	{
-		id: 'cql',
-		name: 
-			<FormattedMessage
-				id='cql.query.name' 
-				description='CQL query name translation'
-				defaultMessage='Text layer Contextual Query Language (CQL)'
-			/>,
-		searchPlaceholder: thatThing['ee'],
-		searchLabel:
-			<FormattedMessage
-				id='cql.query.searchLabel'
-				description='search label for CQL query translation'
-				defaultMessage='Text layer CQL query'
-			/>,
-		searchLabelBkColor: 'rgba(220, 133, 46, .3)',
-		className: '',
-	},
-	{
-		id: "fcs",
-		name: 
-			<FormattedMessage
-				id='fcsql.query.name'
-				description='FCS-QL query name translation'
-				defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
-			/>,
-		searchPlaceholder: 
-			<FormattedMessage
-				id='fcsql.query.searchPlaceholder'
-				description='placeholder in FCS-QL search field translation'
-				defaultMessage="[word = 'annotation'][word = 'focused']"
-			/>,
-		searchLabel: 
-			<FormattedMessage
-				id='fcsql.query.searchLabel'
-				description='search label for FCS-QL query translation'
-				defaultMessage='Multi-layer FCS query'
-			/>,
-		searchLabelBkColor: "rgba(40, 85, 143, .3)",
-		disabled: false,
-	},
-];
-
-var queryTypeMap = {
-     	cql: queryTypes[0],
-     	fcs: queryTypes[1],
-}; */
-
-// module.exports = AggregatorPage;
 export default AggregatorPage;

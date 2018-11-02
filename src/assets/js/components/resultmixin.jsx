@@ -1,15 +1,10 @@
-// "use strict";
 import React, { Component } from 'react'
 import classNames from "classnames";
-// import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
-
-// var PT = PropTypes;
 
 window.MyAggregator = window.MyAggregator || {};
 var NO_MORE_RECORDS_DIAGNOSTIC_URI = window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI = "info:srw/diagnostic/1/61";
 
-//var ResultMixin = {
 class ResultMixin extends Component {
 	constructor(props) {
 		super(props);
@@ -19,39 +14,32 @@ class ResultMixin extends Component {
 		};
 	}
 
-	getDefaultProps/*: function*/(){
+	getDefaultProps(){
 		return {hasPopover: true};
-	}//,
+	}
 
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		displayKwic: false,
-	// 		displayADV: false,
-	// 	};
-	// }//,
-
-	toggleKwic/*: function*/ = () => {
+	toggleKwic = () => {
 		this.setState({displayKwic:!this.state.displayKwic});
-	}//,
+	}
 
-	toggleADV/*: function*/ = () => {
+	toggleADV = () => {
 	 	this.setState({displayADV:!this.state.displayADV});
-	}//,
+	}
 
-	renderPanelTitle/*: function*/(corpus) {
-		return	(
+	renderPanelTitle(corpus) {
+		return (
 			<div className='inline'>
 				<span className="corpusName"> {corpus.title}</span>
 				<span className="institutionName"> — {corpus.institution.name}</span>
 			</div>
 		);
-	}//,
+	}
 
-	renderRowLanguage/*: function*/(hit) {
+	renderRowLanguage(hit) {
 		return false; //<span style={{fontFace:"Courier",color:"black"}}>{hit.language} </span> ;
-	}//,
+	}
 
-	renderRowsAsHits/*: function*/(hit,i) {
+	renderRowsAsHits(hit,i) {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
@@ -61,9 +49,9 @@ class ResultMixin extends Component {
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
-	}//,
+	}
 
-	renderRowsAsKwic/*: function*/(hit,i) {
+	renderRowsAsKwic(hit,i) {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -75,9 +63,9 @@ class ResultMixin extends Component {
 				<td style={sleft}>{hit.right}</td>
 			</tr>
 		);
-	}//,
+	}
 
-	renderRowsAsADV/*: function*/(hit,i) {
+	renderRowsAsADV(hit,i) {
 	    var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 	    var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 	    var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
@@ -93,9 +81,9 @@ class ResultMixin extends Component {
 				{hit.spans.map(renderSpans)}
 			</tr>
 		);
-	}//,
+	}
 
-	renderDiagnostic/*: function*/(d, key) {
+	renderDiagnostic(d, key) {
 		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
 			return false;
 		}
@@ -104,16 +92,16 @@ class ResultMixin extends Component {
 				<div>{d.message}</div>
 			</div>
 		);
-	}//,
+	}
 
-	renderDiagnostics/*: function*/(corpusHit) {
+	renderDiagnostics(corpusHit) {
 		if (!corpusHit.diagnostics || corpusHit.diagnostics.length === 0) {
 			return false;
 		}
 		return corpusHit.diagnostics.map(this.renderDiagnostic);
-	}//,
+	}
 
-	renderErrors/*: function*/(corpusHit) {
+	renderErrors(corpusHit) {
 		var xc = corpusHit.exception;
 		if (!xc) {
 			return false;
@@ -138,9 +126,9 @@ class ResultMixin extends Component {
 				}
 			</div>
 		);
-	}//,
+	}
 
-	renderPanelBody/*: function*/ = corpusHit => {
+	renderPanelBody = corpusHit => {
 	    var fulllength = {width:"100%"};
 
         if (this.state.displayADV) {
@@ -172,9 +160,9 @@ class ResultMixin extends Component {
 				</div>
 			);
 	    }
-	}//,
+	}
 
-	renderDisplayKWIC/*: function*/ = () => {
+	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputKwic" className="btn btn-flat">
@@ -191,9 +179,9 @@ class ResultMixin extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDisplayADV/*: function*/ = () => {
+	renderDisplayADV = () => {
 	 	return (
 		 	<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputADV" className="btn btn-flat">
@@ -210,9 +198,9 @@ class ResultMixin extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDownloadLinks/*: function*/ = (corpusId) => {
+	renderDownloadLinks = (corpusId) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -225,21 +213,21 @@ class ResultMixin extends Component {
 					<span className="caret"/>
 				</button>
 				<ul className="dropdown-menu">
-					<li> <a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
 							<FormattedMessage
 								id='resultmixin.download.csv'
 								description='as csv file translation'
 								defaultMessage='As CSV file'
 							/>
 						</a></li>
-					<li> <a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
 					        <FormattedMessage
 								id='resultmixin.download.json'
 								description='as json file translation'
 								defaultMessage='As JSON file'
 							/>
 						</a></li>
-					<li> <a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
+					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
 					        <FormattedMessage
 								id='resultmixin.download.xml'
 								description='as csv file translation'
@@ -249,29 +237,8 @@ class ResultMixin extends Component {
 				</ul>
 			</div>
 		);
-	}//,
-
-/* 	renderToWeblichtLinks/*: function = (corpusId, forceLanguage, error) => {
-		return (
-			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
-					<span className="glyphicon glyphicon-export" aria-hidden="true"/>{" "} Use Weblicht {" "}
-					<span className="caret"/>
-				</button>
-				<ul className="dropdown-menu">
-					<li>
-						{error ?
-							<div className="alert alert-danger" style={{margin:10, width:200}}>{error}</div> :
-							<a href={this.props.getToWeblichtLink(corpusId, forceLanguage)} target="_blank">{" "}
-								Send to Weblicht</a>
-						}
-					</li>
-				</ul>
-			</div>
-		);
-	}//, */
+	}
 
 };
 
-// module.exports = ResultMixin;
 export default ResultMixin;

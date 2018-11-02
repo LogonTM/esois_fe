@@ -1,15 +1,11 @@
-// "use strict";
 import React, { Component } from 'react';
 import classNames from "classnames";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import { FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
 
-// var QueryInput = createReactClass({
-    //fixme! - class QueryInput extends React.Component {
 class QueryInput extends Component {
     static propTypes = {
 		searchedLanguage: PT.array,
@@ -20,9 +16,9 @@ class QueryInput extends Component {
 		onChange: PT.func.isRequired,
 		onQuery: PT.func.isRequired,
 		onKeyDown: PT.func.isRequired,
-    }//,
+    }
 
-    render/*: function*/() {
+    render() {
 	// if (this.props.queryTypeId === "cql") {
 	    return (
 		<input className="form-control input-lg search" 
@@ -52,33 +48,25 @@ class QueryInput extends Component {
 	            />
 	</div>); */
     }
-}//);
+}
 
-//var ADVTokens = createReactClass({
 class ADVTokens extends Component {
     static propTypes = {
 		query: PT.string,
-    }//,
+    }
 	constructor(props) {
 		super(props);
 		this.state = {
 			tokenCounter: 1,
 			tokens: ["token1"],
 		};
-		// this.removeADVToken = this.removeADVToken.bind(this);
 	}
-    // getInitialState/*: function */() {
-	// return { 
-	//     tokenCounter: 1,
-	//     tokens: ["token1"] 
-	// };
-    // }//,
 
-    addADVToken/*: function*/ = () => {
+    addADVToken = () => {
 		var i = this.state.tokenCounter + 1;
 		this.state.tokens.push('token' + i);
 		this.setState({tokenCounter: i, tokens: this.state.tokens});
-    }//,
+    }
     
     removeADVToken = id => {
 		var tokens = this.state.tokens;
@@ -88,9 +76,9 @@ class ADVTokens extends Component {
 			var two = one.slice(0, i - 1).concat(one.slice(i));;
 			this.setState({tokens: two});
 		}
-    }//,
+    }
 
-    render/*: function*/() {
+    render() {
 	var i = 0;
 	var tokens = this.state.tokens.map((token, i) => {
 	    return (
@@ -110,15 +98,14 @@ class ADVTokens extends Component {
 			</button>
 		</div>);
     }
-}//);
+}
 
-//var ADVToken = createReactClass({
 class ADVToken extends Component {
     static propTypes = {
 		parentToken: PT.string.isRequired,
 		handleRemoveADVToken: PT.func.isRequired,
-    }//,
-    render/*: function*/() {
+    }
+    render() {
 	return (
 		<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
 			<div className="token_header">
@@ -136,9 +123,8 @@ class ADVToken extends Component {
 			</div>
 		</div>);
     }
-}//);
+}
 
-//var ADVTokenMenu = createReactClass({
 class ADVTokenMenu extends Component {
 	constructor(props) {
 		super(props);
@@ -146,16 +132,13 @@ class ADVTokenMenu extends Component {
 			"hideRepeatMenu": true,
 		};
 	}
-	// getInitialState/*: function*/() {
-	//     return {"hideRepeatMenu": true};
-	// }//,
 
-	toggleRepeatMenu/*: function*/ = e => {
+	toggleRepeatMenu = e => {
 	    this.setState({"hideRepeatMenu": !this.state.hideRepeatMenu});
 	    e.preventDefault();
-	}//,
+	}
 	
-	render/*: function*/() {
+	render() {
 	    return (
 		<div>
 			<button className="btn btn-xs btn-default image_button repeat_menu" onClick={this.toggleRepeatMenu} ref="repeatMenu">
@@ -188,9 +171,8 @@ class ADVTokenMenu extends Component {
 			</div>
 	    </div>);
 	}
-}//);
+}
 
-//var ANDQueryArgs = createReactClass({
 class ANDQueryArgs extends Component {
 	constructor(props) {
 		super(props);
@@ -199,26 +181,20 @@ class ANDQueryArgs extends Component {
 			ands: ["and1"],
 		};
 	}
-	// getInitialState/*: function*/() {
-	//     return {
-	// 	andCounter: 1,
-	// 	ands: ["and1"]
-	//     };
-	// }//,
-	
-	setADVTokenLayer/*: function*/(layer) {
+
+	setADVTokenLayer(layer) {
 	    //fixme! - check against valid layers
 	    return;
-	}//,
+	}
 
-	addADVAnd/*: function*/ = () => {
+	addADVAnd = () => {
 	    var i = this.state.andCounter + 1;
 	    this.state.ands.push('and' + i);
 	    this.setState({andCounter: i, ands: this.state.ands});
 
-	}//,
+	}
 
-	removeADVAnd/*: function*/ = id => {
+	removeADVAnd = id => {
 	    var ands = this.state.ands;
 	    var i = ands.indexOf(id);
 	    if (ands.length > 1) {
@@ -226,9 +202,9 @@ class ANDQueryArgs extends Component {
 			var two = one.slice(0, i - 1).concat(one.slice(i));;
 			this.setState({ands: two});
 	    }
-	}//,
+	}
 
-	renderANDTokenFooter/*: function */ = () => {
+	renderANDTokenFooter = () => {
 	    return (
 			<div className="token_footer">
 				<button className="btn btn-xs btn-default image_button insert_arg"
@@ -239,9 +215,9 @@ class ANDQueryArgs extends Component {
 				<div style={{clear:"both"}}/>
 			</div>
 		);
-	}//,
+	}
 
-	renderANDQueryArg/*: function */ = and => {
+	renderANDQueryArg = and => {
 	    return (
 			<div className="and query_arg">
 				<span className="hidden">
@@ -257,9 +233,9 @@ class ANDQueryArgs extends Component {
 					handleRemoveADVAnd={this.removeADVAnd}/>
 			</div>
 		);
-	}//,
+	}
 	
-	render/*: function */() {
+	render() {
 	    var andQueryArgs = this.state.ands.map((and, i) => {
 	    return (
 			<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
@@ -276,15 +252,14 @@ class ANDQueryArgs extends Component {
 			</div>
 		);
     }
-}//);
+}
 
-//var ANDQueryORArgs = createReactClass({
 class ANDQueryORArgs extends Component{
     static propTypes = {
 		numAnds: PT.number.isRequired,
 		parentAnd: PT.string.isRequired,
 		handleRemoveADVAnd: PT.func.isRequired,
-	}//,
+	}
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -292,39 +267,29 @@ class ANDQueryORArgs extends Component{
 			ors: [{id: "or1", layerType: "string:lemma", placeholder: "Bagdad"}],
 		};
 	}
-    // getInitialState/*: function*/() {
-	// return {
-	//     orCounter: 1,
-	//     ors: [{id: "or1", layerType: "string:lemma", placeholder: "Bagdad"}]
-	// };
-    // }//,
 
-    //shouldComponentUpdate: function (nextProps, nextState) {
-    //	return nextState.ors.length > 1; //!== this.state.ors.length;
-    //},
-
-    setADVTokenOp/*: function*/(op) {
+    setADVTokenOp(op) {
 	//fixme! - check against valid layers
 		return;
-    }//,
+    }
 
-    setADVInputDefault/*: function*/(or) {
+    setADVInputDefault(or) {
 	//fixme! - disable SearchButton if not atleast 1 token is in the query filter
 		return;
-    }//,
+    }
 
-    validateADV/*: function*/(value) {
+    validateADV(value) {
 	//fixme! - disable SearchButton if not atleast 1 token is in the query filter
 		return;
-    }//,
+    }
 
-    addADVOr/*: function*/ = e => {
+    addADVOr = e => {
 		var i = this.state.orCounter + 1;
 		this.state.ors.push({id: 'or' + i, layerType: "string:pos", placeholder: "PROPN"});
 		this.setState({orCounter: i, ors: this.state.ors});
-    }//,
+    }
 
-    removeADVOr/*: function*/ = (id, e) => {
+    removeADVOr = (id, e) => {
 		var ors = this.state.ors;
 		var i = ors.indexOf(id);
 		if (ors.length > 1) {
@@ -334,10 +299,10 @@ class ANDQueryORArgs extends Component{
 		} else if (ors.length === 1 && this.props.numAnds > 1) {
 			this.props.handleRemoveADVAnd(this.props.parentAnd);
 		}
-    }//,
+    }
 
-    render/*: function */() {
-		var orArgs = this.state.ors.map(function (or, i) {
+    render() {
+		var orArgs = this.state.ors.map( (or, i) => {
 			return ( 		
 				<CSSTransition key={i} classNames="fade" timeout={{enter: 200, exit: 200}}>
 					<ORArg 
@@ -350,7 +315,7 @@ class ANDQueryORArgs extends Component{
 					/>
 				</CSSTransition>
 			)
-		}.bind(this));
+		});
 		return (
 			<div>
 				<div className="or_container">
@@ -371,9 +336,8 @@ class ANDQueryORArgs extends Component{
 			</div>
 		);
     }
-}//);
+}
 
-//var ORArg = createReactClass({
 class ORArg extends Component {
     static propTypes = {
 		data: PT.object.isRequired,
@@ -381,9 +345,9 @@ class ORArg extends Component {
 		handleSetADVInputDefault: PT.func.isRequired,
 		handleSetADVTokenOp: PT.func.isRequired,
 		handleValidateADV: PT.func.isRequired,
-    }//,
+    }
 
-    render/*: function*/() {
+    render() {
 	return (
 		<div className="or or_arg">
 			<div className="left_col" >
@@ -505,7 +469,6 @@ class ORArg extends Component {
 			</div>
 		</div>);
     }
-}//);
+}
 
-// module.exports = QueryInput;
 export default QueryInput;

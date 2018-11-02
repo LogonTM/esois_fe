@@ -19,7 +19,6 @@ var messages_ee = {
     'deselect.all': 'Kõik mitte valituks',
     'fcsql.query.name': 'mitmekihilise ühendatud sisuotsingu päringukeeles (FCS-QL)',
     'fcsql.query.searchLabel': 'Mitmekihiline FCS päring',
-    'fcsql.query.searchPlaceholder': "[word = 'märkus'][word = 'keskendunud']",
     'federated.content.search': 'Ühendatud sisuotsing',
     'footer.ekrk': 'Eesti Keeleressursside Keskus',
     'footer.estonia': ' ',
