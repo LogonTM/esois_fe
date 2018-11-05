@@ -81,8 +81,6 @@
 	position: relative;
 	top: 12px;
 	left: -2px;
-	/*height: 20px;
-	width: 20px;*/
 	opacity: 1;
 	transition: opacity 200ms ease;
 }
@@ -101,7 +99,6 @@
 
 .query_token .arg_type {
 	display: inline-block;
-/*	vertical-align: middle; */
 	*vertical-align: auto;
 	*zoom: 1;
 	*display: inline;
@@ -143,45 +140,17 @@ input {
 	float: left;
 }
 
-/* .query_token .token_footer button i { */
-/* 	position: relative; */
-/* 	top: 0px; */
-/* 	left: -2px; */
-/* 	font-size: 14px; */
-/* } */
-
 .query_token .token_footer button.insert_arg {
     float: left;
 }
 
 .query_token .token_footer button {
-/*	width: 20px; */
-/*	height: 20px; */
 	float: right;
 }
 
 .query_token .token_footer {
 	font-size: .8em;
 }
-
-/* .btn { */
-/* 	display: inline-block; */
-/* 	margin-bottom: 0; */
-/* 	font-weight: 400; */
-/* 	text-align: center; */
-/* 	vertical-align: middle; */
-/* 	cursor: pointer; */
-/* 	border: 1px solid transparent; */
-/* 	white-space: nowrap; */
-/* 	padding: 6px 12px; */
-/* 	font-size: 14px; */
-/* 	line-height: 1.428571429; */
-/* 	border-radius: 4px; */
-/* 	-webkit-user-select: none; */
-/* 	-moz-user-select: none; */
-/* 	-ms-user-select: none; */
-/* 	user-select: none; */
-/* } */
 
 .query_token select, input {
     border: 1px dashed #ccc;
@@ -211,16 +180,6 @@ input {
 .image_button:hover {
 	cursor: pointer;
 }
-
-/* .fa, .boxdiv.disabled .checkbox, .tree.disabled > label .checkbox { */
-/* 	display: inline-block; */
-/* 	font: normal normal normal 14px/1 FontAwesome; */
-/* 	font-size: inherit; */
-/* 	text-rendering: auto; */
-/* 	-webkit-font-smoothing: antialiased; */
-/* 	-moz-osx-font-smoothing: grayscale; */
-/* 	transform: translate(0, 0); */
-/* } */
 
 .fa-times-circle-o::before {
 	content: "";

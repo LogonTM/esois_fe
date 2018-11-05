@@ -1,10 +1,5 @@
-"use strict";
 import React, { Component } from 'react';
-import classNames from "classnames";
-import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
-
-var PT = PropTypes;
 
 class HelpPage extends Component {
 
@@ -47,9 +42,7 @@ class HelpPage extends Component {
 						<FormattedMessage
 							id='helpPage.howToSearch.paragraph3'
 							description='retrieving results translation'
-							defaultMessage='When the search starts, the page will start filling in with the corpora responses.
-								After the entire search process has ended you have the option to download the results
-								in various formats.'
+							defaultMessage='When the search starts, the page will start filling in with the corpora responses.'
 						/>
 					</p>
 
@@ -57,27 +50,7 @@ class HelpPage extends Component {
 						<FormattedMessage
 							id='helpPage.howToSearch.paragraph4'
 							description='view the search results translation'
-							defaultMessage="If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button. In this view mode you can also download the results."
-						/>
-					</p>
-
-					<h3>
-						<FormattedMessage
-							id='helpPage.adjustSearch'
-							description='adjusting search criteria translation'
-							defaultMessage='Adjusting search criteria'
-						/>
-					</h3>
-					<p>
-						<FormattedMessage
-							id='helpPage.adjustSearch.paragraph1'
-							description='how to adjust search criteria translation'
-							defaultMessage='The FCS Aggregator makes possible to select specific corpora based on their name
-								or language and to specify the number of search results (hits) per corpus per page.
-								The user interface controls that allows to change these options are located
-								right below the search fiels on the main page. The current options are
-								to filter resources based on their language, to select specific resources, and
-								to set the maximum number of hits.'
+							defaultMessage="If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button."
 						/>
 					</p>
 					<div className='bottom-gap'></div>

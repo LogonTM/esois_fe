@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import classNames from "classnames";
-import ResultMixin from "./resultmixin.jsx";
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import _ from "./results.jsx";
 import { FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
@@ -100,17 +97,12 @@ class ZoomedResult extends Component {
 		);
 	}
 
-	renderRowLanguage(hit) {
-		return false;
-	}
-
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
 		return (
 			<p key={i} className="hitrow">
-				{this.renderRowLanguage(hit)}
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
@@ -122,7 +114,6 @@ class ZoomedResult extends Component {
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
 		return	(
 			<tr key={i} className="hitrow">
-				<td>{this.renderRowLanguage(hit)}</td>
 				<td style={sright}>{hit.left}</td>
 				<td style={scenter} className="keyword">{hit.keyword}</td>
 				<td style={sleft}>{hit.right}</td>
@@ -132,15 +123,12 @@ class ZoomedResult extends Component {
 
 	renderRowsAsADV = (hit,i) => {
 	    var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
-	    var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
-	    var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
 	    
 	    function renderSpans(span, idx) {
 		return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 	    }
 	    return (
 			<tr key={i} className="hitrow">
-				{this.renderRowLanguage(hit)}
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
@@ -179,7 +167,8 @@ class ZoomedResult extends Component {
 						description='exception translation'
 						defaultMessage='Exception:'
 					/>&nbsp;
-					{xc.message}</div>
+					{xc.message}
+				</div>
 				{ xc.cause ? 
 					<div>
 						<FormattedMessage 
@@ -232,10 +221,13 @@ class ZoomedResult extends Component {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputKwic" className="btn btn-flat">
-					{ this.state.displayKwic ?
-						<input id="inputKwic" type="checkbox" value="kwic" checked onChange={this.toggleKwic} /> :
-						<input id="inputKwic" type="checkbox" value="kwic" onChange={this.toggleKwic} />
-					}
+					<input
+						id="inputKwic"
+						type="checkbox"
+						value="kwic"
+						checked={this.state.displayKwic}
+						onChange={this.toggleKwic}
+					/>
 					&nbsp;
 					<FormattedMessage
 						id='resultmixin.display.kwic'
@@ -251,10 +243,13 @@ class ZoomedResult extends Component {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 			   <label htmlFor="inputADV" className="btn btn-flat">
-				   { this.state.displayADV ?
-					   <input id="inputADV" type="checkbox" value="adv" checked onChange={this.toggleADV} /> :
-					   <input id="inputADV" type="checkbox" value="adv" onChange={this.toggleADV} />
-				   }
+			   		<input
+						id="inputADV"
+						type="checkbox"
+						value="adv"
+						checked={this.state.displayADV}
+						onChange={this.toggleADV}
+					/>
 				   &nbsp;
 				   <FormattedMessage
 					   id='resultmixin.display.adv'

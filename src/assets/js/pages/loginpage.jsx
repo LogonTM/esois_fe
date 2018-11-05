@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AggregatorPage from './aggregatorpage.jsx';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types'
 

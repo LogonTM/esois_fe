@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import AboutPage from './pages/aboutpage.jsx'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
-import StatisticsPage from './pages/statisticspage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
-import EmbeddedFooter from './components/embeddedfooter.jsx'
 import logo from '../img/clarindLogo.png'
 import ELlogo from '../img/el-reg-fond.png'
-import EeEKRKlogo from '../img/logo.png'
-import EnEKRKlogo from '../img/logo-eng.png'
+import EeFlag from '../img/ee-icon.png'
+import GbFlag from '../img/gb-icon.png'
+import LoginIcon from '../img/login-icon.png'
+import SettingsIcon from '../img/settings-icon.png'
+import EeEKRKlogo from '../img/ekrk-logo.png'
+import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
 import PropTypes from 'prop-types'
 import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
 import locale_en from 'react-intl/locale-data/en';
 import locale_ee from 'react-intl/locale-data/ee';
-import messages_en from "../../en.js"
-import messages_ee from "../../ee.js"
+import messages_en from "../../translations/en.js"
+import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
 import { FormattedMessage } from 'react-intl';
 
@@ -37,39 +38,13 @@ const logoIntl = {
 
 window.MyAggregator = window.MyAggregator || {}
 
-var VERSION = (window.MyAggregator.VERSION = 'v.2.9.91-57')
-
 var URLROOT = (window.MyAggregator.URLROOT =
-  //window.location.pathname.substring(0, window.location.pathname.indexOf("/",2)) ||
   window.location.pathname || '/Aggregator')
 
 var PT = PropTypes
 
-/**
-The FCS Aggregator UI is based on reactjs.
-- index.html: describes the general page structure, with a push-down footer;
-  on that structure the Main and Footer components are plugged.
-- main.jsx: composes the simple top components (Main, AggregatorPage, HelpPage, 
-  AboutPage, StatisticsPage) in pages/
-- pages/aggregatorpage.jsx: defines
-	- the Corpora store of collections
-	- the AggregatorPage component which deals with search and displays the search results
-- components/corpusview.jsx: defines the CorpusView, rendered when the user views the available collections
-- plus in components/: various general usage React components
-
-The top-most component, Main, tracks of the window's location URL and, depending on the value,
-  renders various components inside its frame:
-	- AggregatorPage is the view corresponding to the normal search UI (search bar and all)
-	  This is the most complex component.
-	- HelpPage renders the help page
-	- AboutPage renders the about page
-	- StatisticsPage renders the stats page
-	- another URL, /Aggregator/embed, determines Main and AggregatorPage to render just the search bar.
-	  The embedded view is supposed to work like a YouTube embedded clip.
-*/
-
 class Main extends Component {
-  componentWillMount /*: function*/() {
+  componentWillMount() {
     routeFromLocation.bind(this)()
   }
   
@@ -135,7 +110,7 @@ class Main extends Component {
 
   renderAggregator = () => {
     return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={false} languageFromMain={this.state.language} />
+      <AggregatorPage ajax={this.ajax} error={this.error} languageFromMain={this.state.language} />
     )
   }
 
@@ -152,27 +127,10 @@ class Main extends Component {
     return <LoginPage languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
   }
 
-  renderAbout = () => {
-    return <AboutPage toStatistics={this.toStatistics} />
-  }
-
-  renderStatistics = () => {
-    return <StatisticsPage ajax={this.ajax} />
-  }
-
-  renderEmbedded = () => {
-    return (
-      <AggregatorPage ajax={this.ajax} error={this.error} embedded={true} />
-    )
-  }
-
   getPageFns = () => {
     return {
       '': this.renderAggregator,
       help: this.renderHelp,
-      about: this.renderAbout,
-      stats: this.renderStatistics,
-      embed: this.renderEmbedded,
       login: this.renderLogin //Added this line to allow finding of login - JK
     }
   }
@@ -198,24 +156,9 @@ class Main extends Component {
   toHelp = /*doPushHistory*/ () => {
     this.gotoPage(/*doPushHistory,*/ 'help')
   }
-  toAbout = /*doPushHistory*/ () => {
-    this.gotoPage(/*doPushHistory,*/ 'about')
-  }
-  toStatistics = /*doPushHistory*/ () => {
-    this.gotoPage(/*doPushHistory,*/ 'stats')
-  }
-  toEmbedded = /*doPushHistory*/ () => {
-    this.gotoPage(/*doPushHistory,*/ 'embed')
-  }
   toLogin = /*doPushHistory*/ () => {
     this.gotoPage(/*doPushHistory,*/ 'login')
   } 
-
-  // renderLogin /*: function*/() {
-  //   // return  <li className="unauthenticated">
-  //   // 			<a href="login" tabIndex="-1"><span className="glyphicon glyphicon-log-in"></span> LOGIN</a>
-  //   // 		</li>;
-  // } //,
 
   changeToEE = () => {
     this.setState({
@@ -236,20 +179,20 @@ class Main extends Component {
       <div className={classname} id='navMenu'>
         <div className='navbar-nav navbar-right' id='navbar-right'>
           <div className="d-flex flex-nowrap w-100">
-          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEE}>
-            <img className='ico' src='img/ee-icon.png' alt='EST' />
+          <a className='nav-item navbar-brand' tabIndex='-1' onClick={this.changeToEE}>
+            <img className='ico' src={EeFlag} alt='EST' />
           </a>
-          <a className='nav-item navbar-brand' /*href={URLROOT}*/ tabIndex='-1' onClick={this.changeToEN}>
-            <img className='ico' src='img/gb-icon.png' alt='ENG' />
+          <a className='nav-item navbar-brand' tabIndex='-1' onClick={this.changeToEN}>
+            <img className='ico' src={GbFlag} alt='ENG' />
           </a>
-          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
+          <a className='nav-item navbar-brand' tabIndex="-1" onClick={this.toAggregator.bind(this, true)}>
             <img className='symbols' src={Magglass} alt='Search' />
           </a>
-          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
-            <img className='symbols' src='img/login-icon.png' alt='Login' />
+          <a className='nav-item navbar-brand' tabIndex="-1" onClick={this.toLogin.bind(this, true)}>
+            <img className='symbols' src={LoginIcon} alt='Login' />
           </a>
-          <a /*href={URLROOT}*/ className='nav-item navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
-            <img className='symbols' src='img/settings-icon.png' alt='Help' />
+          <a className='nav-item navbar-brand' tabIndex="-1" onClick={this.toHelp.bind(this, true)}>
+            <img className='symbols' src={SettingsIcon} alt='Help' />
           </a>
           </div>
         </div>
@@ -258,9 +201,6 @@ class Main extends Component {
   } //,
 
   renderTop = () => {
-    if (this.state.navbarPageFn === this.renderEmbedded) {
-      return false
-    }
     return (
       <div>
         <div className='container'>
@@ -292,7 +232,6 @@ class Main extends Component {
               data-toggle='collapse'
               data-target='#navMenu'
               aria-controls="navMenu"
-
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -304,8 +243,6 @@ class Main extends Component {
                 />
               </span>
               <span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
-
-
             </button>
             {this.renderCollapsible()}
           </nav>
@@ -331,21 +268,6 @@ class Main extends Component {
   }
 }
 
-// StatisticsPage
-
-// HelpPage
-
-// AboutPage
-
-// Footer
-
-// EmbeddedFooter
-
-function isEmbeddedView() {
-  var path = window.location.pathname.split('/')
-  return path.length >= 3 && path[path.length - 1] === 'embed'
-}
-
 function endsWith(str, suffix) {
   return str.indexOf(suffix, str.length - suffix.length) !== -1
 }
@@ -359,12 +281,6 @@ var routeFromLocation = function() {
     var p = path[path.length - 1]
     if (p === 'help') {
       this.toHelp(false)
-    } else if (p === 'about') {
-      this.toAbout(false)
-    } else if (p === 'stats') {
-      this.toStatistics(false)
-    } else if (p === 'embed') {
-      this.toEmbedded(false)
     } else {
       this.toAggregator(false)
     }

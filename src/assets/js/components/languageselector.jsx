@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import classNames from "classnames";
 import PropTypes from "prop-types";
-import _ from "./results.jsx";
 import { FormattedMessage } from 'react-intl';
 
 

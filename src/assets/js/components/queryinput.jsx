@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from "classnames";
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +10,6 @@ class QueryInput extends Component {
 		searchedLanguage: PT.array,
 		queryTypeId: PT.string.isRequired,
 		query: PT.string,
-		embedded: PT.bool.isRequired,
 		placeholder: PT.string,
 		onChange: PT.func.isRequired,
 		onQuery: PT.func.isRequired,
@@ -19,34 +17,14 @@ class QueryInput extends Component {
     }
 
     render() {
-	// if (this.props.queryTypeId === "cql") {
 	    return (
 		<input className="form-control input-lg search" 
 		       id="query-cql" name="query-cql" type="text"
 		       value={this.props.query} placeholder={this.props.placeholder}
 		       tabIndex="1" onChange={this.props.onChange} 
-		       //onQuery={this.props.onQuery}
 		       onKeyDown={this.props.onKeyDown} 
-		       ref="cqlOrEmbeddedQuery"/>
+		       />
 	    );
-/* 	} else if (this.props.embedded && this.props.queryTypeId === "fcs") {
-	    return (
-		<textarea className="form-control input-lg search"
-		       id="query-fcs" name="query-fcs"
-		       type="text" rows="1"
-		       value={this.props.query} placeholder={this.props.placeholder}
-		       tabIndex="1" onChange={this.props.onChange} 
-		       //onQuery={this.props.onQuery}
-		       onKeyDown={this.props.onKeyDown} 
-		       ref="fcsOrEmbeddedQuery" />
-	    );
-	}
-	return (<div id="adv_query_input_group" className="input-group-addon">
-		    <ADVTokens
-	                query={this.props.query}
-	                ref="fcsGQB"
-	            />
-	</div>); */
     }
 }
 

@@ -1,37 +1,5 @@
 @media (max-width:360px){.hidden-xxs{display:none!important}}
 
-body.embedded #footer {
-	background-color: #f5f5f5;
-}
-
-.navbar-header a img, #footer.embedded a img {
-	float:left;
-	margin: -3px 5px 0 2px;
-	padding: 3px 3px;
-	border-radius: 50% 50%;
-	border: 1px solid #036;
-	box-shadow: inset 0 0 3px #036;
-}
-
-
-#clarinmore{
-	padding:4px 4px;
-	height:32px;
-	width:32px;
-}
-
-#clarinmore div {
-	width:6px;
-	height:6px;
-	float:left;
-	margin: 1px 1px;
-	padding: 1px 1px;
-	background-color: #036;
-	border-radius: 50% 50%;
-	/*border: 1px solid #003f6e;*/
-	box-shadow: inset 0 0 1px white;
-}
-
 .aligncenter {
 	text-align: center;
 }
@@ -96,16 +64,20 @@ body.embedded #footer {
 }
 
 .btn-flat {
-  color: #333;
+  color: rgb(40,85,143);
   margin: 2px;
   background-color: #fff;
   border-color: transparent;
 }
 .btn-flat:hover {
-  color: #333;
+  color: rgb(40,85,143);
   margin: 2px;
-  background-color: #e6e6e6;
-  border-color: #adadad;
+  background-color: rgba(40,85,143, .2);
+  border-color: lightgray;
+}
+
+.bt-flat:focus {
+	background-color: rgba(40,85,143, .2);
 }
 
 /*** error ***/
@@ -143,12 +115,12 @@ body.embedded #footer {
 }
 
 button.search {
-	 /*width: 64px;*/
-	 /*min-width:64px;*/
+	width: 64px;
+	min-width:64px;
 }
 
 input[type="text"].search {
-	 /*width: 64px;*/
+	min-width: 64px;
 }
 
 .search::-webkit-input-placeholder { /* WebKit browsers */
@@ -220,7 +192,6 @@ input.input {
 
 p.input {
 	background-color: #fff;
-
 	display: inline-block;
 	padding: 6px 6px;
 	margin-bottom: 0;
@@ -249,10 +220,6 @@ div.corpus-container {
 div.corpus-container:hover {
 	box-shadow: 0 0 10px rgb(179,216,253) !important;
 }
-div.corpus-container.dimmed {
-	/*font-weight: 300;*/
-	/*opacity: 0.8;*/
-}
 
 div.modal-dialog input {
 	border-radius:6px;
@@ -267,14 +234,9 @@ div.corpus p {
 	margin: 0;
 }
 
-div.corpus button {
-	/*border: none;*/
-}
-
 div.corpus .fa {
 	font-size: 12px;
 	color: rgb(220, 133, 46);
-
 	-ms-touch-action: manipulation;
 	touch-action: manipulation;
 	cursor: pointer;
@@ -322,8 +284,6 @@ div.modal-dialog {
 }
 
 div.panel-heading {
-	/*border: 1px solid #eee;*/
-	/*border-radius: 4px;*/
 	cursor: pointer;
 }
 
@@ -336,22 +296,16 @@ div.panel-title {
 	font-size: 0.9rem !important;
 }
 
-/* div.panel:hover .zoomResultButton {
-	color: white;
-	background-color: rgb(40,85,143);
-	border: 1px solid black;
-} */
-
 div.panel-title span.institutionName{
 	font-size: 12px;
 	font-weight:300;
-	color: #888;
+	color: rgb(40,85,143);
 }
 
 .modal-title span.institutionName{
 	font-size: 14px;
 	font-weight:300;
-	color: #888;
+	color: rgb(40,85,143);
 }
 
 .panel-body span {
@@ -362,15 +316,10 @@ div.panel-title span.institutionName{
 	font-weight: bold;
 	font-size: 12px;
 	color: #000;
-	/*background-color: #00406F;*/ /*blue*/
-	/*background-color: rgb(223, 184, 155); /*gold*/
 	background-color: rgb(230, 242, 254); /*sky blue*/
-	/*color: #00406F;*/
-	/*color: rgb(215, 180, 105);*/
 	font-weight: bold;
 	padding: .15em .5em .25em;
 	border-radius: .2em;
-	/*display: inline;*/
 }
 
 .panel-body td.keyword {
@@ -425,10 +374,6 @@ td {
     background-color: #F5F5F5;
 }
 
-div.popover {
-	max-width:552px;
-}
-
 /*** zoomed result ***/
 
 /*** Getting modal open and transition smoothly ***/
@@ -436,7 +381,6 @@ div.popover {
 {
     opacity:0.5 !important;
 }
-/*** Getting modal open and transition smoothly ***/
 
 .modal-body .corpusDescription {
 	padding-left: 15px;
@@ -507,64 +451,4 @@ div.popover {
 div.progress {
 	margin-bottom: 0;
 	height: 6px;
-}
-
-/*** BETA ***/
-
-.beta-tag {
-	position:absolute;
-	/*color:rgba(17, 65, 111, 0.1); */
-	color:rgba(128, 107, 82, 0.2);
-	margin: 64px 0 0 0;
-	font-size:36px;
-	font-weight:bold;
-	-webkit-transform: rotate(-30deg);
-	-moz-transform: rotate(-30deg);
-	-ms-transform: rotate(-30deg);
-	-o-transform: rotate(-30deg);
-}
-
-/*** file uploads ***/
-
-.btn-file {
-    position: relative;
-    overflow: hidden;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
-code {
-	background-color: #f8f8f8;
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
-	font-size: 12px;
-	margin: 0 2px;
-	padding: 0px 5px;
-}
-
-
-/*** statistics ***/
-.statistics li, .statistics div
-{
-	font-family: Consolas,monaco,courier,monospace;
-}
-
-.statistics .alert-warning.legacy {
-	color: #000000;
-	background-color: #FFFFFF;
-	border-color: #A00000;
 }

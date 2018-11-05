@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
-import classNames from "classnames";
 import PropTypes from "prop-types";
 import $ from 'jquery';
 import { FormattedMessage } from 'react-intl';

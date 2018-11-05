@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
+import FooterImg from '../../img/EKRK_logoraamat_2-000.png';
 
 class Footer extends Component {
     render() {
@@ -38,7 +39,7 @@ class Footer extends Component {
 						</div>
 					</div>
 				</div>
-				<img className="footer-img" src="img/EKRK_logoraamat_2-000.png" alt="" />
+				<img className="footer-img" src={FooterImg} alt="" />
 			</div>);
     }
 }

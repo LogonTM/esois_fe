@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import classNames from "classnames";
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';

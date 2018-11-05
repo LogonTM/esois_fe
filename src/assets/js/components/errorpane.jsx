@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import classNames from "classnames";
 import JQueryFade from "./jqueryfade.jsx";
 import PropTypes from "prop-types";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import {TransitionGroup} from "react-transition-group";
 
 class ErrorPane extends Component{
 	static propTypes = {
