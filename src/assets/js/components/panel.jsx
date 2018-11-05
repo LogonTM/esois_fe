@@ -1,24 +1,14 @@
-// "use strict";
 import React, { Component } from 'react';
-import classNames from "classnames";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
 
 var PT = PropTypes;
 
-//var Panel = createReactClass({
-//fixme! - class Panel extends React.Component {
 class Panel extends Component {
 	static propTypes = {
 		title: PT.object.isRequired,
 		info: PT.object.isRequired,
-	}//,
-
-	// getInitialState/*: function*/() {
-	// 	return {
-	// 		open: true,
-	// 	};
-	// }//,
+	}
+	
 	constructor(props){
 		super(props);
 		this.state = {
@@ -26,11 +16,11 @@ class Panel extends Component {
 		};
 	}
 
-	toggleState/*: function*/ = (e) => {
+	toggleState = (e) => {
 		this.setState({open: !this.state.open});
-	}//,
+	}
 
-	render/*: function*/() {
+	render() {
 		var chevron = "fa fa-chevron-" + (this.state.open ? "down":"right");
 		return (
 			<div className="bs-callout bs-callout-info"> 
@@ -51,7 +41,6 @@ class Panel extends Component {
 			</div>
 		);
 	}
-}//);
+}
 
-// module.exports = Panel;
 export default Panel;

@@ -1,13 +1,8 @@
-// "use strict";
 import React, { Component } from 'react';
-import classNames from "classnames";
-import ResultMixin from "./resultmixin.jsx";
 import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import { FormattedMessage } from 'react-intl';
-//var Results = createReactClass({
 
 var PT = PropTypes;
 
@@ -17,10 +12,8 @@ class Results extends Component {
 		searchedLanguage: PT.array.isRequired,
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
-/* 		getToWeblichtLink: PT.func.isRequired, */
 	    queryTypeId: PT.string.isRequired, 
-	}//,
-	// mixins: [ResultMixin];
+	}
 
 	constructor(props) {
 		super(props);
@@ -30,7 +23,7 @@ class Results extends Component {
 		};
 	}
 
-	renderPanelInfo/*: function*/(corpusHit) {
+	renderPanelInfo(corpusHit) {
 		var corpus = corpusHit.corpus;
 		var inline = {display:"inline-block"};
 		return (
@@ -49,9 +42,9 @@ class Results extends Component {
 				</div>
 			</div>
 		);
-	}//,
+	}
 
-	renderResultPanel/*: function*/ = corpusHit => {
+	renderResultPanel = corpusHit => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
@@ -66,9 +59,9 @@ class Results extends Component {
 				</Panel>
 			</CSSTransition>
 		);
-	}//,
+	}
 
-	renderProgressMessage/*: function*/ = () => {
+	renderProgressMessage = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
 		var msg = <FormattedMessage
@@ -98,85 +91,65 @@ class Results extends Component {
 					false}
 			</div>
 		);
-	}//,
+	}
 
-	getDefaultProps/*: function*/(){
-		return {hasPopover: true};
-	}//,
-
-	// getInitialState/*: function */() {
-	// 	return {
-	// 		displayKwic: false,
-	// 		displayADV: false,
-	// 	};
-	// }//,
-
-	toggleKwic/*: function*/ = () => {
+	toggleKwic = () => {
 		this.setState({displayKwic:!this.state.displayKwic});
-	}//,
+	}
 
-	toggleADV/*: function*/ = () => {
+	toggleADV = () => {
 		 this.setState({displayADV:!this.state.displayADV});
-	}//,
+	}
 
-	renderPanelTitle/*: function*/(corpus) {
+	renderPanelTitle(corpus) {
 		return	(
 			<div className='inline'>
 				<span className="corpusName"> {corpus.title}</span>
 				<span className="institutionName"> — {corpus.institution.name}</span>
 			</div>
 		);
-	}//,
+	}
 
-	renderRowLanguage/*: function*/(hit) {
-		return false; //<span style={{fontFace:"Courier",color:"black"}}>{hit.language} </span> ;
-	}//,
-
-	renderRowsAsHits/*: function*/ = (hit,i) => {
+	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
 		return (
 			<p key={i} className="hitrow">
-				{this.renderRowLanguage(hit)}
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
-	}//,
+	}
 
-	renderRowsAsKwic/*: function*/ = (hit,i) => {
+	renderRowsAsKwic = (hit,i) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
 		return	(
 			<tr key={i} className="hitrow">
-				<td>{this.renderRowLanguage(hit)}</td>
 				<td style={sright}>{hit.left}</td>
 				<td style={scenter} className="keyword">{hit.keyword}</td>
 				<td style={sleft}>{hit.right}</td>
 			</tr>
 		);
-	}//,
+	}
 
-	renderRowsAsADV/*: function*/ = (hit,i) => {
+	renderRowsAsADV = (hit,i) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
-		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
-		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
 		
 		function renderSpans(span, idx) {
 		return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 		}
 		return (
 			<tr key={i} className="hitrow">
-				{this.renderRowLanguage(hit)}
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
 			</tr>
 		);
-	}//,
+	}
 
-	renderDiagnostic/*: function*/(d, key) {
+	renderDiagnostic(d, key) {
 		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
 			return false;
 		}
@@ -185,16 +158,16 @@ class Results extends Component {
 				<div>{d.message}</div>
 			</div>
 		);
-	}//,
+	}
 
-	renderDiagnostics/*: function*/ = (corpusHit) => {
+	renderDiagnostics = (corpusHit) => {
 		if (!corpusHit.diagnostics || corpusHit.diagnostics.length === 0) {
 			return false;
 		}
 		return corpusHit.diagnostics.map(this.renderDiagnostic);
-	}//,
+	}
 
-	renderErrors/*: function*/(corpusHit) {
+	renderErrors(corpusHit) {
 		var xc = corpusHit.exception;
 		if (!xc) {
 			return false;
@@ -220,9 +193,9 @@ class Results extends Component {
 				}
 			</div>
 		);
-	}//,
+	}
 
-	renderPanelBody/*: function*/ = corpusHit => {
+	renderPanelBody = corpusHit => {
 		var fulllength = {width:"100%"};
 
 		if (this.state.displayADV) {
@@ -254,9 +227,9 @@ class Results extends Component {
 				</div>
 			);
 		}
-	}//,
+	}
 
-	renderDisplayKWIC/*: function*/ = () => {
+	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputKwic" className="btn btn-flat">
@@ -273,16 +246,19 @@ class Results extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDisplayADV/*: function*/ = () => {
+	renderDisplayADV = () => {
 		 return (
 			 <div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputADV" className="btn btn-flat">
-					{ this.state.displayADV ?
-						<input id="inputADV" type="checkbox" value="adv" checked onChange={this.toggleADV} /> :
-						<input id="inputADV" type="checkbox" value="adv" onChange={this.toggleADV} />
-					}
+					<input
+						id="inputADV"
+						type="checkbox"
+						value="adv"
+						checked={this.state.displayADV}
+						onChange={this.toggleADV}
+					/>
 					&nbsp;
 					<FormattedMessage
 						id='resultmixin.display.adv'
@@ -292,9 +268,9 @@ class Results extends Component {
 				</label>
 			</div>
 		);
-	}//,
+	}
 
-	renderDownloadLinks/*: function*/ = (corpusId) => {
+	renderDownloadLinks = (corpusId) => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
@@ -331,29 +307,9 @@ class Results extends Component {
 				</ul>
 			</div>
 		);
-	}//,
+	}
 
-/* 	renderToWeblichtLinks/*: function = (corpusId, forceLanguage, error) => {
-		return (
-			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
-					<span className="glyphicon glyphicon-export" aria-hidden="true"/>{" "} Use Weblicht {" "}
-					<span className="caret"/>
-				</button>
-				<ul className="dropdown-menu">
-					<li>
-						{error ?
-							<div className="alert alert-danger" style={{margin:10, width:200}}>{error}</div> :
-							<a href={this.props.getToWeblichtLink(corpusId, forceLanguage)} target="_blank">{" "}
-								Send to Weblicht</a>
-						}
-					</li>
-				</ul>
-			</div>
-		);
-	}//, */
-
-	render/*: function*/() {
+	render() {
 		var collhits = this.props.collhits;
 		if (!collhits.results) {
 			return false;
@@ -396,51 +352,6 @@ class Results extends Component {
 			</div>
 		);
 	}
+}
 
-}//);
-
-var _ =window._ = window._ || {
-
-	keys/*: function*/(o) {
-		var ret = [];
-		for (var x in o) {
-			if (o.hasOwnProperty(x)) {
-				ret.push(x);
-			}
-		}
-		return ret;
-	},
-
-	pairs/*: function*/(o){
-		var ret = [];
-		for (var x in o) {
-			if (o.hasOwnProperty(x)) {
-				ret.push([x, o[x]]);
-			}
-		}
-		return ret;
-	},
-
-	values/*: function*/(o){
-		var ret = [];
-		for (var x in o) {
-			if (o.hasOwnProperty(x)) {
-				ret.push(o[x]);
-			}
-		}
-		return ret;
-	},
-
-	uniq/*: function*/(a) {
-		var r = [];
-		for (var i = 0; i < a.length; i++) {
-			if (r.indexOf(a[i]) < 0) {
-				r.push(a[i]);
-			}
-		}
-		return r;
-	},
-};
-
-// module.exports = Results;
 export default Results;

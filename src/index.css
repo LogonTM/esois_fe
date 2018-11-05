@@ -13,14 +13,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
   border: 0px;
+  font-size-adjust: 0.5;
 }
 
 h1, h2, h3, h4, h5 {
   font-family: font82752 !important;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #push {
   padding-bottom: 120px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(40,85,143);
 }
 
 #main-container {
@@ -76,7 +80,6 @@ div.navbar {
 }
 
 .logo {
-/*   width: 26%; */
   height: 72px;
 }
 
@@ -108,6 +111,10 @@ div.navbar {
   border: 0px !important;
   background-color: white !important;
   padding: 0.5em !important;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  margin-top: 6px;
 }
 
 div#new-footer {
@@ -150,22 +157,10 @@ div#new-footer {
   padding-right: auto !important;
 }
 
-/* #left-column {
-  text-align: right;
-} */
-
-/* #right-column {
-  text-align: left;
-} */
-
 .form-inline {
   align-items: center;
   text-align: center;
 }
-
-/* #other-row {
-  width: auto !important;
-} */
 
 div.corpus h3 a, .modal-title a {
   color: rgb(220, 133, 46) !important;

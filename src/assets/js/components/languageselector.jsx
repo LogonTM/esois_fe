@@ -1,16 +1,10 @@
-// "use strict";
 import React, { Component } from 'react';
-import classNames from "classnames";
 import PropTypes from "prop-types";
-//import createReactClass from "create-react-class";
-//import LinkedStateMixin from "react-addons-linked-state-mixin";
-import _ from "./results.jsx";
 import { FormattedMessage } from 'react-intl';
 
 
 var PT = PropTypes;
 
-//var LanguageSelector = createReactClass({
 class LanguageSelector extends Component {
 	static propTypes = {
 		anyLanguage: PT.array.isRequired,
@@ -18,23 +12,21 @@ class LanguageSelector extends Component {
 		selectedLanguage: PT.array.isRequired,
 		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
-	}//,
-//	mixins: [LinkedStateMixin];
-//fixme! - react-addons-linked-state-mixin - Explicitly set the value and onChange handler instead.
+	}
 
-	selectLang/*: function*/ = language => {
+	selectLang = language => {
 		this.props.languageChangeHandler(language, this.props.languageFilter);
-	}//,
+	}
 
-	setFilter/*: function*/ = filter => {
+	setFilter = filter => {
 		this.props.languageChangeHandler(this.props.selectedLanguage, filter);
-	}//,
+	}
 
 	handleRadioChange = e => {
 		this.setFilter(e.target.value);
 	}
 	
-	renderLanguageObject/*: function*/ = lang => {
+	renderLanguageObject = lang => {
 		var desc = lang[1] + " [" + lang[0] + "]";
 		var style = {
 			whiteSpace: "nowrap",
@@ -45,25 +37,7 @@ class LanguageSelector extends Component {
 				<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
 			</div>
 		);
-	}//,
-
-/* 	
-	renderRadio/*: function = option => {
-		return	this.props.languageFilter === option ?
-				<input 
-				type="radio" 
-				name="filterOpts" 
-				value={option} 
-				checked 
-				onChange={this.setFilter.bind(this, option)}/>
-				: 
-				<input 
-				type="radio" 
-				name="filterOpts" 
-				value={option} 
-				onChange={this.setFilter.bind(this, option)} />;
-	}//,
- */
+	}
 
 	renderRadio = option => (
 		<input
@@ -75,8 +49,8 @@ class LanguageSelector extends Component {
 		/>
 	);
 
-	render/*: function*/() {
-		var languages = /*_.*/pairs(this.props.languageMap)
+	render() {
+		var languages = pairs(this.props.languageMap)
 						 .sort(function(l1, l2){return l1[1].localeCompare(l2[1]); });
 		languages.unshift(this.props.anyLanguage);
 		languages = languages.map(this.renderLanguageObject);
@@ -130,7 +104,7 @@ class LanguageSelector extends Component {
 			</div>
 		);
 	}
-}//);
+}
 
 function pairs(o){
 	var ret = [];
@@ -142,5 +116,4 @@ function pairs(o){
 		return ret;
 }
 
-// module.exports = LanguageSelector;
 export default LanguageSelector;
