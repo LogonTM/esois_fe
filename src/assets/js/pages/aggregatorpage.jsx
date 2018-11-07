@@ -124,7 +124,7 @@ class AggregatorPage extends Component {
 		this.setState({_isMounted: true});
 			
 		this.props.ajax({
-			url: 'http://localhost:8080/rest/init',
+			url: 'rest/init',
 			success: (json, textStatus, jqXHR) => {
 				if (this.state._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -178,7 +178,7 @@ class AggregatorPage extends Component {
 		}
 
 		this.props.ajax({
-			url: 'http://localhost:8080/search',
+			url: 'search',
 			type: "POST",
 			data: {
 				query: query,
@@ -201,7 +201,7 @@ class AggregatorPage extends Component {
 
 	nextResults = corpusId => {
 		this.props.ajax({
-			url: 'http://localhost:8080/search/' + this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -220,7 +220,7 @@ class AggregatorPage extends Component {
 			return;
 		}
 		this.props.ajax({
-			url: 'http://localhost:8080/search/' + this.state.searchId,
+			url: 'search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
