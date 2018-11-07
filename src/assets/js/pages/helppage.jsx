@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 class HelpPage extends Component {
 
 	render() {
-		return	(
+		return (
 			<div>
 				<div className="top-gap">
 					<h1>

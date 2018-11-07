@@ -17,7 +17,7 @@ class ErrorPane extends Component{
 	}
 
 	render() {
-		return	(
+		return (
 			<div className="container errorDiv">
 				<div className="row errorRow">
 					<TransitionGroup component="div">
