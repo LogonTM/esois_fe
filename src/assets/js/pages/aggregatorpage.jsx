@@ -260,7 +260,7 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return back_end_host + 'search/' + this.state.searchId + '/download?' +
+		return back_end_host + '/search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
