@@ -59,6 +59,7 @@ div.navbar {
 
 #navbar-images {
   float: left;
+  width: 70%;
 }
 
 .navbar-brand {
@@ -84,8 +85,7 @@ div.navbar {
 }
 
 .logo2 {
-  min-width: 70px;
-  width: 13%;
+  height: 67px;
   margin-left: 0.75em;
   margin-right: 0.75em;
 }
@@ -129,7 +129,16 @@ div#new-footer {
   position: absolute;
 }
 
-.footer-img {
+.footer-img-left {
+  position: absolute;
+  bottom: 3px;
+  left: 3%;
+  border: 0;
+  height: 72px;
+  min-height: 1.6cm;
+}
+
+.footer-img-right {
   position: absolute;
   bottom: 0px;
   right: 3%;
@@ -147,7 +156,11 @@ div#new-footer {
   padding-right: 15px;
 }
 
-.col-auto {
+#footer-text > .col-lg-12 > p, #footer-text > .col-md-12 > p, #footer-text > .col-sm-12 > p {
+  margin-bottom: 0 !important;
+}
+
+.col-auto, .col-sm-auto, .col-md-auto, .col-lg-auto, .col-xl-auto {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }

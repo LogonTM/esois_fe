@@ -140,7 +140,7 @@ class ZoomedResult extends Component {
 		if (d.uri === window.MyAggregator.NO_MORE_RECORDS_DIAGNOSTIC_URI) {
 			return false;
 		}
-		return 	(
+		return (
 			<div className="alert alert-warning" key={key}>
 				<div>{d.message}</div>
 			</div>
@@ -159,7 +159,7 @@ class ZoomedResult extends Component {
 		if (!xc) {
 			return false;
 		}
-		return 	(
+		return (
 			<div className="alert alert-danger" role="alert">
 				<div>
 					<FormattedMessage
@@ -206,7 +206,7 @@ class ZoomedResult extends Component {
 					</table>
 				</div>
 			);
-	    } else  {
+	    } else {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}

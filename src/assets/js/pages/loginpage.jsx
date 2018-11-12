@@ -50,7 +50,7 @@ class LoginPage extends Component {
 
 	render () {
 		if (this.state.loggedInStatus === false) {
-			return	(
+			return (
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
@@ -101,7 +101,7 @@ class LoginPage extends Component {
 				</div>
 			);
 		} else {
-			return	(
+			return (
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">

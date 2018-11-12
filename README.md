@@ -54,7 +54,7 @@ const messages = {
 
 soovitud lokaali ning tõlgetega, mida soovitakse kuvada. 
 
-Lisaks tuleb lisada reale 27 (hetkel, võib muutuda), kus asub "addLocaleData([...locale_ee, ...locale_en])", vastav lokaalisatsiooni rida. Näiteks saksa lokalisatsiooni jaoks tuleks täiendada antud rida järgnevalt:
+Lisaks tuleb lisada reale 26 (hetkel, võib muutuda), kus asub "addLocaleData([...locale_ee, ...locale_en])", vastav lokaalisatsiooni rida. Näiteks saksa lokalisatsiooni jaoks tuleks täiendada antud rida järgnevalt:
 
 addLocaleData([...locale_ee, ...locale_en, ...locale_de])
 
@@ -68,7 +68,7 @@ import messages_en from "../../translations/en.js";
 src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb importida 'main.jsx' faili reaga (näidis Suurbritannia lipu kohta):
 import GbFlag from '../img/gb-icon.png';
 
-'main.jsx' failis funktsioonis renderCollapsible (hetkel algab real 175) tuleb lipukese ikooni kuvamiseks lisada read (näidis Suurbritannia lipu kohta):
+'main.jsx' failis funktsioonis renderCollapsible (hetkel algab real 176) tuleb lipukese ikooni kuvamiseks lisada read (näidis Suurbritannia lipu kohta):
   <a className='nav-item navbar-brand' tabIndex='-1' onClick={this.changeToEN}>
     <img className='ico' src={GbFlag} alt='ENG' />
   </a>
@@ -110,7 +110,7 @@ Tulenevalt raamistiku eripärast on mõned tõlked lahendatud otse koodis:
 Eesti Keeleressursside Keskuse logo on võimalik kuvada nii inglise kui eesti keelsena. Tõlke keele jaoks, kui on ka teistes keeltes logosid olemas, tuleb logo lisada src > assets > img kausta ning importida 'main.jsx' faili vastav logo, nagu on inglise keelse logo importimiseks tehtud järgnevalt:
 import EnEKRKlogo from '../img/ekrk-logo-eng.png';
 
-Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 34 asuvas) muutujas logoIntl:
+Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 33 asuvas) muutujas logoIntl:
 const logoIntl = {
   ee: EeEKRKlogo,
   en: EnEKRKlogo

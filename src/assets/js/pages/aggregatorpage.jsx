@@ -442,7 +442,7 @@ class AggregatorPage extends Component {
 	render() {
 		var queryType = this.queryTypeMap[this.state.queryTypeId];
 		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
-		return	(
+		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
 					<div className="col-12">
@@ -605,7 +605,7 @@ class AggregatorPage extends Component {
 					         queryTypeId={this.state.queryTypeId}/>
 				</div>
 			</div>
-			);
+		);
 	}
 }
 

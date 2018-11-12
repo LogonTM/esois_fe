@@ -84,22 +84,23 @@ class ADVToken extends Component {
 		handleRemoveADVToken: PT.func.isRequired,
     }
     render() {
-	return (
-		<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
-			<div className="token_header">
-				<button className="btn btn-xs btn-default image_button close_btn" type="button"
-					onClick={this.props.handleRemoveADVToken(this.props.parentToken)} ref="removeToken">
-					<i className="fa fa-minus-circle" />
-				</button>
-				<div style={{clear:"both"}} />
-			</div>
-			<div className="args">
-					{ /* and.query_arg* and token_footer */ }
-					<ANDQueryArgs />
-				<div className="lower_footer">
+		return (
+			<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
+				<div className="token_header">
+					<button className="btn btn-xs btn-default image_button close_btn" type="button"
+						onClick={this.props.handleRemoveADVToken(this.props.parentToken)} ref="removeToken">
+						<i className="fa fa-minus-circle" />
+					</button>
+					<div style={{clear:"both"}} />
+				</div>
+				<div className="args">
+						{ /* and.query_arg* and token_footer */ }
+						<ANDQueryArgs />
+					<div className="lower_footer">
+					</div>
 				</div>
 			</div>
-		</div>);
+		);
     }
 }
 
@@ -118,36 +119,37 @@ class ADVTokenMenu extends Component {
 	
 	render() {
 	    return (
-		<div>
-			<button className="btn btn-xs btn-default image_button repeat_menu" onClick={this.toggleRepeatMenu} ref="repeatMenu">
-				<i className="fa fa-cog" />
-			</button>
-			<div id="repeatMenu" className={"repeat hide-" + this.state.hideRepeatMenu}>
-				<span>
-					<FormattedMessage
-						id='repeatMenu.repeat'
-						description='repeat translation'
-						defaultMessage='repeat'
-					/>&nbsp;
-				</span>
-				<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
-				<span>&nbsp;
-					<FormattedMessage
-						id='repeatMenu.to'
-						description='to translation'
-						defaultMessage='to'
-					/>&nbsp;
-				</span>
-				<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
-				<span>&nbsp;
-					<FormattedMessage
-						id='repeatMenu.times'
-						description='times translation'
-						defaultMessage='times'
-					/>
-				</span>
+			<div>
+				<button className="btn btn-xs btn-default image_button repeat_menu" onClick={this.toggleRepeatMenu} ref="repeatMenu">
+					<i className="fa fa-cog" />
+				</button>
+				<div id="repeatMenu" className={"repeat hide-" + this.state.hideRepeatMenu}>
+					<span>
+						<FormattedMessage
+							id='repeatMenu.repeat'
+							description='repeat translation'
+							defaultMessage='repeat'
+						/>&nbsp;
+					</span>
+					<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
+					<span>&nbsp;
+						<FormattedMessage
+							id='repeatMenu.to'
+							description='to translation'
+							defaultMessage='to'
+						/>&nbsp;
+					</span>
+					<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
+					<span>&nbsp;
+						<FormattedMessage
+							id='repeatMenu.times'
+							description='times translation'
+							defaultMessage='times'
+						/>
+					</span>
+				</div>
 			</div>
-	    </div>);
+		);
 	}
 }
 
@@ -326,7 +328,7 @@ class ORArg extends Component {
     }
 
     render() {
-	return (
+		return (
 		<div className="or or_arg">
 			<div className="left_col" >
 				<button className="btn btn-xs btn-default image_button remove_arg" onClick={this.props.handleRemoveADVOr.bind(null, this.props.data.id)}
@@ -445,7 +447,8 @@ class ORArg extends Component {
 					</FormattedMessage>
 				</select>
 			</div>
-		</div>);
+		</div>
+		);
     }
 }
 

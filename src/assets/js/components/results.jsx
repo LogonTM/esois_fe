@@ -172,7 +172,7 @@ class Results extends Component {
 		if (!xc) {
 			return false;
 		}
-		return 	(
+		return (
 			<div className="alert alert-danger" role="alert">
 				<div>
 					<FormattedMessage
@@ -218,7 +218,7 @@ class Results extends Component {
 					</table>
 				</div>
 			);
-		} else  {
+		} else {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}
@@ -233,10 +233,13 @@ class Results extends Component {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
 				<label htmlFor="inputKwic" className="btn btn-flat">
-					{ this.state.displayKwic ?
-						<input id="inputKwic" type="checkbox" value="kwic" checked onChange={this.toggleKwic} /> :
-						<input id="inputKwic" type="checkbox" value="kwic" onChange={this.toggleKwic} />
-					}
+					<input
+						id="inputKwic"
+						type="checkbox"
+						value="kwic"
+						checked={this.state.displayKwic}
+						onChange={this.toggleKwic}
+					/>
 					&nbsp;
 					<FormattedMessage
 						id='resultmixin.display.kwic'
