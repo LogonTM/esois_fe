@@ -8,7 +8,9 @@ class LoginPage extends Component {
 	static propTypes = {
 		languageFromMain: PT.string,
 		isUserloggedIn: PT.bool,
-		getStatus: PT.func
+		getStatus: PT.func,
+		backToAggregator: PT.func
+
 	}
 
 	constructor(props) {
@@ -21,13 +23,15 @@ class LoginPage extends Component {
 	}
 	
 	logInOut = (event) => {
-		// TODO
 		event.preventDefault();
 		if (this.state.loggedInStatus === false && this.state.username === 'mina' && this.state.password === '') {
 			this.setState({
 				loggedInStatus: true
 			})
 			this.props.getStatus(true)
+			setTimeout(() => {
+				this.props.backToAggregator();
+			}, 1500)
 		} else {
 			this.setState({
 				loggedInStatus: false

@@ -13,6 +13,7 @@ import 'bootstrap';
 import {FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
+var back_end_host = 'http://localhost:8080';
 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
@@ -124,7 +125,7 @@ class AggregatorPage extends Component {
 		this.setState({_isMounted: true});
 			
 		this.props.ajax({
-			url: 'rest/init',
+			url: back_end_host + '/rest/init',
 			success: (json, textStatus, jqXHR) => {
 				if (this.state._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -178,7 +179,7 @@ class AggregatorPage extends Component {
 		}
 
 		this.props.ajax({
-			url: 'search',
+			url: back_end_host + '/search',
 			type: "POST",
 			data: {
 				query: query,
@@ -201,7 +202,7 @@ class AggregatorPage extends Component {
 
 	nextResults = corpusId => {
 		this.props.ajax({
-			url: 'search/' + this.state.searchId,
+			url: back_end_host + '/search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -220,7 +221,7 @@ class AggregatorPage extends Component {
 			return;
 		}
 		this.props.ajax({
-			url: 'search/' + this.state.searchId,
+			url: back_end_host + '/search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
@@ -259,7 +260,7 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return 'search/' + this.state.searchId + '/download?' +
+		return back_end_host + '/search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 

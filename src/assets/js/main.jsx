@@ -123,7 +123,7 @@ class Main extends Component {
 	}
 
 	renderLogin = () => {
-		return <LoginPage languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+		return <LoginPage backToAggregator={this.toAggregator} languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
 	}
 
 	getPageFns = () => {
@@ -183,6 +183,7 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
+							data-toggle='tooltip' title='EE'
 							onClick={this.changeToEE}
 						>
 							<img
@@ -194,6 +195,7 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
+							data-toggle='tooltip' title='EN'
 							onClick={this.changeToEN}
 						>
 							<img
@@ -205,6 +207,7 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip' title='Agregator'
 							onClick={this.toAggregator.bind(this, true)}
 						>
 							<img
@@ -216,6 +219,7 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip' title='Login/Logout/Register'
 							onClick={this.toLogin.bind(this, true)}
 						>
 							<img
@@ -227,6 +231,7 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip' title='Help'
 							onClick={this.toHelp.bind(this, true)}
 						>
 							<img
