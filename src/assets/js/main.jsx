@@ -252,14 +252,14 @@ class Main extends Component {
 				<div className='container'>
 					<nav className='navbar navbar-expand-md'>
 						<header className="inline navbar-brand" id='navbar-images'>
-							<a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
+							<a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank" data-toggle='tooltip' title='Eesti Keeleressursside Keskus'>
 								<img
 									className='logo'
 									src={logoIntl[this.state.language]}
 									alt='Eesti Keeleressursside Keskus'
 								/>
 							</a>
-							<a tabIndex="-1" href="https://clarin.eu/" target="_blank">
+							<a tabIndex="-1" href="https://clarin.eu/" target="_blank" data-toggle='tooltip' title='CLARIN ERIC'>
 								<img 
 									className='logo2'
 									src={Clarinlogo}
