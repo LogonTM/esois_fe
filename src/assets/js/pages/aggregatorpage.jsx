@@ -46,8 +46,8 @@ class AggregatorPage extends Component {
 			en: 'Elephant'
 		},
 		{
-			ee: "[word = 'märkus'][word = 'keskendunud']",
-			en: "[word = 'annotation'][word = 'focused']"
+			ee: '[word = "märkus"][word = "keskendunud"]',
+			en: '[word = "annotation"][word = "focused"]'
 		}
 	]
 
@@ -188,9 +188,9 @@ class AggregatorPage extends Component {
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-			        if (Location.hostname !== "localhost") {
-			           _paq.push(['trackSiteSearch', query, queryTypeId, false]);
-			        }
+					if (Location.hostname !== "localhost") {
+						_paq.push(['trackSiteSearch', query, queryTypeId, false]);
+					}
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
@@ -424,7 +424,13 @@ class AggregatorPage extends Component {
 				{corpus.title}
 				{ corpus.landingPage ?
 					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-						<span> - Homepage </span>
+						<span>
+							<FormattedMessage 
+								id='homepage'
+								description='homepage translation'
+								defaultMessage='– Homepage'
+							/>
+						</span>
 						<i className="fa fa-home"/>
 					</a>: false}
 			</h3>

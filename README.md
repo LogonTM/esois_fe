@@ -102,8 +102,8 @@ Tulenevalt raamistiku eripärast on mõned tõlked lahendatud otse koodis:
         en: 'Elephant'
       },
       {
-        ee: "[word = 'märkus'][word = 'keskendunud']",
-        en: "[word = 'annotation'][word = 'focused']"
+        ee: '[word = "märkus"][word = "keskendunud"]',
+        en: '[word = "annotation"][word = "focused"]'
       }
     ]
 
