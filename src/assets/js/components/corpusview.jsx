@@ -222,7 +222,7 @@ class CorpusView extends Component {
 									<a href={corpus.landingPage} onClick={this.stop}>
 										<span style={{fontSize:12}}>&nbsp;
 											<FormattedMessage 
-												id='corpusview.homepage'
+												id='homepage'
 												description='homepage translation'
 												defaultMessage='– Homepage'
 											/>

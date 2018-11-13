@@ -95,6 +95,10 @@ div.navbar {
   color: rgb(40,85,143) !important;
 }
 
+.form-control::placeholder {
+  opacity: 0.6 !important;
+}
+
 .btn-outline-secondary {
   border-color: lightgray !important;
 }
@@ -121,7 +125,7 @@ div#new-footer {
   border-top: 0px solid white;
   background-color: white;
   border: 0px;
-  height: 120px;
+  height: 135px;
   bottom: 0px;
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -129,22 +133,50 @@ div#new-footer {
   position: absolute;
 }
 
+#footer-row {
+  min-height: 75px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.footer-with-pics {
+  max-width: 1170px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .footer-img-left {
   position: absolute;
   bottom: 3px;
-  left: 3%;
+  left: 0;
   border: 0;
   height: 72px;
   min-height: 1.6cm;
+  margin-right: 5px;
+}
+
+#footer-img-left {
+  width: 130px;
+  min-height: 75px;
+  margin-right: auto;
 }
 
 .footer-img-right {
   position: absolute;
   bottom: 0px;
-  right: 3%;
+  right: 0;
   border: 0;
-  height: 180%;
-  opacity: 0.5;
+  width: 100%;
+  opacity: 0.4;
+  margin-left: 5px;
+}
+
+#footer-img-right {
+  min-width: 140px;
+  margin-left: auto;
 }
 
 #new-footer a, .dropdown-menu a {
@@ -156,11 +188,11 @@ div#new-footer {
   padding-right: 15px;
 }
 
-#footer-text > .col-lg-12 > p, #footer-text > .col-md-12 > p, #footer-text > .col-sm-12 > p {
+#footer-text > .col-lg-12 > p, #footer-text > .col-md-12 > p, #footer-text > .col-sm-12 > p, #footer-text > .col-12 > p {
   margin-bottom: 0 !important;
 }
 
-.col-auto, .col-sm-auto, .col-md-auto, .col-lg-auto, .col-xl-auto {
+.col-auto, .col-sm-auto, .col-md-auto, .col-lg-auto, .col-xl-auto{
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
