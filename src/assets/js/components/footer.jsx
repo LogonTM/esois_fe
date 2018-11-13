@@ -14,9 +14,9 @@ class Footer extends Component {
 						<div className='col-auto col-sm-auto' id='footer-img-left'>
 							<img className='footer-img-left' src={ELlogo} alt='Euroopa Liidu regionaalfond' />
 						</div>
-						<div className='col-xl-8 col-lg-8 col-sm-6'>
+						<div className='col-xl-8 col-lg-8 col-sm-6 col-5'>
 							<div className='row justify-content-center' id='footer-text'>
-								<div className='col-12 col-sm-12'>
+								<div className='col-12 col-sm-12 col-12'>
 									<p>
 										© 2018&nbsp;
 										<FormattedMessage
@@ -26,7 +26,7 @@ class Footer extends Component {
 										/>
 									</p>
 								</div>
-								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12'>
+								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12 col-12'>
 									<p>
 										Liivi 2-340, Tartu 50409
 										<FormattedMessage
@@ -36,12 +36,12 @@ class Footer extends Component {
 										/>|
 									</p>
 								</div>
-								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12'>
+								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12 col-12'>
 									<p>
 										&nbsp;Tel. (+372) 737 6433 |&nbsp;
 									</p>
 								</div>						
-								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-auto'>
+								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-auto col-12'>
 									<p>
 										<a className="footer-link" title="contact" href="mailto:info@keeleressursid.ee">info@keeleressursid.ee
 										</a>

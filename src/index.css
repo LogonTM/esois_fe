@@ -192,7 +192,9 @@ div#new-footer {
   margin-bottom: 0 !important;
 }
 
-.col-auto, .col-sm-auto, .col-md-auto, .col-lg-auto, .col-xl-auto, .col-sm-12, .col-sm-6 {
+@media (max-width:576px){#footer-text{font-size:0.7rem !important}}
+
+.col-auto, .col-sm-auto, .col-md-auto, .col-lg-auto, .col-xl-auto, .col-sm-12, .col-sm-6, .col-5 {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
