@@ -22,6 +22,7 @@ import messages_en from "../../translations/en.js"
 import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
 import { FormattedMessage } from 'react-intl';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 addLocaleData([...locale_ee, ...locale_en])
 
@@ -37,8 +38,7 @@ const logoIntl = {
 
 window.MyAggregator = window.MyAggregator || {}
 
-var URLROOT = (window.MyAggregator.URLROOT =
-	window.location.pathname || '/Aggregator')
+var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
 var PT = PropTypes
 
@@ -108,9 +108,7 @@ class Main extends Component {
 	}
 
 	renderAggregator = () => {
-		return (
-			<AggregatorPage ajax={this.ajax} error={this.error} languageFromMain={this.state.language} />
-		)
+		return <AggregatorPage ajax={this.ajax} error={this.error} languageFromMain={this.state.language}/>
 	}
 
 	renderHelp = () => {
@@ -130,35 +128,35 @@ class Main extends Component {
 		return {
 			'': this.renderAggregator,
 			help: this.renderHelp,
-			login: this.renderLogin //Added this line to allow finding of login - JK
+			login: this.renderLogin
 		}
 	}
 
-	gotoPage = (/*doPushHistory,*/ pageFnName) => {
+	gotoPage = (doPushHistory, pageFnName) => {
 		var pageFn = this.getPageFns()[pageFnName]
 		if (this.state.navbarPageFn !== pageFn) {
-			// if (doPushHistory) {
-			//   window.history.pushState(
-			//     { page: pageFnName },
-			//     '',
-			//     URLROOT + '/' + pageFnName
-			//   )
-			// }
+			if (doPushHistory) {
+			  window.history.pushState(
+			    { page: pageFnName },
+			    '',
+			    URLROOT + '/' + pageFnName
+			  )
+			}
 			this.setState({ navbarPageFn: pageFn })
 			console.log('new page: ' + document.location + ', name: ' + pageFnName)
 		}
 	}
 
-	toAggregator = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ '')
+	toAggregator = doPushHistory => {
+		this.gotoPage(doPushHistory, '')
 	}
 
-	toHelp = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ 'help')
+	toHelp = doPushHistory => {
+		this.gotoPage(doPushHistory, 'help')
 	}
 
-	toLogin = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ 'login')
+	toLogin = doPushHistory => {
+		this.gotoPage(doPushHistory, 'login')
 	} 
 
 	changeToEE = () => {
@@ -296,15 +294,15 @@ class Main extends Component {
 
 	render() {
 		return (
-			<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
-				<div>
-					<div> {this.renderTop()} </div>
-					<div id='push'>
-						<div className='container'>{this.state.navbarPageFn()}</div>
+				<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
+					<div>
+						<div> {this.renderTop()} </div>
+						<div id='push'>
+							<div className='container'>{this.state.navbarPageFn()}</div>
+						</div>
+						<Footer />
 					</div>
-					<Footer />
-				</div>
-			</IntlProvider>
+				</IntlProvider>
 		)
 	}
 }
@@ -316,17 +314,18 @@ function endsWith(str, suffix) {
 var routeFromLocation = function() {
 	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
-	var path = window.location.pathname.split('/')
+	var path = window.location.pathname
 	console.log('path: ' + path)
-	if (path.length >= 3) {
-		var p = path[path.length - 1]
-		if (p === 'help') {
-			this.toHelp(false)
+	if (path !== '/') {
+		if (path === '/help') {
+			this.toHelp()
+		} else if (path === '/login') {
+			this.toLogin()
 		} else {
-			this.toAggregator(false)
+			this.toAggregator()
 		}
 	} else {
-		this.toAggregator(false)
+		this.toAggregator()
 	}
 }
 
@@ -334,4 +333,4 @@ var main = ReactDOM.render(<Main />, document.getElementById('body'))
 
 window.onpopstate = routeFromLocation.bind(main)
 
-export default Main
+export default Main;

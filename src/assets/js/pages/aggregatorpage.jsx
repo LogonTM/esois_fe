@@ -13,7 +13,7 @@ import 'bootstrap';
 import {FormattedMessage } from 'react-intl';
 
 var PT = PropTypes;
-var back_end_host = 'http://localhost:8080';
+var back_end_host = 'https://localhost:8080';
 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
