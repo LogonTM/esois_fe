@@ -11,9 +11,9 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import 'bootstrap';
 import {FormattedMessage } from 'react-intl';
+import { back_end_host } from '../constants/constants';
 
 var PT = PropTypes;
-var back_end_host = 'https://localhost:8080';
 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
@@ -125,7 +125,7 @@ class AggregatorPage extends Component {
 		this.setState({_isMounted: true});
 			
 		this.props.ajax({
-			url: back_end_host + '/rest/init',
+			url: back_end_host + 'rest/init',
 			success: (json, textStatus, jqXHR) => {
 				if (this.state._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -179,7 +179,7 @@ class AggregatorPage extends Component {
 		}
 
 		this.props.ajax({
-			url: back_end_host + '/search',
+			url: back_end_host + 'search',
 			type: "POST",
 			data: {
 				query: query,
@@ -202,7 +202,7 @@ class AggregatorPage extends Component {
 
 	nextResults = corpusId => {
 		this.props.ajax({
-			url: back_end_host + '/search/' + this.state.searchId,
+			url: back_end_host + 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -221,7 +221,7 @@ class AggregatorPage extends Component {
 			return;
 		}
 		this.props.ajax({
-			url: back_end_host + '/search/' + this.state.searchId,
+			url: back_end_host + 'search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
@@ -229,7 +229,7 @@ class AggregatorPage extends Component {
 						timeout = 1.5 * timeout;
 					}
 					setTimeout(this.refreshSearchResults, timeout);
-					console.log("new search in: " + this.timeout + "ms");
+					console.log("new search in: " + timeout + "ms");
 				} else {
 					console.log("search ended; hits:", json);
 				}

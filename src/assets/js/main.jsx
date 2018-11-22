@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
+import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
 import Clarinlogo from '../img/clarin-logo.png'
@@ -23,6 +24,8 @@ import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
 import { FormattedMessage } from 'react-intl';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
+import { authentication_token } from './constants/constants';
 
 addLocaleData([...locale_ee, ...locale_en])
 
@@ -115,20 +118,25 @@ class Main extends Component {
 		return <HelpPage />
 	}
 
+	renderRegister = () => {
+		return <RegisterPage backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+	}
+
 	getUserLoginStatus = (userStatus) => {
 		console.log('From main: ' + userStatus)
 		this.setState({loggedInStatus: userStatus})
 	}
 
 	renderLogin = () => {
-		return <LoginPage backToAggregator={this.toAggregator} languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+		return <LoginPage toRegistration={this.toRegister.bind(this, true)} backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
 	}
 
 	getPageFns = () => {
 		return {
 			'': this.renderAggregator,
 			help: this.renderHelp,
-			login: this.renderLogin
+			login: this.renderLogin,
+			register: this.renderRegister
 		}
 	}
 
@@ -157,7 +165,11 @@ class Main extends Component {
 
 	toLogin = doPushHistory => {
 		this.gotoPage(doPushHistory, 'login')
-	} 
+	}
+	
+	toRegister = doPushHistory => {
+		this.gotoPage(doPushHistory, 'register')
+	}
 
 	changeToEE = () => {
 		this.setState({
@@ -294,15 +306,19 @@ class Main extends Component {
 
 	render() {
 		return (
-				<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
-					<div>
-						<div> {this.renderTop()} </div>
-						<div id='push'>
-							<div className='container'>{this.state.navbarPageFn()}</div>
+			<CookiesProvider>
+				<Router>
+					<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
+						<div>
+							<div> {this.renderTop()} </div>
+							<div id='push'>
+								<div className='container'>{this.state.navbarPageFn()}</div>
+							</div>
+							<Footer />
 						</div>
-						<Footer />
-					</div>
-				</IntlProvider>
+					</IntlProvider>
+				</Router>
+			</CookiesProvider>
 		)
 	}
 }
@@ -321,6 +337,10 @@ var routeFromLocation = function() {
 			this.toHelp()
 		} else if (path === '/login') {
 			this.toLogin()
+		} else if (path === '/register'){
+			this.toRegister()
+		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
+
 		} else {
 			this.toAggregator()
 		}
