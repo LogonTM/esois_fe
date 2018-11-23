@@ -5,7 +5,7 @@ import {
     minimum_username_length, maximum_username_length,
     minimum_password_length, maximum_password_length,
     maximum_email_length
-} from '../constants/constants'; // For future use?
+} from '../constants/constants';
 import { login } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions'; // For future use?
@@ -24,69 +24,122 @@ class RegisterPage extends Component {
 		super(props);
 		this.state = {
             name: {
-                value: ''
+                value: '',
+                valid: false
             },
             username: {
-                value: ''
+                value: '',
+                valid: false
             },
             email: {
-                value: ''
+                value: '',
+                valid: false
             },
             password: {
-                value: ''
+                value: '',
+                valid: false
             },
             passwordValidation: {
-                value: ''
+                value: '',
+                valid: false
             },
             usernameOrEmail: {
 				value: ''
 			},
 			loggedInStatus: this.props.isUserloggedIn
         }
-	}
+    }
 
     handleNameChange = event => {
         var nameValue = event.target.value;
-		this.setState({
-            name : { 
-                value: nameValue
-            } 
-        })
+        if (this.state.name.value.length > minimum_name_length && 
+            this.state.name.value.length < maximum_name_length) {
+                this.setState({
+                    name: {
+                        value: nameValue,
+                        valid: true
+                    }
+                })
+            } else {
+                this.setState({
+                    name: {
+                        value: nameValue,
+                        valid: false
+                    }
+                })
+            }
 		event.stopPropagation();
     }
     
     handleUsernameChange = event => {
         var userNameValue = event.target.value;
-        this.setState({
-            username : {
-                value : userNameValue
+        if (this.state.username.value.length > minimum_username_length && 
+            this.state.username.value.length < maximum_username_length) {
+                this.setState({
+                    username: {
+                        value: userNameValue,
+                        valid: true
+                    }
+                })
+            } else {
+                this.setState({
+                    username: {
+                        value: userNameValue,
+                        valid: false
+                    }
+                })
             }
-        })
     }
 
     handlePasswordChange = event => {
         var passwordValue = event.target.value;
-        this.setState({
-            password : {
-                value : passwordValue
+        if (this.state.password.value.length > minimum_password_length && 
+            this.state.password.value.length < maximum_password_length) {
+                this.setState({
+                    password: {
+                        value: passwordValue,
+                        valid: true
+                    }
+                })
+            } else {
+                this.setState({
+                    password: {
+                        value: passwordValue,
+                        valid: false
+                    }
+                })
             }
-        })
     }
+
+    
 
     handlePasswordValidationChange = event => {
         var passwordValidationValue = event.target.value;
-        this.setState({
-            passwordValidation : {
-                value : passwordValidationValue             
+        if (this.state.password.value.length > minimum_password_length && 
+            this.state.password.value.length < maximum_password_length && 
+            this.state.password.value === this.state.passwordValidation.value) {
+                this.setState({
+                    passwordValidation: {
+                        value: passwordValidationValue,
+                        valid: true
+                    }
+                })
+            } else {
+                this.setState({
+                    passwordValidation: {
+                        value: passwordValidationValue,
+                        valid: false
+                    }
+                })
             }
-        })
     }
 
     handleEmailChange = event => {
         var emailValue = event.target.value;
         this.setState({
             email : {
-                value : emailValue
+                value : emailValue,
+                valid: true
             }
         })
     }
@@ -139,11 +192,32 @@ class RegisterPage extends Component {
     }
 
 	render() {
+        // Client side? But server side?
+        const registrationEnabler = 
+            this.state.name.valid && 
+            this.state.username.valid && 
+            this.state.email.valid && 
+            this.state.password.valid !== false
+        const nameValidator = (this.state.name.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.name.value.length > minimum_name_length && 
+             this.state.name.value.length < maximum_name_length ? "is-valid" : "is-invalid")
+        const userNameValidator = (this.state.username.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.username.value.length > minimum_username_length && 
+             this.state.username.value.length < maximum_username_length ? "is-valid"  : "is-invalid")
+        const passWordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.password.value.length > minimum_password_length && 
+             this.state.password.value.length < maximum_password_length ? "is-valid" : "is-invalid")
+        const passWordConfirmation = (this.state.passwordValidation.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.password.value.length > minimum_password_length && 
+             this.state.password.value.length < maximum_password_length && 
+             this.state.password.value === this.state.passwordValidation.value ? "is-valid" : "is-invalid")
+        const emailValidator = (this.state.email.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.email.value.length < maximum_email_length ? "is-valid" : "is-invalid")
 		return (
 			<div>
 				<div className="top-gap">
 					<div className="register-panel">
-						    <form onSubmit={this.handleRegister} className="register-form" novalidate>
+						    <form onSubmit={this.handleRegister} className="register-form">
 								<FormattedMessage
 									id='register.name'
 									description='name translation'
@@ -151,9 +225,8 @@ class RegisterPage extends Component {
 								>
 									{name => (
 										<input
-											className="form-control"
+											className={nameValidator}
                                             type="text"
-                                            formNoValidate = {this.state.password.validateStatus} 
 											value={this.state.name.value}
 											placeholder={name} 
 											onChange={this.handleNameChange}
@@ -167,7 +240,7 @@ class RegisterPage extends Component {
 								>	
 									{username => (
 										<input
-											className="form-control"
+											className={userNameValidator}
 											name="Username"
 											value={this.state.username.value}
 											placeholder={username} 
@@ -182,7 +255,7 @@ class RegisterPage extends Component {
 								>
 									{password => (
 										<input
-											className="form-control"
+											className={passWordValidator}
 											type="password" 
 											value={this.state.password.value}
 											placeholder={password} 
@@ -197,7 +270,7 @@ class RegisterPage extends Component {
 								>
 									{passwordvalidation => (
 										<input
-											className="form-control"
+											className={passWordConfirmation}
 											type="password" 
 											value={this.state.passwordValidation.value}
 											placeholder={passwordvalidation} 
@@ -212,7 +285,7 @@ class RegisterPage extends Component {
 								>	
 									{email => (
 										<input
-                                            className="form-control"
+                                            className={emailValidator}
                                             type="email"
 											name="email"
 											value={this.state.email.value}
@@ -221,7 +294,10 @@ class RegisterPage extends Component {
 										/>
 									)}
 								</FormattedMessage>
-								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.handleRegister}>
+                                <button type="submit" 
+                                        className="btn btn-outline-secondary btn-lg" 
+                                        onClick={this.handleRegister} 
+                                        disabled={!registrationEnabler}>
 								<span aria-hidden="true"></span>
 									{<FormattedMessage
 												id='login.registerButton'

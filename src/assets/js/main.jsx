@@ -45,6 +45,10 @@ class Main extends Component {
 	componentWillMount() {
 		routeFromLocation.bind(this)()
 	}
+
+	componentDidUpdate() {
+		routeFromLocation.bind(this)()
+	}
   
 	constructor(props) {
 		super(props)
@@ -187,7 +191,7 @@ class Main extends Component {
 		this.gotoPage(doPushHistory, 'register')
 	}
 
-	toManageCenter = doPushHistory => {
+	toManageCenter = doPushHistory => {	
 		this.gotoPage(doPushHistory, 'manageCenter')
 	}
 
@@ -377,11 +381,9 @@ var routeFromLocation = function() {
 			this.toHelp()
 		} else if (path === '/login') {
 			this.toLogin()
-		} else if (path === '/manageCenter') {
-			this.toManageCenter()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' /*&& localStorage.getItem(authentication_token) !== null*/) {
+		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
 			this.toManageCenter()
 		} else if (path === '/manageUsers' /*&& localStorage.getItem(authentication_token) !== null*/)  {
 			this.toManageUsers()

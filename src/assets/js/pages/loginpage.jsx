@@ -32,6 +32,10 @@ class LoginPage extends Component {
 		this.loadCurrentUser();
 	  }
 
+	componentDidUpdate() {
+		this.loadCurrentUser();
+	}
+
 	loadCurrentUser = () => {
 		getCurrentUser()
 		.then(response => {
