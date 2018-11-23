@@ -18,12 +18,17 @@ class QueryInput extends Component {
 
     render() {
 	    return (
-		<input className="form-control input-lg search" 
-		       id="query-cql" name="query-cql" type="text"
-		       value={this.props.query} placeholder={this.props.placeholder}
-		       tabIndex="1" onChange={this.props.onChange} 
-		       onKeyDown={this.props.onKeyDown} 
-		       />
+			<input
+				className="form-control input-lg search" 
+				id="query-cql"
+				name="query-cql"
+				type="text"
+				value={this.props.query}
+				placeholder={this.props.placeholder}
+				tabIndex="1"
+				onChange={this.props.onChange} 
+				onKeyDown={this.props.onKeyDown} 
+		    />
 	    );
     }
 }

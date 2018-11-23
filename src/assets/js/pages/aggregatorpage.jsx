@@ -205,8 +205,8 @@ class AggregatorPage extends Component {
 			url: back_end_host + 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
-			corpusId: corpusId,
-			numberOfResults: this.state.numberOfResults,
+				corpusId: corpusId,
+				numberOfResults: this.state.numberOfResults,
 			},
 			success: (searchId, textStatus, jqXHR) => {
 				var timeout = 250;
@@ -260,7 +260,7 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return back_end_host + '/search/' + this.state.searchId + '/download?' +
+		return back_end_host + 'search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
@@ -421,7 +421,7 @@ class AggregatorPage extends Component {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
 		return (
-			<h3 style={{fontSize:'1em'}}>
+			<span>
 				{corpus.title}
 				{ corpus.landingPage ?
 					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
@@ -434,7 +434,7 @@ class AggregatorPage extends Component {
 						</span>
 						<i className="fa fa-home"/>
 					</a>: false}
-			</h3>
+			</span>
 		);
 	}
 
@@ -509,7 +509,7 @@ class AggregatorPage extends Component {
 										{queryType.name}
 									</button>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	this.queryTypes.map((l) => {
+										{ 	this.queryTypes.map(l => {
 												var cls = l.disabled ? 'disabled':'dropdown-item';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
 												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"

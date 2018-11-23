@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
+import ManageCenter from './pages/managecenter.jsx'
 import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
@@ -14,7 +15,6 @@ import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
-import PropTypes from 'prop-types'
 import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
 import locale_en from 'react-intl/locale-data/en';
@@ -40,8 +40,6 @@ const logoIntl = {
 window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
-
-var PT = PropTypes
 
 class Main extends Component {
 	componentWillMount() {
@@ -130,7 +128,7 @@ class Main extends Component {
 	}
 
 	renderManageCenter = () => {
-		// return <ManageCenter/> For admins only
+		return <ManageCenter languageFromMain={this.state.language} back_end_host={this.state.back_end_host} />
 	} 
 
 	renderManageUsers = () => {
@@ -142,7 +140,7 @@ class Main extends Component {
 	}
 
 	renderManageLogs = () => {
-		// return <ManageLogs/> For admins only
+		// return <ManageLogs/>
 	}
 
 	getPageFns = () => {
@@ -151,10 +149,10 @@ class Main extends Component {
 			help: this.renderHelp,
 			login: this.renderLogin,
 			register: this.renderRegister,
-			// manageCenter: this.renderManageCenter, For admins only
 			// manageUsers: this.renderManageUsers, For admins only
 			// userManager: this.renderUserManager, For regular users
 			// manageLogs: this.renderManageLogs For admins only
+			manageCenter: this.renderManageCenter
 		}
 	}
 
@@ -184,7 +182,7 @@ class Main extends Component {
 	toLogin = doPushHistory => {
 		this.gotoPage(doPushHistory, 'login')
 	}
-	
+
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
 	}
@@ -284,6 +282,18 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
+						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip' title='Manage Center'
+							onClick={this.toManageCenter.bind(this, true)}
+						>
+							<img
+								className='symbols'
+								src={SettingsIcon}
+								alt='MC'
+							/>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -367,6 +377,8 @@ var routeFromLocation = function() {
 			this.toHelp()
 		} else if (path === '/login') {
 			this.toLogin()
+		} else if (path === '/manageCenter') {
+			this.toManageCenter()
 		} else if (path === '/register'){
 			this.toRegister()
 		} else if (path === '/manageCenter' /*&& localStorage.getItem(authentication_token) !== null*/) {
