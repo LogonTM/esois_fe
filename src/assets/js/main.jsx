@@ -23,8 +23,6 @@ import messages_en from "../../translations/en.js"
 import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
 import { FormattedMessage } from 'react-intl';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 import { authentication_token } from './constants/constants';
 
 addLocaleData([...locale_ee, ...locale_en])
@@ -106,6 +104,11 @@ class Main extends Component {
 		console.log('ajax error, jqXHR: ', jqXHR)
 	}
 
+	getUserLoginStatus = (userStatus) => {
+		console.log('From main: ' + userStatus)
+		this.setState({loggedInStatus: userStatus})
+	}
+
 	toggleCollapse = () => {
 		this.setState({ navbarCollapse: !this.state.navbarCollapse })
 	}
@@ -122,13 +125,24 @@ class Main extends Component {
 		return <RegisterPage backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
 	}
 
-	getUserLoginStatus = (userStatus) => {
-		console.log('From main: ' + userStatus)
-		this.setState({loggedInStatus: userStatus})
-	}
-
 	renderLogin = () => {
 		return <LoginPage toRegistration={this.toRegister.bind(this, true)} backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+	}
+
+	renderManageCenter = () => {
+		// return <ManageCenter/> For admins only
+	} 
+
+	renderManageUsers = () => {
+		// return <ManageUsers/> For admins only
+	}
+
+	renderUserManager = () => {
+		// return <UserManager/> Should combine with login page as requested?
+	}
+
+	renderManageLogs = () => {
+		// return <ManageLogs/> For admins only
 	}
 
 	getPageFns = () => {
@@ -136,7 +150,11 @@ class Main extends Component {
 			'': this.renderAggregator,
 			help: this.renderHelp,
 			login: this.renderLogin,
-			register: this.renderRegister
+			register: this.renderRegister,
+			// manageCenter: this.renderManageCenter, For admins only
+			// manageUsers: this.renderManageUsers, For admins only
+			// userManager: this.renderUserManager, For regular users
+			// manageLogs: this.renderManageLogs For admins only
 		}
 	}
 
@@ -169,6 +187,22 @@ class Main extends Component {
 	
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
+	}
+
+	toManageCenter = doPushHistory => {
+		this.gotoPage(doPushHistory, 'manageCenter')
+	}
+
+	toManageUsers = doPushHistory => {
+		this.gotToManageUser(doPushHistory, 'manageUsers')
+	}
+
+	toUserManager = doPushHistory => {
+		this.goToUserManager(doPushHistory, 'userManager')
+	}
+
+	toManageLogs = doPushHistory => {
+		this.goToManageLogs(doPushHistory, 'manageLogs')
 	}
 
 	changeToEE = () => {
@@ -306,8 +340,6 @@ class Main extends Component {
 
 	render() {
 		return (
-			<CookiesProvider>
-				<Router>
 					<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
 						<div>
 							<div> {this.renderTop()} </div>
@@ -317,8 +349,6 @@ class Main extends Component {
 							<Footer />
 						</div>
 					</IntlProvider>
-				</Router>
-			</CookiesProvider>
 		)
 	}
 }
@@ -339,8 +369,14 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
-
+		} else if (path === '/manageCenter' /*&& localStorage.getItem(authentication_token) !== null*/) {
+			this.toManageCenter()
+		} else if (path === '/manageUsers' /*&& localStorage.getItem(authentication_token) !== null*/)  {
+			this.toManageUsers()
+		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
+			this.toUserManager()
+		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
+			this.toManageLogs()
 		} else {
 			this.toAggregator()
 		}

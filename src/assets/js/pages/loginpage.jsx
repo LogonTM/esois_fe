@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
-import { notification } from 'antd';
 import PropTypes from 'prop-types';
 
 var PT = PropTypes
@@ -20,7 +19,6 @@ class LoginPage extends Component {
 		super(props);
 		this.state = {
 			currentUser: null,
-			isLoading: false,
 			usernameOrEmail: {
 				value: ''
 			},
@@ -35,20 +33,14 @@ class LoginPage extends Component {
 	  }
 
 	loadCurrentUser = () => {
-		this.setState({
-		  isLoading: true
-		});
 		getCurrentUser()
 		.then(response => {
 		  this.setState({
 			currentUser: response.name,
-			isAuthenticated: true,
-			isLoading: false
+			loggedInStatus: true,
 		  });
 		}).catch(error => {
-		  this.setState({
-			isLoading: false
-		  });  
+
 		});
 	  }
 
@@ -72,15 +64,9 @@ class LoginPage extends Component {
 				}, 1500)
 			}).catch(error => {
 				if(error.status === 401) {
-					notification.error({
-						message: 'RABA',
-						description: 'Your Username or Password is incorrect. Please try again!'
-					});                    
+					// Add here Bootstrap notification for incorrect password or username                 
 				} else {
-					notification.error({
-						message: 'RABA',
-						description: error.message || 'Sorry! Something went wrong. Please try again!'
-					});                                            
+					// Add here Bootstrap notification for some other server side failure?                                        
 				}
 			});
 		} else {

@@ -5,11 +5,10 @@ import {
     minimum_username_length, maximum_username_length,
     minimum_password_length, maximum_password_length,
     maximum_email_length
-} from '../constants/constants';
+} from '../constants/constants'; // For future use?
 import { login } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
-import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions';
-import { notification } from 'antd';
+import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions'; // For future use?
 import PropTypes from 'prop-types';
 
 var PT = PropTypes
@@ -46,53 +45,48 @@ class RegisterPage extends Component {
         }
 	}
 
-    handleNameChange = (event, toValidate) => {
+    handleNameChange = event => {
         var nameValue = event.target.value;
 		this.setState({
             name : { 
-                value: nameValue,
-                ...toValidate(nameValue)
+                value: nameValue
             } 
         })
 		event.stopPropagation();
     }
     
-    handleUsernameChange = (event, toValidate) => {
+    handleUsernameChange = event => {
         var userNameValue = event.target.value;
         this.setState({
             username : {
-                value : userNameValue,
-                ...toValidate(userNameValue)
+                value : userNameValue
             }
         })
     }
 
-    handlePasswordChange = (event, toValidate) => {
+    handlePasswordChange = event => {
         var passwordValue = event.target.value;
         this.setState({
             password : {
-                value : passwordValue,
-                ...toValidate(passwordValue)
+                value : passwordValue
             }
         })
     }
 
-    handlePasswordValidationChange = (event, toValidate) => {
+    handlePasswordValidationChange = event => {
         var passwordValidationValue = event.target.value;
         this.setState({
             passwordValidation : {
-                value : passwordValidationValue,
-                ...toValidate(passwordValidationValue)             
+                value : passwordValidationValue             
             }
         })
     }
 
-    handleEmailChange = (event, toValidate) => {
+    handleEmailChange = event => {
         var emailValue = event.target.value;
         this.setState({
             email : {
-                value : emailValue,
-                ...toValidate(emailValue)
+                value : emailValue
             }
         })
     }
@@ -113,10 +107,7 @@ class RegisterPage extends Component {
             register(registerRequest)
             .then(response => {
                 console.log("Near success?")
-                notification.success({
-                    message: 'RABA',
-                    description: "Thank you! You're successfully registered. Proceeding to log in and forwarding to aggregator!",
-                });
+                // Add here Bootstrap notification for success
                 const loginRequest = {
                     usernameOrEmail: this.state.username.value,
                     password: this.state.password.value
@@ -133,220 +124,17 @@ class RegisterPage extends Component {
                     }, 1500)
                 }).catch(error => {
                     if(error.status === 401) {
-                        notification.error({
-                            message: 'RABA',
-                            description: 'Your Username or Password is incorrect. Please try again!'
-                        });                    
+                        // Add here Bootstrap notifcation for failure about incorrectness in either Username or Password                   
                     } else {
-                        notification.error({
-                            message: 'RABA',
-                            description: error.message || 'Sorry! Something went wrong. Please try again!'
-                        });                                            
+                        // Add here Bootstrap notification for failure from the server side?                                            
                     }
                 });
             }).catch(error => {
                 console.log("Error?")
-                notification.error({
-                    message: 'RABA',
-                    description: error.message || 'Sorry! Something went wrong. Please try again!'
-                });
+                // Add here Bootstrap failure notification for server side registration?
             });
         } else {
 
-        }
-    }
-
-    validateName = (name) => {
-        if(name.length < minimum_name_length) {
-            return {
-                validateStatus: 'error',
-                errorMsg: `Name is too short (Minimum ${minimum_name_length} characters needed.)`
-            }
-        } else if (name.length > maximum_name_length) {
-            return {
-                validationStatus: 'error',
-                errorMsg: `Name is too long (Maximum ${maximum_name_length} characters allowed.)`
-            }
-        } else {
-            return {
-                validateStatus: 'success',
-                errorMsg: null,
-              };            
-        }
-    }
-
-    validateEmail = (email) => {
-        if(!email) {
-            return {
-                validateStatus: 'error',
-                errorMsg: 'Email may not be empty'                
-            }
-        }
-
-        const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
-        if(!EMAIL_REGEX.test(email)) {
-            return {
-                validateStatus: 'error',
-                errorMsg: 'Email not valid'
-            }
-        }
-
-        if(email.length > maximum_email_length) {
-            return {
-                validateStatus: 'error',
-                errorMsg: `Email is too long (Maximum ${maximum_email_length} characters allowed)`
-            }
-        }
-
-        return {
-            validateStatus: null,
-            errorMsg: null
-        }
-    }
-
-    validateUsername = (username) => {
-        if(username.length < minimum_username_length) {
-            return {
-                validateStatus: 'error',
-                errorMsg: `Username is too short (Minimum ${minimum_username_length} characters needed.)`
-            }
-        } else if (username.length > maximum_username_length) {
-            return {
-                validationStatus: 'error',
-                errorMsg: `Username is too long (Maximum ${maximum_username_length} characters allowed.)`
-            }
-        } else {
-            return {
-                validateStatus: null,
-                errorMsg: null
-            }
-        }
-    }
-
-    validateUsernameAvailability = () => {
-        // First check for client side errors in username
-        const usernameValue = this.state.username.value;
-        const usernameValidation = this.validateUsername(usernameValue);
-
-        if(usernameValidation.validateStatus === 'error') {
-            this.setState({
-                username: {
-                    value: usernameValue,
-                    ...usernameValidation
-                }
-            });
-            return;
-        }
-
-        this.setState({
-            username: {
-                value: usernameValue,
-                validateStatus: 'validating',
-                errorMsg: null
-            }
-        });
-
-        checkUsernameAvailability(usernameValue)
-        .then(response => {
-            if(response.available) {
-                this.setState({
-                    username: {
-                        value: usernameValue,
-                        validateStatus: 'success',
-                        errorMsg: null
-                    }
-                });
-            } else {
-                this.setState({
-                    username: {
-                        value: usernameValue,
-                        validateStatus: 'error',
-                        errorMsg: 'This username is already taken'
-                    }
-                });
-            }
-        }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
-            this.setState({
-                username: {
-                    value: usernameValue,
-                    validateStatus: 'success',
-                    errorMsg: null
-                }
-            });
-        });
-    }
-
-    validateEmailAvailability = () => {
-        // First check for client side errors in email
-        const emailValue = this.state.email.value;
-        const emailValidation = this.validateEmail(emailValue);
-
-        if(emailValidation.validateStatus === 'error') {
-            this.setState({
-                email: {
-                    value: emailValue,
-                    ...emailValidation
-                }
-            });    
-            return;
-        }
-
-        this.setState({
-            email: {
-                value: emailValue,
-                validateStatus: 'validating',
-                errorMsg: null
-            }
-        });
-
-        checkEmailAvailability(emailValue)
-        .then(response => {
-            if(response.available) {
-                this.setState({
-                    email: {
-                        value: emailValue,
-                        validateStatus: 'success',
-                        errorMsg: null
-                    }
-                });
-            } else {
-                this.setState({
-                    email: {
-                        value: emailValue,
-                        validateStatus: 'error',
-                        errorMsg: 'This Email is already registered'
-                    }
-                });
-            }
-        }).catch(error => {
-            // Marking validateStatus as success, Form will be recchecked at server
-            this.setState({
-                email: {
-                    value: emailValue,
-                    validateStatus: 'success',
-                    errorMsg: null
-                }
-            });
-        });
-    }
-
-    validatePassword = (password) => {
-        if(password.length < minimum_password_length) {
-            return {
-                validateStatus: 'error',
-                errorMsg: `Password is too short (Minimum ${minimum_password_length} characters needed.)`
-            }
-        } else if (password.length > maximum_password_length) {
-            return {
-                validationStatus: 'error',
-                errorMsg: `Password is too long (Maximum ${maximum_password_length} characters allowed.)`
-            }
-        } else {
-            return {
-                validateStatus: 'success',
-                errorMsg: null,
-            };            
         }
     }
 
@@ -354,8 +142,8 @@ class RegisterPage extends Component {
 		return (
 			<div>
 				<div className="top-gap">
-						<div className="register-panel">
-							<form onSubmit={this.handleRegister} className="register-form">
+					<div className="register-panel">
+						    <form onSubmit={this.handleRegister} className="register-form" novalidate>
 								<FormattedMessage
 									id='register.name'
 									description='name translation'
@@ -368,7 +156,7 @@ class RegisterPage extends Component {
                                             formNoValidate = {this.state.password.validateStatus} 
 											value={this.state.name.value}
 											placeholder={name} 
-											onChange={(event) => this.handleNameChange(event, this.validateName)}
+											onChange={this.handleNameChange}
 										/>
 									)}
 								</FormattedMessage>
@@ -383,7 +171,7 @@ class RegisterPage extends Component {
 											name="Username"
 											value={this.state.username.value}
 											placeholder={username} 
-											onChange={(event) => this.handleUsernameChange(event, this.validateUsername)}
+											onChange={this.handleUsernameChange}
 										/>
 									)}
 								</FormattedMessage>
@@ -398,7 +186,7 @@ class RegisterPage extends Component {
 											type="password" 
 											value={this.state.password.value}
 											placeholder={password} 
-											onChange={(event) => this.handlePasswordChange(event, this.validatePassword)}
+											onChange={this.handlePasswordChange}
 										/>
 									)}
 								</FormattedMessage>
@@ -413,7 +201,7 @@ class RegisterPage extends Component {
 											type="password" 
 											value={this.state.passwordValidation.value}
 											placeholder={passwordvalidation} 
-											onChange={(event) => this.handlePasswordValidationChange(event, this.validatePassword)}
+											onChange={this.handlePasswordValidationChange}
 										/>
 									)}
 								</FormattedMessage>
@@ -424,26 +212,27 @@ class RegisterPage extends Component {
 								>	
 									{email => (
 										<input
-											className="form-control"
+                                            className="form-control"
+                                            type="email"
 											name="email"
 											value={this.state.email.value}
 											placeholder={email} 
-											onChange={(event) => this.handleEmailChange(event, this.validatePassword)}
+											onChange={this.handleEmailChange}
 										/>
 									)}
 								</FormattedMessage>
 								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.handleRegister}>
 								<span aria-hidden="true"></span>
-									<FormattedMessage
+									{<FormattedMessage
 												id='login.registerButton'
 												description='register translation'
 												defaultMessage='Register'
-									/>
+									/>}
 								</button>
 							</form>
-							<div className="bottom-gap"></div>
 						</div>
-					</div>
+                    <div className="bottom-gap"></div>
+				</div>
 			</div>
 		);
 	}
