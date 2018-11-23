@@ -121,6 +121,26 @@ input[type="checkbox"], input[type="radio"] {
   margin-top: 6px;
 }
 
+.thead-blue {
+  background-color: rgba(40, 85, 143, .15);
+}
+
+.table a {
+  color: rgb(40,85,143) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd){
+  background-color:rgba(40, 85, 143, .05) !important;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.form-group.addcorp {
+  margin-top: 25px;
+}
+
 div#new-footer {
   border-top: 0px solid white;
   background-color: white;
@@ -149,11 +169,11 @@ div#new-footer {
 }
 
 .footer-img-left {
-  position: absolute;
+  position: fixed;
   bottom: 3px;
-  left: 0;
+  left: 0.5%;
   border: 0;
-  height: 72px;
+  height: 80px;
   min-height: 1.6cm;
   margin-right: 5px;
 }

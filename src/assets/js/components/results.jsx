@@ -31,7 +31,7 @@ class Results extends Component {
 				{" "}
 				<div style={inline}>
 					<button className="btn btn-outline-secondary zoomResultButton"
-							onClick={function(e){this.props.toggleResultModal(e,corpusHit)}.bind(this)}>
+							onClick={e => this.props.toggleResultModal(e,corpusHit)}>
 						<span className="fa fa-eye"/>
 						<FormattedMessage
 							id='results.view.button'

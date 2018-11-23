@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
+import ManageCenter from './pages/managecenter.jsx'
 import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
@@ -14,7 +15,6 @@ import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
-import PropTypes from 'prop-types'
 import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
 import locale_en from 'react-intl/locale-data/en';
@@ -24,7 +24,6 @@ import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
 import { FormattedMessage } from 'react-intl';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
 import { authentication_token } from './constants/constants';
 
 addLocaleData([...locale_ee, ...locale_en])
@@ -42,8 +41,6 @@ const logoIntl = {
 window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
-
-var PT = PropTypes
 
 class Main extends Component {
 	componentWillMount() {
@@ -131,12 +128,17 @@ class Main extends Component {
 		return <LoginPage toRegistration={this.toRegister.bind(this, true)} backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
 	}
 
+	renderManageCenter = () => {
+		return <ManageCenter languageFromMain={this.state.language} back_end_host={this.state.back_end_host} />
+	}
+
 	getPageFns = () => {
 		return {
 			'': this.renderAggregator,
 			help: this.renderHelp,
 			login: this.renderLogin,
-			register: this.renderRegister
+			register: this.renderRegister,
+			manageCenter: this.renderManageCenter
 		}
 	}
 
@@ -166,9 +168,13 @@ class Main extends Component {
 	toLogin = doPushHistory => {
 		this.gotoPage(doPushHistory, 'login')
 	}
-	
+
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
+	}
+
+	toManageCenter = doPushHistory => {
+		this.gotoPage(doPushHistory, 'manageCenter')
 	}
 
 	changeToEE = () => {
@@ -250,6 +256,18 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
+						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip' title='Manage Center'
+							onClick={this.toManageCenter.bind(this, true)}
+						>
+							<img
+								className='symbols'
+								src={SettingsIcon}
+								alt='MC'
+							/>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -306,19 +324,17 @@ class Main extends Component {
 
 	render() {
 		return (
-			<CookiesProvider>
-				<Router>
-					<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
-						<div>
-							<div> {this.renderTop()} </div>
-							<div id='push'>
-								<div className='container'>{this.state.navbarPageFn()}</div>
-							</div>
-							<Footer />
+			<Router>
+				<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
+					<div>
+						<div> {this.renderTop()} </div>
+						<div id='push'>
+							<div className='container'>{this.state.navbarPageFn()}</div>
 						</div>
-					</IntlProvider>
-				</Router>
-			</CookiesProvider>
+						<Footer />
+					</div>
+				</IntlProvider>
+			</Router>
 		)
 	}
 }
@@ -337,10 +353,10 @@ var routeFromLocation = function() {
 			this.toHelp()
 		} else if (path === '/login') {
 			this.toLogin()
+		} else if (path === '/manageCenter') {
+			this.toManageCenter()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
-
 		} else {
 			this.toAggregator()
 		}
