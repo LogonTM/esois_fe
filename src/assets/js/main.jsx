@@ -16,22 +16,8 @@ import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
-import { IntlProvider } from "react-intl";
-import { addLocaleData } from 'react-intl';
-import locale_en from 'react-intl/locale-data/en';
-import locale_ee from 'react-intl/locale-data/ee';
-import messages_en from "../../translations/en.js"
-import messages_ee from "../../translations/ee.js"
 import jQuery from 'jquery'
-import { FormattedMessage } from 'react-intl';
 import { authentication_token } from './constants/constants';
-
-addLocaleData([...locale_ee, ...locale_en])
-
-const messages = {
-	'ee': messages_ee,
-	'en': messages_en
-};
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -151,9 +137,8 @@ class Main extends Component {
 		return (
 			<ManageCenter
 				languageFromMain={this.state.language}
-				back_end_host={this.state.back_end_host}
 			/>
-		);
+		)
 	} 
 
 	renderManageUsers = () => {
@@ -161,7 +146,7 @@ class Main extends Component {
 	}
 
 	renderUserManager = () => {
-		// return <UserManager/> Should combine with login page as requested?
+		// return <UserManager/> Should combine with login page?
 	}
 
 	renderManageLogs = () => {
@@ -212,20 +197,28 @@ class Main extends Component {
 		this.gotoPage(doPushHistory, 'register')
 	}
 
-	toManageCenter = doPushHistory => {	
-		this.gotoPage(doPushHistory, 'manageCenter')
+	toManageCenter = doPushHistory => {
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotoPage(doPushHistory, 'manageCenter')
+		}
 	}
 
 	toManageUsers = doPushHistory => {
-		this.gotToManageUser(doPushHistory, 'manageUsers')
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotToManageUser(doPushHistory, 'manageUsers')
+		}
 	}
 
 	toUserManager = doPushHistory => {
-		this.goToUserManager(doPushHistory, 'userManager')
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.goToUserManager(doPushHistory, 'userManager')
+		}
 	}
 
 	toManageLogs = doPushHistory => {
-		this.goToManageLogs(doPushHistory, 'manageLogs')
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.goToManageLogs(doPushHistory, 'manageLogs')
+		}
 	}
 
 	changeToEE = () => {
@@ -371,15 +364,15 @@ class Main extends Component {
 
 	render() {
 		return (
-					<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
-						<div>
-							<div> {this.renderTop()} </div>
-							<div id='push'>
-								<div className='container'>{this.state.navbarPageFn()}</div>
-							</div>
-							<Footer languageFromMain={this.state.language} />
-						</div>
-					</IntlProvider>
+			<div>
+				<div> 
+					{this.renderTop()} 
+				</div>
+				<div id='push'>
+					<div className='container'>{this.state.navbarPageFn()}</div>
+				</div>
+				<Footer languageFromMain={this.state.language} />
+			</div>
 		)
 	}
 }
