@@ -2,20 +2,41 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import PropTypes from "prop-types";
 import $ from 'jquery';
-import { FormattedMessage } from 'react-intl';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 class Modal extends Component {
 	static propTypes = {
 		title: PropTypes.object.isRequired,
+		isOpen: PropTypes.bool,
+		languageFromMain: PropTypes.string.isRequired
 	}
 	
+	static defaultProps = {
+		isOpen: false
+	}
+
 	componentDidMount() {
 		$(ReactDOM.findDOMNode(this)).modal({background: true, keyboard: true, show: false});
 	}
 	
+/* 	componentDidUpdate(prevProps) {
+		if (prevProps.isOpen !== this.props.isOpen) {
+			this.toggleModal(this.props.isOpen);
+		}
+	} */
+
 	componentWillUnmount() {
 		$(ReactDOM.findDOMNode(this)).off('hidden');
 	}
+	
+/* 	toggleModal = isOpen => {
+		$(ReactDOM.this.node).modal({
+			background: true,
+			keyboard: true,
+			show: isOpen
+		});
+	}; */
 	
 	handleClick(e) {
 		e.stopPropagation();
@@ -23,7 +44,14 @@ class Modal extends Component {
 	
 	render() {
 		return (
-			<div onClick={this.handleClick} className="modal fade in" id="modal-display" role="dialog" aria-hidden="true" keyboard="true" tabIndex="-1">
+			<div onClick={this.handleClick}
+				className="modal fade in"
+				id="modal-display"
+				role="dialog"
+				aria-hidden="true"
+				keyboard="true"
+				tabIndex="-1"
+			>
 				<div className="modal-dialog" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
@@ -31,11 +59,7 @@ class Modal extends Component {
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
 								<span className="sr-only">
-									<FormattedMessage
-										id='close.button'
-										description='close button translation'
-										defaultMessage='Close'
-									/>
+									{dictionary[this.props.languageFromMain].common.closeButton}
 								</span>
 							</button>
 						</div>
@@ -43,13 +67,10 @@ class Modal extends Component {
 							{this.props.children}
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-outline-secondary" data-dismiss="modal">
-								<FormattedMessage
-									id='close.button'
-									description='close button translation'
-									defaultMessage='Close'
-								/>
-							</button>
+							<Button
+								label={dictionary[this.props.languageFromMain].common.closeButton}
+								data-dismiss="modal"
+							/>
 						</div>
 					</div>
 				</div>

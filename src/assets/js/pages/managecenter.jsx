@@ -2,12 +2,13 @@ import 'bootstrap';
 import $ from 'jquery';
 import AddCenter from '../components/addcenter.jsx'
 import { back_end_host } from '../constants/constants';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 import EditCenter from '../components/editcenter.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {FormattedMessage } from 'react-intl';
 
 class ManageCenter extends Component {
 	static propTypes = {
@@ -22,12 +23,13 @@ class ManageCenter extends Component {
 			oneCenterName: '',
 			oneCenterLink: ''
 		};
-		this.headers = [
-			{ key: 'id', label: 'Korpuse ID'},
-			{ key: 'centerName', label: 'Korpuse nimi' },
-			{ key: 'link', label: 'URL' }
-		];
 	}
+
+	headers = [
+		{ key: 'id', label: dictionary[this.props.languageFromMain].common.corpusId },
+		{ key: 'centerName', label: dictionary[this.props.languageFromMain].common.corpusName },
+		{ key: 'link', label: 'URL' }
+	];
 
 	componentDidMount() {
 		this.getCenterList();
@@ -44,7 +46,7 @@ class ManageCenter extends Component {
 	}
 
 	deleteCenter = id => {
-		if (window.confirm("Kas oled kindel, et soovid kustutada?")) {
+		if (window.confirm(dictionary[this.props.languageFromMain].managecenter.confirmDelete)) {
 			fetch(back_end_host + 'db/center/delete/' + id, {
 				method: 'DELETE',
 				headers: {
@@ -54,7 +56,7 @@ class ManageCenter extends Component {
 			})
 			.then(response => { 
 				if (response.status === 200) {
-					alert("Korpus on edukalt kustutatud");
+					alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
 					this.getCenterList();
 				} 
 			});
@@ -85,17 +87,10 @@ class ManageCenter extends Component {
 			<div id='container'>
 				<div className='top-gap'></div>
 				<p className='align-right'>
-					<button
-						type='button'
-						className="btn btn-outline-secondary"
+					<Button
+						label={dictionary[this.props.languageFromMain].managecenter.addNewCorpus}
 						onClick={this.toggleAdd}
-					>
-						<FormattedMessage
-							id='managecenter.addNewCorpus'
-							description='add new corpus translation'
-							defaultMessage='Add new corpus'
-						/>
-					</button>
+					/>
 				</p>
 				<table className='table table-striped'>
 					<thead className='thead-blue'>
@@ -108,11 +103,7 @@ class ManageCenter extends Component {
 								})
 							}
 							<th>
-								<FormattedMessage
-									id='managecenter.actions'
-									description='actions translation'
-									defaultMessage='Actions'
-								/>
+								{dictionary[this.props.languageFromMain].common.actions}
 							</th>
 						</tr>
 					</thead>
@@ -125,29 +116,15 @@ class ManageCenter extends Component {
 										<td>{item.centerName}</td>
 										<td>{item.link}</td>
 										<td>
-											<button
-												type='button'
-												className="btn btn-outline-secondary"
+											<Button
+												label={dictionary[this.props.languageFromMain].common.edit}
 												onClick={e => this.toggleEdit(e, item.id, item.centerName, item.link)}
-											>
-												<FormattedMessage
-													id='edit'
-													description='edit translation'
-													defaultMessage='Edit'
-												/>
-											</button>
+											/>
 											&nbsp;
-											<button
-												type='button'
-												className="btn btn-outline-secondary"
+											<Button
+												label={dictionary[this.props.languageFromMain].common.delete}
 												onClick={this.deleteCenter.bind(this, item.id)}
-											>
-												<FormattedMessage
-													id='delete'
-													description='delete translation'
-													defaultMessage='Delete'
-												/>
-											</button>
+											/>
 										</td>
 									</tr>
 								)
@@ -159,13 +136,12 @@ class ManageCenter extends Component {
 
 				<Modal
 					ref='AddCenterModal'
-					title={<span>
-					<FormattedMessage
-						id='managecenter.addNewCorpus'
-						description='add new corpus translation'
-						defaultMessage='Add new corpus'
-					/>
-					</span>}
+					title={
+						<span>
+							{dictionary[this.props.languageFromMain].managecenter.addNewCorpus}
+						</span>
+					}
+					languageFromMain={this.props.languageFromMain}
 				>
 					<AddCenter 
 						languageFromMain={this.props.languageFromMain}
@@ -175,13 +151,12 @@ class ManageCenter extends Component {
 
 				<Modal
 					ref='editCenterModal'
-					title={<span>
-					<FormattedMessage
-						id='managecenter.editCenterData'
-						description='edit corpus data translation'
-						defaultMessage='Edit corpus data'
-					/>
-					</span>}
+					title={
+						<span>
+							{dictionary[this.props.languageFromMain].managecenter.editCenterData}
+							</span>
+					}
+					languageFromMain={this.props.languageFromMain}
 				>
 					<EditCenter 
 						languageFromMain={this.props.languageFromMain}

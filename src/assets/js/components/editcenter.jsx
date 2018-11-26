@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
@@ -42,9 +41,8 @@ class EditCenter extends Component {
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2">
-                            <label htmlFor="Center_id">
-                                {dictionary[this.props.languageFromMain].editcenter.corpusId}
-
+                        <label htmlFor="Center_id">
+                                {dictionary[this.props.languageFromMain].common.corpusId}
                             </label>
                         </div>
                         <div className="col-sm-10">
@@ -61,11 +59,7 @@ class EditCenter extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2">
                             <label htmlFor="Center_name">
-                                <FormattedMessage
-                                    id='corpusName'
-                                    description='corpus name translation'
-                                    defaultMessage="Corpus' name"
-                                />
+                                {dictionary[this.props.languageFromMain].common.corpusName}
                             </label>
                         </div>
                         <div className="col-sm-10">
@@ -76,10 +70,10 @@ class EditCenter extends Component {
                                 id="Center_name"
                                 value={this.props.oneCenterName}
                                 onChange={this.props.handleChange}
-                                placeholder="Korpuse nimi"
+                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
                             />
                             <div className="invalid-feedback">
-                                Sisesta korpuse nimi
+                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
                             </div>
                         </div>
                     </div>
@@ -98,24 +92,16 @@ class EditCenter extends Component {
                                 placeholder="http"
                             />
                             <div className="invalid-feedback">
-                                Sisesta korpuse URL
+                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
                             </div>
                         </div>
                     </div>
                     <p>
-                        <Button label='Salvesta' onClick={this.handleEdit} disabled={!disableButton}/>
-                        <button
-                            type='button'
-                            className="btn btn-outline-secondary"
+                        <Button
+                            label={dictionary[this.props.languageFromMain].common.save}
                             onClick={this.handleEdit}
                             disabled={!disableButton}
-                        >
-                            <FormattedMessage
-                                id='save'
-                                description='save translation'
-                                defaultMessage='Save'
-                            />
-                        </button>
+                        />
                     </p>
                 </form>
             </div>

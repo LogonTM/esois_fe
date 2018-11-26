@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;

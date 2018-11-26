@@ -77,15 +77,6 @@ class ZoomedResult extends Component {
 		this.setState({displayADV:!this.state.displayADV});
 	}
 
-/* 	renderPanelTitle(corpus) {
-		return (
-			<div className='inline'>
-				<span className="corpusName"> {corpus.title}</span>
-				<span className="institutionName"> — {corpus.institution.name}</span>
-			</div>
-		);
-	} */
-
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);

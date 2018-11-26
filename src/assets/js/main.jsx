@@ -15,6 +15,7 @@ import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
+import dictionary from '../../translations/dictionary'
 import { IntlProvider } from "react-intl";
 import { addLocaleData } from 'react-intl';
 import locale_en from 'react-intl/locale-data/en';
@@ -91,13 +92,7 @@ class Main extends Component {
 
 	handleAjaxError = (jqXHR, textStatus, error) => {
 		if (jqXHR.readyState === 0) {
-			this.error(
-				<FormattedMessage
-					id='ajax.network.error'
-					description='no network connection error translation'
-					defaultMessage='Network error, please check your internet connection'
-				/>
-			)
+			this.error(dictionary[this.state.language].errors.noNetwork)
 		} else if (jqXHR.responseText) {
 			this.error(jqXHR.responseText + ' (' + error + ')')
 		} else {
@@ -116,23 +111,49 @@ class Main extends Component {
 	}
 
 	renderAggregator = () => {
-		return <AggregatorPage ajax={this.ajax} error={this.error} languageFromMain={this.state.language}/>
+		return (
+			<AggregatorPage
+				ajax={this.ajax}
+				error={this.error}
+				languageFromMain={this.state.language}
+			/>
+		);
 	}
 
 	renderHelp = () => {
-		return <HelpPage />
+		return <HelpPage languageFromMain={this.state.language} />
 	}
 
 	renderRegister = () => {
-		return <RegisterPage backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+		return (
+			<RegisterPage
+				backToAggregator={this.toAggregator.bind(this, true)}
+				isUserloggedIn={this.state.loggedInStatus}
+				getStatus={this.getUserLoginStatus.bind(this)}
+				languageFromMain={this.state.language}
+			/>
+		);
 	}
 
 	renderLogin = () => {
-		return <LoginPage toRegistration={this.toRegister.bind(this, true)} backToAggregator={this.toAggregator.bind(this, true)} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+		return (
+			<LoginPage
+				toRegistration={this.toRegister.bind(this, true)}
+				backToAggregator={this.toAggregator.bind(this, true)}
+				isUserloggedIn={this.state.loggedInStatus}
+				getStatus={this.getUserLoginStatus.bind(this)}
+				languageFromMain={this.state.language}
+			/>
+		);
 	}
 
 	renderManageCenter = () => {
-		return <ManageCenter languageFromMain={this.state.language} back_end_host={this.state.back_end_host} />
+		return (
+			<ManageCenter
+				languageFromMain={this.state.language}
+				back_end_host={this.state.back_end_host}
+			/>
+		);
 	} 
 
 	renderManageUsers = () => {
@@ -335,11 +356,7 @@ class Main extends Component {
 							aria-label="Toggle navigation"
 						>
 							<span className='sr-only'>
-								<FormattedMessage
-									id='toggle.navigation'
-									description='toggle navigation translation'
-									defaultMessage='Toggle navigation'
-								/>
+								{dictionary[this.state.language].common.toggleNavigation}
 							</span>
 							<span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
 						</button>
@@ -360,7 +377,7 @@ class Main extends Component {
 							<div id='push'>
 								<div className='container'>{this.state.navbarPageFn()}</div>
 							</div>
-							<Footer />
+							<Footer languageFromMain={this.state.language} />
 						</div>
 					</IntlProvider>
 		)

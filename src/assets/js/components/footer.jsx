@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import dictionary from '../../../translations/dictionary';
 import ELlogo from '../../img/el-reg-fond.jpg'
 import FooterImg from '../../img/ekrk-footer-logo.png';
+import PropTypes from 'prop-types';
 
 class Footer extends Component {
+	static propTypes = {
+		languageFromMain: PropTypes.string.isRequired
+	}
+
     render() {
 	    return (
 			<div id='new-footer' style={{textAlign:'center'}}>
@@ -19,21 +24,13 @@ class Footer extends Component {
 								<div className='col-12 col-sm-12 col-12'>
 									<p>
 										© 2018&nbsp;
-										<FormattedMessage
-											id='footer.ekrk'
-											description='Eesti Keeleressursside Keskus translation'
-											defaultMessage='Center of Estonian Language Resources'
-										/>
+										{dictionary[this.props.languageFromMain].footer.ekrk}
 									</p>
 								</div>
 								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12 col-12'>
 									<p>
 										Liivi 2-340, Tartu 50409
-										<FormattedMessage
-											id='footer.estonia'
-											description='Estonia for page in English'
-											defaultMessage=' '
-										/>|
+										{dictionary[this.props.languageFromMain].footer.estonia} |
 									</p>
 								</div>
 								<div className='col-xl-auto col-lg-auto col-md-auto col-sm-12 col-12'>

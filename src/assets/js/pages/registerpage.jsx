@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { 
     minimum_name_length, maximum_name_length,
     minimum_username_length, maximum_username_length,
@@ -10,6 +9,8 @@ import { login } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions'; // For future use?
 import PropTypes from 'prop-types';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes
 
@@ -17,7 +18,8 @@ class RegisterPage extends Component {
     static propTypes = {
 		isUserloggedIn: PT.bool,
 		getStatus: PT.func,
-		backToAggregator: PT.func,
+        backToAggregator: PT.func,
+        languageFromMain: PropTypes.string.isRequired
 	}
 
     constructor(props) {
@@ -110,8 +112,6 @@ class RegisterPage extends Component {
                 })
             }
     }
-
-    
 
     handlePasswordValidationChange = event => {
         var passwordValidationValue = event.target.value;
@@ -218,93 +218,48 @@ class RegisterPage extends Component {
 				<div className="top-gap">
 					<div className="register-panel">
 						    <form onSubmit={this.handleRegister} className="register-form">
-								<FormattedMessage
-									id='register.name'
-									description='name translation'
-									defaultMessage='Your full name'
-								>
-									{name => (
-										<input
-											className={nameValidator}
-                                            type="text"
-											value={this.state.name.value}
-											placeholder={name} 
-											onChange={this.handleNameChange}
-										/>
-									)}
-								</FormattedMessage>
-								<FormattedMessage
-									id='register.username'
-									description='username translation'
-									defaultMessage='Your Username'
-								>	
-									{username => (
-										<input
-											className={userNameValidator}
-											name="Username"
-											value={this.state.username.value}
-											placeholder={username} 
-											onChange={this.handleUsernameChange}
-										/>
-									)}
-								</FormattedMessage>
-                                <FormattedMessage
-									id='register.password'
-									description='password translation'
-									defaultMessage='Your password'
-								>
-									{password => (
-										<input
-											className={passWordValidator}
-											type="password" 
-											value={this.state.password.value}
-											placeholder={password} 
-											onChange={this.handlePasswordChange}
-										/>
-									)}
-								</FormattedMessage>
-                                <FormattedMessage
-									id='register.passowordvalidation'
-									description='password validation translation'
-									defaultMessage='Your password confirmation'
-								>
-									{passwordvalidation => (
-										<input
-											className={passWordConfirmation}
-											type="password" 
-											value={this.state.passwordValidation.value}
-											placeholder={passwordvalidation} 
-											onChange={this.handlePasswordValidationChange}
-										/>
-									)}
-								</FormattedMessage>
-								<FormattedMessage
-									id='register.email'
-									description='email translation'
-									defaultMessage='Your e-mail'
-								>	
-									{email => (
-										<input
-                                            className={emailValidator}
-                                            type="email"
-											name="email"
-											value={this.state.email.value}
-											placeholder={email} 
-											onChange={this.handleEmailChange}
-										/>
-									)}
-								</FormattedMessage>
-                                <button type="submit" 
-                                        className="btn btn-outline-secondary btn-lg" 
-                                        onClick={this.handleRegister} 
-                                        disabled={!registrationEnabler}>
-								<span aria-hidden="true"></span>
-									{<FormattedMessage
-												id='login.registerButton'
-												description='register translation'
-												defaultMessage='Register'
-									/>}
-								</button>
+                                <input
+                                    className={nameValidator}
+                                    type="text" 
+                                    value={this.state.name.value}
+                                    placeholder={dictionary[this.props.languageFromMain].register.name} 
+                                    onChange={this.handleNameChange}
+                                />
+                                <input
+                                    className={userNameValidator}
+                                    type="Username" 
+                                    value={this.state.username.value}
+                                    placeholder={dictionary[this.props.languageFromMain].register.username} 
+                                    onChange={this.handleUsernameChange}
+                                />
+                                <input
+                                    className={passWordValidator}
+                                    type="password" 
+                                    value={this.state.password.value}
+                                    placeholder={dictionary[this.props.languageFromMain].register.password} 
+                                    onChange={this.handlePasswordChange}
+                                />
+                                <input
+                                    className={passWordConfirmation}
+                                    type="password" 
+                                    value={this.state.passwordValidation.value}
+                                    placeholder={dictionary[this.props.languageFromMain].register.passwordvalidation} 
+                                    onChange={this.handlePasswordValidationChange}
+                                />
+                                <input
+                                    className={emailValidator}
+                                    type="email"
+                                    name="email"
+                                    value={this.state.email.value}
+                                    placeholder={dictionary[this.props.languageFromMain].register.email} 
+                                    onChange={this.handleEmailChange}
+                                />
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    uiType='btn.lg'
+                                    onClick={this.handleRegister}
+                                    disabled={!registrationEnabler}
+                                />
 							</form>
 						</div>
                     <div className="bottom-gap"></div>
