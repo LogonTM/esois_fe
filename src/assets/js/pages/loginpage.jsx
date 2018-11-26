@@ -23,11 +23,13 @@ class LoginPage extends Component {
 			currentUser: null,
 			usernameOrEmail: {
 				value: '',
-				valid: false
+				valid: false,
+				errormessage: null
 			},
 			password: {
 				value: '',
-				valid: false
+				valid: false,
+				errormessage: null
 			},
 			notificationMessage: {
                 message: ''
@@ -73,8 +75,15 @@ class LoginPage extends Component {
 				if(error.status === 401) {
 					// Fix here Bootstrap notification for incorrect password or username?
 					this.setState({
-						notificationMessage : {
-							message: "RABA: Your Username or Password is incorrect. Please try again!"
+						usernameOrEmail : {
+							value : this.state.usernameOrEmail.value,
+							valid: false,
+							errormessage : "RABA: Your Username or Password is incorrect. Please try again!"
+						},
+						password : {
+							value : this.state.password.value,
+							valid : false,
+							errormessage : "RABA: Your Username or Password is incorrect. Please try again!"
 						}
 					})
 				} else {
@@ -152,6 +161,10 @@ class LoginPage extends Component {
 	}
 
 	render () {
+		const usernameOrEmailValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
+        const passwordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 
+            (this.state.password.valid ? "is-valid"  : "is-invalid")
 		if (this.state.loggedInStatus === false) {
 			return (
 				<div>
@@ -160,30 +173,32 @@ class LoginPage extends Component {
 							<form onSubmit={this.logInOut}>
 								<div>
 									<input
-										className="form-control"
+										className={usernameOrEmailValidator}
 										type="text" 
 										value={this.state.usernameOrEmail.value}
 										placeholder={dictionary[this.props.languageFromMain].common.username} 
 										onChange={(event) => this.handleUsernameChange(event, this.usernameNotEmpty)}
 									/>
+									<div className="invalid-feedback">{this.state.usernameOrEmail.errormessage}</div>
 								</div>
 								<div>
 									<input
-										className="form-control"
+										className={passwordValidator}
 										type="password"
 										name="password"
 										value={this.state.password.value}
 										placeholder={dictionary[this.props.languageFromMain].common.password} 
 										onChange={(event) => this.handlePasswordChange(event, this.passwordNotEmpty)}
 									/>
+									<div className="invalid-feedback">{this.state.password.errormessage}</div>
 								</div>
-                                <Button
-                                    label={dictionary[this.props.languageFromMain].loginpage.loginButton}
-                                    type='submit'
-                                    uiType='btn.lg'
-                                    onClick={this.logInOut}
+								<Button
+									label={dictionary[this.props.languageFromMain].loginpage.loginButton}
+									type='submit'
+									uiType='btn.lg'
+									onClick={this.logInOut}
 									disabled={this.loginValidator()}
-                                />
+								/>
                                 &nbsp;
                                 <Button
                                     label={dictionary[this.props.languageFromMain].loginpage.registerButton}
