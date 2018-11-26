@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import { FormattedMessage } from 'react-intl';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -12,7 +13,8 @@ class Results extends Component {
 		searchedLanguage: PT.array.isRequired,
 		toggleResultModal: PT.func.isRequired,
 		getDownloadLink: PT.func.isRequired,
-	    queryTypeId: PT.string.isRequired, 
+		queryTypeId: PT.string.isRequired,
+		languageFromMain: PT.string.isRequired
 	}
 
 	constructor(props) {
@@ -33,11 +35,7 @@ class Results extends Component {
 					<button className="btn btn-outline-secondary zoomResultButton"
 							onClick={e => this.props.toggleResultModal(e,corpusHit)}>
 						<span className="fa fa-eye"/>
-						<FormattedMessage
-							id='results.view.button'
-							description='view translation'
-							defaultMessage='View'
-						/>
+						{dictionary[this.props.languageFromMain].results.viewButton}
 					</button>
 				</div>
 			</div>
@@ -52,9 +50,11 @@ class Results extends Component {
 		}
 		return (
 			<CSSTransition key={corpusHit.corpus.id} classNames="fade" timeout={{enter: 200, exit: 200}}>
-				<Panel key={corpusHit.corpus.id}
-						title={this.renderPanelTitle(corpusHit.corpus)}
-						info={this.renderPanelInfo(corpusHit)}>
+				<Panel
+					key={corpusHit.corpus.id}
+					title={this.renderPanelTitle(corpusHit.corpus)}
+					info={this.renderPanelInfo(corpusHit)}
+				>
 					{this.renderPanelBody(corpusHit)}
 				</Panel>
 			</CSSTransition>
@@ -64,15 +64,7 @@ class Results extends Component {
 	renderProgressMessage = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
-		var msg = <FormattedMessage
-					id='results.renderProgressMessage'
-					description='how many matching collections found in how many searched collections translation'
-					defaultMessage='{found} matching collections found in {done} searched collections'
-					values= {{
-						found: collhits.hits,
-						done: done
-					}}
-			 	/>;
+		var msg = `${collhits.hits} ${dictionary[this.props.languageFromMain].results.renderProgressMessageP1} ${done} ${dictionary[this.props.languageFromMain].results.renderProgressMessageP2}`
 		var percents = Math.round(100 * collhits.hits / collhits.results.length);
 		var styleperc = {width: percents+"%"};
 		return (
@@ -136,9 +128,8 @@ class Results extends Component {
 
 	renderRowsAsADV = (hit,i) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
-		
 		function renderSpans(span, idx) {
-		return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
+			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 		}
 		return (
 			<tr key={i} className="hitrow">
@@ -175,19 +166,12 @@ class Results extends Component {
 		return (
 			<div className="alert alert-danger" role="alert">
 				<div>
-					<FormattedMessage
-						id='resultmixin.exception'
-						description='exception translation'
-						defaultMessage='Exception:'
-					/>&nbsp;
-					{xc.message}</div>
+					{dictionary[this.props.languageFromMain].resultfunctions.exception}&nbsp;
+					{xc.message}
+				</div>
 				{ xc.cause ? 
 					<div>
-						<FormattedMessage 
-							id='resultmixin.causedBy'
-							description='caused by translation'
-							defaultMessage='Caused by:'
-						/>&nbsp;
+						{dictionary[this.props.languageFromMain].resultfunctions.causedBy}&nbsp;
 						{xc.cause}
 					</div> : false
 				}
@@ -241,11 +225,7 @@ class Results extends Component {
 						onChange={this.toggleKwic}
 					/>
 					&nbsp;
-					<FormattedMessage
-						id='resultmixin.display.kwic'
-						description='display as key word in context translation'
-						defaultMessage='Display as Key Word In Context'
-					/>
+					{dictionary[this.props.languageFromMain].resultfunctions.displayKwic}
 				</label>
 			</div>
 		);
@@ -263,50 +243,36 @@ class Results extends Component {
 						onChange={this.toggleADV}
 					/>
 					&nbsp;
-					<FormattedMessage
-						id='resultmixin.display.adv'
-						description='display as AdvancedDataView translation'
-						defaultMessage='Display as AdvancedDataView (ADV)'
-					/>
+					{dictionary[this.props.languageFromMain].resultfunctions.displayAdv}
 				</label>
 			</div>
 		);
 	}
 
-	renderDownloadLinks = (corpusId) => {
+	renderDownloadLinks = corpusId => {
 		return (
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
 					<span className="fa fa-download" aria-hidden="true"/>{" "}
-						<FormattedMessage
-							id='resultmixin.download'
-							description='download translation'
-							defaultMessage=' Download '
-						/>{" "}
+						{dictionary[this.props.languageFromMain].resultfunctions.download}{" "}
 					<span className="caret"/>
 				</button>
 				<ul className="dropdown-menu">
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
-							<FormattedMessage
-								id='resultmixin.download.csv'
-								description='as csv file translation'
-								defaultMessage='As CSV file'
-							/>
-						</a></li>
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
-							<FormattedMessage
-								id='resultmixin.download.json'
-								description='as json file translation'
-								defaultMessage='As JSON file'
-							/>
-						</a></li>
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
-							<FormattedMessage
-								id='resultmixin.download.xml'
-								description='as csv file translation'
-								defaultMessage='As XML file'
-							/>
-						</a></li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadCsv}
+						</a>
+					</li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadJson}
+						</a>
+					</li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadXml}
+						</a>
+					</li>
 				</ul>
 			</div>
 		);
@@ -325,14 +291,7 @@ class Results extends Component {
 				<div style={{marginBottom:2}}>
 					{ showprogress ? false :
 						<div className="float-left">
-							<FormattedMessage
-								id='results.howManyMatchingCollectionsFound'
-								description='so many matching collections found translation'
-								defaultMessage='{amount} matching collections found'
-								values= {{
-									amount: collhits.hits
-								}}
-							/>
+							{`${collhits.hits} ${dictionary[this.props.languageFromMain].results.howManyMatchingCollectionsFound}`}
 						</div>
 					}
 					{ collhits.hits === 0 ? false :

@@ -12,6 +12,7 @@ import jQuery from 'jquery';
 import 'bootstrap';
 import {FormattedMessage } from 'react-intl';
 import { back_end_host } from '../constants/constants';
+import dictionary from '../../../translations/dictionary.js';
 
 var PT = PropTypes;
 
@@ -60,35 +61,11 @@ class AggregatorPage extends Component {
 	queryTypes = [
 		{
 			id: 'cql',
-			name: 
-				<FormattedMessage
-					id='cql.query.name' 
-					description='CQL query name translation'
-					defaultMessage='Text layer Contextual Query Language (CQL)'
-				/>,
-			searchLabel:
-				<FormattedMessage
-					id='cql.query.searchLabel'
-					description='search label for CQL query translation'
-					defaultMessage='Text layer CQL query'
-				/>,
 			searchLabelBkColor: 'rgba(220, 133, 46, .3)',
 			className: '',
 		},
 		{
 			id: "fcs",
-			name: 
-				<FormattedMessage
-					id='fcsql.query.name'
-					description='FCS-QL query name translation'
-					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
-				/>,
-			searchLabel: 
-				<FormattedMessage
-					id='fcsql.query.searchLabel'
-					description='search label for FCS-QL query translation'
-					defaultMessage='Multi-layer FCS query'
-				/>,
 			searchLabelBkColor: "rgba(40, 85, 143, .3)",
 			disabled: false,
 		},
@@ -457,7 +434,7 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-										{queryType.searchLabel}
+										{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
 									</span>
 								</div>
 								<QueryInput 
@@ -467,8 +444,9 @@ class AggregatorPage extends Component {
 									placeholder={correctPlaceholder[this.props.languageFromMain]}
 									onChange={this.onADVQuery}
 									onQuery={this.onQuery}
-									onKeyDown={this.handleKey} />
-
+									onKeyDown={this.handleKey}
+									languageFromMain={this.props.languageFromMain}
+								/>
 								<div className="input-group-append">
 									{this.renderSearchButtonOrLink()}
 								</div>
@@ -506,14 +484,23 @@ class AggregatorPage extends Component {
 									<button className="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
 											aria-expanded="false"
 											data-toggle="dropdown">
-										{queryType.name}
+										{dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
 									</button>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	this.queryTypes.map(l => {
+										{ this.queryTypes.map(l => {
 												var cls = l.disabled ? 'disabled':'dropdown-item';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
-													onClick={handler}> {l.name} </a></li>);
+
+												return (
+													<li 
+														key={l.id}
+														className={cls}
+													>
+														<a tabIndex="-1" href="#" onClick={handler}>
+															{dictionary[this.props.languageFromMain][l.id].name}
+														</a>
+													</li>
+												);
 											})
 										}
 									</ul>
@@ -539,7 +526,7 @@ class AggregatorPage extends Component {
 									<button	type="button"
 											className="btn btn-outline-secondary dropdown-toggle"
 											onClick={this.toggleCorpusSelection}>
-										{this.state.corpora.getSelectedMessage()}
+										{this.state.corpora.getSelectedMessage(this.props.languageFromMain)}
 									</button>
 								</div>
 								<div className="input-group-prepend">
@@ -578,7 +565,7 @@ class AggregatorPage extends Component {
 						defaultMessage='Collections'
 					/>
 					</span>}>
-					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} />
+					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} languageFromMain={this.props.languageFromMain} />
 				</Modal>
 
 				<Modal ref="languageModal" title={<span>
@@ -619,6 +606,7 @@ class AggregatorPage extends Component {
 function Corpora(corpora, updateFn) {
 	this.corpora = corpora;
 	this.update = () => updateFn(this);
+
 
 	var sortFn = function(x, y) {
 		var r = x.institution.name.localeCompare(y.institution.name);
@@ -752,38 +740,14 @@ Corpora.prototype.getSelectedIds = function() {
 	return ids;
 };
 
-Corpora.prototype.getSelectedMessage = function() {
+Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
 	if (this.corpora.length === selectedIdsCount) {
-		return (
-			<FormattedMessage
-				id='front.page.all.collections.selected'
-				description='all available collections translation'
-				defaultMessage='All available collections ({amount})'
-				values= {{
-					amount: selectedIdsCount
-				}}
-			/>
-		);
+		return `${dictionary[languageFromMain].corpusview.allCollectionsSelected} (${selectedIdsCount})`;
 	} else if (selectedIdsCount === 1) {
-		return (
-			<FormattedMessage
-				id='front.page.one.collection.selected'
-				description='one selected collection translation'
-				defaultMessage='1 selected collection'
-			/>
-		);
+		return dictionary[languageFromMain].corpusview.oneCollectionSelected;
 	}
-	return (
-		<FormattedMessage
-			id='front.page.some.collections.selected'
-			description='some collections selected translation'
-			defaultMessage='{amount} selected collections'
-			values= {{
-				amount: selectedIdsCount
-			}}
-		/>
-	);
+	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.someCollectionsSelected}`;
 };
 
 function getQueryVariable(variable) {

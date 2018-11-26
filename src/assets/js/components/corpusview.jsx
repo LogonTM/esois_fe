@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import { FormattedMessage } from 'react-intl';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -9,6 +10,7 @@ class CorpusView extends Component {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
+		languageFromMain: PT.string.isRequired
 	}
 
 	toggleSelection = (corpus, e) => {
@@ -180,15 +182,9 @@ class CorpusView extends Component {
 		}
 		return (
 			<div id="searchInCollections">
-				<FormattedMessage
-					id='corpusview.howManyCollectionsAreShown'
-					description='showing so many collections out of all translation'
-					defaultMessage='Showing {visible} out of {total} (sub)collections.'
-					values= {{
-						visible: visible,
-						total: total
-					}}
-				/>
+				{`${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP1} ${visible} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP2} ${total} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP3}.`}
 			</div>
 		);
 	}
@@ -257,7 +253,7 @@ class CorpusView extends Component {
 					<div className="col" style={{ marginRight: -15, marginLeft: -15 }}>
 						<div className="float-left inline">
 							<h3 style={{marginTop:10}}>
-								{this.props.corpora.getSelectedMessage()}
+								{this.props.corpora.getSelectedMessage(this.props.languageFromMain)}
 							</h3>
 						</div>
 						<div className="float-right inline">
@@ -278,7 +274,10 @@ class CorpusView extends Component {
 						</div>
 						<div className="float-right inline">
 							<div className="inline" style={{ marginRight: 20 }} >
-								<SearchCorpusBox search={this.searchCorpus}/>
+								<SearchCorpusBox
+									search={this.searchCorpus}
+									languageFromMain={this.props.languageFromMain}
+								/>
 								{this.renderFilteredMessage()}
 							</div>
 						</div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import { FormattedMessage } from 'react-intl';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -13,6 +13,7 @@ class ZoomedResult extends Component {
 		searchedLanguage: PT.array.isRequired,
 		getDownloadLink: PT.func.isRequired,
 		queryTypeId: PT.string.isRequired,
+		languageFromMain: PT.string.isRequired
 	}
 
 	constructor(props) {
@@ -41,11 +42,7 @@ class ZoomedResult extends Component {
 		if (this.props.corpusHit.inProgress)
 			return (
 				<span style={{fontStyle:'italic'}}>
-					<FormattedMessage
-						id='zoomedresult.pleaseWait'
-						description='retrieving results, please wait translation'
-						defaultMessage='Retrieving results, please wait...'
-					/>
+					{dictionary[this.props.languageFromMain].zoomedresult.pleaseWait}
 				</span>
 			);
 
@@ -61,21 +58,13 @@ class ZoomedResult extends Component {
 		if (!moreResults)
 			return (
 				<span style={{fontStyle:'italic'}}>
-					<FormattedMessage
-						id='zoomedresult.noMoreResults'
-						description='no other results available for this query translation'
-						defaultMessage='No other results available for this query'
-					/>
+					{dictionary[this.props.languageFromMain].zoomedresult.noMoreResults}
 				</span>
 			);
 		return (
 			<button className="btn btn-outline-secondary" onClick={this.nextResults}>
 				<span className="fa fa-ellipsis-h" aria-hidden="true"/>
-				<FormattedMessage
-					id='zoomedresult.moreResults'
-					description='more results translation'
-					defaultMessage='More Results'
-				/>
+				{dictionary[this.props.languageFromMain].zoomedresult.moreResults}
 			</button>
 		);
 	}
@@ -88,14 +77,14 @@ class ZoomedResult extends Component {
 		this.setState({displayADV:!this.state.displayADV});
 	}
 
-	renderPanelTitle(corpus) {
+/* 	renderPanelTitle(corpus) {
 		return (
 			<div className='inline'>
 				<span className="corpusName"> {corpus.title}</span>
 				<span className="institutionName"> — {corpus.institution.name}</span>
 			</div>
 		);
-	}
+	} */
 
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
@@ -123,9 +112,8 @@ class ZoomedResult extends Component {
 
 	renderRowsAsADV = (hit,i) => {
 	    var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
-	    
 	    function renderSpans(span, idx) {
-		return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
+			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 	    }
 	    return (
 			<tr key={i} className="hitrow">
@@ -162,20 +150,12 @@ class ZoomedResult extends Component {
 		return (
 			<div className="alert alert-danger" role="alert">
 				<div>
-					<FormattedMessage
-						id='resultmixin.exception'
-						description='exception translation'
-						defaultMessage='Exception:'
-					/>&nbsp;
+					{dictionary[this.props.languageFromMain].resultfunctions.exception}&nbsp;
 					{xc.message}
 				</div>
 				{ xc.cause ? 
 					<div>
-						<FormattedMessage 
-							id='resultmixin.causedBy'
-							description='caused by translation'
-							defaultMessage='Caused by:'
-						/>&nbsp;
+						{dictionary[this.props.languageFromMain].resultfunctions.causedBy}&nbsp;
 						{xc.cause}
 					</div> : false
 				}
@@ -229,11 +209,7 @@ class ZoomedResult extends Component {
 						onChange={this.toggleKwic}
 					/>
 					&nbsp;
-					<FormattedMessage
-						id='resultmixin.display.kwic'
-						description='display as key word in context translation'
-						defaultMessage='Display as Key Word In Context'
-					/>
+					{dictionary[this.props.languageFromMain].resultfunctions.displayKwic}
 				</label>
 			</div>
 		);
@@ -251,11 +227,7 @@ class ZoomedResult extends Component {
 						onChange={this.toggleADV}
 					/>
 				   &nbsp;
-				   <FormattedMessage
-					   id='resultmixin.display.adv'
-					   description='display as AdvancedDataView translation'
-					   defaultMessage='Display as AdvancedDataView (ADV)'
-				   />
+				   {dictionary[this.props.languageFromMain].resultfunctions.displayAdv}
 			   </label>
 		   </div>
 	   );
@@ -266,35 +238,25 @@ class ZoomedResult extends Component {
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
 					<span className="fa fa-download" aria-hidden="true"/>{" "}
-						<FormattedMessage
-							id='resultmixin.download'
-							description='download translation'
-							defaultMessage='Download'
-						/>{" "}
+						{dictionary[this.props.languageFromMain].resultfunctions.download}{" "}
 					<span className="caret"/>
 				</button>
 				<ul className="dropdown-menu">
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
-							<FormattedMessage
-								id='resultmixin.download.csv'
-								description='as csv file translation'
-								defaultMessage='As CSV file'
-							/>
-						</a></li>
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
-					        <FormattedMessage
-								id='resultmixin.download.json'
-								description='as json file translation'
-								defaultMessage='As JSON file'
-							/>
-						</a></li>
-					<li className="dropdown-item"> <a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
-					        <FormattedMessage
-								id='resultmixin.download.xml'
-								description='as csv file translation'
-								defaultMessage='As XML file'
-							/>
-						</a></li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadCsv}
+						</a>
+					</li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadJson}
+						</a>
+					</li>
+					<li className="dropdown-item">
+						<a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
+							{dictionary[this.props.languageFromMain].resultfunctions.downloadXml}
+						</a>
+					</li>
 				</ul>
 			</div>
 		);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import { FormattedMessage } from 'react-intl';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -14,6 +14,7 @@ class QueryInput extends Component {
 		onChange: PT.func.isRequired,
 		onQuery: PT.func.isRequired,
 		onKeyDown: PT.func.isRequired,
+		languageFromMain: PT.string.isRequired
     }
 
     render() {
@@ -69,7 +70,9 @@ class ADVTokens extends Component {
 				<ADVToken 
 					key={token}
 					parentToken={token}
-					handleRemoveADVToken={this.removeADVToken} />
+					handleRemoveADVToken={this.removeADVToken}
+					languageFromMain={this.props.languageFromMain}
+				/>
 			</CSSTransition>);
 	});
 
@@ -100,7 +103,9 @@ class ADVToken extends Component {
 				</div>
 				<div className="args">
 						{ /* and.query_arg* and token_footer */ }
-						<ANDQueryArgs />
+						<ANDQueryArgs 
+							languageFromMain={this.props.languageFromMain}
+						/>
 					<div className="lower_footer">
 					</div>
 				</div>
@@ -130,27 +135,17 @@ class ADVTokenMenu extends Component {
 				</button>
 				<div id="repeatMenu" className={"repeat hide-" + this.state.hideRepeatMenu}>
 					<span>
-						<FormattedMessage
-							id='repeatMenu.repeat'
-							description='repeat translation'
-							defaultMessage='repeat'
-						/>&nbsp;
+						{dictionary[this.props.languageFromMain].queryinput.repeatMenu.repeat}
+						&nbsp;
 					</span>
 					<input type="number" id="repeat1" value={this.state.repeat1} ref="repeat1"/>
 					<span>&nbsp;
-						<FormattedMessage
-							id='repeatMenu.to'
-							description='to translation'
-							defaultMessage='to'
-						/>&nbsp;
+						{dictionary[this.props.languageFromMain].queryinput.repeatMenu.to}
+						&nbsp;
 					</span>
 					<input type="number" id="repeat2" value={this.state.repeat2} ref="repeat2"/>
 					<span>&nbsp;
-						<FormattedMessage
-							id='repeatMenu.times'
-							description='times translation'
-							defaultMessage='times'
-						/>
+						{dictionary[this.props.languageFromMain].queryinput.repeatMenu.times}
 					</span>
 				</div>
 			</div>
@@ -206,16 +201,14 @@ class ANDQueryArgs extends Component {
 	    return (
 			<div className="and query_arg">
 				<span className="hidden">
-					<FormattedMessage
-						id='and'
-						description='and translation'
-						defaultMessage='and'
-					/>
+					{dictionary[this.props.languageFromMain].queryinput.and}
 				</span>
 				<ANDQueryORArgs 
 					numAnds={this.state.ands.length}
 					parentAnd={and}
-					handleRemoveADVAnd={this.removeADVAnd}/>
+					handleRemoveADVAnd={this.removeADVAnd}
+					languageFromMain={this.props.languageFromMain}
+				/>
 			</div>
 		);
 	}
@@ -297,6 +290,7 @@ class ANDQueryORArgs extends Component{
 						handleSetADVInputDefault={this.setADVInputDefault}
 						handleSetADVTokenOp={this.setADVTokenOp}
 						handleValidateADV={this.validateADV}
+						languageFromMain={this.props.languageFromMain}
 					/>
 				</CSSTransition>
 			)
@@ -310,11 +304,7 @@ class ANDQueryORArgs extends Component{
 				</div>
 				<div className="arg_footer">
 					<span className="link" onClick={this.addADVOr} ref={'addOR' + this.props.numAnds}>
-						<FormattedMessage
-							id='or'
-							description='or translation'
-							defaultMessage='or'
-						/>
+						{dictionary[this.props.languageFromMain].queryinput.or}
 					</span>
 					<div style={{clear:"both"}}/>
 				</div>
@@ -346,94 +336,22 @@ class ORArg extends Component {
 					<select className="arg_type" onChange={this.props.handleSetADVInputDefault("or")} defaultValue={this.props.data.layerType}
 						ref={'ANDLayerType_' + this.props.data.id}>
 						{ /* onChange={this.handleSetADVTokenLayer("value")} */}
-						<FormattedMessage
-							id='orarg.word'
-							description='word in ORArg translation'
-							defaultMessage='word'
-						>
-							{word => (
-								<optgroup label={word}>
-									{ /* ::before */ }
-									<FormattedMessage
-										id='orarg.word'
-										description='word in ORArg translation'
-										defaultMessage='word'
-									>
-										{text => (
-											<option value="string:word">{text}</option>
-										)}
-									</FormattedMessage>
-								</optgroup>
-							)}
-						</FormattedMessage>
-						<FormattedMessage
-							id='orarg.wordAttribute'
-							description='word attribute translation'
-							defaultMessage='wordAttribute'
-						>
-							{wordAttribute => (
-								<optgroup label={wordAttribute}>
-									{ /* ::before */ }
-									<FormattedMessage
-										id='orarg.partofspeech'
-										description='part-of-speech in ORArg translation'
-										defaultMessage='part-of-speech'
-									>
-										{pos => (
-											<option value="string:pos" label="word">{pos}</option>
-										)}
-									</FormattedMessage>
-									<FormattedMessage
-										id='orarg.lemma'
-										description='lemma in ORArg translation'
-										defaultMessage='lemma'
-									>
-										{lemma => (
-											<option value="string:lemma">{lemma}</option>
-										)}
-									</FormattedMessage>
-								</optgroup>
-							)}
-						</FormattedMessage>
-						<FormattedMessage
-							id='orarg.textAttribute'
-							description='text attribute translation'
-							defaultMessage='textAttribute'
-						>
-							{textAttribute => (
-								<optgroup label={textAttribute}>
-									<FormattedMessage
-										id='orarg.language'
-										description='language in ORArg translation'
-										defaultMessage='language'
-									>
-										{language => (
-											<option value="string:_.text_language" label="language">{language}</option>
-										)}
-									</FormattedMessage>
-								</optgroup>
-							)}
-						</FormattedMessage>
+							<optgroup label={dictionary[this.props.languageFromMain].queryinput.orarg.word}>
+								{ /* ::before */ }
+								<option value="string:word">{dictionary[this.props.languageFromMain].queryinput.orarg.word}</option>
+							</optgroup>
+							<optgroup label={dictionary[this.props.languageFromMain].queryinput.orarg.wordAttribute}>
+								{ /* ::before */ }
+								<option value="string:pos" label="word">{dictionary[this.props.languageFromMain].queryinput.orarg.partofspeech}</option>
+								<option value="string:lemma">{dictionary[this.props.languageFromMain].queryinput.orarg.lemma}</option>
+							</optgroup>
+							<optgroup label={dictionary[this.props.languageFromMain].queryinput.orarg.textAttribute}>
+								<option value="string:_.text_language" label="language">{dictionary[this.props.languageFromMain].queryinput.orarg.language}</option>
+							</optgroup>
 					</select>
 					<select className="arg_opts" defaultValue="string:contains" onChange={this.props.handleSetADVTokenOp("op")}>
-						<FormattedMessage
-							id='is'
-							description='is translation'
-							defaultMessage='is'
-						>
-							{is => (
-								<option value="string:contains" label="is">{is}</option>
-							)}
-						</FormattedMessage>
-						<FormattedMessage
-							id='is.not'
-							description='is not translation'
-							defaultMessage='is not'
-						>
-							{isnot => (
-								<option value="string:not contains" label="is not">{isnot}</option>
-							)}
-						</FormattedMessage>
+						<option value="string:contains" label={dictionary[this.props.languageFromMain].queryinput.is}>{dictionary[this.props.languageFromMain].queryinput.is}</option>
+						<option value="string:not contains" label={dictionary[this.props.languageFromMain].queryinput.isNot}>{dictionary[this.props.languageFromMain].queryinput.isNot}</option>
 					</select>
 				</div>
 				<div className="arg_val_container">
@@ -441,15 +359,7 @@ class ORArg extends Component {
 						onChange={this.props.handleValidateADV} ref={'textEntry_' + this.props.data.id}/>
 				</div>
 				<select> 
-					<FormattedMessage
-						id='orarg.properNoun'
-						description='proper noun in ORArg translation'
-						defaultMessage='Proper Noun'
-					>
-						{propn => (
-							<option label="PROPN" value="string:PROPN">{propn}</option>
-						)}
-					</FormattedMessage>
+					<option label="PROPN" value="string:PROPN">{dictionary[this.props.languageFromMain].queryinput.orarg.properNoun}</option>
 				</select>
 			</div>
 		</div>
