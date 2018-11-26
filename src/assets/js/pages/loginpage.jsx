@@ -25,16 +25,15 @@ class LoginPage extends Component {
 			password: {
 				value: ''
 			},
+			notificationMessage: {
+                message: ''
+            },
 			loggedInStatus: this.props.isUserloggedIn
 		};
 	}
 	componentDidMount() {
 		this.loadCurrentUser();
 	  }
-
-	componentDidUpdate() {
-		this.loadCurrentUser();
-	}
 
 	loadCurrentUser = () => {
 		getCurrentUser()
@@ -58,24 +57,33 @@ class LoginPage extends Component {
 			login(loginRequest)
 			.then(response => {
 				localStorage.setItem(authentication_token, response.accessToken);
-				console.log(localStorage.getItem(authentication_token))
 				this.setState({
 					loggedInStatus: true
 				})
+				this.loadCurrentUser()
 				this.props.getStatus(true)
 				setTimeout(() => {
 					this.props.backToAggregator();
 				}, 1500)
 			}).catch(error => {
 				if(error.status === 401) {
-					// Add here Bootstrap notification for incorrect password or username                 
+					// Fix here Bootstrap notification for incorrect password or username?
+					this.setState({
+						notificationMessage : {
+							message: "RABA: Your Username or Password is incorrect. Please try again!"
+						}
+					})
 				} else {
-					// Add here Bootstrap notification for some other server side failure?                                        
+					// Fix here Bootstrap notification for some other server side failure?
+					this.setState({
+						notificationMessage : {
+							message: "RABA: " + error.message || "RABA: Sorry! Something went wrong. Please try again!!"
+						}
+					})
 				}
 			});
 		} else {
 			localStorage.removeItem(authentication_token);
-			console.log(localStorage.getItem(authentication_token))
 			this.setState({
 				loggedInStatus: false
 			})
