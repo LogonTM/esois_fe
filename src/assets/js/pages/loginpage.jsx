@@ -22,10 +22,12 @@ class LoginPage extends Component {
 		this.state = {
 			currentUser: null,
 			usernameOrEmail: {
-				value: ''
+				value: '',
+				valid: false
 			},
 			password: {
-				value: ''
+				value: '',
+				valid: false
 			},
 			notificationMessage: {
                 message: ''
@@ -93,21 +95,47 @@ class LoginPage extends Component {
 		}
 	}
 
-	handleUsernameChange = event => {
+	usernameNotEmpty = (name) => {
+		if(name !== '') {
+			return {
+				notEmpty: true
+			}
+		} else {
+			return {
+				notEmpty : false
+			}
+		}
+	}
+
+	handleUsernameChange = (event, validation) => {
 		var usernameOrEmail = event.target.value;
 		this.setState({
 			usernameOrEmail : {
-				value : usernameOrEmail
+				value : usernameOrEmail,
+				valid : validation(usernameOrEmail).notEmpty
 			}
 		})
 		event.stopPropagation();	
 	}
 
-	handlePasswordChange = event => {
+	passwordNotEmpty = (password) => {
+		if(password !== '') {
+			return {
+				notEmpty : true
+			}
+		} else {
+			return {
+				notEmpty : false
+			}
+		}
+	}
+
+	handlePasswordChange = (event, validation) => {
 		var password = event.target.value;
 		this.setState({
 			password : {
-				value : password
+				value : password,
+				valid : validation(password).notEmpty
 			}
 		})
 		event.stopPropagation();
@@ -117,6 +145,12 @@ class LoginPage extends Component {
 		this.props.toRegistration();
 	}
 
+	loginValidator = () => {
+		return !(
+            this.state.usernameOrEmail.valid === true && 
+            this.state.password.valid === true)
+	}
+
 	render () {
 		if (this.state.loggedInStatus === false) {
 			return (
@@ -124,33 +158,38 @@ class LoginPage extends Component {
 					<div className="top-gap">
 						<div className="login-panel">
 							<form onSubmit={this.logInOut}>
-								<input
-                                    className="form-control"
-                                    type="text" 
-                                    value={this.state.usernameOrEmail.value}
-                                    placeholder={dictionary[this.props.languageFromMain].common.username} 
-                                    onChange={this.handleUsernameChange.bind(this)}
-                                />
-                                <input
-                                    className="form-control"
-                                    type="password"
-                                    name="password"
-                                    value={this.state.password.value}
-                                    placeholder={dictionary[this.props.languageFromMain].common.password} 
-                                    onChange={this.handlePasswordChange.bind(this)}
-                                />
+								<div>
+									<input
+										className="form-control"
+										type="text" 
+										value={this.state.usernameOrEmail.value}
+										placeholder={dictionary[this.props.languageFromMain].common.username} 
+										onChange={(event) => this.handleUsernameChange(event, this.usernameNotEmpty)}
+									/>
+								</div>
+								<div>
+									<input
+										className="form-control"
+										type="password"
+										name="password"
+										value={this.state.password.value}
+										placeholder={dictionary[this.props.languageFromMain].common.password} 
+										onChange={(event) => this.handlePasswordChange(event, this.passwordNotEmpty)}
+									/>
+								</div>
                                 <Button
                                     label={dictionary[this.props.languageFromMain].loginpage.loginButton}
                                     type='submit'
                                     uiType='btn.lg'
                                     onClick={this.logInOut}
+									disabled={this.loginValidator()}
                                 />
                                 &nbsp;
                                 <Button
                                     label={dictionary[this.props.languageFromMain].loginpage.registerButton}
                                     type='submit'
-                                    uiType='btn.lg'
-                                    onClick={this.handleToRegistration}
+									uiType='btn.lg'
+									onClick={this.handleToRegistration}
                                 />
 							</form>
 							<div className="bottom-gap"></div>
