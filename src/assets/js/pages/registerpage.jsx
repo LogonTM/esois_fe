@@ -69,7 +69,7 @@ class RegisterPage extends Component {
         } else if (name.length > maximum_name_length) {
             return {
                 isValid: false,
-                haSError: `Name is too long (Maximum ${maximum_name_length} characters allowed.)`
+                hasError: `Name is too long (Maximum ${maximum_name_length} characters allowed.)`
             }
         } else {
             return {
