@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
 import PropTypes from 'prop-types';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes
 
@@ -12,7 +13,8 @@ class LoginPage extends Component {
 		isUserloggedIn: PT.bool,
 		getStatus: PT.func,
 		backToAggregator: PT.func,
-		toRegistration: PT.func
+		toRegistration: PT.func,
+		languageFromMain: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
@@ -122,53 +124,34 @@ class LoginPage extends Component {
 					<div className="top-gap">
 						<div className="login-panel">
 							<form onSubmit={this.logInOut}>
-								<FormattedMessage
-									id='login.username'
-									description='username translation'
-									defaultMessage='Username'
-								>
-									{username => (
-										<input
-											className="form-control"
-											type="text" 
-											value={this.state.usernameOrEmail.value}
-											placeholder={username} 
-											onChange={this.handleUsernameChange.bind(this)}
-										/>
-									)}
-								</FormattedMessage>
-								<FormattedMessage
-									id='login.password'
-									description='password translation'
-									defaultMessage='Password'
-								>	
-									{password => (
-										<input
-											className="form-control"
-											type="password"
-											name="password"
-											value={this.state.password.value}
-											placeholder={password} 
-											onChange={this.handlePasswordChange.bind(this)}
-										/>
-									)}
-								</FormattedMessage>
-								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
-								<span aria-hidden="true"></span>
-									<FormattedMessage
-										id='login.loginButton'
-										description='login translation'
-										defaultMessage='Login'
-									/>
-								</button> 
-								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.handleToRegistration}>
-								<span aria-hidden="true"></span>
-									<FormattedMessage
-												id='login.registerButton'
-												description='register translation'
-												defaultMessage='Register'
-									/>
-								</button>
+								<input
+                                    className="form-control"
+                                    type="text" 
+                                    value={this.state.usernameOrEmail.value}
+                                    placeholder={dictionary[this.props.languageFromMain].common.username} 
+                                    onChange={this.handleUsernameChange.bind(this)}
+                                />
+                                <input
+                                    className="form-control"
+                                    type="password"
+                                    name="password"
+                                    value={this.state.password.value}
+                                    placeholder={dictionary[this.props.languageFromMain].common.password} 
+                                    onChange={this.handlePasswordChange.bind(this)}
+                                />
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.loginButton}
+                                    type='submit'
+                                    uiType='btn.lg'
+                                    onClick={this.logInOut}
+                                />
+                                &nbsp;
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    type='submit'
+                                    uiType='btn.lg'
+                                    onClick={this.handleToRegistration}
+                                />
 							</form>
 							<div className="bottom-gap"></div>
 						</div>
@@ -180,16 +163,13 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">Tere {this.state.currentUser}, olete logitud sisse!</span>
+							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.loginMessageP1} ${this.state.currentUser}, ${dictionary[this.props.languageFromMain].loginpage.loginMessageP2}!`}</span>
 							<div>
-								<button type="button" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
-								<span aria-hidden="true"></span>
-									<FormattedMessage
-										id='login.logoutButton'
-										description='log out translation'
-										defaultMessage='Log out'
-									/>
-								</button>
+								<Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.logoutButton}
+                                    uiType='btn.lg'
+                                    onClick={this.logInOut}
+                                />
 							</div>
 						</div>
 					</div>

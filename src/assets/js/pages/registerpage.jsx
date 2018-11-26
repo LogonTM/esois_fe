@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { 
     minimum_name_length, maximum_name_length,
     minimum_username_length, maximum_username_length,
@@ -10,6 +9,8 @@ import { login } from '../utilities/functions';
 import { authentication_token } from '../constants/constants';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions';
 import PropTypes from 'prop-types';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes
 
@@ -17,7 +18,8 @@ class RegisterPage extends Component {
     static propTypes = {
 		isUserloggedIn: PT.bool,
 		getStatus: PT.func,
-		backToAggregator: PT.func,
+        backToAggregator: PT.func,
+        languageFromMain: PropTypes.string.isRequired
 	}
 
     constructor(props) {
@@ -396,110 +398,65 @@ class RegisterPage extends Component {
 				<div className="top-gap">
 					<div className="register-panel">
 						    <form onSubmit={this.handleRegister} className="register-form">
-								<div>
-                                    <FormattedMessage
-                                        id='register.name'
-                                        description='name translation'
-                                        defaultMessage='Your full name'
-                                    >
-                                        {name => (
-                                            <input
-                                                className={nameValidator}
-                                                type="text"
-                                                value={this.state.name.value}
-                                                placeholder={name} 
-                                                onChange={(event) => this.handleNameChange(event, this.validateName)}
-                                            />
-                                        )}
-                                    </FormattedMessage>
-                                        <div className="invalid-feedback">{this.state.name.errormessage}</div>
+                                <div>
+                                    <input
+                                        className={nameValidator}
+                                        type="text" 
+                                        value={this.state.name.value}
+                                        placeholder={dictionary[this.props.languageFromMain].register.name} 
+                                        onChange={(event) => this.handleNameChange(event, this.validateName)}
+                                    />
+                                    <div className="invalid-feedback">{this.state.name.errormessage}</div>
                                 </div>
                                 <div>
-                                    <FormattedMessage
-                                        id='register.username'
-                                        description='username translation'
-                                        defaultMessage='Your Username'
-                                    >	
-                                        {username => (
-                                            <input
-                                                className={userNameValidator}
-                                                name="Username"
-                                                value={this.state.username.value}
-                                                placeholder={username}
-                                                onBlur={this.validateUsernameAvailability} 
-                                                onChange={(event) => this.handleUsernameChange(event, this.validateUsername)}
-                                            />
-                                        )}
-                                    </FormattedMessage>
-                                        <div className="invalid-feedback">{this.state.username.errormessage}</div>
+                                    <input
+                                        className={userNameValidator}
+                                        type="Username" 
+                                        value={this.state.username.value}
+                                        placeholder={dictionary[this.props.languageFromMain].register.username} 
+                                        onBlur={this.validateUsernameAvailability} 
+                                        onChange={(event) => this.handleUsernameChange(event, this.validateUsername)}
+                                    />
+                                    <div className="invalid-feedback">{this.state.username.errormessage}</div>
                                 </div>
                                 <div>
-                                    <FormattedMessage
-                                        id='register.password'
-                                        description='password translation'
-                                        defaultMessage='Your password'
-                                    >
-                                        {password => (
-                                            <input
-                                                className={passWordValidator}
-                                                type="password" 
-                                                value={this.state.password.value}
-                                                placeholder={password} 
-                                                onChange={(event) => this.handlePasswordChange(event, this.validatePassword)}
-                                            />
-                                        )}
-                                    </FormattedMessage>
-                                        <div className="invalid-feedback">{this.state.password.errormessage}</div>
+                                    <input
+                                        className={passWordValidator}
+                                        type="password" 
+                                        value={this.state.password.value}
+                                        placeholder={dictionary[this.props.languageFromMain].register.password} 
+                                        onChange={(event) => this.handlePasswordChange(event, this.validatePassword)}
+                                    />
+                                    <div className="invalid-feedback">{this.state.password.errormessage}</div>
                                 </div>
                                 <div>
-                                    <FormattedMessage
-                                        id='register.passowordvalidation'
-                                        description='password validation translation'
-                                        defaultMessage='Your password confirmation'
-                                    >
-                                        {passwordvalidation => (
-                                            <input
-                                                className={passWordConfirmation}
-                                                type="password" 
-                                                value={this.state.passwordValidation.value}
-                                                placeholder={passwordvalidation} 
-                                                onChange={(event) => this.handlePasswordValidationChange(event, this.validatePasswordConfirmation)}
-                                            />
-                                        )}
-                                    </FormattedMessage>
-                                        <div className="invalid-feedback">{this.state.passwordValidation.errormessage}</div>
+                                    <input
+                                        className={passWordConfirmation}
+                                        type="password" 
+                                        value={this.state.passwordValidation.value}
+                                        placeholder={dictionary[this.props.languageFromMain].register.passwordvalidation} 
+                                        onChange={(event) => this.handlePasswordValidationChange(event, this.validatePasswordConfirmation)}
+                                    />
+                                    <div className="invalid-feedback">{this.state.passwordValidation.errormessage}</div>
                                 </div>
                                 <div>
-                                    <FormattedMessage
-                                        id='register.email'
-                                        description='email translation'
-                                        defaultMessage='Your e-mail'
-                                    >	
-                                        {email => (
-                                            <input
-                                                className={emailValidator}
-                                                type="email"
-                                                name="email"
-                                                value={this.state.email.value}
-                                                placeholder={email}
-                                                onBlur={this.validateEmailAvailability} 
-                                                onChange={(event) => this.handleEmailChange(event, this.validateEmail)}
-                                            />
-                                        )}
-                                    </FormattedMessage>
-                                        <div className="invalid-feedback">{this.state.email.errormessage}</div>
+                                    <input
+                                        className={emailValidator}
+                                        type="email"
+                                        name="email"
+                                        value={this.state.email.value}
+                                        placeholder={dictionary[this.props.languageFromMain].register.email}
+                                        onBlur={this.validateEmailAvailability} 
+                                        onChange={(event) => this.handleEmailChange(event, this.validateEmail)}
+                                    />
+                                    <div className="invalid-feedback">{this.state.email.errormessage}</div>
                                 </div>
-                                <button type="submit" 
-                                        className="btn btn-outline-secondary btn-lg" 
-                                        onClick={this.handleRegister} 
-                                        disabled={this.formValidator()}>
-								<span aria-hidden="true"></span>
-									{<FormattedMessage
-												id='login.registerButton'
-												description='register translation'
-												defaultMessage='Register'
-									/>}
-								</button>
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    uiType='btn.lg'
+                                    onClick={this.handleRegister}
+                                    disabled={this.formValidator()}
+                                />
 							</form>
 						</div>
                     <div className="bottom-gap"></div>

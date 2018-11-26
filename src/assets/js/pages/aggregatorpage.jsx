@@ -10,7 +10,8 @@ import PropTypes from "prop-types";
 import $ from 'jquery';
 import jQuery from 'jquery';
 import 'bootstrap';
-import {FormattedMessage } from 'react-intl';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 import { back_end_host } from '../constants/constants';
 
 var PT = PropTypes;
@@ -28,67 +29,17 @@ class AggregatorPage extends Component {
 	nohits = {
 		results: null,
 	}
-	
-	anyLanguages = {
-		ee: 'igas keeles',
-		en: 'Any language'
-	}
 
-	anyLanguage = [multipleLanguageCode, 
-		<FormattedMessage
-			id='any.language'
-			description='Any Language translation'
-			defaultMessage='Any Language'
-		/>];
-
-	searchPlaceholders = [
-		{
-			ee: 'Koer',
-			en: 'Elephant'
-		},
-		{
-			ee: '[word = "märkus"][word = "keskendunud"]',
-			en: '[word = "annotation"][word = "focused"]'
-		}
-	]
-
-	placeholderMap = {
-		cql: this.searchPlaceholders[0],
-		fcs: this.searchPlaceholders[1]
-	}
+	anyLanguage = [multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage];
 
 	queryTypes = [
 		{
 			id: 'cql',
-			name: 
-				<FormattedMessage
-					id='cql.query.name' 
-					description='CQL query name translation'
-					defaultMessage='Text layer Contextual Query Language (CQL)'
-				/>,
-			searchLabel:
-				<FormattedMessage
-					id='cql.query.searchLabel'
-					description='search label for CQL query translation'
-					defaultMessage='Text layer CQL query'
-				/>,
 			searchLabelBkColor: 'rgba(220, 133, 46, .3)',
 			className: '',
 		},
 		{
 			id: "fcs",
-			name: 
-				<FormattedMessage
-					id='fcsql.query.name'
-					description='FCS-QL query name translation'
-					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
-				/>,
-			searchLabel: 
-				<FormattedMessage
-					id='fcsql.query.searchLabel'
-					description='search label for FCS-QL query translation'
-					defaultMessage='Multi-layer FCS query'
-				/>,
 			searchLabelBkColor: "rgba(40, 85, 143, .3)",
 			disabled: false,
 		},
@@ -143,7 +94,7 @@ class AggregatorPage extends Component {
 						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
 						corpora.setAggregationContext(json["x-aggregation-context"]);
 						if (!corpora.getSelectedIds().length) {
-							this.props.error("Cannot find the required collection, will search all collections instead");
+							this.props.error(dictionary[this.props.languageFromMain].errors.cannotFindRequiredCollection);
 							corpora.recurse(function(corpus) { corpus.selected = true; });
 						}
 						corpora.update();
@@ -174,7 +125,7 @@ class AggregatorPage extends Component {
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error('Please select a collection to search into');
+			this.props.error(dictionary[this.props.languageFromMain].errors.selectCollection);
 			return;
 		}
 
@@ -195,7 +146,7 @@ class AggregatorPage extends Component {
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId: searchId, timeout: timeout });
+				this.setState({ searchId, timeout });
 			}
 		});
 	}
@@ -211,7 +162,7 @@ class AggregatorPage extends Component {
 			success: (searchId, textStatus, jqXHR) => {
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId: searchId, timeout: timeout });
+				this.setState({ searchId, timeout });
 			}
 		});
 	}
@@ -378,44 +329,6 @@ class AggregatorPage extends Component {
 			this.addADVToken();
 	    }
 	}
-
-	error = errObj => {
-		var err = ''
-		if (typeof errObj === 'string' || errObj instanceof String) {
-		    err = errObj
-		} else if (typeof errObj === 'object' && errObj.statusText) {
-		    console.log('ERROR: jqXHR = ', errObj)
-		    err = errObj.statusText
-		} else {
-		    return
-		}
-	
-		var errs = this.state.errorMessages.slice()
-		errs.push(err)
-		this.setState({ errorMessages: errs })
-	
-		setTimeout(() => {
-		    var errs = this.state.errorMessages.slice()
-		    errs.shift()
-		    this.setState({ errorMessages: errs })
-		}, 10000)
-	} 
-	
-	ajax = ajaxObject => {
-		ajaxObject.error = ajaxObject.error || this.handleAjaxError
-		jQuery.ajax(ajaxObject)
-	}
-	
-	handleAjaxError = (jqXHR, textStatus, error) => {
-		if (jqXHR.readyState === 0) {
-			this.error('Network error, please check your internet connection')
-		} else if (jqXHR.responseText) {
-			this.error(jqXHR.responseText + ' (' + error + ')')
-		} else {
-			this.error(error + ' (' + textStatus + ')')
-		}
-		console.log('ajax error, jqXHR: ', jqXHR)
-	}
 	
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
@@ -426,11 +339,7 @@ class AggregatorPage extends Component {
 				{ corpus.landingPage ?
 					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
 						<span>
-							<FormattedMessage 
-								id='homepage'
-								description='homepage translation'
-								defaultMessage='– Homepage'
-							/>
+							{dictionary[this.props.languageFromMain].common.homepage}
 						</span>
 						<i className="fa fa-home"/>
 					</a>: false}
@@ -440,15 +349,15 @@ class AggregatorPage extends Component {
 
 	renderSearchButtonOrLink = () => {
 		return (
-		    <button className="btn btn-outline-secondary" type="button" onClick={this.search}>
-				<i className="fa fa-search"></i>
-		    </button>
+			<Button
+				label={<i className="fa fa-search"></i>}
+				onClick={this.search}
+			/>
 		);
 	}
 
 	render() {
 		var queryType = this.queryTypeMap[this.state.queryTypeId];
-		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
@@ -457,18 +366,19 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-										{queryType.searchLabel}
+										{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
 									</span>
 								</div>
 								<QueryInput 
 									searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
 									queryTypeId={this.state.queryTypeId}
 									query={this.state.query}
-									placeholder={correctPlaceholder[this.props.languageFromMain]}
+									placeholder={dictionary[this.props.languageFromMain][this.state.queryTypeId].placeholder}
 									onChange={this.onADVQuery}
 									onQuery={this.onQuery}
-									onKeyDown={this.handleKey} />
-
+									onKeyDown={this.handleKey}
+									languageFromMain={this.props.languageFromMain}
+								/>
 								<div className="input-group-append">
 									{this.renderSearchButtonOrLink()}
 								</div>
@@ -483,18 +393,15 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='search.for'
-											description='Search for translation'
-											defaultMessage='Search for'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.searchFor}
 									</span>
 								</div>
 								<div className="input-group">
-									<button className="btn btn-outline-secondary dropdown-toggle"
-											onClick={this.toggleLanguageSelection}>
-										{this.state.language[1]} 
-									</button>
+									<Button
+										label={this.state.language[1]}
+										uiType='dropdown-toggle'
+										onClick={this.toggleLanguageSelection}
+									/>
 								</div>
 							</div>
 						</form>
@@ -503,17 +410,26 @@ class AggregatorPage extends Component {
 						<form className="form-inline">
 							<div className="input-group mb-3">
 								<div className="input-group">
-									<button className="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-											aria-expanded="false"
-											data-toggle="dropdown">
-										{queryType.name}
-									</button>
+									<Button
+										label={dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
+										uiType='dropdown-toggle dropdown-toggle-split'
+										aria-expanded="false"
+										data-toggle="dropdown"
+									/>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	this.queryTypes.map(l => {
+										{ this.queryTypes.map(l => {
 												var cls = l.disabled ? 'disabled':'dropdown-item';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
-													onClick={handler}> {l.name} </a></li>);
+												return (
+													<li 
+														key={l.id}
+														className={cls}
+													>
+														<a tabIndex="-1" href="#" onClick={handler}>
+															{dictionary[this.props.languageFromMain][l.id].name}
+														</a>
+													</li>
+												);
 											})
 										}
 									</ul>
@@ -528,42 +444,36 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='aggregatorpage.in'
-											description='in translation'
-											defaultMessage='in'
-										/>
+										{dictionary[this.props.languageFromMain].common.in}
 									</span>
 								</div>
 								<div className="input-group">
-									<button	type="button"
-											className="btn btn-outline-secondary dropdown-toggle"
-											onClick={this.toggleCorpusSelection}>
-										{this.state.corpora.getSelectedMessage()}
-									</button>
+									<Button
+										label={this.state.corpora.getSelectedMessage(this.props.languageFromMain)}
+										uiType='dropdown-toggle'
+										onClick={this.toggleCorpusSelection}
+									/>
 								</div>
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='aggregatorpage.andShowUpTo'
-											description='and show up to translation'
-											defaultMessage='and show up to'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.andShowUpTo}
 									</span>
 								</div>
 								<div className="input-group">
-									<input type="number" className="form-control input" min="10" max="250"
+									<input
+										type="number"
+										className="form-control input"
+										min="10"
+										max="250"
 										style={{width:60}}
-										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
-										onKeyPress={this.stop.bind(this)}/>
+										onChange={this.setNumberOfResults.bind(this)}
+										value={this.state.numberOfResults}
+										onKeyPress={this.stop.bind(this)}
+									/>
 								</div>
 								<div className="input-group-append">
 									<span className="input-group-text nobkg">
-										<FormattedMessage 
-											id='aggregatorpage.hitsPerEndpoint'
-											description='hits per endoint translation'
-											defaultMessage='hits per endpoint'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.hitsPerEndpoint}
 									</span>
 								</div>
 							</div>
@@ -571,45 +481,62 @@ class AggregatorPage extends Component {
 					</div>
 				</div>
 
-				<Modal ref="corporaModal" title={<span>
-					<FormattedMessage
-						id='collections'
-						description='collections translation'
-						defaultMessage='Collections'
+				<Modal
+					ref="corporaModal"
+					title={<span>
+							{dictionary[this.props.languageFromMain].aggregatorpage.collections}
+						</span>}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<CorpusView
+						corpora={this.state.corpora}
+						languageMap={this.state.languageMap}
+						languageFromMain={this.props.languageFromMain}
 					/>
-					</span>}>
-					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} />
 				</Modal>
 
-				<Modal ref="languageModal" title={<span>
-					<FormattedMessage
-						id='select.language'
-						description='select language translation'
-						defaultMessage='Select Language'
+				<Modal
+					ref="languageModal"
+					title={<span>
+							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}
+						</span>}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<LanguageSelector
+						anyLanguage={[multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage]}
+						languageMap={this.state.languageMap}
+						selectedLanguage={this.state.language}
+						languageFilter={this.state.languageFilter}
+						languageChangeHandler={this.setLanguageAndFilter}
+						languageFromMain={this.props.languageFromMain}
 					/>
-					</span>}>
-					<LanguageSelector anyLanguage={[multipleLanguageCode, this.anyLanguages[this.props.languageFromMain]]}
-									  languageMap={this.state.languageMap}
-									  selectedLanguage={this.state.language}
-									  languageFilter={this.state.languageFilter}
-									  languageChangeHandler={this.setLanguageAndFilter} />
 				</Modal>
 
-				<Modal ref="resultModal" title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}>
-					<ZoomedResult corpusHit={this.state.zoomedCorpusHit}
-								  nextResults={this.nextResults}
-								  getDownloadLink={this.getDownloadLink}
-								  searchedLanguage={this.state.language}
-								  languageMap={this.state.languageMap} 
-						          queryTypeId={this.state.queryTypeId} />
+				<Modal
+					ref="resultModal"
+					title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<ZoomedResult
+						corpusHit={this.state.zoomedCorpusHit}
+						nextResults={this.nextResults}
+						getDownloadLink={this.getDownloadLink}
+						searchedLanguage={this.state.language}
+						languageMap={this.state.languageMap}
+						queryTypeId={this.state.queryTypeId}
+						languageFromMain={this.props.languageFromMain}
+					/>
 				</Modal>
 
 				<div className="top-gap">
-					<Results collhits={this.filterResults()}
-							 toggleResultModal={this.toggleResultModal}
-							 getDownloadLink={this.getDownloadLink}
-							 searchedLanguage={this.state.language}
-					         queryTypeId={this.state.queryTypeId}/>
+					<Results
+						collhits={this.filterResults()}
+						toggleResultModal={this.toggleResultModal}
+						getDownloadLink={this.getDownloadLink}
+						searchedLanguage={this.state.language}
+						queryTypeId={this.state.queryTypeId}
+						languageFromMain={this.props.languageFromMain}
+					/>
 				</div>
 			</div>
 		);
@@ -619,6 +546,7 @@ class AggregatorPage extends Component {
 function Corpora(corpora, updateFn) {
 	this.corpora = corpora;
 	this.update = () => updateFn(this);
+
 
 	var sortFn = function(x, y) {
 		var r = x.institution.name.localeCompare(y.institution.name);
@@ -752,38 +680,14 @@ Corpora.prototype.getSelectedIds = function() {
 	return ids;
 };
 
-Corpora.prototype.getSelectedMessage = function() {
+Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
 	if (this.corpora.length === selectedIdsCount) {
-		return (
-			<FormattedMessage
-				id='front.page.all.collections.selected'
-				description='all available collections translation'
-				defaultMessage='All available collections ({amount})'
-				values= {{
-					amount: selectedIdsCount
-				}}
-			/>
-		);
+		return `${dictionary[languageFromMain].corpusview.allCollectionsSelected} (${selectedIdsCount})`;
 	} else if (selectedIdsCount === 1) {
-		return (
-			<FormattedMessage
-				id='front.page.one.collection.selected'
-				description='one selected collection translation'
-				defaultMessage='1 selected collection'
-			/>
-		);
+		return dictionary[languageFromMain].corpusview.oneCollectionSelected;
 	}
-	return (
-		<FormattedMessage
-			id='front.page.some.collections.selected'
-			description='some collections selected translation'
-			defaultMessage='{amount} selected collections'
-			values= {{
-				amount: selectedIdsCount
-			}}
-		/>
-	);
+	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.someCollectionsSelected}`;
 };
 
 function getQueryVariable(variable) {

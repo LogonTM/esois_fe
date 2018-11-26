@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React, { Component } from 'react';
-import {FormattedMessage } from 'react-intl';
 import { back_end_host } from '../constants/constants';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 class AddCenter extends Component {
 	static propTypes = {
@@ -37,37 +38,32 @@ class AddCenter extends Component {
         }).then(response => {
             console.log(response)
             if (response.status === 200) {
-                alert("Uus korpus on edukalt lisatud");
+                alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
                 this.setState({
                     id: '',
                     centerName: '',
                     link: ''
                 });
             } else if (response.status === 409) {
-                alert("Sellise ID-ga korpus on juba olemas")
+                alert(dictionary[this.props.languageFromMain].addcenter.thisIdExists)
             } else {
-                alert("Palun kontrolli sisestatud andmete õigsust");
+                alert(dictionary[this.props.languageFromMain].addcenter.pleaseCheckData);
             }
         }).then(this.props.getCenterList)
     }
 
     render() {
-        const buttonEnabler = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
+        const disableButton = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
         const idValidator = "form-control input-lg " + (this.state.id.length > 3 ? "is-valid" : "is-invalid")
         const nameValidator = "form-control input-lg " + (this.state.centerName.length > 3 ? "is-valid" : "is-invalid")
         const linkValidator = "form-control input-lg " + (this.state.link !== ('' || 'http') && this.state.link.startsWith('http') ? "is-valid" : "is-invalid")
-        console.log(buttonEnabler)
         return (
             <div id="container">
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2">
                             <label htmlFor="Center_id">
-                                <FormattedMessage
-                                    id='corpusId'
-                                    description='corpus ID translation'
-                                    defaultMessage="Corpus' ID"
-                                />
+                            {dictionary[this.props.languageFromMain].common.corpusId}
                             </label>
                         </div>
                         <div className="col-sm-10">
@@ -78,21 +74,17 @@ class AddCenter extends Component {
                                 id="Center_id"
                                 value={this.state.id}
                                 onChange={this.handleChange}
-                                placeholder="Korpuse ID"
+                                placeholder={dictionary[this.props.languageFromMain].common.corpusId}
                             />
                             <div className="invalid-feedback">
-                                Sisesta korpuse ID
+                                {dictionary[this.props.languageFromMain].addcenter.enterCorpusId}
                             </div>
                         </div>
                     </div>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2">
                             <label htmlFor="Center_name">
-                                <FormattedMessage
-                                    id='corpusName'
-                                    description='corpus name translation'
-                                    defaultMessage="Corpus' name"
-                                />
+                                {dictionary[this.props.languageFromMain].common.corpusName}
                             </label>
                         </div>
                         <div className="col-sm-10">
@@ -103,11 +95,11 @@ class AddCenter extends Component {
                                 id="Center_name"
                                 value={this.state.centerName}
                                 onChange={this.handleChange}
-                                placeholder="Korpuse nimi"
+                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
 
                             />
                             <div className="invalid-feedback">
-                                Sisesta korpuse nimi
+                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
                             </div>
                         </div>
                     </div>
@@ -126,24 +118,17 @@ class AddCenter extends Component {
                                 placeholder="http"
                             />
                             <div className="invalid-feedback">
-                                Sisesta korpuse URL
+                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
                             </div>
                         </div>
                     </div>
                     <p>
-                        <button
-                            type='button'
-                            className="btn btn-outline-secondary"
+                        <Button
+                            label={dictionary[this.props.languageFromMain].common.add}
                             onClick={this.handleAdd}
-                            disabled={!buttonEnabler}
+                            disabled={!disableButton}
                             data-dismiss='modal'
-                        >
-                            <FormattedMessage
-                                id='add'
-                                description='add translation'
-                                defaultMessage='Add'
-                            />
-                        </button>
+                        />
                     </p>
                 </form>
             </div>
