@@ -20,7 +20,7 @@ class RegisterPage extends Component {
 		getStatus: PT.func,
         backToAggregator: PT.func,
         languageFromMain: PropTypes.string.isRequired
-	}
+    }
 
     constructor(props) {
 		super(props);
@@ -56,7 +56,7 @@ class RegisterPage extends Component {
             notificationMessage: {
                 message: ''
             },
-			loggedInStatus: this.props.isUserloggedIn
+            loggedInStatus: this.props.isUserloggedIn
         }
     }
 
@@ -64,12 +64,14 @@ class RegisterPage extends Component {
         if(name.length < minimum_name_length) {
             return {
                 isValid: false,
-                hasError: `Name is too short (Minimum ${minimum_name_length} characters needed.)`
+                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
+                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
             }
         } else if (name.length > maximum_name_length) {
             return {
                 isValid: false,
-                hasError: `Name is too long (Maximum ${maximum_name_length} characters allowed.)`
+                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
+                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
             }
         } else {
             return {
@@ -95,12 +97,14 @@ class RegisterPage extends Component {
         if(username.length < minimum_username_length) {
             return {
                 isValid: false,
-                hasError: `Username is too short (Minimum ${minimum_username_length} characters needed.)`
+                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + minimum_username_length + " " + 
+                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
             }
         } else if (username.length > maximum_name_length) {
             return {
                 isValid: false,
-                hasError: `Username is too long (Maximum ${maximum_username_length} characters allowed.)`
+                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + maximum_username_length + " " + 
+                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
             }
         } else {
             return {
@@ -125,12 +129,14 @@ class RegisterPage extends Component {
         if(password.length < minimum_password_length) {
             return {
                 isValid: false,
-                hasError: `Password is too short (Minimum ${minimum_password_length} characters needed.)`
+                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
+                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
             }
         } else if (password.length > maximum_password_length) {
             return {
                 isValid: false,
-                hasError: `Password is too long (Maximum ${maximum_password_length} characters allowed.)`
+                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
+                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
             }
         } else {
             return {
@@ -155,17 +161,19 @@ class RegisterPage extends Component {
         if(password.length < minimum_password_length) {
             return {
                 isValid: false,
-                hasError: `Password is too short (Minimum ${minimum_password_length} characters needed.)`
+                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
+                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
             }
         } else if (password.length > maximum_password_length) {
             return {
                 isValid: false,
-                hasError: `Password is too long (Maximum ${maximum_password_length} characters allowed.)`
+                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
+                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
             }
         } else if (this.state.password.value !== password) {
             return {
                 isValid: false,
-                hasError: `Passwords do not match.`
+                hasError: dictionary[this.props.languageFromMain].register.passworderrornomatch
             }            
         } else if (this.state.password.value === password) {
             return {
@@ -187,10 +195,11 @@ class RegisterPage extends Component {
     }
 
     validateEmail = (email) => {
+        console.log("Here is the prop value: " + this.props.languageFromMain)
         if(!email) {
             return {
                 isValid: false,
-                hasError: 'Email may not be empty'                
+                hasError: dictionary[this.props.languageFromMain].register.emailerrorntovalid
             }
         }
 
@@ -198,14 +207,15 @@ class RegisterPage extends Component {
         if(!email_regex.test(email)) {
             return {
                 isValid: false,
-                hasError: 'Email not valid'
+                hasError: dictionary[this.props.languageFromMain].register.emailerrornotvalid
             }
         }
 
         if(email.length > maximum_email_length) {
             return {
                 isValid: false,
-                hasError: `Email is too long (Maximum ${maximum_email_length} characters allowed)`
+                hasError : dictionary[this.props.languageFromMain].register.emailerrortoolongP1 + " " + maximum_email_length + " " + 
+                           dictionary[this.props.languageFromMain].register.emailerrortoolongP2
             }
         }
 
@@ -314,7 +324,7 @@ class RegisterPage extends Component {
                     username: {
                         value: usernameValue,
                         valid: false,
-                        errormessage: 'This username is already taken'
+                        errormessage: dictionary[this.props.languageFromMain].register.usernameavailableerror
                     }
                 });
             }
@@ -358,7 +368,7 @@ class RegisterPage extends Component {
                     email: {
                         value: emailValue,
                         valid: false,
-                        errormessage: 'This Email is already registered'
+                        errormessage: dictionary[this.props.languageFromMain].register.emailavailableerror
                     }
                 });
             }
