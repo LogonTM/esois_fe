@@ -205,7 +205,7 @@ class LoginPage extends Component {
                                     type='submit'
 									uiType='btn.lg'
 									onClick={this.handleToRegistration}
-                                />
+                                />								
 							</form>
 							<div className="bottom-gap"></div>
 						</div>

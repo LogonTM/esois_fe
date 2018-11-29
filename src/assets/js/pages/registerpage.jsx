@@ -195,7 +195,6 @@ class RegisterPage extends Component {
     }
 
     validateEmail = (email) => {
-        console.log("Here is the prop value: " + this.props.languageFromMain)
         if(!email) {
             return {
                 isValid: false,

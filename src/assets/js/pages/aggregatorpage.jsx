@@ -8,7 +8,6 @@ import QueryInput from "../components/queryinput.jsx";
 import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
 import $ from 'jquery';
-import jQuery from 'jquery';
 import 'bootstrap';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
