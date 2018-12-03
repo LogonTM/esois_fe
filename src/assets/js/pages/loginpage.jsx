@@ -67,7 +67,7 @@ class LoginPage extends Component {
 					loggedInStatus: true
 				})
 				this.loadCurrentUser()
-				this.props.getStatus(true, this.state.currentUser)
+				this.props.getStatus(true)
 				setTimeout(() => {
 					this.props.backToAggregator();
 				}, 1500)
@@ -78,19 +78,19 @@ class LoginPage extends Component {
 						usernameOrEmail : {
 							value : this.state.usernameOrEmail.value,
 							valid: false,
-							errormessage : "RABA: Your Username or Password is incorrect. Please try again!"
+							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
 						},
 						password : {
 							value : this.state.password.value,
 							valid : false,
-							errormessage : "RABA: Your Username or Password is incorrect. Please try again!"
+							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
 						}
 					})
 				} else {
 					// Fix here Bootstrap notification for some other server side failure?
 					this.setState({
 						notificationMessage : {
-							message: "RABA: " + error.message || "RABA: Sorry! Something went wrong. Please try again!!"
+							message: "RABA: " + error.message || dictionary[this.props.languageFromMain].loginpage.loginerrorservercatch
 						}
 					})
 				}
@@ -161,10 +161,9 @@ class LoginPage extends Component {
 	}
 
 	render () {
-		console.log("loginpage " + this.state.loggedInStatus)
-		const usernameOrEmailValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " + 
+		const usernameOrEmailInputValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " +
             (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
-        const passwordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 
+        const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
             (this.state.password.valid ? "is-valid"  : "is-invalid")
 		if (this.state.loggedInStatus === false) {
 			return (
@@ -174,7 +173,7 @@ class LoginPage extends Component {
 							<form onSubmit={this.logInOut}>
 								<div>
 									<input
-										className={usernameOrEmailValidator}
+										className={usernameOrEmailInputValidator}
 										type="text" 
 										value={this.state.usernameOrEmail.value}
 										placeholder={dictionary[this.props.languageFromMain].common.username} 
@@ -184,7 +183,7 @@ class LoginPage extends Component {
 								</div>
 								<div>
 									<input
-										className={passwordValidator}
+										className={passwordInputValidator}
 										type="password"
 										name="password"
 										value={this.state.password.value}
