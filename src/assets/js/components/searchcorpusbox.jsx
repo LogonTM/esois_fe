@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import { FormattedMessage } from 'react-intl';
 
 class SearchCorpusBox extends Component {
 	static propTypes = {
 		search: PropTypes.func.isRequired,
+		placeholder: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
@@ -16,7 +16,7 @@ class SearchCorpusBox extends Component {
 
 	handleChange = event => {
 		var query = event.target.value;
-		this.setState({query: query});
+		this.setState({query});
 
 		if (query.length === 0 || 2 <= query.length) {
 			this.props.search(query);
@@ -33,21 +33,13 @@ class SearchCorpusBox extends Component {
 	render() {
 		return (
 			<div className="form-group">
-				<FormattedMessage
-					id='corpus.search.corpusbox'
-					description='placeholder for search for collections translation'
-					defaultMessage='Search for collection'
-				>
-					{text => (
-						<input
-							className="form-control search search-collection"
-							type="text" 
-							value={this.state.query}
-							placeholder={text}
-							onChange={this.handleChange.bind(this)}
-						/>
-					)}
-				</FormattedMessage>
+				<input
+					className="form-control search search-collection"
+					type="text" 
+					value={this.state.query}
+					placeholder={this.props.placeholder}
+					onChange={this.handleChange.bind(this)}
+				/>
 			</div>
 		);
 	}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
-import { FormattedMessage } from 'react-intl';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -9,6 +10,7 @@ class CorpusView extends Component {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
+		languageFromMain: PT.string.isRequired
 	}
 
 	toggleSelection = (corpus, e) => {
@@ -133,25 +135,11 @@ class CorpusView extends Component {
 						<span className="fa fa-plus" aria-hidden="true"/>
 					} 
 					{corpus.expanded ? 
-						<FormattedMessage
-							id='corpusview.collapse'
-							description='collapse translation'
-							defaultMessage='Collapse'
-						/> :
-						<FormattedMessage
-							id='corpusview.expand'
-							description='expand translation'
-							defaultMessage='Expand'
-						/>}
+						dictionary[this.props.languageFromMain].corpusview.collapse :
+						dictionary[this.props.languageFromMain].corpusview.expand
+					}
 					&nbsp;
-					<FormattedMessage
-						id='corpusview.amountOfSubcollections'
-						description='amount of subcollections translation'
-						defaultMessage='({amount} subcollections)'
-						values= {{
-							amount: corpus.subCorpora.length
-						}}
-					/>
+					{`(${corpus.subCorpora.length} ${dictionary[this.props.languageFromMain].corpusview.subcollections})`}
 				</a>
 			</div>
 		);
@@ -180,15 +168,9 @@ class CorpusView extends Component {
 		}
 		return (
 			<div id="searchInCollections">
-				<FormattedMessage
-					id='corpusview.howManyCollectionsAreShown'
-					description='showing so many collections out of all translation'
-					defaultMessage='Showing {visible} out of {total} (sub)collections.'
-					values= {{
-						visible: visible,
-						total: total
-					}}
-				/>
+				{`${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP1} ${visible} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP2} ${total} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP3}.`}
 			</div>
 		);
 	}
@@ -210,9 +192,9 @@ class CorpusView extends Component {
 			<div className={corpusContainerClass} key={corpus.id}>
 				<div className="row corpus" onClick={this.toggleExpansion.bind(this, corpus)}>
 					<div className="col-sm-2 col-lg-1 vcenter">
-							<div className="inline" style={priorityStyle} onClick={this.toggleSelection.bind(this,corpus)}>
-								{this.renderCheckbox(corpus)}
-							</div>
+						<div className="inline" style={priorityStyle} onClick={this.toggleSelection.bind(this,corpus)}>
+							{this.renderCheckbox(corpus)}
+						</div>
 					</div>
 					<div className="col-sm-7 col-lg-8 vcenter">
 						<div style={indent}>
@@ -221,12 +203,8 @@ class CorpusView extends Component {
 								{ corpus.landingPage ? 
 									<a href={corpus.landingPage} onClick={this.stop}>
 										<span style={{fontSize:12}}>&nbsp;
-											<FormattedMessage 
-												id='corpusview.homepage'
-												description='homepage translation'
-												defaultMessage='– Homepage'
-											/>
-											</span>
+											{dictionary[this.props.languageFromMain].common.homepage}
+										</span>
 										<i className="fa fa-home"/>
 									</a>: false
 								}
@@ -257,28 +235,27 @@ class CorpusView extends Component {
 					<div className="col" style={{ marginRight: -15, marginLeft: -15 }}>
 						<div className="float-left inline">
 							<h3 style={{marginTop:10}}>
-								{this.props.corpora.getSelectedMessage()}
+								{this.props.corpora.getSelectedMessage(this.props.languageFromMain)}
 							</h3>
 						</div>
 						<div className="float-right inline">
-							<button className="btn btn-outline-secondary" style={{ marginRight: 10 }} onClick={this.selectAll.bind(this,true)}>
-								{ <FormattedMessage
-									id='select.all'
-									description='select all translation'
-									defaultMessage='Select all'
-								/> }
-							</button>
-							<button className="btn btn-outline-secondary" style={{ marginRight: 20 }} onClick={this.selectAll.bind(this,false)}>
-								{ <FormattedMessage
-									id='deselect.all'
-									description='deselect all translation'
-									defaultMessage='Deselect all' 
-								/>}
-							</button>
+							<Button
+								label={dictionary[this.props.languageFromMain].corpusview.selectAll}
+								onClick={this.selectAll.bind(this,true)}
+								style={{ marginRight: 10 }}
+							/>
+							<Button
+								label={dictionary[this.props.languageFromMain].corpusview.deselectAll}
+								onClick={this.selectAll.bind(this,false)}
+								style={{ marginRight: 20 }}
+							/>
 						</div>
 						<div className="float-right inline">
 							<div className="inline" style={{ marginRight: 20 }} >
-								<SearchCorpusBox search={this.searchCorpus}/>
+								<SearchCorpusBox
+									search={this.searchCorpus}
+									placeholder={dictionary[this.props.languageFromMain].corpusview.searchCorpusBox}
+								/>
 								{this.renderFilteredMessage()}
 							</div>
 						</div>

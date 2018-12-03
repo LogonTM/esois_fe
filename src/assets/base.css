@@ -29,6 +29,26 @@
 	margin-top: 40px;
 }
 
+.register-form input {
+    margin-top: 20px;
+}
+
+.login-panel input {
+	margin-bottom: 20px;
+}
+
+.register-panel {
+	border-radius: 2px;
+	margin: 10px auto 30px;
+	max-width: 38%;
+	padding: 50px 70px 70px 71px;
+	font-size: 14px;
+	width: 100%;
+	line-height: 50px;
+	padding: 0;
+    margin-bottom: 3px;
+}
+
 .login-panel{
 	border-radius: 2px;
 	margin: 10px auto 30px;
@@ -36,7 +56,6 @@
 	padding: 50px 70px 70px 71px;
 	font-size: 14px;
 	width: 100%;
-	height: 120px;
 	line-height: 50px;
 	padding: 0;
 }
@@ -106,6 +125,9 @@
 
 .errorRow .errorMessage {
 	margin: 2px 0;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-bottom: 3px;
 }
 
 /*** SEARCH ***/
@@ -273,9 +295,13 @@ div.corpus div.expansion-handle a {
 
 /*** search results panel ***/
 
-div.panel {
+div.card {
 	box-shadow: none !important;
 	margin-bottom: 0;
+}
+
+.bs-callout.bs-callout-info > .card {
+	border: none;
 }
 
 div.modal-dialog {
@@ -283,11 +309,11 @@ div.modal-dialog {
 	max-width: 1024px;
 }
 
-div.panel-heading {
+div.card-heading {
 	cursor: pointer;
 }
 
-div.panel-title {
+div.card-title {
 	font-size:16px;
 }
 
@@ -296,7 +322,7 @@ div.panel-title {
 	font-size: 0.9rem !important;
 }
 
-div.panel-title span.institutionName{
+div.card-title span.institutionName{
 	font-size: 12px;
 	font-weight:300;
 	color: rgb(40,85,143);
@@ -308,11 +334,11 @@ div.panel-title span.institutionName{
 	color: rgb(40,85,143);
 }
 
-.panel-body span {
+.card-body span {
 	color: #222;
 }
 
-.panel-body span.keyword {
+.card-body span.keyword {
 	font-weight: bold;
 	font-size: 12px;
 	color: #000;
@@ -322,7 +348,7 @@ div.panel-title span.institutionName{
 	border-radius: .2em;
 }
 
-.panel-body td.keyword {
+.card-body td.keyword {
 	color: rgb(40,85,143);
 	font-weight: bold;
 	font-weight: bold;
@@ -335,15 +361,15 @@ div.panel-title span.institutionName{
 	border-left: 5px solid rgb(40,85,143); /*blue*/
 	border-radius: 4px;
 }
-.bs-callout .panel-heading {
+.bs-callout .card-heading {
 	margin-top: 0;
 	margin-bottom: 5px;
 	padding: 10px 15px 4px;
 }
-.bs-callout .panel-title {
+.bs-callout .card-title {
 	color: rgb(220, 133, 46);
 }
-.panel-body {
+.card-body {
 	border-top: 1px solid #ddd;
 }
 
@@ -361,16 +387,16 @@ td {
 	border: none !important;
 }
 
-.panel-body .table-hover > tbody > tr.hitrow:hover {
+.card-body .table-hover > tbody > tr.hitrow:hover {
     background-color: #F5F5F5;
 }
 
-.panel-body div > p.hitrow {
+.card-body div > p.hitrow {
 	margin:0;
 	padding: 5px 0;
 }
 
-.panel-body div > p.hitrow:hover {
+.card-body div > p.hitrow:hover {
     background-color: #F5F5F5;
 }
 

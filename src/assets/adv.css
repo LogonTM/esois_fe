@@ -10,6 +10,7 @@
 	opacity: 1;
 	transition: opacity 200ms ease;
 	font-size: 15px;
+	border: none;
 }
 
 .query_token .close_btn i {
@@ -18,11 +19,23 @@
 
 .query_token .token_header {
 	padding-bottom: 3px;
-	cursor: move;
+/* 	cursor: move; */
+}
+
+#ADVtokenMenu {
+    flex: 2;
+}
+
+#ADVtokenMenu > * {
+    float:right;
+}
+
+#unavailable-corpora-message{
+    font-size: smaller;
 }
 
 .query_token {
-	background-color: #e1e1e1;
+	background-color: rgba(40, 85, 143, .14);
 	display: inline-block;
 	vertical-align: top;
 	*vertical-align: auto;
@@ -36,18 +49,33 @@
 	box-shadow: 2px 2px 3px grey;
 }
 
+#adv-tokens {
+    display: flex;
+	flex-wrap: nowrap !important;
+	flex-direction: row !important;
+	align-items: baseline;
+}
+
+#adv-tokens > div:first-child {
+    display:contents; /* the react TransitionGroup creates a div that we dont really want. */
+}
+
+/* ? */
 #adv_query_input_group {
-        overflow: auto;
+    overflow: auto;
 	white-space: nowrap;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .query_arg {
     border-radius: 2px;
     padding: 5px;
-    background-color: #f7fceb;
+    background-color: rgba(40, 85, 143, .02);
     border: solid 1px #999;
     margin-bottom: 5px;
-    padding-right: 13px;
+	padding-right: 13px;
 }
 
 .query_arg .arg_footer .link {
@@ -55,7 +83,15 @@
 }
 
 .link:hover {
-    color: indianred !important;
+    color: rgb(220, 133, 46) !important;
+}
+
+.arg_type.form-control {
+	width: 162px !important;
+}
+
+.arg_opts.form-control {
+	width: 85px !important;
 }
 
 .or_arg {
@@ -97,24 +133,19 @@
 	*display: inline;
 }
 
+.right_col.inline_block {
+	width: auto;
+}
+
 .query_token .arg_type {
 	display: inline-block;
 	*vertical-align: auto;
 	*zoom: 1;
 	*display: inline;
-	width: 160px;
 }
 
 .query_token .arg_opts {
 	margin-left: 5px;
-}
-
-.query_token input.arg_value {
-  width: 95%;
-}
-
-.query_token .arg_value {
-  max-width: 300px;
 }
 
 button, input, optgroup, select, textarea {
@@ -127,12 +158,9 @@ input {
 	line-height: normal;
 }
 
-.query_token .arg_value {
-	max-width: 300px;
-}
-
 .arg_val_container {
 	margin-top: 2px;
+	width: 252px;
 }
 
 .query_token .insert_arg {
@@ -140,26 +168,49 @@ input {
 	float: left;
 }
 
+.adv-query-preview {
+	margin-bottom: unset;
+	background-color: rgba(40, 85, 143, .03) !important;
+	height: 100% !important;
+}
+
+.card-footer {
+	background-color: rgba(40, 85, 143, .05) !important;
+}
+
+.card-footer {
+	height: auto;
+}
+
+/* ? */
 .query_token .token_footer button.insert_arg {
     float: left;
 }
-
+/* ? */
 .query_token .token_footer button {
 	float: right;
 }
-
+/* ? */
 .query_token .token_footer {
 	font-size: .8em;
+	display: flex;
+    align-items: start;
 }
-
+/* ? */
 .query_token select, input {
     border: 1px dashed #ccc;
     outline: medium none;
     float: left;
 }
 
+.or-containter select, .or-containter input {
+    border: 1px dashed #ccc;
+    outline: medium none;
+    float: left;
+}
+
 .query_token .repeat {
-	float: right;
+/* 	float: right; */
 	margin-right: 25px;
 }
 
@@ -174,7 +225,7 @@ input {
 
 .insert_token {
 	position: relative;
-	margin-left: 10px;
+	margin-left: 4px;
 }
 
 .image_button:hover {
@@ -192,19 +243,30 @@ input {
 /*** transitions css ***/
 .token-enter {
   opacity: 0.01;
-  margin-left: -50%;
+/*   margin-left: -50%; */
+  transform: translateX(-50%);
 }
-.token-enter.token-enter-active {
+/* .token-enter */.token-enter-active {
   opacity: 1;
-  margin-left: 0;
+/*   margin-left: 0; */
+  transform: translateX(0);
   transition: all 250ms linear;
 }
+/* ? */
 .token-leave {
   opacity: 1;
   margin-left: 0;
 }
+/* ? */
 .token-leave.token-leave-active {
   opacity: 0.01;
   margin-left: 50%;
   transition: all 250ms linear;
 }
+
+.token-exit-active {
+	opacity: 0.01;
+	/*margin-left: 50%;*/
+	/*transform: translateX(50%);*/
+	transition: all 250ms linear;
+  }

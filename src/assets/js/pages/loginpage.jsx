@@ -1,34 +1,102 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types'
+import { login } from '../utilities/functions';
+import { getCurrentUser } from '../utilities/functions';
+import { authentication_token } from '../constants/constants';
+import PropTypes from 'prop-types';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes
 
 class LoginPage extends Component {
 	static propTypes = {
-		languageFromMain: PT.string,
 		isUserloggedIn: PT.bool,
-		getStatus: PT.func
+		getStatus: PT.func,
+		backToAggregator: PT.func,
+		toRegistration: PT.func,
+		languageFromMain: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: "",
-			password: "",
+			currentUser: null,
+			usernameOrEmail: {
+				value: '',
+				valid: false,
+				errormessage: null
+			},
+			password: {
+				value: '',
+				valid: false,
+				errormessage: null
+			},
+			notificationMessage: {
+                message: ''
+            },
 			loggedInStatus: this.props.isUserloggedIn
 		};
 	}
-	
+	componentDidMount() {
+		this.loadCurrentUser();
+	  }
+
+	loadCurrentUser = () => {
+		getCurrentUser()
+		.then(response => {
+		  this.setState({
+			currentUser: response.name,
+			loggedInStatus: true,
+		  });
+		}).catch(error => {
+
+		});
+	  }
+
 	logInOut = (event) => {
-		// TODO
 		event.preventDefault();
-		if (this.state.loggedInStatus === false && this.state.username === 'mina' && this.state.password === '') {
-			this.setState({
-				loggedInStatus: true
-			})
-			this.props.getStatus(true)
+		if (this.state.loggedInStatus === false && this.state.usernameOrEmail.value !== '' && this.state.password.value !== '') {
+			const loginRequest = {
+				usernameOrEmail: this.state.usernameOrEmail.value,
+				password: this.state.password.value
+			};
+			login(loginRequest)
+			.then(response => {
+				localStorage.setItem(authentication_token, response.accessToken);
+				this.setState({
+					loggedInStatus: true
+				})
+				this.loadCurrentUser()
+				this.props.getStatus(true)
+				setTimeout(() => {
+					this.props.backToAggregator();
+				}, 1500)
+			}).catch(error => {
+				if(error.status === 401) {
+					// Fix here Bootstrap notification for incorrect password or username?
+					this.setState({
+						usernameOrEmail : {
+							value : this.state.usernameOrEmail.value,
+							valid: false,
+							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
+						},
+						password : {
+							value : this.state.password.value,
+							valid : false,
+							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
+						}
+					})
+				} else {
+					// Fix here Bootstrap notification for some other server side failure?
+					this.setState({
+						notificationMessage : {
+							message: "RABA: " + error.message || dictionary[this.props.languageFromMain].loginpage.loginerrorservercatch
+						}
+					})
+				}
+			});
 		} else {
+			localStorage.removeItem(authentication_token);
 			this.setState({
 				loggedInStatus: false
 			})
@@ -36,64 +104,108 @@ class LoginPage extends Component {
 		}
 	}
 
-	handleUsernameChange = event => {
-		var username = event.target.value;
-		this.setState({username: username})
+	usernameNotEmpty = (name) => {
+		if(name !== '') {
+			return {
+				notEmpty: true
+			}
+		} else {
+			return {
+				notEmpty : false
+			}
+		}
+	}
+
+	handleUsernameChange = (event, validation) => {
+		var usernameOrEmail = event.target.value;
+		this.setState({
+			usernameOrEmail : {
+				value : usernameOrEmail,
+				valid : validation(usernameOrEmail).notEmpty
+			}
+		})
 		event.stopPropagation();	
 	}
 
-	handlePasswordChange = event => {
+	passwordNotEmpty = (password) => {
+		if(password !== '') {
+			return {
+				notEmpty : true
+			}
+		} else {
+			return {
+				notEmpty : false
+			}
+		}
+	}
+
+	handlePasswordChange = (event, validation) => {
 		var password = event.target.value;
-		this.setState({password: password})
+		this.setState({
+			password : {
+				value : password,
+				valid : validation(password).notEmpty
+			}
+		})
 		event.stopPropagation();
 	}
 
+	handleToRegistration = () => {
+		this.props.toRegistration();
+	}
+
+	loginValidator = () => {
+		return !(
+            this.state.usernameOrEmail.valid === true && 
+            this.state.password.valid === true)
+	}
+
 	render () {
+		const usernameOrEmailInputValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " +
+            (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
+        const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
+            (this.state.password.valid ? "is-valid"  : "is-invalid")
 		if (this.state.loggedInStatus === false) {
 			return (
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
 							<form onSubmit={this.logInOut}>
-								<FormattedMessage
-									id='login.username'
-									description='username translation'
-									defaultMessage='Username'
-								>
-									{username => (
-										<input
-											className="form-control"
-											type="text" 
-											value={this.state.username}
-											placeholder={username} 
-											onChange={this.handleUsernameChange.bind(this)}
-										/>
-									)}
-								</FormattedMessage>
-								<FormattedMessage
-									id='login.password'
-									description='password translation'
-									defaultMessage='Password'
-								>	
-									{password => (
-										<input
-											className="form-control"
-											type="password"
-											name="password"
-											value={this.state.password}
-											placeholder={password} 
-											onChange={this.handlePasswordChange.bind(this)}
-										/>
-									)}
-								</FormattedMessage>
-								<button type="submit" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
-								<span aria-hidden="true"></span>
-									<FormattedMessage
-										id='login.loginButton'
-										description='login translation'
-										defaultMessage='Login'
+								<div>
+									<input
+										className={usernameOrEmailInputValidator}
+										type="text" 
+										value={this.state.usernameOrEmail.value}
+										placeholder={dictionary[this.props.languageFromMain].common.username} 
+										onChange={(event) => this.handleUsernameChange(event, this.usernameNotEmpty)}
 									/>
-								</button> 
+									<div className="invalid-feedback">{this.state.usernameOrEmail.errormessage}</div>
+								</div>
+								<div>
+									<input
+										className={passwordInputValidator}
+										type="password"
+										name="password"
+										value={this.state.password.value}
+										placeholder={dictionary[this.props.languageFromMain].common.password} 
+										onChange={(event) => this.handlePasswordChange(event, this.passwordNotEmpty)}
+									/>
+									<div className="invalid-feedback">{this.state.password.errormessage}</div>
+								</div>
+								<Button
+									label={dictionary[this.props.languageFromMain].loginpage.loginButton}
+									type='submit'
+									uiType='btn.lg'
+									onClick={this.logInOut}
+									disabled={this.loginValidator()}
+								/>
+                                &nbsp;
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    type='submit'
+									uiType='btn.lg'
+									onClick={this.handleToRegistration}
+                                />
 							</form>
 							<div className="bottom-gap"></div>
 						</div>
@@ -105,16 +217,13 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">Tere {this.state.username}, you are logged in!</span>
+							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.loginMessageP1} ${this.state.currentUser}, ${dictionary[this.props.languageFromMain].loginpage.loginMessageP2}!`}</span>
 							<div>
-								<button type="button" className="btn btn-outline-secondary btn-lg" onClick={this.logInOut} >
-								<span aria-hidden="true"></span>
-									<FormattedMessage
-										id='login.logoutButton'
-										description='log out translation'
-										defaultMessage='Log out'
-									/>
-								</button>
+								<Button
+                                    label={dictionary[this.props.languageFromMain].loginpage.logoutButton}
+                                    uiType='btn.lg'
+                                    onClick={this.logInOut}
+                                />
 							</div>
 						</div>
 					</div>
@@ -122,6 +231,6 @@ class LoginPage extends Component {
 			);
 		}
 	}
-}
+};
 
 export default LoginPage;

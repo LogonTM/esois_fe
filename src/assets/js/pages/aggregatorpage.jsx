@@ -8,9 +8,10 @@ import QueryInput from "../components/queryinput.jsx";
 import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
 import $ from 'jquery';
-import jQuery from 'jquery';
 import 'bootstrap';
-import {FormattedMessage } from 'react-intl';
+import Button from '../utilities/button';
+import dictionary from '../../../translations/dictionary';
+import { back_end_host } from '../constants/constants';
 
 var PT = PropTypes;
 var back_end_host = 'http://217.159.229.95:8888';
@@ -29,85 +30,39 @@ class AggregatorPage extends Component {
 		results: null,
 	}
 	
-	anyLanguages = {
-		ee: 'igas keeles',
-		en: 'Any language'
-	}
-
-	anyLanguage = [multipleLanguageCode, 
-		<FormattedMessage
-			id='any.language'
-			description='Any Language translation'
-			defaultMessage='Any Language'
-		/>];
-
-	searchPlaceholders = [
-		{
-			ee: 'Koer',
-			en: 'Elephant'
-		},
-		{
-			ee: "[word = 'märkus'][word = 'keskendunud']",
-			en: "[word = 'annotation'][word = 'focused']"
-		}
-	]
-
-	placeholderMap = {
-		cql: this.searchPlaceholders[0],
-		fcs: this.searchPlaceholders[1]
-	}
+	anyLanguage = [multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage];
 
 	queryTypes = [
 		{
 			id: 'cql',
-			name: 
-				<FormattedMessage
-					id='cql.query.name' 
-					description='CQL query name translation'
-					defaultMessage='Text layer Contextual Query Language (CQL)'
-				/>,
-			searchLabel:
-				<FormattedMessage
-					id='cql.query.searchLabel'
-					description='search label for CQL query translation'
-					defaultMessage='Text layer CQL query'
-				/>,
 			searchLabelBkColor: 'rgba(220, 133, 46, .3)',
 			className: '',
 		},
 		{
-			id: "fcs",
-			name: 
-				<FormattedMessage
-					id='fcsql.query.name'
-					description='FCS-QL query name translation'
-					defaultMessage='Multi-layer Federated Content Search Query Language (FCS-QL)'
-				/>,
-			searchLabel: 
-				<FormattedMessage
-					id='fcsql.query.searchLabel'
-					description='search label for FCS-QL query translation'
-					defaultMessage='Multi-layer FCS query'
-				/>,
-			searchLabelBkColor: "rgba(40, 85, 143, .3)",
+			id: 'fcs',
+			searchLabelBkColor: 'rgba(40, 85, 143, .3)',
 			disabled: false,
 		},
 	];
 	
 	queryTypeMap = {
 			 cql: this.queryTypes[0],
-			 fcs: this.queryTypes[1],
+			 fcs: this.queryTypes[1]
 	};
 
 	constructor(props) {
 		super(props);
+		var aggrContext = getQueryVariable('x-aggregation-context');
+	    aggrContext = aggrContext && JSON.parse(aggrContext);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
-			weblichtLanguages: [],
 	        queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
-			aggregationContext: getQueryVariable('x-aggregation-context') || '',
+			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
+			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
+			fcsTextAreaVisibility: false,
+			aggregationContext: aggrContext || null,
 			language: this.anyLanguage,
 			languageFilter: 'byMeta',
 			numberOfResults: 10,
@@ -117,92 +72,125 @@ class AggregatorPage extends Component {
 			hits: this.nohits,
 
 			zoomedCorpusHit: null,
-		    _isMounted: false,
 		};
 	}
 
 	componentDidMount() {
-		this.setState({_isMounted: true});
+	    this._isMounted = true;
 			
 		this.props.ajax({
-			url: back_end_host + '/rest/init',
+			url: back_end_host + 'rest/init',
 			success: (json, textStatus, jqXHR) => {
-				if (this.state._isMounted) {
+				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
+                    var aggregationContext = json['x-aggregation-context'] || this.state.aggregationContext;
+				    
+				    window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
 					window.MyAggregator.corpora = json.corpora;
-					this.setState({
-						corpora : corpora,
-						languageMap: json.languages,
-						query: this.state.query || json.query || '',
-					});
-					if (this.state.aggregationContext && !json['x-aggregation-context']) {
-						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-						console.log(json['x-aggregation-context']);
-					}
-					if (json['x-aggregation-context']) {
-						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-						corpora.setAggregationContext(json["x-aggregation-context"]);
-						if (!corpora.getSelectedIds().length) {
-							this.props.error("Cannot find the required collection, will search all collections instead");
-							corpora.recurse(function(corpus) { corpus.selected = true; });
-						}
-						corpora.update();
-					}
-					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+	                window.MyAggregator.xAggregationContext = aggregationContext;
+					
+				    // Setting visibility, e.g. only corpora 
+                    // from v2.0 endpoints for fcs v2.0
+                    corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
 
-					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
-						window.MyAggregator.mode = 'search';
-						this.search();
+                    if (aggregationContext) {
+                        const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
+                        const unavailableCorporaHandles = contextCorporaInfo.unavailable; // list of unavailable aggregationContext
+                        if (unavailableCorporaHandles.length > 0) {
+                            this.props.error("Could not find requested collection handles:\n" + unavailableCorporaHandles.join('\n'));
 					}
+                    
+                        const actuallySelectedCorpora = corpora.getSelectedIds();
+                        
+                        if (contextCorporaInfo.selected.length !== actuallySelectedCorpora.length) {
+                            if (actuallySelectedCorpora.length === 0) {
+                                this.props.error("This search does not support the required collection(s), will search all collections instead"); // TODO give detailed reason its not supported.
+							corpora.recurse(function(corpus) { corpus.selected = true; });
+                            } else {
+                                var err = "Some required context collections are not supported for this search:\n"
+                                err = err + contextCorporaInfo.filter((c) => {
+                                    if (actuallySelectedCorpora.indexOf(c) === -1) {
+                                        console.warn("Requested corpus but not available for selection", c);
+                                        return true;
+						}
+                                    return false;
+                                }).map((c) => c.title).join('\n')
+                                this.props.error(err);
+					}
+                        }
+                    }
+                    else {
+                        // no context set all visible to selected as default.
+                        console.log("no context set, selecting all available");
+                        corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
+                    }
+
+                    this.setState({
+	                    corpora : corpora,
+	                    languageMap: json.languages,
+	                    aggregationContext: aggregationContext,
+	                }, this.postInit);
+					}
+				else {
+				    console.warn("Got Aggregator init response, but not mounted!");
 				}
 			}
 		});
+	}
+
+	postInit = () => {
+		if (window.MyAggregator.mode === 'search') {
+		   this.search();
+	   }
 	}
 
 	updateCorpora = corpora => {
 		this.setState({corpora});
 	}
 
+	getCurrentQuery = () => {
+	    return this.state.queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery;
+	}
+
 	search = () => {
 		var _paq = [];
-
-		var query = this.state.query;
-		var queryTypeId = this.state.queryTypeId;
-		if (!query) {
+		var query = this.getCurrentQuery();
+		var queryTypeIdForSearch = this.state.queryTypeId;
+		if (!query || (this.props.embedded && window.MyAggregator.mode !== 'search')) {
 			this.setState({ hits: this.nohits, searchId: null });
 			return;
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error('Please select a collection to search into');
+			this.props.error("Please select a collection to search into");
 			return;
 		}
-
+		console.log(query)
 		this.props.ajax({
-			url: back_end_host+'/search',
+			url: back_end_host + 'search',
 			type: "POST",
 			data: {
 				query: query,
-				queryType: queryTypeId,
+				queryType: queryTypeIdForSearch,
 				language: this.state.language[0],
 				numberOfResults: this.state.numberOfResults,
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
 			        if (Location.hostname !== "localhost") {
-			           _paq.push(['trackSiteSearch', query, queryTypeId, false]);
+					_paq.push(['trackSiteSearch', query, queryTypeIdForSearch, false]);
 			        }
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId: searchId, timeout: timeout });
+				this.setState({ searchId, timeout });
 			}
 		});
 	}
 
 	nextResults = corpusId => {
 		this.props.ajax({
-			url: back_end_host + '/search/' + this.state.searchId,
+			url: back_end_host + 'search/' + this.state.searchId,
 			type: "POST",
 			data: {
 			corpusId: corpusId,
@@ -211,17 +199,17 @@ class AggregatorPage extends Component {
 			success: (searchId, textStatus, jqXHR) => {
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId: searchId, timeout: timeout });
+				this.setState({ searchId, timeout });
 			}
 		});
 	}
 
 	refreshSearchResults = () => {
-		if (!this.state.searchId || !this.state._isMounted) {
+		if (!this.state.searchId || !this._isMounted) {
 			return;
 		}
 		this.props.ajax({
-			url: back_end_host + '/search/' + this.state.searchId,
+			url: back_end_host + 'search/' + this.state.searchId,
 			success: (json, textStatus, jqXHR) => {
 				var timeout = this.state.timeout;
 				if (json.inProgress) {
@@ -229,7 +217,7 @@ class AggregatorPage extends Component {
 						timeout = 1.5 * timeout;
 					}
 					setTimeout(this.refreshSearchResults, timeout);
-					console.log("new search in: " + this.timeout + "ms");
+					console.log("new search in: " + timeout + "ms");
 				} else {
 					console.log("search ended; hits:", json);
 				}
@@ -260,7 +248,7 @@ class AggregatorPage extends Component {
 	}
 
 	getDownloadLink = (corpusId, format) => {
-		return back_end_host + '/search/' + this.state.searchId + '/download?' +
+		return back_end_host + 'search/' + this.state.searchId + '/download?' +
 			this.getExportParams(corpusId, format);
 	}
 
@@ -276,12 +264,12 @@ class AggregatorPage extends Component {
 
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
+		setQueryVariable('queryType', queryTypeId);
+		setQueryVariable('query', queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery)
 		this.setState({
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
 			searchId: null,
-		    displayADV: queryTypeId === "fcs" ? true : false,
-			corpora: this.state.corpora,
 		});
 	}
 
@@ -359,12 +347,17 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	onQuery = event => {
-		this.setState({query: event.target.value});
+	onQueryChange = queryStr => {
+	    if (this.state.queryTypeId === 'cql') {
+	        this.setState({
+				cqlQuery: queryStr || '',
+		    });
+	    } else {
+	        this.setState({
+				fcsQuery: queryStr || '',
+		    });
 	}
-
-    onADVQuery = fcsql => {
-	    this.setState({query: fcsql.target.value});
+		setQueryVariable('query', queryStr);
 	}
 
 	handleKey = event => {
@@ -373,59 +366,39 @@ class AggregatorPage extends Component {
 		}
 	}
 
-    handleADVKey = event => {
+	handleKeyTextarea = event => {
 	    if (event.keyCode === 13) {
-			this.addADVToken();
+			this.search();
+		} else {
+			event.target.style.height = 'inherit';
+			event.target.style.height = `${Math.max(Math.min(event.target.scrollHeight + 2, 550), 55)}px`;
 	    }
 	}
 
-	error = errObj => {
-		var err = ''
-		if (typeof errObj === 'string' || errObj instanceof String) {
-		    err = errObj
-		} else if (typeof errObj === 'object' && errObj.statusText) {
-		    console.log('ERROR: jqXHR = ', errObj)
-		    err = errObj.statusText
-		} else {
-		    return
+    handleADVKey = event => {
+	    if (event.keyCode === 13) {
+			this.addADVToken();
 		}
-	
-		var errs = this.state.errorMessages.slice()
-		errs.push(err)
-		this.setState({ errorMessages: errs })
-	
-		setTimeout(() => {
-		    var errs = this.state.errorMessages.slice()
-		    errs.shift()
-		    this.setState({ errorMessages: errs })
-		}, 10000)
 	} 
 	
-	ajax = ajaxObject => {
-		ajaxObject.error = ajaxObject.error || this.handleAjaxError
-		jQuery.ajax(ajaxObject)
-	}
-	
-	handleAjaxError = (jqXHR, textStatus, error) => {
-		if (jqXHR.readyState === 0) {
-			this.error('Network error, please check your internet connection')
-		} else if (jqXHR.responseText) {
-			this.error(jqXHR.responseText + ' (' + error + ')')
-		} else {
-			this.error(error + ' (' + textStatus + ')')
-		}
-		console.log('ajax error, jqXHR: ', jqXHR)
+	toggleFcsView = (e, fcsTextAreaVisibility) => {
+		e.preventDefault();
+		this.setState({
+			fcsTextAreaVisibility: fcsTextAreaVisibility
+		});
 	}
 	
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
 		return (
-			<h3 style={{fontSize:'1em'}}>
+			<h3>
 				{corpus.title}
 				{ corpus.landingPage ?
 					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
-						<span> - Homepage </span>
+						<span>
+							{dictionary[this.props.languageFromMain].common.homepage}
+						</span>
 						<i className="fa fa-home"/>
 					</a>: false}
 			</h3>
@@ -434,40 +407,125 @@ class AggregatorPage extends Component {
 
 	renderSearchButtonOrLink = () => {
 		return (
-		    <button className="btn btn-outline-secondary" type="button" onClick={this.search}>
-				<i className="fa fa-search"></i>
-		    </button>
+			<Button
+				label={<i className="fa fa-search"></i>}
+				uiType={'input-lg image_button'}
+				onClick={this.search}
+			/>
 		);
 	}
 
-	render() {
+	renderQueryInput = () => {
+	    return (
+	        <QueryInput 
+			    searchedLanguage={this.state.searchedLanguage || [multipleLanguageCode]}
+			    queryTypeId={this.state.queryTypeId}
+			    query={this.getCurrentQuery()}
+			    placeholder={dictionary[this.props.languageFromMain].cql.placeholder}
+			    onKeyDown={this.handleKey}
+				handleKeyTextarea={this.handleKeyTextarea}
+				languageFromMain={this.props.languageFromMain}
+				corpora={this.props.corpora}
+				onQueryChange={this.onQueryChange}
+				fcsTextAreaVisibility={this.state.fcsTextAreaVisibility}
+			/>
+		);
+	}
+	
+	renderCql = () => {
 		var queryType = this.queryTypeMap[this.state.queryTypeId];
-		var correctPlaceholder = this.placeholderMap[this.state.queryTypeId];
-		return	(
-			<div className="container">
-				<div className="row justify-content-center" style={{marginTop:64}}>
-					<div className="col-12">
-						<div className="aligncenter">
+	    
+	    return (
+			<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-										{queryType.searchLabel}
+							{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
 									</span>
 								</div>
-								<QueryInput 
-									searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
-									queryTypeId={this.state.queryTypeId}
-									query={this.state.query}
-									placeholder={correctPlaceholder[this.props.languageFromMain]}
-									onChange={this.onADVQuery}
-									onQuery={this.onQuery}
-									onKeyDown={this.handleKey} />
+					{ this.renderQueryInput() }
+					<div className="input-group-append">
+						{this.renderSearchButtonOrLink()}
+					</div>
+				</div>
+			</div>
+		);
+	}
 
+	renderGQB = () => {
+	    var queryType = this.queryTypeMap[this.state.queryTypeId];
+	    return (
+			<div style={{marginLeft:16, marginRight:16}}>
+				<div className="card">
+					<div
+						id='fcsFormHeading'
+						className="card-heading"
+						style={{backgroundColor:queryType.searchLabelBkColor, fontSize: "120%"}}
+					>
+						{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
+					</div>
+					<div className="card-body">
+						<p>
+							<Button
+								label={this.state.fcsTextAreaVisibility ?
+								dictionary[this.props.languageFromMain].queryinput.fcsQueryFromButton :
+								dictionary[this.props.languageFromMain].queryinput.fcsTextFieldButton}
+								onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+							/>
+						</p>
+						{ this.renderQueryInput() }
+					</div>
+					<div className="card-footer">
+						<div className="input-group">
+							<pre className="adv-query-preview aligncenter form-control input-lg">
+								{this.getCurrentQuery()}
+							</pre>
 								<div className="input-group-append">
 									{this.renderSearchButtonOrLink()}
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+		);
+	}
+
+	renderUnavailableCorporaMessage = () => {
+	    if (!this.state.corpora) {
+	        return;
+	    }
+        const unavailable = [];
+        this.state.corpora.recurse((c) => {
+            if (c.selected && ! c.visible) {
+                unavailable.push(c);
+            }
+            if (c.selected) {
+                // apparently a selected corpus 
+            }
+        });
+        
+        if (unavailable.length) {
+            return (
+				<div id="unavailable-corpora-message" className="text-muted">
+					<div id="unavailable-corpora-message-message">
+						<a role="button" data-toggle="dropdown">{unavailable.length} selected collection{unavailable.length > 1 ? 's are' : ' is'} disabled in this search mode.</a>
+					</div>
+					<ul id="unavailable-corpora-message-list" className="dropdown-menu">
+					{
+						unavailable.map((c) => <li className="unavailable-corpora-message-item">{c.name}</li>)
+					}
+					</ul>
+				</div>
+			);
+        }
+	}
+
+	render() {
+		return (
+			<div className="container">
+				<div className="row justify-content-center" style={{marginTop:64}}>
+					<div className="col-12">
+						{ (this.state.queryTypeId === "fcs") ? this.renderGQB() : this.renderCql() }
 					</div>
 				</div>
 
@@ -477,18 +535,15 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='search.for'
-											description='Search for translation'
-											defaultMessage='Search for'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.searchFor}
 									</span>
 								</div>
 								<div className="input-group">
-									<button className="btn btn-outline-secondary dropdown-toggle"
-											onClick={this.toggleLanguageSelection}>
-										{this.state.language[1]} 
-									</button>
+									<Button
+										label={this.state.language[1]}
+										uiType='dropdown-toggle'
+										onClick={this.toggleLanguageSelection}
+									/>
 								</div>
 							</div>
 						</form>
@@ -497,17 +552,26 @@ class AggregatorPage extends Component {
 						<form className="form-inline">
 							<div className="input-group mb-3">
 								<div className="input-group">
-									<button className="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+									<Button
+										label={dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
+										uiType='dropdown-toggle dropdown-toggle-split'
 											aria-expanded="false"
-											data-toggle="dropdown">
-										{queryType.name}
-									</button>
+										data-toggle="dropdown"
+									/>
 									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ 	this.queryTypes.map((l) => {
+										{ this.queryTypes.map(l => {
 												var cls = l.disabled ? 'disabled':'dropdown-item';
 												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (<li key={l.id} className={cls}> <a tabIndex="-1" href="#"
-													onClick={handler}> {l.name} </a></li>);
+												return (
+													<li 
+														key={l.id}
+														className={cls}
+													>
+														<a tabIndex="-1" href="#" onClick={handler}>
+															{dictionary[this.props.languageFromMain][l.id].name}
+														</a>
+													</li>
+												);
 											})
 										}
 									</ul>
@@ -522,42 +586,36 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='aggregatorpage.in'
-											description='in translation'
-											defaultMessage='in'
-										/>
+										{dictionary[this.props.languageFromMain].common.in}
 									</span>
 								</div>
 								<div className="input-group">
-									<button	type="button"
-											className="btn btn-outline-secondary dropdown-toggle"
-											onClick={this.toggleCorpusSelection}>
-										{this.state.corpora.getSelectedMessage()}
-									</button>
+									<Button
+										label={this.state.corpora.getSelectedMessage(this.props.languageFromMain)}
+										uiType='dropdown-toggle'
+										onClick={this.toggleCorpusSelection}
+									/>
 								</div>
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										<FormattedMessage
-											id='aggregatorpage.andShowUpTo'
-											description='and show up to translation'
-											defaultMessage='and show up to'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.andShowUpTo}
 									</span>
 								</div>
 								<div className="input-group">
-									<input type="number" className="form-control input" min="10" max="250"
+									<input
+										type="number"
+										className="form-control input"
+										min="10"
+										max="250"
 										style={{width:60}}
-										onChange={this.setNumberOfResults.bind(this)} value={this.state.numberOfResults}
-										onKeyPress={this.stop.bind(this)}/>
+										onChange={this.setNumberOfResults.bind(this)}
+										value={this.state.numberOfResults}
+										onKeyPress={this.stop.bind(this)}
+									/>
 								</div>
 								<div className="input-group-append">
 									<span className="input-group-text nobkg">
-										<FormattedMessage 
-											id='aggregatorpage.hitsPerEndpoint'
-											description='hits per endoint translation'
-											defaultMessage='hits per endpoint'
-										/>
+										{dictionary[this.props.languageFromMain].aggregatorpage.hitsPerEndpoint}
 									</span>
 								</div>
 							</div>
@@ -565,45 +623,62 @@ class AggregatorPage extends Component {
 					</div>
 				</div>
 
-				<Modal ref="corporaModal" title={<span>
-					<FormattedMessage
-						id='collections'
-						description='collections translation'
-						defaultMessage='Collections'
+				<Modal
+					ref="corporaModal"
+					title={<span>
+							{dictionary[this.props.languageFromMain].aggregatorpage.collections}
+						</span>}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<CorpusView
+						corpora={this.state.corpora}
+						languageMap={this.state.languageMap}
+						languageFromMain={this.props.languageFromMain}
 					/>
-					</span>}>
-					<CorpusView corpora={this.state.corpora} languageMap={this.state.languageMap} />
 				</Modal>
 
-				<Modal ref="languageModal" title={<span>
-					<FormattedMessage
-						id='select.language'
-						description='select language translation'
-						defaultMessage='Select Language'
-					/>
-					</span>}>
-					<LanguageSelector anyLanguage={[multipleLanguageCode, this.anyLanguages[this.props.languageFromMain]]}
+				<Modal
+					ref="languageModal"
+					title={<span>
+							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}
+						</span>}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<LanguageSelector
+						anyLanguage={[multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage]}
 									  languageMap={this.state.languageMap}
 									  selectedLanguage={this.state.language}
 									  languageFilter={this.state.languageFilter}
-									  languageChangeHandler={this.setLanguageAndFilter} />
+						languageChangeHandler={this.setLanguageAndFilter}
+						languageFromMain={this.props.languageFromMain}
+					/>
 				</Modal>
 
-				<Modal ref="resultModal" title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}>
-					<ZoomedResult corpusHit={this.state.zoomedCorpusHit}
+				<Modal
+					ref="resultModal"
+					title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}
+					languageFromMain={this.props.languageFromMain}
+				>
+					<ZoomedResult
+						corpusHit={this.state.zoomedCorpusHit}
 								  nextResults={this.nextResults}
 								  getDownloadLink={this.getDownloadLink}
 								  searchedLanguage={this.state.language}
 								  languageMap={this.state.languageMap} 
-						          queryTypeId={this.state.queryTypeId} />
+						queryTypeId={this.state.queryTypeId}
+						languageFromMain={this.props.languageFromMain}
+					/>
 				</Modal>
 
 				<div className="top-gap">
-					<Results collhits={this.filterResults()}
+					<Results
+						collhits={this.filterResults()}
 							 toggleResultModal={this.toggleResultModal}
 							 getDownloadLink={this.getDownloadLink}
 							 searchedLanguage={this.state.language}
-					         queryTypeId={this.state.queryTypeId}/>
+						queryTypeId={this.state.queryTypeId}
+						languageFromMain={this.props.languageFromMain}
+					/>
 				</div>
 			</div>
 			);
@@ -613,6 +688,7 @@ class AggregatorPage extends Component {
 function Corpora(corpora, updateFn) {
 	this.corpora = corpora;
 	this.update = () => updateFn(this);
+
 
 	var sortFn = function(x, y) {
 		var r = x.institution.name.localeCompare(y.institution.name);
@@ -746,38 +822,14 @@ Corpora.prototype.getSelectedIds = function() {
 	return ids;
 };
 
-Corpora.prototype.getSelectedMessage = function() {
+Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
 	if (this.corpora.length === selectedIdsCount) {
-		return (
-			<FormattedMessage
-				id='front.page.all.collections.selected'
-				description='all available collections translation'
-				defaultMessage='All available collections ({amount})'
-				values= {{
-					amount: selectedIdsCount
-				}}
-			/>
-		);
+		return `${dictionary[languageFromMain].corpusview.allCollectionsSelected} (${selectedIdsCount})`;
 	} else if (selectedIdsCount === 1) {
-		return (
-			<FormattedMessage
-				id='front.page.one.collection.selected'
-				description='one selected collection translation'
-				defaultMessage='1 selected collection'
-			/>
-		);
+		return dictionary[languageFromMain].corpusview.oneCollectionSelected;
 	}
-	return (
-		<FormattedMessage
-			id='front.page.some.collections.selected'
-			description='some collections selected translation'
-			defaultMessage='{amount} selected collections'
-			values= {{
-				amount: selectedIdsCount
-			}}
-		/>
-	);
+	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.someCollectionsSelected}`;
 };
 
 function getQueryVariable(variable) {
@@ -792,6 +844,34 @@ function getQueryVariable(variable) {
         }
     }
     return null;
+}
+
+/* setter opposite of getQueryVariable*/
+function setQueryVariable(qvar, value) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    var d = {};
+    d[qvar] = value;
+    var found = false;
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) === qvar) {
+            
+            vars[i] = encodeQueryData(d);
+            found=true;
+            break;
+        }
+    }
+    
+    if (!found) {
+        // add to end of url
+        vars.push(encodeQueryData(d));
+    }
+    
+    var searchPart = vars.join('&');
+    var newUrl = window.location.origin + window.location.pathname+'?'+searchPart;
+    console.log("set url", newUrl);
+    window.history.replaceState(window.history.state, null, newUrl);
 }
 
 function encodeQueryData(data)

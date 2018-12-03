@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import { FormattedMessage } from 'react-intl';
-
+import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -12,6 +11,7 @@ class LanguageSelector extends Component {
 		selectedLanguage: PT.array.isRequired,
 		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
+		languageFromMain: PropTypes.string.isRequired
 	}
 
 	selectLang = language => {
@@ -72,31 +72,19 @@ class LanguageSelector extends Component {
 						<div className="custom-control custom-radio">
 							<label>
 								{ this.renderRadio('byMeta') }&nbsp;
-								<FormattedMessage
-									id='language.radio.byMeta'
-									description='language selection by using collections specified language translation'
-									defaultMessage='Use the collections specified language to filter results'
-								/>
+								{dictionary[this.props.languageFromMain].languageselector.radioByMeta}
 							</label>
 						</div>
 						<div className="custom-control custom-radio">
 							<label>
 								{ this.renderRadio('byGuess') }&nbsp;
-								<FormattedMessage
-									id='language.radio.byGuess'
-									description='language selection by using a language detector translation'
-									defaultMessage='Filter results by using a language detector'
-								/>
+								{dictionary[this.props.languageFromMain].languageselector.radioByGuess}
 							</label>
 						</div>
 						<div className="custom-control custom-radio">
 							<label>
 								{ this.renderRadio('byMetaAndGuess') }&nbsp;
-								<FormattedMessage
-									id='language.radio.byMetaAndGuess'
-									description='language selection by first using collections language then also using a language detector translation'
-									defaultMessage='First use the collections specified language then also use a language detector'
-								/>
+								{dictionary[this.props.languageFromMain].languageselector.radioByMetaAndGuess}
 							</label>
 						</div>
 					</div>

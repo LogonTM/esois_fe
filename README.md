@@ -9,6 +9,8 @@ Kasutus- ja paigaldusjuhend
   - [Eelnõuded](#eelnõuded)
   - [Installeerimine ja käivitamine](#installeerimine-ja-käivitamine) 
 - [Kasutamisest](#kasutamisest)
+  - [Back-end liidestamine](#back-end-liidestamine)
+  - [Registreerimine ja kasutaja autentimine](#registreerimine-ja-kasutaja-autentimine)
 - [Internatsionaliseeritavus](#internatsionaliseeritavus)
   - [Tõlked](#tõlked)
 
@@ -32,43 +34,34 @@ Järgnevalt tuleb sisestada käsklus 'yarn start', mille järel käivitatakse ra
 
 Hetkel on võimalik teostada otsinguid, näha otsingurida, otsingunuppu, vahetada lihtotsingu (CQL) ning laiendatud (FCS-QL) otsingu moodi vahel, eksisteerib ka kasutaja sisselogimise lehekülg ning abilehekülg. Viimasel on hetkel kirjeldatud otsingute tegemine.
 
-Kasutajaliides võimaldab vahetada ka keeli, vajutades vastava lipu peale (Eesti, Inglise).
+Kasutajaliides võimaldab vahetada ka keeli, vajutades vastava lipu peale (Eesti, Inglise). Võimaldatud on ka kasutajate registreerimine ja sisse logimine. Oauth 2.0 läbi väliste teenuste on hetkel testimisel aga lokaalselt on autentimine võimaldatud. Hetkeseisuga on kõik kasutajad vaikimisi tavakasutaja rollis, kes saavad ligi ka hiljem administraatorile mõeldud funktsionaalsustele (mis hetkel olemas).
+
+### Back-end liidestamine
+
+Ühendamaks back-end'iga, tuleb src > assets > js > constants > constants.jsx failis olevale const back_end_host juurde märkida back-end'i URL.
+
+### Registreerimine ja kasutaja autentimine
+
+Võimaldatud on ka kasutajate registreerimine ja sisse logimine. Oauth 2.0 läbi väliste teenustega on hetkel testimisel aga lokaalselt on autentimine võimaldatud. Hetkeseisuga on kõik kasutajad vaikimisi tavakasutaja rollis, kes saavad ligi ka hiljem administraatorile mõeldud funktsionaalsustele (mis hetkel olemas). Täiendavalt lisandub ka SAML (TAAT) autentimise võimalus.
+
+Kasutaja lokaalseks registreerimiseks on vaja navigeerida läbi login lehekülje registreerimise leheküljele, kus tuleb täita vastavad lahtrid ning vajutada nuppu registreeri. Eduka registreerimise järgselt logitakse kasutaja ka koheselt sisse ning suunatakse agregaatori otsingu lehele. Mitte õnnestunud registreerimise kohta kuvatakse kasutajale ka vastava sisulist tagasidet koos näpunäidetega, kuidas probleemi oleks võimalik lahendada.
+
+Kasutaja sisse logimiseks on vaja vastavalt navigeerida sisse logimise leheküljele ning täita vajalikud lahtrid. Eduka sisenemise korral suunatakse kasutaja edasi agregaatori lehele. Ebaõnnestunud autentimise korral aga kuvatakse võimalikke probleeme ning näpunäiteid probleemi lahendamiseks.
+
+Hetkel välja logimiseks tuleb samuti minna esialgsele lehele, kust logiti sisse. Seal on nüüd võimalik klõpsata vastaval nupul, mis lõpetab sisse logitud sessiooni.
 
 ## Internatsionaliseeritavus
 
-Internatsionaliseeritavuse jaoks on kasutatud 'react-intl' liidest, mis võimaldab vajalikku funktsionaalsust.
-
 ### Tõlked
 
-Antud tõlked on hetkel kaasas failides 'ee.js' ja 'en.js' vastavalt siis eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud failidele on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
-
-Vastava tõlke rakendamiseks on vaja lisada veel 'main.jsx' päisesse vastav lokalisatsiooni import, näiteks inglise keele jaoks on vajalik:
-import locale_en from 'react-intl/locale-data/en';
-
-Täiendavalt tuleb laiendada konstanti 
-
-const messages = {
-    'ee': messages_ee,
-    'en': messages_en
-};
+Antud tõlked on hetkel kaasas failis dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud failidele on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
 
 soovitud lokaali ning tõlgetega, mida soovitakse kuvada. 
-
-Lisaks tuleb lisada reale 26 (hetkel, võib muutuda), kus asub "addLocaleData([...locale_ee, ...locale_en])", vastav lokaalisatsiooni rida. Näiteks saksa lokalisatsiooni jaoks tuleks täiendada antud rida järgnevalt:
-
-addLocaleData([...locale_ee, ...locale_en, ...locale_de])
-
-Vene keele jaoks aga:
-
-addLocaleData([...locale_ee, ...locale_en, ...locale_ru])
-
-Samuti on vaja sisse importida uue keele '.js' fail translations folderist 'main.jsx' faili näiteks reaga:
-import messages_en from "../../translations/en.js";
 
 src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb importida 'main.jsx' faili reaga (näidis Suurbritannia lipu kohta):
 import GbFlag from '../img/gb-icon.png';
 
-'main.jsx' failis funktsioonis renderCollapsible (hetkel algab real 176) tuleb lipukese ikooni kuvamiseks lisada read (näidis Suurbritannia lipu kohta):
+'main.jsx' failis olevas funktsioonis renderCollapsible tuleb lipukese ikooni kuvamiseks lisada read (näidis Suurbritannia lipu kohta):
   <a className='nav-item navbar-brand' tabIndex='-1' onClick={this.changeToEN}>
     <img className='ico' src={GbFlag} alt='ENG' />
   </a>
@@ -86,31 +79,11 @@ changeToEN = () => {
 
 siin language: 'en' kahetäheline keele lühend vastab 'const messages' olevale vastava keele indikaatorile. Sellele vastavalt saadakse kätte vastavad tõlgitud laused.
 
-Tulenevalt raamistiku eripärast on mõned tõlked lahendatud otse koodis:
-1. aggregatorpage.jsx failis tõlge väljendile kui otsitakse kõigis keeltes:
-  hetkel real 31:
-  	anyLanguages = {
-      ee: 'igas keeles',
-      en: 'Any language'
-    }
-
-2. aggregatorpage.jsx failis otsingu tekstilahtri kohahoidjad:
-  hetkel real 43:
-    searchPlaceholders = [
-      {
-        ee: 'Koer',
-        en: 'Elephant'
-      },
-      {
-        ee: "[word = 'märkus'][word = 'keskendunud']",
-        en: "[word = 'annotation'][word = 'focused']"
-      }
-    ]
-
 Eesti Keeleressursside Keskuse logo on võimalik kuvada nii inglise kui eesti keelsena. Tõlke keele jaoks, kui on ka teistes keeltes logosid olemas, tuleb logo lisada src > assets > img kausta ning importida 'main.jsx' faili vastav logo, nagu on inglise keelse logo importimiseks tehtud järgnevalt:
 import EnEKRKlogo from '../img/ekrk-logo-eng.png';
 
-Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 33 asuvas) muutujas logoIntl:
+Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 22 asuvas) muutujas logoIntl:
+
 const logoIntl = {
   ee: EeEKRKlogo,
   en: EnEKRKlogo

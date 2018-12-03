@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
+import ManageCenter from './pages/managecenter.jsx'
+import ManageUsers from './pages/manageusers'
+import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
 import Clarinlogo from '../img/clarin-logo.png'
@@ -13,22 +16,9 @@ import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
-import PropTypes from 'prop-types'
-import { IntlProvider } from "react-intl";
-import { addLocaleData } from 'react-intl';
-import locale_en from 'react-intl/locale-data/en';
-import locale_ee from 'react-intl/locale-data/ee';
-import messages_en from "../../translations/en.js"
-import messages_ee from "../../translations/ee.js"
+import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
-import { FormattedMessage } from 'react-intl';
-
-addLocaleData([...locale_ee, ...locale_en])
-
-const messages = {
-	'ee': messages_ee,
-	'en': messages_en
-};
+import { authentication_token } from './constants/constants';
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -37,13 +27,14 @@ const logoIntl = {
 
 window.MyAggregator = window.MyAggregator || {}
 
-var URLROOT = (window.MyAggregator.URLROOT =
-	window.location.pathname || '/Aggregator')
-
-var PT = PropTypes
+var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
 class Main extends Component {
 	componentWillMount() {
+		routeFromLocation.bind(this)()
+	}
+
+	componentDidUpdate() {
 		routeFromLocation.bind(this)()
 	}
   
@@ -88,13 +79,7 @@ class Main extends Component {
 
 	handleAjaxError = (jqXHR, textStatus, error) => {
 		if (jqXHR.readyState === 0) {
-			this.error(
-				<FormattedMessage
-					id='ajax.network.error'
-					description='no network connection error translation'
-					defaultMessage='Network error, please check your internet connection'
-				/>
-			)
+			this.error(dictionary[this.state.language].errors.noNetwork)
 		} else if (jqXHR.responseText) {
 			this.error(jqXHR.responseText + ' (' + error + ')')
 		} else {
@@ -103,63 +88,143 @@ class Main extends Component {
 		console.log('ajax error, jqXHR: ', jqXHR)
 	}
 
+	getUserLoginStatus = (userStatus, currentUser) => {
+		console.log('From main: ' + userStatus)
+		this.setState({
+			loggedInStatus: userStatus,
+			userName: currentUser
+		})
+	}
+
 	toggleCollapse = () => {
 		this.setState({ navbarCollapse: !this.state.navbarCollapse })
 	}
 
 	renderAggregator = () => {
 		return (
-			<AggregatorPage ajax={this.ajax} error={this.error} languageFromMain={this.state.language} />
-		)
+			<AggregatorPage
+				ajax={this.ajax}
+				error={this.error}
+				languageFromMain={this.state.language}
+			/>
+		);
 	}
 
 	renderHelp = () => {
-		return <HelpPage />
+		return <HelpPage languageFromMain={this.state.language} />
 	}
 
-	getUserLoginStatus = (userStatus) => {
-		console.log('From main: ' + userStatus)
-		this.setState({loggedInStatus: userStatus})
+	renderRegister = () => {
+		return (
+			<RegisterPage
+				backToAggregator={this.toAggregator.bind(this, true)}
+				isUserloggedIn={this.state.loggedInStatus}
+				getStatus={this.getUserLoginStatus.bind(this)}
+				languageFromMain={this.state.language}
+			/>
+		);
 	}
 
 	renderLogin = () => {
-		return <LoginPage languageFromMain={this.state.language} isUserloggedIn={this.state.loggedInStatus} getStatus={this.getUserLoginStatus.bind(this)}/>
+		return (
+			<LoginPage
+				toRegistration={this.toRegister.bind(this, true)}
+				backToAggregator={this.toAggregator.bind(this, true)}
+				isUserloggedIn={this.state.loggedInStatus}
+				userName={this.state.userName}
+				getStatus={this.getUserLoginStatus.bind(this)}
+				languageFromMain={this.state.language}
+			/>
+		);
+	}
+
+	renderManageCenter = () => {
+		return (
+			<ManageCenter
+				languageFromMain={this.state.language}
+			/>
+		)
+	} 
+
+	renderManageUsers = () => {
+		return <ManageUsers languageFromMain={this.state.language} /> // For admins only
+	}
+
+	renderUserManager = () => {
+		// return <UserManager/> Should combine with login page?
+	}
+
+	renderManageLogs = () => {
+		// return <ManageLogs/>
 	}
 
 	getPageFns = () => {
 		return {
 			'': this.renderAggregator,
 			help: this.renderHelp,
-			login: this.renderLogin //Added this line to allow finding of login - JK
+			login: this.renderLogin,
+			register: this.renderRegister,
+			manageUsers: this.renderManageUsers, // For admins only
+			// userManager: this.renderUserManager, For regular users
+			// manageLogs: this.renderManageLogs For admins only
+			manageCenter: this.renderManageCenter
 		}
 	}
 
-	gotoPage = (/*doPushHistory,*/ pageFnName) => {
+	gotoPage = (doPushHistory, pageFnName) => {
 		var pageFn = this.getPageFns()[pageFnName]
 		if (this.state.navbarPageFn !== pageFn) {
-			// if (doPushHistory) {
-			//   window.history.pushState(
-			//     { page: pageFnName },
-			//     '',
-			//     URLROOT + '/' + pageFnName
-			//   )
-			// }
+			if (doPushHistory) {
+			  window.history.pushState(
+			    { page: pageFnName },
+			    '',
+			    URLROOT + '/' + pageFnName
+			  )
+			}
 			this.setState({ navbarPageFn: pageFn })
 			console.log('new page: ' + document.location + ', name: ' + pageFnName)
 		}
 	}
 
-	toAggregator = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ '')
+	toAggregator = doPushHistory => {
+		this.gotoPage(doPushHistory, '')
 	}
 
-	toHelp = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ 'help')
+	toHelp = doPushHistory => {
+		this.gotoPage(doPushHistory, 'help')
 	}
 
-	toLogin = /*doPushHistory*/ () => {
-		this.gotoPage(/*doPushHistory,*/ 'login')
-	} 
+	toLogin = doPushHistory => {
+		this.gotoPage(doPushHistory, 'login')
+	}
+
+	toRegister = doPushHistory => {
+		this.gotoPage(doPushHistory, 'register')
+	}
+
+	toManageCenter = doPushHistory => {
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotoPage(doPushHistory, 'manageCenter')
+		}
+	}
+
+	toManageUsers = doPushHistory => {
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotoPage(doPushHistory, 'manageUsers')
+		}
+	}
+
+	toUserManager = doPushHistory => {
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotoPage(doPushHistory, 'userManager')
+		}
+	}
+
+	toManageLogs = doPushHistory => {
+		if(localStorage.getItem(authentication_token) !== null) {
+			this.gotoPage(doPushHistory, 'manageLogs')
+		}
+	}
 
 	changeToEE = () => {
 		this.setState({
@@ -183,6 +248,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
+							data-toggle='tooltip'
+							title='EE'
 							onClick={this.changeToEE}
 						>
 							<img
@@ -194,6 +261,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
+							data-toggle='tooltip'
+							title='EN'
 							onClick={this.changeToEN}
 						>
 							<img
@@ -205,6 +274,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Agregator'
 							onClick={this.toAggregator.bind(this, true)}
 						>
 							<img
@@ -216,6 +287,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Login/Logout/Register'
 							onClick={this.toLogin.bind(this, true)}
 						>
 							<img
@@ -227,6 +300,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Help'
 							onClick={this.toHelp.bind(this, true)}
 						>
 							<img
@@ -235,6 +310,24 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
+{/* 						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Manage Center'
+							onClick={this.toManageCenter.bind(this, true)}
+						>
+							<i className="fa fa-database"/>
+						</a>
+						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Manage Users'
+							onClick={this.toManageUsers.bind(this, true)}
+						>
+							<i className="fa fa-users"/>
+						</a> */}
 					</div>
 				</div>
 			</div>
@@ -247,14 +340,26 @@ class Main extends Component {
 				<div className='container'>
 					<nav className='navbar navbar-expand-md'>
 						<header className="inline navbar-brand" id='navbar-images'>
-							<a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank">
+							<a
+								tabIndex="-1"
+								href="https://keeleressursid.ee/"
+								target="external"
+								data-toggle='tooltip'
+								title='Eesti Keeleressursside Keskus'
+							>
 								<img
 									className='logo'
 									src={logoIntl[this.state.language]}
 									alt='Eesti Keeleressursside Keskus'
 								/>
 							</a>
-							<a tabIndex="-1" href="https://clarin.eu/" target="_blank">
+							<a
+								tabIndex="-1"
+								href="https://clarin.eu/"
+								target="external"
+								data-toggle='tooltip'
+								title='CLARIN ERIC'
+							>
 								<img 
 									className='logo2'
 									src={Clarinlogo}
@@ -272,13 +377,11 @@ class Main extends Component {
 							aria-label="Toggle navigation"
 						>
 							<span className='sr-only'>
-								<FormattedMessage
-									id='toggle.navigation'
-									description='toggle navigation translation'
-									defaultMessage='Toggle navigation'
-								/>
+								{dictionary[this.state.language].common.toggleNavigation}
 							</span>
-							<span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
+							<span className='navbar-toggler-icon'>
+								<i className="fa fa-bars"></i>
+							</span>
 						</button>
 						{this.renderCollapsible()}
 					</nav>
@@ -291,15 +394,15 @@ class Main extends Component {
 
 	render() {
 		return (
-			<IntlProvider locale={this.state.language} messages={messages[this.state.language]}>
+			<div>
 				<div>
-					<div> {this.renderTop()} </div>
-					<div id='push'>
-						<div className='container'>{this.state.navbarPageFn()}</div>
-					</div>
-					<Footer />
+					{this.renderTop()}
 				</div>
-			</IntlProvider>
+				<div id='push'>
+					<div className='container'>{this.state.navbarPageFn()}</div>
+				</div>
+				<Footer languageFromMain={this.state.language} />
+			</div>
 		)
 	}
 }
@@ -311,17 +414,28 @@ function endsWith(str, suffix) {
 var routeFromLocation = function() {
 	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
-	var path = window.location.pathname.split('/')
+	var path = window.location.pathname
 	console.log('path: ' + path)
-	if (path.length >= 3) {
-		var p = path[path.length - 1]
-		if (p === 'help') {
-			this.toHelp(false)
+	if (path !== '/') {
+		if (path === '/help') {
+			this.toHelp()
+		} else if (path === '/login') {
+			this.toLogin()
+		} else if (path === '/register'){
+			this.toRegister()
+		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
+			this.toManageCenter()
+		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null)  {
+			this.toManageUsers()
+		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
+			this.toUserManager()
+		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
+			this.toManageLogs()
 		} else {
-			this.toAggregator(false)
+			this.toAggregator()
 		}
 	} else {
-		this.toAggregator(false)
+		this.toAggregator()
 	}
 }
 
@@ -329,4 +443,4 @@ var main = ReactDOM.render(<Main />, document.getElementById('body'))
 
 window.onpopstate = routeFromLocation.bind(main)
 
-export default Main
+export default Main;
