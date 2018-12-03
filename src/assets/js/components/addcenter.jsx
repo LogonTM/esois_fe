@@ -61,12 +61,12 @@ class AddCenter extends Component {
             <div id="container">
                 <form>
                     <div className="form-group row addcorp">
-                        <div className="col-sm-2">
+                        <div className="col-sm-2 align-right">
                             <label htmlFor="Center_id">
                             {dictionary[this.props.languageFromMain].common.corpusId}
                             </label>
                         </div>
-                        <div className="col-sm-10">
+                        <div className="col-sm-9">
                             <input
                                 className={idValidator}
                                 type="text"
@@ -82,12 +82,12 @@ class AddCenter extends Component {
                         </div>
                     </div>
                     <div className="form-group row addcorp">
-                        <div className="col-sm-2">
+                        <div className="col-sm-2 align-right">
                             <label htmlFor="Center_name">
                                 {dictionary[this.props.languageFromMain].common.corpusName}
                             </label>
                         </div>
-                        <div className="col-sm-10">
+                        <div className="col-sm-9">
                             <input
                                 className={nameValidator}
                                 type="text"
@@ -104,10 +104,10 @@ class AddCenter extends Component {
                         </div>
                     </div>
                     <div className="form-group row addcorp">
-                        <div className="col-sm-2">
+                        <div className="col-sm-2 align-right">
                             <label htmlFor="url">URL</label>
                         </div>
-                        <div className="col-sm-10">
+                        <div className="col-sm-9">
                             <input
                                 className={linkValidator} 
                                 type="text"
@@ -122,7 +122,7 @@ class AddCenter extends Component {
                             </div>
                         </div>
                     </div>
-                    <p>
+                    <p className='align-right'>
                         <Button
                             label={dictionary[this.props.languageFromMain].common.add}
                             onClick={this.handleAdd}

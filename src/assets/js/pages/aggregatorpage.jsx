@@ -8,7 +8,6 @@ import QueryInput from "../components/queryinput.jsx";
 import ZoomedResult from "../components/zoomedresult.jsx";
 import PropTypes from "prop-types";
 import $ from 'jquery';
-import jQuery from 'jquery';
 import 'bootstrap';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
@@ -39,26 +38,30 @@ class AggregatorPage extends Component {
 			className: '',
 		},
 		{
-			id: "fcs",
-			searchLabelBkColor: "rgba(40, 85, 143, .3)",
+			id: 'fcs',
+			searchLabelBkColor: 'rgba(40, 85, 143, .3)',
 			disabled: false,
 		},
 	];
 	
 	queryTypeMap = {
 			 cql: this.queryTypes[0],
-			 fcs: this.queryTypes[1],
+			 fcs: this.queryTypes[1]
 	};
 
 	constructor(props) {
 		super(props);
+		var aggrContext = getQueryVariable('x-aggregation-context');
+	    aggrContext = aggrContext && JSON.parse(aggrContext);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
-			weblichtLanguages: [],
 	        queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
-			aggregationContext: getQueryVariable('x-aggregation-context') || '',
+			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
+			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
+			fcsTextAreaVisibility: false,
+			aggregationContext: aggrContext || null,
 			language: this.anyLanguage,
 			languageFilter: 'byMeta',
 			numberOfResults: 10,
@@ -68,81 +71,114 @@ class AggregatorPage extends Component {
 			hits: this.nohits,
 
 			zoomedCorpusHit: null,
-		    _isMounted: false,
 		};
 	}
 
 	componentDidMount() {
-		this.setState({_isMounted: true});
-			
+	    this._isMounted = true;
+
 		this.props.ajax({
 			url: back_end_host + 'rest/init',
 			success: (json, textStatus, jqXHR) => {
-				if (this.state._isMounted) {
+				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
-					window.MyAggregator.corpora = json.corpora;
-					this.setState({
-						corpora : corpora,
-						languageMap: json.languages,
-						query: this.state.query || json.query || '',
-					});
-					if (this.state.aggregationContext && !json['x-aggregation-context']) {
-						json['x-aggregation-context'] = JSON.parse(this.state.aggregationContext);
-						console.log(json['x-aggregation-context']);
-					}
-					if (json['x-aggregation-context']) {
-						window.MyAggregator.xAggregationContext = json["x-aggregation-context"];
-						corpora.setAggregationContext(json["x-aggregation-context"]);
-						if (!corpora.getSelectedIds().length) {
-							this.props.error(dictionary[this.props.languageFromMain].errors.cannotFindRequiredCollection);
-							corpora.recurse(function(corpus) { corpus.selected = true; });
-						}
-						corpora.update();
-					}
-					this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+                    var aggregationContext = json['x-aggregation-context'] || this.state.aggregationContext;
+				    
+				    window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
+				    window.MyAggregator.corpora = json.corpora;
+	                window.MyAggregator.xAggregationContext = aggregationContext;
+					
+				    // Setting visibility, e.g. only corpora 
+                    // from v2.0 endpoints for fcs v2.0
+                    corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
 
-					if (getQueryVariable('mode') === 'search' || json.mode === 'search') {
-						window.MyAggregator.mode = 'search';
-						this.search();
-					}
+                    if (aggregationContext) {
+                        const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
+                        const unavailableCorporaHandles = contextCorporaInfo.unavailable; // list of unavailable aggregationContext
+                        if (unavailableCorporaHandles.length > 0) {
+                            this.props.error("Could not find requested collection handles:\n" + unavailableCorporaHandles.join('\n'));
+                        }
+                    
+                        const actuallySelectedCorpora = corpora.getSelectedIds();
+                        
+                        if (contextCorporaInfo.selected.length !== actuallySelectedCorpora.length) {
+                            if (actuallySelectedCorpora.length === 0) {
+                                this.props.error("This search does not support the required collection(s), will search all collections instead"); // TODO give detailed reason its not supported.
+                                corpora.recurse(function(corpus) { corpus.selected = true; });
+                            } else {
+                                var err = "Some required context collections are not supported for this search:\n"
+                                err = err + contextCorporaInfo.filter((c) => {
+                                    if (actuallySelectedCorpora.indexOf(c) === -1) {
+                                        console.warn("Requested corpus but not available for selection", c);
+                                        return true;
+                                    }
+                                    return false;
+                                }).map((c) => c.title).join('\n')
+                                this.props.error(err);
+                            }
+                        }
+                    }
+                    else {
+                        // no context set all visible to selected as default.
+                        console.log("no context set, selecting all available");
+                        corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
+                    }
+                    
+                    this.setState({
+	                    corpora : corpora,
+	                    languageMap: json.languages,
+	                    aggregationContext: aggregationContext,
+	                }, this.postInit);
+				}
+				else {
+				    console.warn("Got Aggregator init response, but not mounted!");
 				}
 			}
 		});
+	}
+
+	postInit = () => {
+		if (window.MyAggregator.mode === 'search') {
+		   this.search();
+	   }
 	}
 
 	updateCorpora = corpora => {
 		this.setState({corpora});
 	}
 
+	getCurrentQuery = () => {
+	    return this.state.queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery;
+	}
+
 	search = () => {
 		var _paq = [];
-
-		var query = this.state.query;
-		var queryTypeId = this.state.queryTypeId;
-		if (!query) {
+		var query = this.getCurrentQuery();
+		var queryTypeIdForSearch = this.state.queryTypeId;
+		if (!query || (this.props.embedded && window.MyAggregator.mode !== 'search')) {
 			this.setState({ hits: this.nohits, searchId: null });
 			return;
 		}
 		var selectedIds = this.state.corpora.getSelectedIds();
 		if (!selectedIds.length) {
-			this.props.error(dictionary[this.props.languageFromMain].errors.selectCollection);
+			this.props.error("Please select a collection to search into");
 			return;
 		}
-
+		console.log(query)
 		this.props.ajax({
 			url: back_end_host + 'search',
 			type: "POST",
 			data: {
 				query: query,
-				queryType: queryTypeId,
+				queryType: queryTypeIdForSearch,
 				language: this.state.language[0],
 				numberOfResults: this.state.numberOfResults,
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-					if (Location.hostname !== "localhost") {
-						_paq.push(['trackSiteSearch', query, queryTypeId, false]);
-					}
+				if (Location.hostname !== "localhost") {
+					_paq.push(['trackSiteSearch', query, queryTypeIdForSearch, false]);
+				}
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
@@ -168,7 +204,7 @@ class AggregatorPage extends Component {
 	}
 
 	refreshSearchResults = () => {
-		if (!this.state.searchId || !this.state._isMounted) {
+		if (!this.state.searchId || !this._isMounted) {
 			return;
 		}
 		this.props.ajax({
@@ -227,12 +263,12 @@ class AggregatorPage extends Component {
 
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
+		setQueryVariable('queryType', queryTypeId);
+		setQueryVariable('query', queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery)
 		this.setState({
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
 			searchId: null,
-		    displayADV: queryTypeId === "fcs" ? true : false,
-			corpora: this.state.corpora,
 		});
 	}
 
@@ -310,17 +346,31 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	onQuery = event => {
-		this.setState({query: event.target.value});
-	}
-
-    onADVQuery = fcsql => {
-	    this.setState({query: fcsql.target.value});
+	onQueryChange = queryStr => {
+	    if (this.state.queryTypeId === 'cql') {
+	        this.setState({
+				cqlQuery: queryStr || '',
+		    });
+	    } else {
+	        this.setState({
+				fcsQuery: queryStr || '',
+		    });
+	    }
+		setQueryVariable('query', queryStr);
 	}
 
 	handleKey = event => {
 		if (event.keyCode === 13) {
 			this.search();
+		}
+	}
+
+	handleKeyTextarea = event => {
+		if (event.keyCode === 13) {
+			this.search();
+		} else {
+			event.target.style.height = 'inherit';
+			event.target.style.height = `${Math.max(Math.min(event.target.scrollHeight + 2, 550), 55)}px`;
 		}
 	}
 
@@ -330,11 +380,18 @@ class AggregatorPage extends Component {
 	    }
 	}
 	
+	toggleFcsView = (e, fcsTextAreaVisibility) => {
+		e.preventDefault();
+		this.setState({
+			fcsTextAreaVisibility: fcsTextAreaVisibility
+		});
+	}
+
 	renderZoomedResultTitle = corpusHit => {
 		if (!corpusHit) return (<span/>);
 		var corpus = corpusHit.corpus;
 		return (
-			<span>
+			<h3>
 				{corpus.title}
 				{ corpus.landingPage ?
 					<a href={corpus.landingPage} onClick={this.stop} style={{fontSize:12}}>
@@ -343,7 +400,7 @@ class AggregatorPage extends Component {
 						</span>
 						<i className="fa fa-home"/>
 					</a>: false}
-			</span>
+			</h3>
 		);
 	}
 
@@ -351,39 +408,123 @@ class AggregatorPage extends Component {
 		return (
 			<Button
 				label={<i className="fa fa-search"></i>}
+				uiType={'input-lg image_button'}
 				onClick={this.search}
 			/>
 		);
 	}
 
+	renderQueryInput = () => {
+	    return (
+	        <QueryInput 
+			    searchedLanguage={this.state.searchedLanguage || [multipleLanguageCode]}
+			    queryTypeId={this.state.queryTypeId}
+			    query={this.getCurrentQuery()}
+			    placeholder={dictionary[this.props.languageFromMain].cql.placeholder}
+			    onKeyDown={this.handleKey}
+				handleKeyTextarea={this.handleKeyTextarea}
+				languageFromMain={this.props.languageFromMain}
+				corpora={this.props.corpora}
+				onQueryChange={this.onQueryChange}
+				fcsTextAreaVisibility={this.state.fcsTextAreaVisibility}
+			/>
+		);
+	}
+	
+	renderCql = () => {
+	    var queryType = this.queryTypeMap[this.state.queryTypeId];
+	    
+	    return (
+			<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
+				<div className="input-group mb-3">
+					<div className="input-group-prepend">
+						<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
+							{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
+						</span>
+					</div>
+					{ this.renderQueryInput() }
+					<div className="input-group-append">
+						{this.renderSearchButtonOrLink()}
+					</div>
+				</div>
+			</div>
+		);
+	}
+	
+	renderGQB = () => {
+	    var queryType = this.queryTypeMap[this.state.queryTypeId];
+	    return (
+			<div style={{marginLeft:16, marginRight:16}}>
+				<div className="card">
+					<div
+						id='fcsFormHeading'
+						className="card-heading"
+						style={{backgroundColor:queryType.searchLabelBkColor, fontSize: "120%"}}
+					>
+						{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
+					</div>
+					<div className="card-body">
+						<p>
+							<Button
+								label={this.state.fcsTextAreaVisibility ?
+								dictionary[this.props.languageFromMain].queryinput.fcsQueryFromButton :
+								dictionary[this.props.languageFromMain].queryinput.fcsTextFieldButton}
+								onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+							/>
+						</p>
+						{ this.renderQueryInput() }
+					</div>
+					<div className="card-footer">
+						<div className="input-group">
+							<pre className="adv-query-preview aligncenter form-control input-lg">
+								{this.getCurrentQuery()}
+							</pre>
+							<div className="input-group-append">
+								{this.renderSearchButtonOrLink()}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+	
+	renderUnavailableCorporaMessage = () => {
+	    if (!this.state.corpora) {
+	        return;
+	    }
+        const unavailable = [];
+        this.state.corpora.recurse((c) => {
+            if (c.selected && ! c.visible) {
+                unavailable.push(c);
+            }
+            if (c.selected) {
+                // apparently a selected corpus 
+            }
+        });
+        
+        if (unavailable.length) {
+            return (
+				<div id="unavailable-corpora-message" className="text-muted">
+					<div id="unavailable-corpora-message-message">
+						<a role="button" data-toggle="dropdown">{unavailable.length} selected collection{unavailable.length > 1 ? 's are' : ' is'} disabled in this search mode.</a>
+					</div>
+					<ul id="unavailable-corpora-message-list" className="dropdown-menu">
+					{
+						unavailable.map((c) => <li className="unavailable-corpora-message-item">{c.name}</li>)
+					}
+					</ul>
+				</div>
+			);
+        }
+	}
+
 	render() {
-		var queryType = this.queryTypeMap[this.state.queryTypeId];
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
 					<div className="col-12">
-						<div className="aligncenter">
-							<div className="input-group mb-3">
-								<div className="input-group-prepend">
-									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-										{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
-									</span>
-								</div>
-								<QueryInput 
-									searchedLanguages={this.state.searchedLanguages || [multipleLanguageCode]}
-									queryTypeId={this.state.queryTypeId}
-									query={this.state.query}
-									placeholder={dictionary[this.props.languageFromMain][this.state.queryTypeId].placeholder}
-									onChange={this.onADVQuery}
-									onQuery={this.onQuery}
-									onKeyDown={this.handleKey}
-									languageFromMain={this.props.languageFromMain}
-								/>
-								<div className="input-group-append">
-									{this.renderSearchButtonOrLink()}
-								</div>
-							</div>
-						</div>
+						{ (this.state.queryTypeId === "fcs") ? this.renderGQB() : this.renderCql() }
 					</div>
 				</div>
 
@@ -702,6 +843,34 @@ function getQueryVariable(variable) {
         }
     }
     return null;
+}
+
+/* setter opposite of getQueryVariable*/
+function setQueryVariable(qvar, value) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    var d = {};
+    d[qvar] = value;
+    var found = false;
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) === qvar) {
+            
+            vars[i] = encodeQueryData(d);
+            found=true;
+            break;
+        }
+    }
+    
+    if (!found) {
+        // add to end of url
+        vars.push(encodeQueryData(d));
+    }
+    
+    var searchPart = vars.join('&');
+    var newUrl = window.location.origin + window.location.pathname+'?'+searchPart;
+    console.log("set url", newUrl);
+    window.history.replaceState(window.history.state, null, newUrl);
 }
 
 function encodeQueryData(data)

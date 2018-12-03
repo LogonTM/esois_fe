@@ -17,6 +17,7 @@ export default {
             save: 'Salvesta',
             search: 'Otsing',
             toggleNavigation: 'Ava navigatsiooni menüü',
+            update: 'Uuenda',
             username: 'Kasutajanimi',
         },
         addcenter: {
@@ -53,6 +54,16 @@ export default {
         },
         editcenter: {
             corpusIsUpdated: 'Korpuse andmed on edukalt uuendatud'
+        },
+        edituser: {
+            accountstate: 'Kasutajakonto olek',
+            email: 'e-mail',
+            enterName: 'Sisesta nimi',
+            enterUsername: 'Sisesta kasutajanimi',
+            enterEmail: 'Sisesta e-maili aadress',
+            name: 'Nimi',
+            userIsUpdated: 'Kasutaja andmed on edukalt uuendatud',
+            username: 'Kasutajanimi'
         },
         errors: {
             cannotFindRequiredCollection: 'Ei leia soovitud korpust, otsin selle asemel kõigist korpustest',
@@ -95,16 +106,88 @@ export default {
             addNewCorpus: 'Lisa uus korpus',
             confirmDelete: 'Kas oled kindel, et soovid korpuse kustutada?',
             corpusIsDeleted: 'Korpus on edukalt kustutatud',
-            editCenterData: 'Korpuse andmete muutmine'
+            editCenterData: 'Korpuse andmete muutmine',
+            headers: [
+                { key: 'id', label: 'Korpuse ID'},
+                { key: 'centerName', label: 'Korpuse nimi'},
+                { key: 'link', label: 'URL'}
+            ]
+        },
+        manageuser: {
+            editUserData: 'Kasutaja andmete muutmine',
+            enabled: {
+                true: 'aktiivne',
+                false: 'suletud'
+            },
+            headers: [
+/*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'name', label: 'Nimi'},
+                { key: 'username', label: 'Kasutajanimi'},
+                { key: 'email', label: 'e-mail'},
+                { key: 'enabled', label: 'Kasutajakonto olek'}
+            ]
         },
         queryinput: {
             and: 'ja',
-            is: 'on',
-            isNot: 'ei ole',
-            repeatMenu: {
-                repeat: 'korda',
-                times: 'korda',
-                to: 'kuni'
+            fcsQueryFromButton: 'Otsinguvormi vaatele',
+            fcsTextFieldButton: 'Tekstivälja vaatele',
+            layerCategories: [
+                {cat: 'word', label: 'Sõna', layers: ['word']},
+                {cat: 'wordAttribute', label: 'Sõna atribuut', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
+                {cat: 'textAttribute', label: 'Teksti atribuut', layers: ['_.text_language']},
+            ],
+            layers: {
+                'word': {
+                    label: 'sõna',
+                    argOpts: 'wordOptions',
+                },
+                'pos': {
+                    label: 'part-of-speech UD v2.0 tagset',
+                    argOpts: 'setOptions',
+                    valueOptions: [
+                        {value: "ADJ", label: "Omadussõna"},
+                        {value: "ADV", label: "Määrsõna"},
+                        {value: "INTJ", label: "Hüüdsõna"},
+                        {value: "NOUN", label: "Nimisõna"},
+                        {value: "PROPN", label: "Pärisnimi"},
+                        {value: "VERB", label: "Tegusõna"},
+                        {value: "ADP", label: "Adposition"},
+                        {value: "AUX", label: "Auxiliary"},
+                        {value: "CCONJ", label: "Coordinating conjunction"},
+                        {value: "DET", label: "Determiner"},
+                        {value: "NUM", label: "Arvsõna"},
+                        {value: "PART", label: "Particle"},
+                        {value: "PRON", label: "Asesõna"},
+                        {value: "SCONJ", label: "Subordinating conjunction"},
+                        {value: "PUNCT", label: "Punctuation"},
+                        {value: "SYM", label: "Sümbol"},
+                        {value: "X", label: "Muu"},
+                    ],
+                },
+                'lemma': {
+                    label: 'lemmatization of tokens',
+                    argOpts: 'wordOptions',
+                },
+                'orth': {
+                    label: 'orthographic transcription',
+                    argOpts: 'wordOptions',
+                },
+                'norm': {
+                    label: 'orthographic normalization',
+                    argOpts: 'wordOptions',
+                },
+                'phonetic': {
+                    label: 'phonetic transcription SAMPA',
+                    argOpts: 'wordOptions', // TODO special toString/parse? (probably due to regex character handling)
+                },
+                'text': {
+                    label: 'Layer only for Basic Search',
+                    argOpts: 'wordOptions',
+                },
+                '_.text_language': {
+                    label: 'keel',
+                    argOpts: 'wordOptions',
+                }
             },
             or: 'või',
             orarg: {
@@ -115,7 +198,27 @@ export default {
                 textAttribute: 'tekstiAtribuut',
                 word: 'sõna',
                 wordAttribute: 'sõnaAtribuut'
-            }
+            },
+            repeatMenu: {
+                repeat: 'korda',
+                times: 'korda',
+                to: 'kuni'
+            },
+            sentenceEnd: 'Lause lõpp',
+            sentenceStart: 'Lause algus',
+            setOptions: [
+                {value: "is", label: "on"},
+                {value: "is_not", label: "ei ole"},
+            ],
+            wordOptions: [
+                {value: 'is', label: 'on'},
+                {value: 'is_not', label: 'ei ole'},
+                {value: 'contains', label: 'sisaldab'},
+                {value: 'starts_with', label: 'algab'},
+                {value: 'ends_with', label: 'lõppeb'},
+                {value: 'regex', label: 'regulaaravaldis'},
+                {value: 'not_regex', label: 'ei ole regulaaravaldis'},
+            ]
         },
         register: {
             name: 'Teie täispikk nimi',
@@ -164,6 +267,7 @@ export default {
             save: 'Save',
             search: 'Search',
             toggleNavigation: 'Toggle navigation',
+            update: 'Update',
             username: 'Username',
         },
         addcenter: {
@@ -200,6 +304,16 @@ export default {
         },
         editcenter: {
             corpusIsUpdated: 'Corpus is updated successfully'
+        },
+        edituser: {
+            accountstate: 'Useraccount state',
+            email: 'e-mail',
+            enterName: 'Enter name',
+            enterUsername: 'Enter username',
+            enterEmail: 'Enter e-mail address',
+            name: 'Name',
+            userIsUpdated: 'User is updated successfully',
+            username: 'Username' 
         },
         errors: {
             cannotFindRequiredCollection: 'Cannot find the required collection, will search all collections instead',
@@ -242,16 +356,88 @@ export default {
             addNewCorpus: 'Add new corpus',
             confirmDelete: 'Are you sure you want to delete this corpus?',
             corpusIsDeleted: 'Corpus has been deleted successfully',
-            editCenterData: 'Edit corpus data'
+            editCenterData: 'Edit corpus data',
+            headers: [
+                { key: 'id', label: "Corpus' ID"},
+                { key: 'centerName', label: "Corpus' name"},
+                { key: 'link', label: 'URL' }
+            ]
+        },
+        manageuser: {
+            editUserData: 'Edit user data',
+            enabled: {
+                true: 'Active',
+                false: 'Disabled'
+            },
+            headers: [
+/*                 { key: 'id', label: 'User ID'}, */
+                { key: 'name', label: 'Name'},
+                { key: 'username', label: 'Username'},
+                { key: 'email', label: 'e-mail'},
+                { key: 'enabled', label: 'Useraccount state'}
+            ]
         },
         queryinput: {
             and: 'and',
-            is: 'is',
-            isNot: 'is not',
-            repeatMenu: {
-                repeat: 'repeat',
-                times: 'times',
-                to: 'to'
+            fcsQueryFromButton: 'To Query Form View',
+            fcsTextFieldButton: 'To Text Field View',
+            layerCategories: [
+                {cat: 'word', label: 'Word', layers: ['word']},
+                {cat: 'wordAttribute', label: 'Word attribute', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
+                {cat: 'textAttribute', label: 'Text attribute', layers: ['_.text_language']},
+            ],
+            layers: {
+                'word': {
+                    label: 'word',
+                    argOpts: 'wordOptions',
+                },
+                'pos': {
+                    label: 'part-of-speech UD v2.0 tagset',
+                    argOpts: 'setOptions',
+                    valueOptions: [
+                        {value: "ADJ", label: "Adjective"},
+                        {value: "ADV", label: "Adverb"},
+                        {value: "INTJ", label: "Interjection"},
+                        {value: "NOUN", label: "Noun"},
+                        {value: "PROPN", label: "Proper noun"},
+                        {value: "VERB", label: "Verb"},
+                        {value: "ADP", label: "Adposition"},
+                        {value: "AUX", label: "Auxiliary"},
+                        {value: "CCONJ", label: "Coordinating conjunction"},
+                        {value: "DET", label: "Determiner"},
+                        {value: "NUM", label: "Numeral"},
+                        {value: "PART", label: "Particle"},
+                        {value: "PRON", label: "Pronoun"},
+                        {value: "SCONJ", label: "Subordinating conjunction"},
+                        {value: "PUNCT", label: "Punctuation"},
+                        {value: "SYM", label: "Symbol"},
+                        {value: "X", label: "Other"},
+                    ],
+                },
+                'lemma': {
+                    label: 'lemmatization of tokens',
+                    argOpts: 'wordOptions',
+                },
+                'orth': {
+                    label: 'orthographic transcription',
+                    argOpts: 'wordOptions',
+                },
+                'norm': {
+                    label: 'orthographic normalization',
+                    argOpts: 'wordOptions',
+                },
+                'phonetic': {
+                    label: 'phonetic transcription SAMPA',
+                    argOpts: 'wordOptions', // TODO special toString/parse? (probably due to regex character handling)
+                },
+                'text': {
+                    label: 'Layer only for Basic Search',
+                    argOpts: 'wordOptions',
+                },
+                '_.text_language': {
+                    label: 'language',
+                    argOpts: 'wordOptions',
+                },
             },
             or: 'or',
             orarg: {
@@ -259,10 +445,30 @@ export default {
                 lemma: 'lemma',
                 partofspeech: 'part-of-speech',
                 properNoun: 'Proper Noun',
-                textAttribute: 'textAttribute',
-                word: 'word',
-                wordAttribute: 'wordAttribute'
-            }
+                textAttribute: 'Text attribute',
+                word: 'Word',
+                wordAttribute: 'Word attribute'
+            },
+            repeatMenu: {
+                repeat: 'repeat',
+                times: 'times',
+                to: 'to'
+            },
+            sentenceEnd: 'Sentence end',
+            sentenceStart: 'Sentence start',
+            setOptions: [
+                {value: "is", label: "is"},
+                {value: "is_not", label: "is not"},
+            ],
+            wordOptions: [
+                {value: 'is', label: 'is'},
+                {value: 'is_not', label: 'is not'},
+                {value: 'contains', label: 'contains'},
+                {value: 'starts_with', label: 'starts with'},
+                {value: 'ends_with', label: 'ends with'},
+                {value: 'regex', label: 'regex'},
+                {value: 'not_regex', label: 'not regex'},
+            ]
         },
         register: {
             name: 'Your full name',

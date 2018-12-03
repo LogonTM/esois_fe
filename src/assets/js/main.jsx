@@ -4,6 +4,7 @@ import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
 import ManageCenter from './pages/managecenter.jsx'
+import ManageUsers from './pages/manageusers'
 import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
@@ -87,9 +88,12 @@ class Main extends Component {
 		console.log('ajax error, jqXHR: ', jqXHR)
 	}
 
-	getUserLoginStatus = (userStatus) => {
+	getUserLoginStatus = (userStatus, currentUser) => {
 		console.log('From main: ' + userStatus)
-		this.setState({loggedInStatus: userStatus})
+		this.setState({
+			loggedInStatus: userStatus,
+			userName: currentUser
+		})
 	}
 
 	toggleCollapse = () => {
@@ -127,6 +131,7 @@ class Main extends Component {
 				toRegistration={this.toRegister.bind(this, true)}
 				backToAggregator={this.toAggregator.bind(this, true)}
 				isUserloggedIn={this.state.loggedInStatus}
+				userName={this.state.userName}
 				getStatus={this.getUserLoginStatus.bind(this)}
 				languageFromMain={this.state.language}
 			/>
@@ -142,7 +147,7 @@ class Main extends Component {
 	} 
 
 	renderManageUsers = () => {
-		// return <ManageUsers/> For admins only
+		return <ManageUsers languageFromMain={this.state.language} /> // For admins only
 	}
 
 	renderUserManager = () => {
@@ -159,7 +164,7 @@ class Main extends Component {
 			help: this.renderHelp,
 			login: this.renderLogin,
 			register: this.renderRegister,
-			// manageUsers: this.renderManageUsers, For admins only
+			manageUsers: this.renderManageUsers, // For admins only
 			// userManager: this.renderUserManager, For regular users
 			// manageLogs: this.renderManageLogs For admins only
 			manageCenter: this.renderManageCenter
@@ -205,19 +210,19 @@ class Main extends Component {
 
 	toManageUsers = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null) {
-			this.gotToManageUser(doPushHistory, 'manageUsers')
+			this.gotoPage(doPushHistory, 'manageUsers')
 		}
 	}
 
 	toUserManager = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null) {
-			this.goToUserManager(doPushHistory, 'userManager')
+			this.gotoPage(doPushHistory, 'userManager')
 		}
 	}
 
 	toManageLogs = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null) {
-			this.goToManageLogs(doPushHistory, 'manageLogs')
+			this.gotoPage(doPushHistory, 'manageLogs')
 		}
 	}
 
@@ -243,7 +248,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
-							data-toggle='tooltip' title='EE'
+							data-toggle='tooltip'
+							title='EE'
 							onClick={this.changeToEE}
 						>
 							<img
@@ -255,7 +261,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
-							data-toggle='tooltip' title='EN'
+							data-toggle='tooltip'
+							title='EN'
 							onClick={this.changeToEN}
 						>
 							<img
@@ -267,7 +274,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
-							data-toggle='tooltip' title='Agregator'
+							data-toggle='tooltip'
+							title='Agregator'
 							onClick={this.toAggregator.bind(this, true)}
 						>
 							<img
@@ -279,7 +287,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
-							data-toggle='tooltip' title='Login/Logout/Register'
+							data-toggle='tooltip'
+							title='Login/Logout/Register'
 							onClick={this.toLogin.bind(this, true)}
 						>
 							<img
@@ -291,7 +300,8 @@ class Main extends Component {
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
-							data-toggle='tooltip' title='Help'
+							data-toggle='tooltip'
+							title='Help'
 							onClick={this.toHelp.bind(this, true)}
 						>
 							<img
@@ -300,18 +310,24 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
+{/* 						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Manage Center'
+							onClick={this.toManageCenter.bind(this, true)}
+						>
+							<i className="fa fa-database"/>
+						</a>
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
-							data-toggle='tooltip' title='Manage Center'
-							onClick={this.toManageCenter.bind(this, true)}
+							data-toggle='tooltip'
+							title='Manage Users'
+							onClick={this.toManageUsers.bind(this, true)}
 						>
-							<img
-								className='symbols'
-								src={SettingsIcon}
-								alt='MC'
-							/>
-						</a>
+							<i className="fa fa-users"/>
+						</a> */}
 					</div>
 				</div>
 			</div>
@@ -324,14 +340,26 @@ class Main extends Component {
 				<div className='container'>
 					<nav className='navbar navbar-expand-md'>
 						<header className="inline navbar-brand" id='navbar-images'>
-							<a tabIndex="-1" href="https://keeleressursid.ee/" target="_blank" data-toggle='tooltip' title='Eesti Keeleressursside Keskus'>
+							<a
+								tabIndex="-1"
+								href="https://keeleressursid.ee/"
+								target="external"
+								data-toggle='tooltip'
+								title='Eesti Keeleressursside Keskus'
+							>
 								<img
 									className='logo'
 									src={logoIntl[this.state.language]}
 									alt='Eesti Keeleressursside Keskus'
 								/>
 							</a>
-							<a tabIndex="-1" href="https://clarin.eu/" target="_blank" data-toggle='tooltip' title='CLARIN ERIC'>
+							<a
+								tabIndex="-1"
+								href="https://clarin.eu/"
+								target="external"
+								data-toggle='tooltip'
+								title='CLARIN ERIC'
+							>
 								<img 
 									className='logo2'
 									src={Clarinlogo}
@@ -351,7 +379,9 @@ class Main extends Component {
 							<span className='sr-only'>
 								{dictionary[this.state.language].common.toggleNavigation}
 							</span>
-							<span className='navbar-toggler-icon'><i className="fa fa-bars"></i></span>
+							<span className='navbar-toggler-icon'>
+								<i className="fa fa-bars"></i>
+							</span>
 						</button>
 						{this.renderCollapsible()}
 					</nav>
@@ -365,8 +395,8 @@ class Main extends Component {
 	render() {
 		return (
 			<div>
-				<div> 
-					{this.renderTop()} 
+				<div>
+					{this.renderTop()}
 				</div>
 				<div id='push'>
 					<div className='container'>{this.state.navbarPageFn()}</div>
@@ -395,7 +425,7 @@ var routeFromLocation = function() {
 			this.toRegister()
 		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
 			this.toManageCenter()
-		} else if (path === '/manageUsers' /*&& localStorage.getItem(authentication_token) !== null*/)  {
+		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null)  {
 			this.toManageUsers()
 		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
 			this.toUserManager()

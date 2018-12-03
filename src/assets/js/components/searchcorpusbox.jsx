@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import dictionary from '../../../translations/dictionary';
 
 class SearchCorpusBox extends Component {
 	static propTypes = {
 		search: PropTypes.func.isRequired,
-		languageFromMain: PropTypes.string.isRequired
+		placeholder: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
@@ -17,7 +16,7 @@ class SearchCorpusBox extends Component {
 
 	handleChange = event => {
 		var query = event.target.value;
-		this.setState({query: query});
+		this.setState({query});
 
 		if (query.length === 0 || 2 <= query.length) {
 			this.props.search(query);
@@ -38,7 +37,7 @@ class SearchCorpusBox extends Component {
 					className="form-control search search-collection"
 					type="text" 
 					value={this.state.query}
-					placeholder={dictionary[this.props.languageFromMain].corpusview.searchCorpusBox}
+					placeholder={this.props.placeholder}
 					onChange={this.handleChange.bind(this)}
 				/>
 			</div>

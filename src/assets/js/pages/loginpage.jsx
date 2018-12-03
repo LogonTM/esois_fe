@@ -67,7 +67,7 @@ class LoginPage extends Component {
 					loggedInStatus: true
 				})
 				this.loadCurrentUser()
-				this.props.getStatus(true)
+				this.props.getStatus(true, this.state.currentUser)
 				setTimeout(() => {
 					this.props.backToAggregator();
 				}, 1500)
@@ -161,6 +161,7 @@ class LoginPage extends Component {
 	}
 
 	render () {
+		console.log("loginpage " + this.state.loggedInStatus)
 		const usernameOrEmailValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " + 
             (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
         const passwordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 

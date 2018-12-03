@@ -235,6 +235,7 @@ class RegisterPage extends Component {
                 username: this.state.username.value,
                 password: this.state.password.value
             };
+            console.log(JSON.stringify(registerRequest))
             register(registerRequest)
             .then(response => {
                 // Fix here Bootstrap notification for succesfull registration and therefore pending log in?

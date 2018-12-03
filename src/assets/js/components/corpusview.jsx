@@ -254,7 +254,7 @@ class CorpusView extends Component {
 							<div className="inline" style={{ marginRight: 20 }} >
 								<SearchCorpusBox
 									search={this.searchCorpus}
-									languageFromMain={this.props.languageFromMain}
+									placeholder={dictionary[this.props.languageFromMain].corpusview.searchCorpusBox}
 								/>
 								{this.renderFilteredMessage()}
 							</div>

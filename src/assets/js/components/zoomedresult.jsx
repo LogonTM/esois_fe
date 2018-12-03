@@ -280,8 +280,8 @@ class ZoomedResult extends Component {
 				</div>
 				<TransitionGroup>
 					<CSSTransition classNames="fade" timeout={{enter: 200, exit: 200}}>
-						<div className="panel">
-							<div className="panel-body corpusResults">{this.renderPanelBody(corpusHit)}</div>
+						<div className="card">
+							<div className="card-body corpusResults">{this.renderPanelBody(corpusHit)}</div>
 						</div>
 					</CSSTransition>
 				</TransitionGroup>

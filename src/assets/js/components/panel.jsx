@@ -24,9 +24,9 @@ class Panel extends Component {
 		var chevron = "fa fa-chevron-" + (this.state.open ? "down":"right");
 		return (
 			<div className="bs-callout bs-callout-info"> 
-				<div className="panel">
-					<div className="panel-heading unselectable row" onClick={this.toggleState}>
-						<div className="panel-title unselectable col-sm-11">
+				<div className="card">
+					<div className="card-heading unselectable row" onClick={this.toggleState}>
+						<div className="card-title unselectable col-sm-11">
 							<span className={chevron} style={{fontSize:12}} />&nbsp;
 							{this.props.title}
 						</div>
@@ -35,7 +35,7 @@ class Panel extends Component {
 						</div>
 					</div>
 					{ this.state.open ? 
-						<div className="panel-body">{this.props.children}</div> : 
+						<div className="card-body">{this.props.children}</div> : 
 						false}
 				</div>
 			</div>

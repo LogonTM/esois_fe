@@ -42,14 +42,14 @@ export function register(registerRequest) {
 
 export function checkUsernameAvailability(username) {
     return request({
-        url: back_end_host + "api/user/checkUsernameAvailability?username=" + username,
+        url: back_end_host + "db/user/checkUsernameAvailability?username=" + username,
         method: 'GET'
     });
 }
 
 export function checkEmailAvailability(email) {
     return request({
-        url: back_end_host + "api/user/checkEmailAvailability?email=" + email,
+        url: back_end_host + "db/user/checkEmailAvailability?email=" + email,
         method: 'GET'
     });
 }
@@ -60,14 +60,14 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: back_end_host + "api/user/me",
+        url: back_end_host + "db/user/me",
         method: 'GET'
     });
 }
 
 export function getUserProfile(username) {
     return request({
-        url: back_end_host + "api/users/" + username,
+        url: back_end_host + "db/users/" + username,
         method: 'GET'
     });
 }

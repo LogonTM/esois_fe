@@ -9,6 +9,7 @@ import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { TableHeaderRow } from '../constants/admintable';
 
 class ManageCenter extends Component {
 	static propTypes = {
@@ -24,12 +25,6 @@ class ManageCenter extends Component {
 			oneCenterLink: ''
 		};
 	}
-
-	headers = [
-		{ key: 'id', label: dictionary[this.props.languageFromMain].common.corpusId },
-		{ key: 'centerName', label: dictionary[this.props.languageFromMain].common.corpusName },
-		{ key: 'link', label: 'URL' }
-	];
 
 	componentDidMount() {
 		this.getCenterList();
@@ -95,13 +90,7 @@ class ManageCenter extends Component {
 				<table className='table table-striped'>
 					<thead className='thead-blue'>
 						<tr>
-							{
-								this.headers.map(function(h) {
-									return (
-										<th key = {h.key}>{h.label}</th>
-									)
-								})
-							}
+							<TableHeaderRow headers={dictionary[this.props.languageFromMain].managecenter.headers} />
 							<th>
 								{dictionary[this.props.languageFromMain].common.actions}
 							</th>
@@ -154,7 +143,7 @@ class ManageCenter extends Component {
 					title={
 						<span>
 							{dictionary[this.props.languageFromMain].managecenter.editCenterData}
-							</span>
+						</span>
 					}
 					languageFromMain={this.props.languageFromMain}
 				>

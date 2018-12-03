@@ -68,16 +68,19 @@ div.navbar {
   margin-left: 0.01em !important;
 }
 
+.nav-item.navbar-brand {
+  cursor: pointer;
+  color: rgb(40,85,143);
+}
+
 .ico {
   border: 0; 
   height: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  cursor: pointer;
 }
 
 .symbols {
   height: 25px;
-  cursor: pointer;
 }
 
 .logo {
@@ -90,9 +93,13 @@ div.navbar {
   margin-right: 0.75em;
 }
 
-.input-group .form-control, .form-control, .input-group-prepend, .input-group-text, .btn-default, .btn-outline-secondary, .modal, .form label, .top-gap, .row a, h3 a {
+.input-group .form-control, .form-control, .input-group-prepend, .input-group-text, .btn-default, .btn-outline-secondary, .modal, .form label, .top-gap, .row a, h3 a, .card-body span {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(40,85,143) !important;
+}
+
+.card-body {
+  padding: 15px !important;
 }
 
 .form-control::placeholder {
@@ -111,6 +118,13 @@ div.navbar {
   background-color: rgba(40,85,143, .3) !important;
 }
 
+.btn-xs {
+  padding-top: 2.8px !important;
+  padding-right: 0 !important;
+  padding-bottom: 2.8px !important;
+  padding-left: 4.8px !important;
+}
+
 .nobkg {
   border: 0px !important;
   background-color: white !important;
@@ -118,7 +132,14 @@ div.navbar {
 }
 
 input[type="checkbox"], input[type="radio"] {
-  margin-top: 6px;
+  margin-top: 5px;
+}
+
+#fcsFormHeading {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .thead-blue {
@@ -139,6 +160,16 @@ input[type="checkbox"], input[type="radio"] {
 
 .form-group.addcorp {
   margin-top: 25px;
+}
+
+.col-sm-2.align-right {
+  padding-top: 7px;
+  padding-right: 0px;
+}
+
+#searchBox {
+  width: 350px;
+  padding-bottom: 40px;
 }
 
 div#new-footer {
@@ -241,6 +272,6 @@ div.corpus h3 a, .modal-title a {
   margin: 0.2em;
 }
 
-.fa-plus, .fa-minus, .fa-ellipsis-h {
+.fa-plus, .fa-minus, .fa-ellipsis-h, .fa-cog, .fa-times-circle {
   margin-right: 0.5em;
 }
