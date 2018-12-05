@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import CorpusView from "../components/corpusview.jsx";
-import LanguageSelector from "../components/languageselector.jsx"
-import Modal from "../components/modal.jsx";
-import Results from "../components/results.jsx";
-import QueryInput from "../components/queryinput.jsx";
-import ZoomedResult from "../components/zoomedresult.jsx";
-import PropTypes from "prop-types";
 import $ from 'jquery';
+import { back_end_host } from '../constants/constants';
 import 'bootstrap';
 import Button from '../utilities/button';
+import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
-import { back_end_host } from '../constants/constants';
+import ELlogo from '../../img/el-reg-fond.jpg';
+import LanguageSelector from '../components/languageselector.jsx'
+import Modal from '../components/modal.jsx';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Results from '../components/results.jsx';
+import QueryInput from '../components/queryinput.jsx';
+import ZoomedResult from '../components/zoomedresult.jsx';
 
 var PT = PropTypes;
 
@@ -579,7 +580,7 @@ class AggregatorPage extends Component {
 						</form>
 					</div>
 				</div>
-				<div className="row justify-content-center" >
+				<div className="row justify-content-center align-items-center" >
 					<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">
@@ -595,6 +596,12 @@ class AggregatorPage extends Component {
 										onClick={this.toggleCorpusSelection}
 									/>
 								</div>
+							</div>
+						</form>
+					</div>
+					<div className="col-auto">
+						<form className="form-inline">
+							<div className="input-group mb-3">								
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
 										{dictionary[this.props.languageFromMain].aggregatorpage.andShowUpTo}
@@ -606,7 +613,7 @@ class AggregatorPage extends Component {
 										className="form-control input"
 										min="10"
 										max="250"
-										style={{width:60}}
+										style={{maxWidth:60}}
 										onChange={this.setNumberOfResults.bind(this)}
 										value={this.state.numberOfResults}
 										onKeyPress={this.stop.bind(this)}
@@ -813,7 +820,7 @@ Corpora.prototype.getSelectedIds = function() {
 	this.recurse(function(corpus) {
 		if (corpus.visible && corpus.selected) {
 			ids.push(corpus.id);
-			return false; // top-most collection in tree, don't delve deeper
+			// return false; // top-most collection in tree, don't delve deeper
 		}
 		return true;
 	});
