@@ -167,7 +167,7 @@ class Main extends Component {
 			manageUsers: this.renderManageUsers, // For admins only
 			// userManager: this.renderUserManager, For regular users
 			// manageLogs: this.renderManageLogs For admins only
-			manageCenter: this.renderManageCenter
+			manageCenter: this.renderManageCenter // For admins only
 		}
 	}
 

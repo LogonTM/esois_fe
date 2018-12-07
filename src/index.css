@@ -201,8 +201,7 @@ div#new-footer {
 
 .footer-img-left {
   position: fixed;
-  bottom: 3px;
-  left: 0.5%;
+  bottom: 0px;
   border: 0;
   height: 80px;
   min-height: 1.6cm;
@@ -210,10 +209,12 @@ div#new-footer {
 }
 
 #footer-img-left {
-  width: 130px;
   min-height: 75px;
   margin-right: auto;
 }
+
+@media (min-width:1410px){#footer-img-left{left:-120px !important}}
+@media (max-width:1409px){.footer-img-left{left:0.5% !important}}
 
 .footer-img-right {
   position: absolute;

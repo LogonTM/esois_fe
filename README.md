@@ -54,9 +54,9 @@ Hetkel välja logimiseks tuleb samuti minna esialgsele lehele, kust logiti sisse
 
 ### Tõlked
 
-Antud tõlked on hetkel kaasas failis dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud failidele on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
+Antud tõlked on hetkel kaasas failis dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud faili sisule on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
 
-soovitud lokaali ning tõlgetega, mida soovitakse kuvada. 
+soovitud lokaali ning tõlgetega, mida soovitakse kuvada.
 
 src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb importida 'main.jsx' faili reaga (näidis Suurbritannia lipu kohta):
 import GbFlag from '../img/gb-icon.png';
@@ -70,19 +70,19 @@ kus onClick={this.changeToEN} viitab keele vahetamise funktsioonile (funktsiooni
 src={GbFlag} viitab imporditud Suurbritannia lipu ikoonile, mida kuvatakse ekraanil,
 alt='ENG' viitab keele lühendile.
 
-Tuleb lisada ka keele vahetamise funktsioon vastavale uuele keelele. Näidis inglise keele valimise funktsioonist:
+Tuleb lisada ka keele vahetamise funktsioon vastavale uuele keelele 'main.jsx' faili. Näidis inglise keele valimise funktsioonist:
 changeToEN = () => {
   this.setState({
     language: 'en'
   })
 }
 
-siin language: 'en' kahetäheline keele lühend vastab 'const messages' olevale vastava keele indikaatorile. Sellele vastavalt saadakse kätte vastavad tõlgitud laused.
+siin language: 'en' kahetäheline keele lühend vastab dictionary.js failis olevale vastava keele indikaatorile. Sellele vastavalt saadakse kätte vastavad tõlgitud laused.
 
 Eesti Keeleressursside Keskuse logo on võimalik kuvada nii inglise kui eesti keelsena. Tõlke keele jaoks, kui on ka teistes keeltes logosid olemas, tuleb logo lisada src > assets > img kausta ning importida 'main.jsx' faili vastav logo, nagu on inglise keelse logo importimiseks tehtud järgnevalt:
 import EnEKRKlogo from '../img/ekrk-logo-eng.png';
 
-Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 22 asuvas) muutujas logoIntl:
+Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 23 asuvas) muutujas logoIntl:
 
 const logoIntl = {
   ee: EeEKRKlogo,

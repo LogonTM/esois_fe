@@ -29,6 +29,7 @@ export default {
         aggregatorpage: {
             andShowUpTo: 'ja näita kuni',
             collections: 'Korpused',
+            erf: 'RABA loomist on toetanud Euroopa Liidu Euroopa Regionaalarengu Fond',
             hitsPerEndpoint: 'vastet allika kohta',
             searchFor: 'Otsi',
             selectLanguage: 'Vali keel',
@@ -144,7 +145,7 @@ export default {
                     argOpts: 'wordOptions',
                 },
                 'pos': {
-                    label: 'part-of-speech UD v2.0 tagset',
+                    label: 'sõnaliik',
                     argOpts: 'setOptions',
                     valueOptions: [
                         {value: "ADJ", label: "Omadussõna"},
@@ -153,7 +154,7 @@ export default {
                         {value: "NOUN", label: "Nimisõna"},
                         {value: "PROPN", label: "Pärisnimi"},
                         {value: "VERB", label: "Tegusõna"},
-                        {value: "ADP", label: "Adposition"},
+                        {value: "ADP", label: "Kaassõna"},
                         {value: "AUX", label: "Auxiliary"},
                         {value: "CCONJ", label: "Coordinating conjunction"},
                         {value: "DET", label: "Determiner"},
@@ -161,13 +162,13 @@ export default {
                         {value: "PART", label: "Particle"},
                         {value: "PRON", label: "Asesõna"},
                         {value: "SCONJ", label: "Subordinating conjunction"},
-                        {value: "PUNCT", label: "Punctuation"},
+                        {value: "PUNCT", label: "Kirjavahemärk"},
                         {value: "SYM", label: "Sümbol"},
                         {value: "X", label: "Muu"},
                     ],
                 },
                 'lemma': {
-                    label: 'lemmatization of tokens',
+                    label: 'lemma',
                     argOpts: 'wordOptions',
                 },
                 'orth': {
@@ -180,7 +181,7 @@ export default {
                 },
                 'phonetic': {
                     label: 'phonetic transcription SAMPA',
-                    argOpts: 'wordOptions', // TODO special toString/parse? (probably due to regex character handling)
+                    argOpts: 'wordOptions',
                 },
                 'text': {
                     label: 'Layer only for Basic Search',
@@ -192,15 +193,6 @@ export default {
                 }
             },
             or: 'või',
-            orarg: {
-                language: 'keel',
-                lemma: 'lemma',
-                partofspeech: 'sõnaliik',
-                properNoun: 'pärisnimi',
-                textAttribute: 'tekstiAtribuut',
-                word: 'sõna',
-                wordAttribute: 'sõnaAtribuut'
-            },
             repeatMenu: {
                 repeat: 'korda',
                 times: 'korda',
@@ -299,6 +291,7 @@ export default {
         aggregatorpage: {
             andShowUpTo: 'and show up to',
             collections: 'Collections',
+            erf: 'The creation of RABA has been supported by the European Union European Regional Development Fund',
             hitsPerEndpoint: 'hits per endpoint',
             searchFor: 'Search for',
             selectLanguage: 'Select Language',
@@ -450,7 +443,7 @@ export default {
                 },
                 'phonetic': {
                     label: 'phonetic transcription SAMPA',
-                    argOpts: 'wordOptions', // TODO special toString/parse? (probably due to regex character handling)
+                    argOpts: 'wordOptions',
                 },
                 'text': {
                     label: 'Layer only for Basic Search',
@@ -462,15 +455,6 @@ export default {
                 },
             },
             or: 'or',
-            orarg: {
-                language: 'language',
-                lemma: 'lemma',
-                partofspeech: 'part-of-speech',
-                properNoun: 'Proper Noun',
-                textAttribute: 'Text attribute',
-                word: 'Word',
-                wordAttribute: 'Word attribute'
-            },
             repeatMenu: {
                 repeat: 'repeat',
                 times: 'times',
