@@ -25,8 +25,7 @@ class QueryInput extends Component {
 	}
 
 	render() {
-		if (this.props.queryTypeId === "cql") {
-			return (
+		return (
 				<input
 					className="form-control input-lg search" 
 					id="query-cql"
@@ -40,23 +39,6 @@ class QueryInput extends Component {
 					ref="cqlOrEmbeddedQuery"
 				/>
 			);
-		} else if (this.props.queryTypeId === "fcs" && this.props.fcsTextAreaVisibility) {
-			return (
-				<textarea
-					className="form-control input-lg search"
-					id="query-fcs"
-					name="query-fcs"
-					type="text"
-					rows="1"
-					value={this.props.query}
-					placeholder={this.props.placeholder}
-					tabIndex="1"
-					onChange={evt => this.props.onQueryChange(evt.target.value)} 
-					onKeyDown={this.props.handleKeyTextarea} 
-					ref="fcsOrEmbeddedQuery"
-				/>
-			);
-		}
 		return (
 			<div>
 				<div id="adv_query_input_group" className="container-fluid">

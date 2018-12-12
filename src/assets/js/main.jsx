@@ -13,12 +13,15 @@ import EeFlag from '../img/ee-icon.png'
 import GbFlag from '../img/gb-icon.png'
 import LoginIcon from '../img/login-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
-import EeEKRKlogo from '../img/ekrk-logo.png'
+import EeEKRKlogo from '../img/vunk.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
 import { authentication_token } from './constants/constants';
+
+import Partners from './pages/partnerspage.jsx'
+
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -138,6 +141,15 @@ class Main extends Component {
 		);
 	}
 
+	
+	renderPartners= () => {
+        return (
+                <Partners
+                    languageFromMain={this.state.language}
+                />
+            )
+        } 
+	
 	renderManageCenter = () => {
 		return (
 			<ManageCenter
@@ -167,7 +179,8 @@ class Main extends Component {
 			manageUsers: this.renderManageUsers, // For admins only
 			// userManager: this.renderUserManager, For regular users
 			// manageLogs: this.renderManageLogs For admins only
-			manageCenter: this.renderManageCenter // For admins only
+			manageCenter: this.renderManageCenter, // For admins only
+			partners: this.renderPartners
 		}
 	}
 
@@ -198,6 +211,10 @@ class Main extends Component {
 		this.gotoPage(doPushHistory, 'login')
 	}
 
+	toPartner = doPushHistory => {
+        this.gotoPage(doPushHistory, 'partners')
+    }
+	
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
 	}
@@ -245,7 +262,7 @@ class Main extends Component {
 			<div className={classname} id='navMenu'>
 				<div className='navbar-nav navbar-right' id='navbar-right'>
 					<div className="d-flex flex-nowrap w-100">
-						<a
+		        {/* 						<a
 							className='nav-item navbar-brand'
 							tabIndex='-1'
 							data-toggle='tooltip'
@@ -270,7 +287,7 @@ class Main extends Component {
 								src={GbFlag}
 								alt='ENG'
 							/>
-						</a>
+						</a>*/}
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
@@ -288,16 +305,12 @@ class Main extends Component {
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
-							title='Login/Logout/Register'
-							onClick={this.toLogin.bind(this, true)}
+							title='Register partners'
+							onClick={this.toPartner.bind(this, true)}
 						>
-							<img
-								className='symbols'
-								src={LoginIcon}
-								alt='Login'
-							/>
+		        <i className="fa fa-database"/>
 						</a>
-						<a
+{/* 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
@@ -310,7 +323,7 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
-{/* 						<a
+						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
@@ -342,23 +355,10 @@ class Main extends Component {
 						<header className="inline navbar-brand" id='navbar-images'>
 							<a
 								tabIndex="-1"
-								href="https://keeleressursid.ee/"
+								href="http://heisi.eu/"
 								target="external"
 								data-toggle='tooltip'
-								title='Eesti Keeleressursside Keskus'
-							>
-								<img
-									className='logo'
-									src={logoIntl[this.state.language]}
-									alt='Eesti Keeleressursside Keskus'
-								/>
-							</a>
-							<a
-								tabIndex="-1"
-								href="https://clarin.eu/"
-								target="external"
-								data-toggle='tooltip'
-								title='CLARIN ERIC'
+								title='HEISI IT OÜ'
 							>
 								<img 
 									className='logo2'
@@ -367,7 +367,7 @@ class Main extends Component {
 								/>
 							</a>
 						</header>
-						<button
+								<button
 							type='button'
 							className='navbar-toggler'
 							data-toggle='collapse'
@@ -430,8 +430,10 @@ var routeFromLocation = function() {
 		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
 			this.toUserManager()
 		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
-			this.toManageLogs()
-		} else {
+            this.toManageLogs()
+		} else if (path === '/partners' /*&& localStorage.getItem(authentication_token) !== null*/) {
+            this.toPartner()
+        } else {
 			this.toAggregator()
 		}
 	} else {

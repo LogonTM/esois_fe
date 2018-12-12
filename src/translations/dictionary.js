@@ -28,30 +28,30 @@ export default {
         },
         aggregatorpage: {
             andShowUpTo: 'ja näita kuni',
-            collections: 'Korpused',
+            collections: 'Partnerid',
             erf: 'RABA loomist on toetanud Euroopa Liidu Euroopa Regionaalarengu Fond',
             hitsPerEndpoint: 'vastet allika kohta',
             searchFor: 'Otsi',
             selectLanguage: 'Vali keel',
         },
         corpusview: {
-            allCollectionsSelected: 'kõigist korpustest',
+            allCollectionsSelected: 'kõigist partnetite ladusest',
             collapse: 'Peida',
-            deselectAll: 'Kõik mitte valituks',
+            deselectAll: 'Puhasta kõik',
             expand: 'Laienda',
             howManyCollectionsAreShownP1: 'Näitan',
-            howManyCollectionsAreShownP2: 'korpust',
+            howManyCollectionsAreShownP2: 'partneri ladusid',
             howManyCollectionsAreShownP3: '(alam)korpusest',
-            searchCorpusBox: 'Otsi korpust',
-            selectAll: 'Kõik valituks',
-            someCollectionsSelected: 'valitud korpusest',
+            searchCorpusBox: 'Otsi partneri',
+            selectAll: 'Vali kõik',
+            someCollectionsSelected: 'valitud ladudest',
             subcollections: 'alamkorpust',
-            oneCollectionSelected: 'ühest valitud korpusest'
+            oneCollectionSelected: 'ühe partneri laost'
         },
         cql: {
-            name: 'tekstikihi kontekstuaalses päringukeeles (CQL)',
-            placeholder: 'koer',
-            searchLabel: 'Tekstikihi CQL päring'
+            name: 'tootekood',
+            placeholder: 'Sisesta tootekood',
+            searchLabel: ''
         },
         editcenter: {
             corpusIsUpdated: 'Korpuse andmed on edukalt uuendatud'
@@ -70,7 +70,7 @@ export default {
             cannotFindRequiredCollection: 'Ei leia soovitud korpust, otsin selle asemel kõigist korpustest',
             incorrectLoginData: 'Sisestasid vale Kasutajanime või Parooli. Palun proovi uuesti!',
             noNetwork: 'Viga võrgu ühenduses, palun kontrolli oma interneti ühendust',
-            selectCollection: 'Palun vali korpus, millest otsingut teostada'
+            selectCollection: 'Palun vali partnerite ladusid'
         },
         fcs: {
             name: 'mitmekihilise ühendatud sisuotsingu päringukeeles (FCS-QL)',
@@ -78,7 +78,7 @@ export default {
             searchLabel: 'Mitmekihiline FCS päring'
         },
         footer: {
-            ekrk: 'Eesti Keeleressursside Keskus',
+            ekrk: 'HEISI IT OÜ',
             estonia: ' '
         },
         helppage: {
@@ -116,6 +116,31 @@ export default {
                 { key: 'link', label: 'URL'}
             ]
         },
+		partner: {
+			
+			add: {
+				enterId: 'Sisesta partneri ID',
+				success: 'Uus kirje on edukalt lisatud',
+				reCheck: 'Palun kontrolli sisestatud andmete õigsust',
+				duplicate: 'Sellise ID-ga korpus on juba olemas'
+			},
+			edit: {
+				success: 'Kirje edukalt uuendatud'
+			},
+			manage: {
+				add: 'Lisa uus partner',
+				edit: 'Partneri andmete muutmine',
+				confirm: 'Kas oled kindel, et soovid partneri kirje kustutada?',
+				success: 'Kirje on edukalt kustutatud',
+				headers: [
+					{ key: 'id', label: 'Id', placeholder: 'Partneri ID'},
+					{ key: 'name', label: 'Partneri nimetus', },
+					{ key: 'link', label: 'API URL'},
+					{ key: 'username', label: 'API Kasutaja'},
+					{ key: 'password', label: 'API Salasõna'}
+				]
+			}
+		},
         manageuser: {
             editUserData: 'Kasutaja andmete muutmine',
             enabled: {
@@ -332,7 +357,7 @@ export default {
             cannotFindRequiredCollection: 'Cannot find the required collection, will search all collections instead',
             incorrectLoginData: 'Your Username or Password is incorrect. Please try again!',
             noNetwork: 'Network error, please check your internet connection',
-            selectCollection: 'Please select a collection to search into'
+            selectCollection: 'Palun vali partnerite ladusid'
         },
         fcs: {
             name: 'Multi-layer Federated Content Search Query Language (FCS-QL)',

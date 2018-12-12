@@ -32,14 +32,22 @@ export function login(loginRequest) {
 }
 
 export function register(registerRequest) {
-    console.log('Register function got called with path: ' + back_end_host + 'auth/register')
+    console.log('Register function got called with path: ' + back_end_host + 'api/partner')
     return request({
-        url: back_end_host + "api/auth/register",
+        url: back_end_host + "api/partner",
         method: 'POST',
         body: JSON.stringify(registerRequest)
     });
 }
 
+
+export function getPartnersList() {
+    return request({
+        url: back_end_host + "api/partner",
+        method: 'GET'
+    });
+}
+ 
 export function checkUsernameAvailability(username) {
     return request({
         url: back_end_host + "db/user/checkUsernameAvailability?username=" + username,
