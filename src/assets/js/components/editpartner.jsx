@@ -10,16 +10,23 @@ class EditPartner extends Component {
         getCenterList: PropTypes.func.isRequired,
         handleChange: PropTypes.func.isRequired,
         oneCenterId: PropTypes.string.isRequired,
-        oneCenterName: PropTypes.string.isRequired
+        oneCenterName: PropTypes.string.isRequired,
+        partnerID: PropTypes.string,
+        partnerName: PropTypes.string,
+        APIUrl: PropTypes.string,
+        APIUsername: PropTypes.string,
+        APIPassword: PropTypes.string
     }
     
     handleEdit = () => {
-        fetch(back_end_host + 'db/center/update', {
-            method: 'POST',
+        fetch(back_end_host + 'partner', {
+            method: 'PUT',
             body: JSON.stringify({
-                id: this.props.oneCenterId,
-                centerName: this.props.oneCenterName,
-                link: this.props.oneCenterLink
+                id: this.props.partnerID,
+                name: this.props.partnerName,
+                link: this.props.APIUrl,
+                user: this.props.APIUsername,
+                password: this.props.APIPassword
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -33,69 +40,12 @@ class EditPartner extends Component {
     }
 
     render() {
-        const disableButton = this.props.oneCenterId && this.props.oneCenterName && this.props.oneCenterLink
-        const nameValidator = "form-control input-lg " /*(this.props.oneCenterName.length > 3 ? "is-valid" : "is-invalid")*/
-        const linkValidator = "form-control input-lg " /*(this.props.oneCenterLink !== ('' || 'http') && this.props.oneCenterLink.startsWith('http') ? "is-valid" : "is-invalid")*/
+        // const disableButton = this.props.oneCenterId && this.props.oneCenterName && this.props.oneCenterLink
+        // const nameValidator = "form-control input-lg " /*(this.props.oneCenterName.length > 3 ? "is-valid" : "is-invalid")*/
+        // const linkValidator = "form-control input-lg " /*(this.props.oneCenterLink !== ('' || 'http') && this.props.oneCenterLink.startsWith('http') ? "is-valid" : "is-invalid")*/
         return (
             <div id="container">
                 <form>
-                    {/* <div className="form-group row addcorp">
-                        <div className="col-sm-2 align-right">
-                        <label htmlFor="Center_id">
-                                {dictionary[this.props.languageFromMain].common.corpusId}
-                            </label>
-                        </div>
-                        <div className="col-sm-9">
-                            <input
-                                className="form-control input-lg"
-                                type="text"
-                                name="oneCenterId"
-                                id="Center_id"
-                                value={this.props.oneCenterId}
-                                readOnly
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row addcorp">
-                        <div className="col-sm-2 align-right">
-                            <label htmlFor="Center_name">
-                                {dictionary[this.props.languageFromMain].common.corpusName}
-                            </label>
-                        </div>
-                        <div className="col-sm-9">
-                            <input
-                                className={nameValidator}
-                                type="text"
-                                name="oneCenterName"
-                                id="Center_name"
-                                value={this.props.oneCenterName}
-                                onChange={this.props.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
-                            />
-                            <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-group row addcorp">
-                        <div className="col-sm-2 align-right">
-                            <label htmlFor="url">URL</label>
-                        </div>
-                        <div className="col-sm-9">
-                            <input
-                                className={linkValidator}
-                                type="text"
-                                name="oneCenterLink"
-                                id="Center_url"
-                                value={this.props.oneCenterLink}
-                                onChange={this.props.handleChange}
-                                placeholder="http"
-                            />
-                            <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="Partner_id">
@@ -107,7 +57,7 @@ class EditPartner extends Component {
                                 className="form-control input-lg"
                                 type="text"
                                 name="id"
-                                id="Partner_id"
+                                id="id"
                                 value={this.props.partnerID}
                                 readOnly
                             />
@@ -124,12 +74,12 @@ class EditPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg "
                                 type="text"
-                                name="partnerName"
-                                id="Partner_name"
+                                name="name"
+                                id="name"
                                 value={this.props.partnerName}
-                                onChange={this.handleChange}
+                                onChange={this.props.handleChange}
                                 placeholder={dictionary[this.props.languageFromMain].partner.add.partnerName}
 
                             />
@@ -144,17 +94,17 @@ class EditPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator} 
+                                className="form-control input-lg "
                                 type="text"
                                 name="link"
-                                id="API_url"
+                                id="link"
                                 value={this.props.APIUrl}
-                                onChange={this.handleChange}
+                                onChange={this.props.handleChange}
                                 placeholder="API URL"
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIurl}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -165,18 +115,18 @@ class EditPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg"
                                 type="text"
-                                name="APIUser"
-                                id="API_user"
+                                name="user"
+                                id="user"
                                 value={this.props.APIUsername}
-                                onChange={this.handleChange}
+                                onChange={this.props.handleChange}
                                 placeholder={dictionary[this.props.languageFromMain].partner.add.partnerAPIuser}
 
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIuser}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -185,24 +135,23 @@ class EditPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator} 
+                                className="form-control input-lg "
                                 type="password"
-                                name="APIpassword"
-                                id="API_password"
+                                name="password"
+                                id="password"
                                 value={this.props.APIPassword}
-                                onChange={this.handleChange}
+                                onChange={this.props.handleChange}
                                 placeholder='API Salasõna'
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIpassword}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <p className='align-right'>
                         <Button
                             label={dictionary[this.props.languageFromMain].common.save}
                             onClick={this.handleEdit}
-                            disabled={!disableButton}
                         />
                     </p>
                 </form>

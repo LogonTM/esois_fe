@@ -21,38 +21,12 @@ class ManageCenter extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            partners: [
-				{id:"P001", name:"Esimene Partner", link:"www.test.ee/api", username: "User name", password:"passw"}
-			],
-		    id: {
-	            value: '',
-	            valid: false,
-	            errormessage: null
-	        },
-	        name: {
-                value: '',
-                valid: false,
-                errormessage: null
-            },
-            link: {
-                value: '',
-                valid: false,
-                errormessage: null
-            },
-            username: {
-                value: '',
-                valid: false,
-                errormessage: null
-            },
-            password: {
-                value: '',
-                valid: false,
-                errormessage: null
-            },
-			centers: [],
-			oneCenterId: '',
-			oneCenterName: '',
-			oneCenterLink: ''
+            partners: [],
+		    id: '',
+	        name: '',
+            link: '',
+            username: '',
+            password: '',
 		};
 	}
 
@@ -65,24 +39,24 @@ class ManageCenter extends Component {
 		.then(response => response.json())
 		.then(result => {
 			this.setState({
-				centers: result
+				partners: result
 			});
 		});
     }
     
-    getList = () => {
-        getPartnersList()
-        .then(response => response.json())
-        .then(result => {
-            this.setState({
-                users: result
-            });
-        });
-    }
-
+    // getList = () => {
+    //     getPartnersList()
+    //     .then(response => response.json())
+    //     .then(result => {
+    //         this.setState({
+    //             users: result
+    //         });
+    //     });
+	// }
+	
 	deleteCenter = id => {
-		if (window.confirm(dictionary[this.props.languageFromMain].managecenter.confirmDelete)) {
-			fetch(back_end_host + 'db/center/delete/' + id, {
+		if (window.confirm(dictionary[this.props.languageFromMain].partner.manage.confirm)) {
+			fetch(back_end_host + 'partner/' + id, {
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',
@@ -91,7 +65,7 @@ class ManageCenter extends Component {
 			})
 			.then(response => { 
 				if (response.status === 200) {
-					alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
+					alert(dictionary[this.props.languageFromMain].partner.manage.success);
 					this.getCenterList();
 				} 
 			});
@@ -111,21 +85,11 @@ class ManageCenter extends Component {
 		e.preventDefault();
 		$(ReactDOM.findDOMNode(this.refs.editPartnerModal)).modal();
 		this.setState({
-			id: {
-	            value: id
-	        },
-	        name: {
-                value: name
-            },
-            link: {
-                value: link
-            },
-            username: {
-                value: username
-            },
-            password: {
-                value: password
-            }
+			id: id,
+	        name: name,
+            link: link,
+            username: username,
+            password: password
 
 		});
 	}
@@ -233,15 +197,12 @@ class ManageCenter extends Component {
 				>
 					<EditPartner 
 						languageFromMain={this.props.languageFromMain}
-						partnerID={this.state.id.value}
-						partnerName={this.state.name.value}
-						APIUrl={this.state.link.value}
-						APIUsername={this.state.username.value}
-						APIPassword={this.state.password.value}
+						partnerID={this.state.id}
+						partnerName={this.state.name}
+						APIUrl={this.state.link}
+						APIUsername={this.state.username}
+						APIPassword={this.state.password}
 						getCenterList={this.getCenterList}
-						oneCenterId={this.state.oneCenterId}
-						oneCenterName={this.state.oneCenterName}
-						oneCenterLink={this.state.oneCenterLink}
 						handleChange={this.handleChange}
 					/>				
 				</Modal>

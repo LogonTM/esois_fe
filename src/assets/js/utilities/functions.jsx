@@ -23,14 +23,6 @@ const request = (options) => {
     );
 };
 
-// export function login(loginRequest) {
-//     return request({
-//         url: back_end_host + "api/auth/login",
-//         method: 'POST',
-//         body: JSON.stringify(loginRequest)
-//     });
-// }
-
 export function register(registerRequest) {
     console.log('Register function got called with path: ' + back_end_host + 'api/partner')
     return request({
@@ -46,35 +38,3 @@ export function getPartnersList() {
         method: 'GET'
     });
 }
- 
-// export function checkUsernameAvailability(username) {
-//     return request({
-//         url: back_end_host + "db/user/checkUsernameAvailability?username=" + username,
-//         method: 'GET'
-//     });
-// }
-
-// export function checkEmailAvailability(email) {
-//     return request({
-//         url: back_end_host + "db/user/checkEmailAvailability?email=" + email,
-//         method: 'GET'
-//     });
-// }
-
-// export function getCurrentUser() {
-//     if(!localStorage.getItem(authentication_token)) {
-//         return Promise.reject("No access token set.");
-//     }
-
-//     return request({
-//         url: back_end_host + "db/user/me",
-//         method: 'GET'
-//     });
-// }
-
-// export function getUserProfile(username) {
-//     return request({
-//         url: back_end_host + "db/users/" + username,
-//         method: 'GET'
-//     });
-// }

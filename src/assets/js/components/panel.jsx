@@ -21,11 +21,11 @@ class Panel extends Component {
 	}
 
 	render() {
-		var chevron = "fa fa-chevron-" + (this.state.open ? "down":"right");
+		var chevron = "fa fa-chevron-" + (this.state.open ? "right":"down");
 		return (
 			<div className="bs-callout bs-callout-info"> 
 				<div className="card">
-					<div className="card-heading unselectable row" onClick={this.toggleState}>
+					<div className="card-heading unselectable row" /*Click={this.toggleState*/>
 						<div className="card-title unselectable col-sm-11">
 							<span className={chevron} style={{fontSize:12}} />&nbsp;
 							{this.props.title}

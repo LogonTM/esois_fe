@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
-// import HelpPage from './pages/helppage.jsx'
-// import LoginPage from './pages/loginpage.jsx'
-import ManageCenter from './pages/managecenter.jsx'
-// import ManageUsers from './pages/manageusers'
-// import RegisterPage from './pages/registerpage.jsx'
-import ErrorPane from './components/errorpane.jsx'
+// import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
 import Clarinlogo from '../img/clarin-logo.png'
 import EeFlag from '../img/ee-icon.png'
@@ -18,8 +13,7 @@ import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
-import Partners from './pages/partnerspage.jsx'
-import PP from './pages/partnermanagerpage'
+import PartnerManagerPage from './pages/partnermanagerpage'
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -141,18 +135,18 @@ class Main extends Component {
 	
 	renderPartners= () => {
         return (
-                <PP
+                <PartnerManagerPage
                     languageFromMain={this.state.language}
                 />
             )
         } 
 	
 	renderManageCenter = () => {
-		return (
-			<ManageCenter
-				languageFromMain={this.state.language}
-			/>
-		)
+		// return (
+		// 	<ManageCenter
+		// 		languageFromMain={this.state.language}
+		// 	/>
+		// )
 	} 
 
 	renderManageUsers = () => {
@@ -309,7 +303,7 @@ class Main extends Component {
 					</nav>
 				</div>
 				<hr className='orange-line' />
-				<ErrorPane errorMessages={this.state.errorMessages} />
+				{/* <ErrorPane errorMessages={this.state.errorMessages} /> */}
 			</div>
 		)
 	}

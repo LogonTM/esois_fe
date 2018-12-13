@@ -14,8 +14,10 @@ class AddPartner extends Component {
         super(props);
         this.state = {
             id: '',
-            centerName: '',
-            link: ''
+            name: '',
+            link: '',
+            user: '',
+            password: ''
         }
     }
 
@@ -24,13 +26,38 @@ class AddPartner extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    handleAdd = () => {
-        fetch(back_end_host + 'partner', {
-            method: 'PUT',
+    handleEdit = () => {
+        fetch(back_end_host + 'db/user/update', {
+            method: 'POST',
             body: JSON.stringify({
-                id: this.state.id,
-                centerName: this.state.centerName,
-                link: this.state.link
+                id: this.props.oneUserId,
+                enabled: this.props.oneUserAccountstate
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(response => {
+            console.log(response)
+            if(response.status === 200) {
+                alert(dictionary[this.props.languageFromMain].edituser.userIsUpdated);
+            }
+        }).then(this.props.getUserList)
+    }
+
+    handleAdd = () => {
+        console.log("About to send values: " + JSON.stringify({
+            name: this.state.name,
+            link: this.state.link,
+            username: this.state.user,
+            password: this.state.password
+        }))
+        fetch(back_end_host + 'partner', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: this.state.name,
+                link: this.state.link,
+                username: this.state.user,
+                password: this.state.password
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -41,8 +68,10 @@ class AddPartner extends Component {
                 alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
                 this.setState({
                     id: '',
-                    centerName: '',
-                    link: ''
+                    name: '',
+                    link: '',
+                    user: '',
+                    password: ''
                 });
             } else if (response.status === 409) {
                 alert(dictionary[this.props.languageFromMain].addcenter.thisIdExists)
@@ -53,10 +82,10 @@ class AddPartner extends Component {
     }
 
     render() {
-        const disableButton = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
-        const idValidator = "form-control input-lg " + (this.state.id.length > 3 ? "is-valid" : "is-invalid")
-        const nameValidator = "form-control input-lg " + (this.state.centerName.length > 3 ? "is-valid" : "is-invalid")
-        const linkValidator = "form-control input-lg " + (this.state.link !== ('' || 'http') && this.state.link.startsWith('http') ? "is-valid" : "is-invalid")
+        // const disableButton = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
+        // const idValidator = "form-control input-lg " + (this.state.id.length > 3 ? "is-valid" : "is-invalid")
+        // const nameValidator = "form-control input-lg " + (this.state.centerName.length > 3 ? "is-valid" : "is-invalid")
+        // const linkValidator = "form-control input-lg " + (this.state.link !== ('' || 'http') && this.state.link.startsWith('http') ? "is-valid" : "is-invalid")
         return (
             <div id="container">
                 <form>
@@ -68,17 +97,18 @@ class AddPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={idValidator}
+                                className="form-control input-lg "
                                 type="text"
                                 name="id"
-                                id="Partner_id"
+                                id="id"
                                 value={this.state.id}
                                 onChange={this.handleChange}
                                 placeholder={dictionary[this.props.languageFromMain].partner.add.partnerId}
+                                // readOnly
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterId}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -89,18 +119,18 @@ class AddPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg "
                                 type="text"
-                                name="partnerName"
-                                id="Partner_name"
-                                value={this.state.centerName}
+                                name="name"
+                                id="name"
+                                value={this.state.name}
                                 onChange={this.handleChange}
                                 placeholder={dictionary[this.props.languageFromMain].partner.add.partnerName}
 
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterName}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -109,17 +139,17 @@ class AddPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator} 
+                                className="form-control input-lg"
                                 type="text"
                                 name="link"
-                                id="API_url"
+                                id="link"
                                 value={this.state.link}
                                 onChange={this.handleChange}
                                 placeholder="API URL"
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIurl}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -130,18 +160,18 @@ class AddPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg "
                                 type="text"
-                                name="APIUser"
-                                id="API_user"
-                                value={this.state.centerName}
+                                name="user"
+                                id="user"
+                                value={this.state.user}
                                 onChange={this.handleChange}
                                 placeholder={dictionary[this.props.languageFromMain].partner.add.partnerAPIuser}
 
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIuser}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-group row addcorp">
@@ -150,24 +180,23 @@ class AddPartner extends Component {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator} 
+                                className="form-control input-lg "
                                 type="password"
-                                name="APIpassword"
-                                id="API_password"
-                                value={this.state.link}
+                                name="password"
+                                id="password"
+                                value={this.state.password}
                                 onChange={this.handleChange}
                                 placeholder='API Salasõna'
                             />
-                            <div className="invalid-feedback">
+                            {/* <div className="invalid-feedback">
                                 {dictionary[this.props.languageFromMain].partner.add.enterAPIpassword}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <p className='align-right'>
                         <Button
                             label={dictionary[this.props.languageFromMain].common.add}
                             onClick={this.handleAdd}
-                            disabled={!disableButton}
                             data-dismiss='modal'
                         />
                     </p>

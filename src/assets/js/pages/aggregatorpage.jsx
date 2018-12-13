@@ -4,8 +4,6 @@ import 'bootstrap';
 import Button from '../utilities/button';
 import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
-import ELlogo from '../../img/el-reg-fond.jpg';
-import LanguageSelector from '../components/languageselector.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -21,9 +19,9 @@ var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // 
 
 class AggregatorPage extends Component {
 	static propTypes = {
-	 	ajax: PT.func.isRequired,
-	 	error: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired,
+	 	ajax: PT.func,
+	 	error: PT.func,
+		languageFromMain: PT.string,
 	} 
 
 	nohits = {
@@ -172,94 +170,96 @@ class AggregatorPage extends Component {
 				queryType: queryTypeIdForSearch,
 				language: this.state.language[0],
 				numberOfResults: this.state.numberOfResults,
-				corporaIds: selectedIds,
+				partnerIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-					console.log("Search response? : " + searchId)
+					console.log("Search response? : " + searchId.tootekood)
 			        if (Location.hostname !== "localhost") {
 					_paq.push(['trackSiteSearch', query, queryTypeIdForSearch, false]);
 			        }
 
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId, timeout });
+				this.setState({ searchId, timeout, hits: searchId });
+				console.log("Current state of searchId: " + this.state.searchId)
+				console.log("First occurence of hits: " + this.state.hits)
 			}
 		});
 	}
 
-	nextResults = corpusId => {
-		this.props.ajax({
-			url: back_end_host + 'search/' + this.state.searchId,
-			type: "POST",
-			data: {
-			corpusId: corpusId,
-			numberOfResults: this.state.numberOfResults,
-			},
-			success: (searchId, textStatus, jqXHR) => {
-				var timeout = 250;
-				setTimeout(this.refreshSearchResults, timeout);
-				this.setState({ searchId, timeout });
-			}
-		});
-	}
+	// nextResults = corpusId => {
+	// 	this.props.ajax({
+	// 		url: back_end_host + 'search/' + this.state.searchId,
+	// 		type: "POST",
+	// 		data: {
+	// 			corpusId: corpusId,
+	// 			numberOfResults: this.state.numberOfResults,
+	// 		},
+	// 		success: (searchId, textStatus, jqXHR) => {
+	// 			var timeout = 250;
+	// 			setTimeout(this.refreshSearchResults, timeout);
+	// 			this.setState({ searchId, timeout });
+	// 		}
+	// 	});
+	// }
 
-	refreshSearchResults = () => {
-		if (!this.state.searchId || !this._isMounted) {
-			return;
-		}
-		this.props.ajax({
-			url: back_end_host + 'search/' + this.state.searchId,
-			success: (json, textStatus, jqXHR) => {
-				var timeout = this.state.timeout;
-				if (json.inProgress) {
-					if (timeout < 10000) {
-						timeout = 1.5 * timeout;
-					}
-					setTimeout(this.refreshSearchResults, timeout);
-					console.log("new search in: " + timeout + "ms");
-				} else {
-					console.log("search ended; hits:", json);
-				}
-				var corpusHit = this.state.zoomedCorpusHit;
-				if (corpusHit) {
-					for (var resi = 0; resi < json.results.length; resi++) {
-						var res = json.results[resi];
-						if (res.corpus.id === corpusHit.corpus.id) {
-							corpusHit = res;
-							break;
-						}
-					}
-				}
-				this.setState({ hits: json, timeout: timeout, zoomedCorpusHit: corpusHit});
-			}
-		});
-	}
+	// refreshSearchResults = () => {
+	// 	if (!this.state.searchId || !this._isMounted) {
+	// 		return;
+	// 	}
+	// 	this.props.ajax({
+	// 		url: back_end_host + 'search/' + this.state.searchId,
+	// 		success: (json, textStatus, jqXHR) => {
+	// 			var timeout = this.state.timeout;
+	// 			if (json.inProgress) {
+	// 				if (timeout < 10000) {
+	// 					timeout = 1.5 * timeout;
+	// 				}
+	// 				setTimeout(this.refreshSearchResults, timeout);
+	// 				console.log("new search in: " + timeout + "ms");
+	// 			} else {
+	// 				console.log("search ended; hits:", json);
+	// 			}
+	// 			var corpusHit = this.state.zoomedCorpusHit;
+	// 			if (corpusHit) {
+	// 				for (var resi = 0; resi < json.results.length; resi++) {
+	// 					var res = json.results[resi];
+	// 					if (res.corpus.id === corpusHit.corpus.id) {
+	// 						corpusHit = res;
+	// 						break;
+	// 					}
+	// 				}
+	// 			}
+	// 			this.setState({ hits: json, timeout: timeout, zoomedCorpusHit: corpusHit});
+	// 		}
+	// 	});
+	// }
 
-	getExportParams = (corpusId, format, filterLanguage) => {
-		var params = corpusId ? {corpusId:corpusId}:{};
-		if (format) params.format = format;
-		if (filterLanguage) {
-			params.filterLanguage = filterLanguage;
-		} else if (this.state.languageFilter === 'byGuess' || this.state.languageFilter === 'byMetaAndGuess') {
-			params.filterLanguage = this.state.language[0];
-		}
-		return encodeQueryData(params);
-	}
+	// getExportParams = (corpusId, format, filterLanguage) => {
+	// 	var params = corpusId ? {corpusId:corpusId}:{};
+	// 	if (format) params.format = format;
+	// 	if (filterLanguage) {
+	// 		params.filterLanguage = filterLanguage;
+	// 	} else if (this.state.languageFilter === 'byGuess' || this.state.languageFilter === 'byMetaAndGuess') {
+	// 		params.filterLanguage = this.state.language[0];
+	// 	}
+	// 	return encodeQueryData(params);
+	// }
 
-	getDownloadLink = (corpusId, format) => {
-		return back_end_host + 'search/' + this.state.searchId + '/download?' +
-			this.getExportParams(corpusId, format);
-	}
+	// getDownloadLink = (corpusId, format) => {
+	// 	return back_end_host + 'search/' + this.state.searchId + '/download?' +
+	// 		this.getExportParams(corpusId, format);
+	// }
 
-	setLanguageAndFilter = (languageObj, languageFilter) => {
-		this.state.corpora.setVisibility(this.state.queryTypeId,
-			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
-		this.setState({
-			language: languageObj,
-			languageFilter: languageFilter,
-			corpora: this.state.corpora,
-		});
-	}
+	// setLanguageAndFilter = (languageObj, languageFilter) => {
+	// 	this.state.corpora.setVisibility(this.state.queryTypeId,
+	// 		languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
+	// 	this.setState({
+	// 		language: languageObj,
+	// 		languageFilter: languageFilter,
+	// 		corpora: this.state.corpora,
+	// 	});
+	// }
 
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
@@ -285,53 +285,54 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	filterResults = () => {
-		var noLangFiltering = this.state.languageFilter === 'byMeta';
-		var langCode = this.state.language[0];
-		var results = null, inProgress = 0, hits = 0;
-		if (this.state.hits.results) {
-			results = this.state.hits.results.map(function(corpusHit) {
-				return {
-					corpus: corpusHit.corpus,
-					inProgress: corpusHit.inProgress,
-					exception: corpusHit.exception,
-					diagnostics: corpusHit.diagnostics,
-					kwics: noLangFiltering ? corpusHit.kwics :
-						corpusHit.kwics.filter(function(kwic) {
-							return kwic.language === langCode ||
-							       langCode === multipleLanguageCode ||
-							       langCode === null;
-						}),
-					advancedLayers: noLangFiltering ? corpusHit.advancedLayers :
-					 	corpusHit.advancedLayers.filter(function(layer) {
-					 		return layer.language === langCode ||
-					 		       langCode === multipleLanguageCode ||
-					 		       langCode === null;
-					 	}),
-				};
-			});
-			for (var i = 0; i < results.length; i++) {
-				var result = results[i];
-				if (result.inProgress) {
-					inProgress++;
-				}
-				if (result.kwics.length > 0) {
-					hits ++;
-				}
-			}
-		}
-		return {
-			results: results,
-			hits: hits,
-			inProgress: inProgress,
-		};
-	}
+	// filterResults = () => {
+	// 	console.log("Partner results? : " + this.state.hits.tootekood)
+	// 	var noLangFiltering = this.state.languageFilter === 'byMeta';
+	// 	var langCode = this.state.language[0];
+	// 	var results = null, inProgress = 0, hits = 0;
+	// 	if (this.state.hits.results) {
+	// 		results = this.state.hits.results.map(function(corpusHit) {
+	// 			return {
+	// 				corpus: corpusHit.corpus,
+	// 				inProgress: corpusHit.inProgress,
+	// 				exception: corpusHit.exception,
+	// 				diagnostics: corpusHit.diagnostics,
+	// 				kwics: noLangFiltering ? corpusHit.kwics :
+	// 					corpusHit.kwics.filter(function(kwic) {
+	// 						return kwic.language === langCode ||
+	// 						       langCode === multipleLanguageCode ||
+	// 						       langCode === null;
+	// 					}),
+	// 				advancedLayers: noLangFiltering ? corpusHit.advancedLayers :
+	// 				 	corpusHit.advancedLayers.filter(function(layer) {
+	// 				 		return layer.language === langCode ||
+	// 				 		       langCode === multipleLanguageCode ||
+	// 				 		       langCode === null;
+	// 				 	}),
+	// 			};
+	// 		});
+	// 		for (var i = 0; i < results.length; i++) {
+	// 			var result = results[i];
+	// 			if (result.inProgress) {
+	// 				inProgress++;
+	// 			}
+	// 			if (result.kwics.length > 0) {
+	// 				hits ++;
+	// 			}
+	// 		}
+	// 	}
+	// 	return {
+	// 		results: results,
+	// 		hits: hits,
+	// 		inProgress: inProgress,
+	// 	};
+	// }
 
-	toggleLanguageSelection = e => {
-		$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
-		e.preventDefault();
-		e.stopPropagation();
-	}
+	// toggleLanguageSelection = e => {
+	// 	$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
+	// 	e.preventDefault();
+	// 	e.stopPropagation();
+	// }
 
 	toggleCorpusSelection = e => {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
@@ -339,12 +340,12 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	toggleResultModal = (e, corpusHit) => {
-	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
-		this.setState({zoomedCorpusHit: corpusHit});
-		e.preventDefault();
-		e.stopPropagation();
-	}
+	// toggleResultModal = (e, corpusHit) => {
+	//     $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
+	// 	this.setState({zoomedCorpusHit: corpusHit});
+	// 	e.preventDefault();
+	// 	e.stopPropagation();
+	// }
 
 	onQueryChange = queryStr => {
 	    if (this.state.queryTypeId === 'cql') {
@@ -647,7 +648,7 @@ class AggregatorPage extends Component {
 					/>
 				</Modal>
 
-				<Modal
+				{/* <Modal
 					ref="languageModal"
 					title={<span>
 							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}
@@ -662,30 +663,30 @@ class AggregatorPage extends Component {
 						languageChangeHandler={this.setLanguageAndFilter}
 						languageFromMain={this.props.languageFromMain}
 					/>
-				</Modal>
+				</Modal> */}
 
-				<Modal
+				{/* <Modal
 					ref="resultModal"
 					title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}
 					languageFromMain={this.props.languageFromMain}
 				>
 					<ZoomedResult
 						corpusHit={this.state.zoomedCorpusHit}
-								  nextResults={this.nextResults}
-								  getDownloadLink={this.getDownloadLink}
-								  searchedLanguage={this.state.language}
-								  languageMap={this.state.languageMap} 
+						nextResults={this.nextResults}
+						getDownloadLink={this.getDownloadLink}
+						searchedLanguage={this.state.language}
+						languageMap={this.state.languageMap} 
 						queryTypeId={this.state.queryTypeId}
 						languageFromMain={this.props.languageFromMain}
 					/>
-				</Modal>
+				</Modal> */}
 
 				<div className="top-gap">
 					<Results
-						collhits={this.filterResults()}
-							 toggleResultModal={this.toggleResultModal}
-							 getDownloadLink={this.getDownloadLink}
-							 searchedLanguage={this.state.language}
+						collhits={this.state.hits}
+						toggleResultModal={this.toggleResultModal}
+						// getDownloadLink={this.getDownloadLink}
+						searchedLanguage={this.state.language}
 						queryTypeId={this.state.queryTypeId}
 						languageFromMain={this.props.languageFromMain}
 					/>
