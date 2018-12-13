@@ -117,12 +117,20 @@ export default {
             ]
         },
 		partner: {
-			
 			add: {
-				enterId: 'Sisesta partneri ID',
+                partnerId: 'Partneri ID',
+                enterId: 'Sisesta partneri ID',
+                partnerName: 'Partneri nimi',
+                enterName: 'Sisesta partneri nimi',
+                partnerAPIurl: 'API URL',
+                enterAPIurl: 'Sisesta partneri API URL',
+                partnerAPIuser: 'API kasutaja',
+                enterAPIuser: 'Sisesta partneri API kasutaja',
+                partnerAPIpassword: 'API salasõna',
+                enterAPIpassword: 'Sisesta partneri API salasõna',
 				success: 'Uus kirje on edukalt lisatud',
 				reCheck: 'Palun kontrolli sisestatud andmete õigsust',
-				duplicate: 'Sellise ID-ga korpus on juba olemas'
+				duplicate: 'Sellise ID-ga partner on juba olemas'
 			},
 			edit: {
 				success: 'Kirje edukalt uuendatud'

@@ -147,7 +147,7 @@ class ManageCenter extends Component {
 					}
 					languageFromMain={this.props.languageFromMain}
 				>
-					<EditCenter 
+					<EditPartner 
 						languageFromMain={this.props.languageFromMain}
 						getCenterList={this.getCenterList}
 						oneCenterId={this.state.oneCenterId}

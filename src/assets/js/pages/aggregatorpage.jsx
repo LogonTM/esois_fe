@@ -15,7 +15,6 @@ import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
 
 var PT = PropTypes;
-//var back_end_host = 'http://217.159.229.95:8888';
 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
@@ -80,7 +79,7 @@ class AggregatorPage extends Component {
 	    this._isMounted = true;
 			
 		this.props.ajax({
-			url: back_end_host + 'rest/init',
+			url: back_end_host + 'search',
 			success: (json, textStatus, jqXHR) => {
 				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -88,10 +87,8 @@ class AggregatorPage extends Component {
 				    
 				    window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
 					window.MyAggregator.corpora = json.corpora;
-	                window.MyAggregator.xAggregationContext = aggregationContext;
+					window.MyAggregator.xAggregationContext = aggregationContext;
 					
-				    // Setting visibility, e.g. only corpora 
-                    // from v2.0 endpoints for fcs v2.0
                     corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
 
                     if (aggregationContext) {
@@ -161,11 +158,11 @@ class AggregatorPage extends Component {
 			this.setState({ hits: this.nohits, searchId: null });
 			return;
 		}
-		var selectedIds = this.state.corpora.getSelectedIds();
-		if (!selectedIds.length) {
-			this.props.error("Palun vali partnerite ladusid");
-			return;
-		}
+		var selectedIds = [1,2].toString()
+		// if (!selectedIds.length) {
+		// 	this.props.error("Palun vali partnerite ladusid");
+		// 	return;
+		// }
 		console.log(query)
 		this.props.ajax({
 			url: back_end_host + 'search',
@@ -178,6 +175,7 @@ class AggregatorPage extends Component {
 				corporaIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
+					console.log("Search response? : " + searchId)
 			        if (Location.hostname !== "localhost") {
 					_paq.push(['trackSiteSearch', query, queryTypeIdForSearch, false]);
 			        }

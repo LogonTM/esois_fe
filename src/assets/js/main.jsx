@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
-import HelpPage from './pages/helppage.jsx'
-import LoginPage from './pages/loginpage.jsx'
+// import HelpPage from './pages/helppage.jsx'
+// import LoginPage from './pages/loginpage.jsx'
 import ManageCenter from './pages/managecenter.jsx'
-import ManageUsers from './pages/manageusers'
-import RegisterPage from './pages/registerpage.jsx'
+// import ManageUsers from './pages/manageusers'
+// import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
 import Footer from './components/footer.jsx'
 import Clarinlogo from '../img/clarin-logo.png'
@@ -18,10 +18,8 @@ import EnEKRKlogo from '../img/ekrk-logo-eng.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
-import { authentication_token } from './constants/constants';
-
 import Partners from './pages/partnerspage.jsx'
-
+import PP from './pages/partnermanagerpage'
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -114,37 +112,36 @@ class Main extends Component {
 	}
 
 	renderHelp = () => {
-		return <HelpPage languageFromMain={this.state.language} />
+		// return <HelpPage languageFromMain={this.state.language} />
 	}
 
 	renderRegister = () => {
-		return (
-			<RegisterPage
-				backToAggregator={this.toAggregator.bind(this, true)}
-				isUserloggedIn={this.state.loggedInStatus}
-				getStatus={this.getUserLoginStatus.bind(this)}
-				languageFromMain={this.state.language}
-			/>
-		);
+		// return (
+		// 	<RegisterPage
+		// 		backToAggregator={this.toAggregator.bind(this, true)}
+		// 		isUserloggedIn={this.state.loggedInStatus}
+		// 		getStatus={this.getUserLoginStatus.bind(this)}
+		// 		languageFromMain={this.state.language}
+		// 	/>
+		// );
 	}
 
 	renderLogin = () => {
-		return (
-			<LoginPage
-				toRegistration={this.toRegister.bind(this, true)}
-				backToAggregator={this.toAggregator.bind(this, true)}
-				isUserloggedIn={this.state.loggedInStatus}
-				userName={this.state.userName}
-				getStatus={this.getUserLoginStatus.bind(this)}
-				languageFromMain={this.state.language}
-			/>
-		);
+		// return (
+		// 	<LoginPage
+		// 		toRegistration={this.toRegister.bind(this, true)}
+		// 		backToAggregator={this.toAggregator.bind(this, true)}
+		// 		isUserloggedIn={this.state.loggedInStatus}
+		// 		userName={this.state.userName}
+		// 		getStatus={this.getUserLoginStatus.bind(this)}
+		// 		languageFromMain={this.state.language}
+		// 	/>
+		// );
 	}
-
 	
 	renderPartners= () => {
         return (
-                <Partners
+                <PP
                     languageFromMain={this.state.language}
                 />
             )
@@ -159,7 +156,7 @@ class Main extends Component {
 	} 
 
 	renderManageUsers = () => {
-		return <ManageUsers languageFromMain={this.state.language} /> // For admins only
+		// return <ManageUsers languageFromMain={this.state.language} /> // For admins only
 	}
 
 	renderUserManager = () => {
@@ -220,27 +217,9 @@ class Main extends Component {
 	}
 
 	toManageCenter = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
+		// if(localStorage.getItem(authentication_token) !== null) {
 			this.gotoPage(doPushHistory, 'manageCenter')
-		}
-	}
-
-	toManageUsers = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
-			this.gotoPage(doPushHistory, 'manageUsers')
-		}
-	}
-
-	toUserManager = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
-			this.gotoPage(doPushHistory, 'userManager')
-		}
-	}
-
-	toManageLogs = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
-			this.gotoPage(doPushHistory, 'manageLogs')
-		}
+		// }
 	}
 
 	changeToEE = () => {
@@ -261,33 +240,7 @@ class Main extends Component {
 		return (
 			<div className={classname} id='navMenu'>
 				<div className='navbar-nav navbar-right' id='navbar-right'>
-					<div className="d-flex flex-nowrap w-100">
-		        {/* 						<a
-							className='nav-item navbar-brand'
-							tabIndex='-1'
-							data-toggle='tooltip'
-							title='EE'
-							onClick={this.changeToEE}
-						>
-							<img
-								className='ico'
-								src={EeFlag}
-								alt='EST'
-							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex='-1'
-							data-toggle='tooltip'
-							title='EN'
-							onClick={this.changeToEN}
-						>
-							<img
-								className='ico'
-								src={GbFlag}
-								alt='ENG'
-							/>
-						</a>*/}
+					<div className="d-flex flex-nowrap w-100" >
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
@@ -310,37 +263,6 @@ class Main extends Component {
 						>
 		        <i className="fa fa-database"/>
 						</a>
-{/* 						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Help'
-							onClick={this.toHelp.bind(this, true)}
-						>
-							<img
-								className='symbols'
-								src={SettingsIcon}
-								alt='Help'
-							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Manage Center'
-							onClick={this.toManageCenter.bind(this, true)}
-						>
-							<i className="fa fa-database"/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Manage Users'
-							onClick={this.toManageUsers.bind(this, true)}
-						>
-							<i className="fa fa-users"/>
-						</a> */}
 					</div>
 				</div>
 			</div>
@@ -423,9 +345,9 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
+		} else if (path === '/manageCenter' /*&& localStorage.getItem(authentication_token) !== null*/) {
 			this.toManageCenter()
-		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null)  {
+		} else if (path === '/manageUsers' /*&& localStorage.getItem(authentication_token) !== null*/)  {
 			this.toManageUsers()
 		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
 			this.toUserManager()

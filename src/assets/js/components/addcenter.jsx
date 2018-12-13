@@ -62,8 +62,8 @@ class AddCenter extends Component {
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
-                            <label htmlFor="Center_id">
-                            {dictionary[this.props.languageFromMain].common.corpusId}
+                            <label htmlFor="Partner_id">
+                            {dictionary[this.props.languageFromMain].partner.add.partnerId}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -71,54 +71,95 @@ class AddCenter extends Component {
                                 className={idValidator}
                                 type="text"
                                 name="id"
-                                id="Center_id"
+                                id="Partner_id"
                                 value={this.state.id}
                                 onChange={this.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusId}
+                                placeholder={dictionary[this.props.languageFromMain].partner.add.partnerId}
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].addcenter.enterCorpusId}
+                                {dictionary[this.props.languageFromMain].partner.add.enterId}
                             </div>
                         </div>
                     </div>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
-                            <label htmlFor="Center_name">
-                                {dictionary[this.props.languageFromMain].common.corpusName}
+                            <label htmlFor="Partner_name">
+                                {dictionary[this.props.languageFromMain].partner.add.partnerName}
                             </label>
                         </div>
                         <div className="col-sm-9">
                             <input
                                 className={nameValidator}
                                 type="text"
-                                name="centerName"
-                                id="Center_name"
+                                name="partnerName"
+                                id="Partner_name"
                                 value={this.state.centerName}
                                 onChange={this.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
+                                placeholder={dictionary[this.props.languageFromMain].partner.add.partnerName}
 
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
+                                {dictionary[this.props.languageFromMain].partner.add.enterName}
                             </div>
                         </div>
                     </div>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
-                            <label htmlFor="url">URL</label>
+                            <label htmlFor="url">{dictionary[this.props.languageFromMain].partner.add.partnerAPIurl}</label>
                         </div>
                         <div className="col-sm-9">
                             <input
                                 className={linkValidator} 
                                 type="text"
                                 name="link"
-                                id="Center_url"
+                                id="API_url"
                                 value={this.state.link}
                                 onChange={this.handleChange}
-                                placeholder="http"
+                                placeholder="API URL"
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
+                                {dictionary[this.props.languageFromMain].partner.add.enterAPIurl}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-group row addcorp">
+                        <div className="col-sm-2 align-right">
+                            <label htmlFor="API_user">
+                                {dictionary[this.props.languageFromMain].partner.add.partnerAPIuser}
+                            </label>
+                        </div>
+                        <div className="col-sm-9">
+                            <input
+                                className={nameValidator}
+                                type="text"
+                                name="APIUser"
+                                id="API_user"
+                                value={this.state.centerName}
+                                onChange={this.handleChange}
+                                placeholder={dictionary[this.props.languageFromMain].partner.add.partnerAPIuser}
+
+                            />
+                            <div className="invalid-feedback">
+                                {dictionary[this.props.languageFromMain].partner.add.enterAPIuser}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-group row addcorp">
+                        <div className="col-sm-2 align-right">
+                            <label htmlFor="APIpassword">{dictionary[this.props.languageFromMain].partner.add.partnerAPIpassword}</label>
+                        </div>
+                        <div className="col-sm-9">
+                            <input
+                                className={linkValidator} 
+                                type="password"
+                                name="APIpassword"
+                                id="API_password"
+                                value={this.state.link}
+                                onChange={this.handleChange}
+                                placeholder='API Salasõna'
+                            />
+                            <div className="invalid-feedback">
+                                {dictionary[this.props.languageFromMain].partner.add.enterAPIpassword}
                             </div>
                         </div>
                     </div>

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { 
-    minimum_name_length, maximum_name_length,
-    minimum_username_length, maximum_username_length,
-    minimum_password_length, maximum_password_length,
-    maximum_email_length
-} from '../constants/constants';
+import ReactDOM from 'react-dom';
 import { login } from '../utilities/functions';
-import { authentication_token } from '../constants/constants';
-import { register, getPartnersList, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions';
+import { register, getPartnersList } from '../utilities/functions';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
@@ -15,6 +9,7 @@ import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
 import EditUser from '../components/edituser.jsx'
 import Modal from '../components/modal.jsx';
+import $ from 'jquery';
 
 
 var PT = PropTypes
@@ -68,26 +63,26 @@ class RegisterPage extends Component {
         }
     }
 
-    validateName = (name) => {
-        if(name.length < minimum_name_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
-                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
-            }
-        } else if (name.length > maximum_name_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
-                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
-            }
-        } else {
-            return {
-                isValid: true,
-                hasError: null,
-              };            
-        }
-    }
+    // validateName = (name) => {
+    //     if(name.length < minimum_name_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.nameerrortooshortP2
+    //         }
+    //     } else if (name.length > maximum_name_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.nameerrortooshortP2
+    //         }
+    //     } else {
+    //         return {
+    //             isValid: true,
+    //             hasError: null,
+    //           };            
+    //     }
+    // }
 
     handleNameChange = (event, validation) => {
         var nameValue = event.target.value;
@@ -101,26 +96,26 @@ class RegisterPage extends Component {
 		event.stopPropagation();
     }
 
-    validateUsername = (username) => {
-        if(username.length < minimum_username_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + minimum_username_length + " " + 
-                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
-            }
-        } else if (username.length > maximum_name_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + maximum_username_length + " " + 
-                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
-            }
-        } else {
-            return {
-                isValid: true,
-                hasError: null
-            }
-        }
-    }
+    // validateUsername = (username) => {
+    //     if(username.length < minimum_username_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + minimum_username_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
+    //         }
+    //     } else if (username.length > maximum_name_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + maximum_username_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
+    //         }
+    //     } else {
+    //         return {
+    //             isValid: true,
+    //             hasError: null
+    //         }
+    //     }
+    // }
     
     handleUsernameChange = (event, validation) => {
         var userNameValue = event.target.value;
@@ -133,26 +128,26 @@ class RegisterPage extends Component {
         })
     }
 
-    validatePassword = (password) => {
-        if(password.length < minimum_password_length) {
-            return {
-                isValid: false,
-                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
-                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
-            }
-        } else if (password.length > maximum_password_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
-                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
-            }
-        } else {
-            return {
-                isValid: true,
-                hasError: null,
-            };            
-        }
-    }
+    // validatePassword = (password) => {
+    //     if(password.length < minimum_password_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
+    //                        dictionary[this.props.languageFromMain].register.passworderrortooshortP2
+    //         }
+    //     } else if (password.length > maximum_password_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.passworderrortoolongP2
+    //         }
+    //     } else {
+    //         return {
+    //             isValid: true,
+    //             hasError: null,
+    //         };            
+    //     }
+    // }
 
     handlePasswordChange = (event, validation) => {
         var passwordValue = event.target.value;
@@ -165,48 +160,43 @@ class RegisterPage extends Component {
         })
     }
     
-    validatePasswordConfirmation = (password) => {
-        if(password.length < minimum_password_length) {
-            return {
-                isValid: false,
-                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
-                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
-            }
-        } else if (password.length > maximum_password_length) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
-                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
-            }
-        } else if (this.state.password.value !== password) {
-            return {
-                isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrornomatch
-            }            
-        } else if (this.state.password.value === password) {
-            return {
-                isValid: true,
-                hasError: null
-            }
-        }
-    }
+    // validatePasswordConfirmation = (password) => {
+    //     if(password.length < minimum_password_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
+    //                        dictionary[this.props.languageFromMain].register.passworderrortooshortP2
+    //         }
+    //     } else if (password.length > maximum_password_length) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
+    //                       dictionary[this.props.languageFromMain].register.passworderrortoolongP2
+    //         }
+    //     } else if (this.state.password.value !== password) {
+    //         return {
+    //             isValid: false,
+    //             hasError: dictionary[this.props.languageFromMain].register.passworderrornomatch
+    //         }            
+    //     } else if (this.state.password.value === password) {
+    //         return {
+    //             isValid: true,
+    //             hasError: null
+    //         }
+    //     }
+    // }
 
-    handlePasswordValidationChange = (event, validation) => {
-        var passwordValidationValue = event.target.value;
-        this.setState({
-            passwordValidation: {
-                value: passwordValidationValue,
-                valid: validation(passwordValidationValue).isValid,
-                errormessage: validation(passwordValidationValue).hasError
-            }
-        })
-    }
-
-
-        
-
-    
-    
+    // handlePasswordValidationChange = (event, validation) => {
+    //     var passwordValidationValue = event.target.value;
+    //     this.setState({
+    //         passwordValidation: {
+    //             value: passwordValidationValue,
+    //             valid: validation(passwordValidationValue).isValid,
+    //             errormessage: validation(passwordValidationValue).hasError
+    //         }
+    //     })
+    // }
+ 
     handleRegister = (event) => {
         event.preventDefault();
         if (this.state.password.value === this.state.passwordValidation.value && this.state.password.value !== '') {
@@ -247,71 +237,77 @@ class RegisterPage extends Component {
         });
     }
 
+    // validateUsernameAvailability = () => {
+    //     const usernameValue = this.state.username.value;
 
+    //     if(usernameValue === '' || this.validateUsername(usernameValue).isValid === false) {
+    //         this.setState({
+    //             username: {
+    //                 value: usernameValue,
+    //                 valid: this.validateUsername(usernameValue).isValid,
+    //                 errormessage: this.validateUsername(usernameValue).hasError
+    //             }
+    //         });
+    //         return;
+    //     }
+
+    //     checkUsernameAvailability(usernameValue)
+    //     .then(response => {
+    //         if(response.available) {
+    //             this.setState({
+    //                 username: {
+    //                     value: usernameValue,
+    //                     valid: true,
+    //                     errormessage: null
+    //                 }
+    //             });
+    //         } else {
+    //             this.setState({
+    //                 username: {
+    //                     value: usernameValue,
+    //                     valid: false,
+    //                     errormessage: dictionary[this.props.languageFromMain].register.usernameavailableerror
+    //                 }
+    //             });
+    //         }
+    //     }).catch(error => {
+    //         this.setState({
+    //             username: {
+    //                 value: usernameValue,
+    //                 validateStatus: true,
+    //                 errormessage: null
+    //             }
+    //         });
+    //     });
+    // }
+
+    toggleEdit = (e, id, name, link) => {
+		e.preventDefault();
+		$(ReactDOM.findDOMNode(this.refs.editCenterModal)).modal();
+		this.setState({
+			oneCenterId: id,
+			oneCenterName: name,
+			oneCenterLink: link
+		});
+    }
     
-    validateUsernameAvailability = () => {
-        const usernameValue = this.state.username.value;
-
-        if(usernameValue === '' || this.validateUsername(usernameValue).isValid === false) {
-            this.setState({
-                username: {
-                    value: usernameValue,
-                    valid: this.validateUsername(usernameValue).isValid,
-                    errormessage: this.validateUsername(usernameValue).hasError
-                }
-            });
-            return;
-        }
-
-        checkUsernameAvailability(usernameValue)
-        .then(response => {
-            if(response.available) {
-                this.setState({
-                    username: {
-                        value: usernameValue,
-                        valid: true,
-                        errormessage: null
-                    }
-                });
-            } else {
-                this.setState({
-                    username: {
-                        value: usernameValue,
-                        valid: false,
-                        errormessage: dictionary[this.props.languageFromMain].register.usernameavailableerror
-                    }
-                });
-            }
-        }).catch(error => {
-            this.setState({
-                username: {
-                    value: usernameValue,
-                    validateStatus: true,
-                    errormessage: null
-                }
-            });
-        });
-    }
-
-
-
-    formValidator = () => {
-        return !(
-            this.state.name.valid === true && 
-            this.state.username.valid === true && 
-            this.state.password.valid === true &&
-            this.state.passwordValidation.valid  === true )
-    }
+    // formValidator = () => {
+    //     return !(
+    //         this.state.name.valid === true && 
+    //         this.state.username.valid === true && 
+    //         this.state.password.valid === true &&
+    //         this.state.passwordValidation.valid  === true )
+    // }
 
 	render() {
-        const nameValidator = (this.state.name.value === '') ? "form-control" : "form-control input-lg " + 
-            (this.state.name.valid ? "is-valid" : "is-invalid")
-        const userNameValidator = (this.state.username.value === '') ? "form-control" : "form-control input-lg " + 
-            (this.state.username.valid ? "is-valid"  : "is-invalid")
-        const passWordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 
-            (this.state.password.valid ? "is-valid" : "is-invalid")
-        const passWordConfirmation = (this.state.passwordValidation.value === '') ? "form-control" : "form-control input-lg " + 
-            (this.state.passwordValidation.valid ? "is-valid" : "is-invalid")
+        // const nameValidator = (this.state.name.value === '') ? "form-control" : "form-control input-lg " + 
+        //     (this.state.name.valid ? "is-valid" : "is-invalid")
+        // const userNameValidator = (this.state.username.value === '') ? "form-control" : "form-control input-lg " + 
+        //     (this.state.username.valid ? "is-valid"  : "is-invalid")
+        // const passWordValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " + 
+        //     (this.state.password.valid ? "is-valid" : "is-invalid")
+        // const passWordConfirmation = (this.state.passwordValidation.value === '') ? "form-control" : "form-control input-lg " + 
+        //     (this.state.passwordValidation.valid ? "is-valid" : "is-invalid")
        return (
                <div id='container'>
                <div className='top-gap'></div>
@@ -377,7 +373,7 @@ class RegisterPage extends Component {
                        handleAccountState={this.handleAccountState}
                    />              
                </Modal>          
-				<div className="top-gap">
+				{/* <div className="top-gap">
 					<div className="register-panel">
 						    <form onSubmit={this.handleRegister} className="register-form">
                                 <div>
@@ -431,7 +427,7 @@ class RegisterPage extends Component {
 							</form>
 						</div>
                     <div className="bottom-gap"></div>
-				</div>
+				</div> */}
 			</div>
 		);
 	}

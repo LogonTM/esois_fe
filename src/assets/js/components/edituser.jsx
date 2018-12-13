@@ -6,14 +6,14 @@ import dictionary from '../../../translations/dictionary';
 
 class EditUser extends Component {
 	static propTypes = {
-		languageFromMain: PropTypes.string.isRequired,
-        getUserList: PropTypes.func.isRequired,
-        handleAccountState: PropTypes.func.isRequired,
-        handleChange: PropTypes.func.isRequired,
-        oneUserId: PropTypes.number.isRequired,
-        oneUserName: PropTypes.string.isRequired,
-        oneUserEmail: PropTypes.string.isRequired,
-        oneUserAccountstate: PropTypes.bool.isRequired
+		languageFromMain: PropTypes.string,
+        getUserList: PropTypes.func,
+        handleAccountState: PropTypes.func,
+        handleChange: PropTypes.func,
+        oneUserId: PropTypes.number,
+        oneUserName: PropTypes.string,
+        oneUserEmail: PropTypes.string,
+        oneUserAccountstate: PropTypes.bool
     }
 
     handleEdit = () => {

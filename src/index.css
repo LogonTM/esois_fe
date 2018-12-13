@@ -89,7 +89,7 @@ div.navbar {
 
 .logo2 {
   height: 67px;
-  margin-left: 0.75em;
+  /* margin-left: 0.75em; */
   margin-right: 0.75em;
 }
 
@@ -169,7 +169,7 @@ input[type="checkbox"], input[type="radio"] {
 
 #searchBox {
   width: 350px;
-  padding-bottom: 40px;
+  padding-bottom: 4px;
 }
 
 div#new-footer {
@@ -186,8 +186,8 @@ div#new-footer {
 
 #footer-row {
   min-height: 75px;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin-left: 0.75em;
+  margin-right: 0.75em;
 }
 
 .footer-with-pics {
@@ -200,8 +200,8 @@ div#new-footer {
 }
 
 .footer-img-left {
-  position: fixed;
-  bottom: 0px;
+  position: center;
+  /* bottom: 0px; */
   border: 0;
   height: 80px;
   min-height: 1.6cm;
@@ -236,7 +236,7 @@ div#new-footer {
 }
 
 #footer-text {
- // padding-left: 50px;
+  /* padding-left: 50px; */
   padding-right: 50px;
 }
 
