@@ -43,6 +43,7 @@ class Results extends Component {
 	}
 
 	renderResultPanel = () => {
+	    
 		var collhits = this.props.collhits
 		console.log("Within renderResultsPanel" + collhits.id)
 		
@@ -234,12 +235,12 @@ class Results extends Component {
 
 	render() {
 		var collhits = this.props.collhits;
-		console.log("Collhits: " + collhits.tootekood)
-		console.log("Collhits: " + collhits.results)
+		//console.log("Collhits: " + collhits.tootekood)
+		//console.log("Collhits: " + collhits.results)
 		if (!collhits.results) {
 			return false;
 		}
-		var showprogress = collhits.inProgress > 0;
+	//	var showprogress = collhits.inProgress > 0;
 	     
 		return (
 			<div>
@@ -265,6 +266,8 @@ class Results extends Component {
 					<div style={{clear:'both'}}/>
 				</div>
 				<TransitionGroup>
+					{/*collhits.map(this.renderResultPanel)*/}
+					
 					{this.renderResultPanel(collhits.results)}
 				</TransitionGroup>
 			</div>

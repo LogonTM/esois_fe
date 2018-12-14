@@ -25,6 +25,7 @@ class AggregatorPage extends Component {
 	} 
 
 	nohits = {
+	    tootekood: null,
 		results: null,
 	}
 	
@@ -67,7 +68,7 @@ class AggregatorPage extends Component {
 
 			searchId: null,
 			timeout: 0,
-			hits: this.nohits,
+			hits: [this.nohits],
 
 			zoomedCorpusHit: null,
 		};
@@ -173,7 +174,7 @@ class AggregatorPage extends Component {
 				partnerIds: selectedIds,
 			},
 			success: (searchId, textStatus, jqXHR) => {
-					console.log("Search response? : " + searchId.tootekood)
+					console.log("Search response? : " + searchId[0].tootekood)
 			        if (Location.hostname !== "localhost") {
 					_paq.push(['trackSiteSearch', query, queryTypeIdForSearch, false]);
 			        }
@@ -181,85 +182,13 @@ class AggregatorPage extends Component {
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId, timeout, hits: searchId });
-				console.log("Current state of searchId: " + this.state.searchId)
-				console.log("First occurence of hits: " + this.state.hits)
+				//console.log("Current state of searchId: " + this.state.searchId)
+				//console.log("First occurence of hits: " + this.state.hits)
 			}
 		});
 	}
 
-	// nextResults = corpusId => {
-	// 	this.props.ajax({
-	// 		url: back_end_host + 'search/' + this.state.searchId,
-	// 		type: "POST",
-	// 		data: {
-	// 			corpusId: corpusId,
-	// 			numberOfResults: this.state.numberOfResults,
-	// 		},
-	// 		success: (searchId, textStatus, jqXHR) => {
-	// 			var timeout = 250;
-	// 			setTimeout(this.refreshSearchResults, timeout);
-	// 			this.setState({ searchId, timeout });
-	// 		}
-	// 	});
-	// }
-
-	// refreshSearchResults = () => {
-	// 	if (!this.state.searchId || !this._isMounted) {
-	// 		return;
-	// 	}
-	// 	this.props.ajax({
-	// 		url: back_end_host + 'search/' + this.state.searchId,
-	// 		success: (json, textStatus, jqXHR) => {
-	// 			var timeout = this.state.timeout;
-	// 			if (json.inProgress) {
-	// 				if (timeout < 10000) {
-	// 					timeout = 1.5 * timeout;
-	// 				}
-	// 				setTimeout(this.refreshSearchResults, timeout);
-	// 				console.log("new search in: " + timeout + "ms");
-	// 			} else {
-	// 				console.log("search ended; hits:", json);
-	// 			}
-	// 			var corpusHit = this.state.zoomedCorpusHit;
-	// 			if (corpusHit) {
-	// 				for (var resi = 0; resi < json.results.length; resi++) {
-	// 					var res = json.results[resi];
-	// 					if (res.corpus.id === corpusHit.corpus.id) {
-	// 						corpusHit = res;
-	// 						break;
-	// 					}
-	// 				}
-	// 			}
-	// 			this.setState({ hits: json, timeout: timeout, zoomedCorpusHit: corpusHit});
-	// 		}
-	// 	});
-	// }
-
-	// getExportParams = (corpusId, format, filterLanguage) => {
-	// 	var params = corpusId ? {corpusId:corpusId}:{};
-	// 	if (format) params.format = format;
-	// 	if (filterLanguage) {
-	// 		params.filterLanguage = filterLanguage;
-	// 	} else if (this.state.languageFilter === 'byGuess' || this.state.languageFilter === 'byMetaAndGuess') {
-	// 		params.filterLanguage = this.state.language[0];
-	// 	}
-	// 	return encodeQueryData(params);
-	// }
-
-	// getDownloadLink = (corpusId, format) => {
-	// 	return back_end_host + 'search/' + this.state.searchId + '/download?' +
-	// 		this.getExportParams(corpusId, format);
-	// }
-
-	// setLanguageAndFilter = (languageObj, languageFilter) => {
-	// 	this.state.corpora.setVisibility(this.state.queryTypeId,
-	// 		languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
-	// 	this.setState({
-	// 		language: languageObj,
-	// 		languageFilter: languageFilter,
-	// 		corpora: this.state.corpora,
-	// 	});
-	// }
+	
 
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
@@ -285,54 +214,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	// filterResults = () => {
-	// 	console.log("Partner results? : " + this.state.hits.tootekood)
-	// 	var noLangFiltering = this.state.languageFilter === 'byMeta';
-	// 	var langCode = this.state.language[0];
-	// 	var results = null, inProgress = 0, hits = 0;
-	// 	if (this.state.hits.results) {
-	// 		results = this.state.hits.results.map(function(corpusHit) {
-	// 			return {
-	// 				corpus: corpusHit.corpus,
-	// 				inProgress: corpusHit.inProgress,
-	// 				exception: corpusHit.exception,
-	// 				diagnostics: corpusHit.diagnostics,
-	// 				kwics: noLangFiltering ? corpusHit.kwics :
-	// 					corpusHit.kwics.filter(function(kwic) {
-	// 						return kwic.language === langCode ||
-	// 						       langCode === multipleLanguageCode ||
-	// 						       langCode === null;
-	// 					}),
-	// 				advancedLayers: noLangFiltering ? corpusHit.advancedLayers :
-	// 				 	corpusHit.advancedLayers.filter(function(layer) {
-	// 				 		return layer.language === langCode ||
-	// 				 		       langCode === multipleLanguageCode ||
-	// 				 		       langCode === null;
-	// 				 	}),
-	// 			};
-	// 		});
-	// 		for (var i = 0; i < results.length; i++) {
-	// 			var result = results[i];
-	// 			if (result.inProgress) {
-	// 				inProgress++;
-	// 			}
-	// 			if (result.kwics.length > 0) {
-	// 				hits ++;
-	// 			}
-	// 		}
-	// 	}
-	// 	return {
-	// 		results: results,
-	// 		hits: hits,
-	// 		inProgress: inProgress,
-	// 	};
-	// }
-
-	// toggleLanguageSelection = e => {
-	// 	$(ReactDOM.findDOMNode(this.refs.languageModal)).modal();
-	// 	e.preventDefault();
-	// 	e.stopPropagation();
-	// }
+	
 
 	toggleCorpusSelection = e => {
 	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
@@ -340,12 +222,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	// toggleResultModal = (e, corpusHit) => {
-	//     $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
-	// 	this.setState({zoomedCorpusHit: corpusHit});
-	// 	e.preventDefault();
-	// 	e.stopPropagation();
-	// }
+	
 
 	onQueryChange = queryStr => {
 	    if (this.state.queryTypeId === 'cql') {
@@ -464,17 +341,7 @@ class AggregatorPage extends Component {
 					>
 						{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
 					</div>
-					<div className="card-body">
-						<p>
-							<Button
-								label={this.state.fcsTextAreaVisibility ?
-								dictionary[this.props.languageFromMain].queryinput.fcsQueryFromButton :
-								dictionary[this.props.languageFromMain].queryinput.fcsTextFieldButton}
-								onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
-							/>
-						</p>
-						{ this.renderQueryInput() }
-					</div>
+					
 					<div className="card-footer">
 						<div className="input-group">
 							<pre className="adv-query-preview aligncenter form-control input-lg">
@@ -528,168 +395,19 @@ class AggregatorPage extends Component {
 						{  this.renderCql() }
 					</div>
 				</div>
-
-				<div className="row justify-content-center align-items-center" style={{marginTop:20}}>
-					{/*<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">
-								<div className="input-group-prepend">
-									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].aggregatorpage.searchFor}
-									</span>
-								</div>
-								<div className="input-group">
-									<Button
-										label={this.state.language[1]}
-										uiType='dropdown-toggle'
-										onClick={this.toggleLanguageSelection}
-									/>
-								</div>
-							</div>
-						</form>
-					</div>
-									
-				<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">
-								<div className="input-group">
-									<Button
-										label={dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
-										uiType='dropdown-toggle dropdown-toggle-split'
-											aria-expanded="false"
-										data-toggle="dropdown"
-									/>
-									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ this.queryTypes.map(l => {
-												var cls = l.disabled ? 'disabled':'dropdown-item';
-												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (
-													<li 
-														key={l.id}
-														className={cls}
-													>
-														<a tabIndex="-1" href="#" onClick={handler}>
-															{dictionary[this.props.languageFromMain][l.id].name}
-														</a>
-													</li>
-												);
-											})
-										}
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
-					*/}
-				</div>
-				
-					{/*	<div className="row justify-content-center align-items-center" >
-					<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">
-								<div className="input-group-prepend">
-									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].common.in}
-									</span>
-								</div>
-								<div className="input-group">
-									<Button
-										label={this.state.corpora.getSelectedMessage(this.props.languageFromMain)}
-										uiType='dropdown-toggle'
-										onClick={this.toggleCorpusSelection}
-									/>
-								</div>
-							</div>
-						</form>
-					</div>
-						<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">								
-								<div className="input-group-prepend">
-									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].aggregatorpage.andShowUpTo}
-									</span>
-								</div>
-								<div className="input-group">
-									<input
-										type="number"
-										className="form-control input"
-										min="10"
-										max="250"
-										style={{maxWidth:60}}
-										onChange={this.setNumberOfResults.bind(this)}
-										value={this.state.numberOfResults}
-										onKeyPress={this.stop.bind(this)}
-									/>
-								</div>
-								<div className="input-group-append">
-									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].aggregatorpage.hitsPerEndpoint}
-									</span>
-								</div>
-							</div>
-					
-						</form>
-					</div>
-					
-				</div>
-*/}
-					{/*	<Modal
-					ref="corporaModal"
-					title={<span>
-							{dictionary[this.props.languageFromMain].aggregatorpage.collections}
-						</span>}
-					languageFromMain={this.props.languageFromMain}
-				>
-						<CorpusView
-						corpora={this.state.corpora}
-						languageMap={this.state.languageMap}
-						languageFromMain={this.props.languageFromMain}
-					/>
-				</Modal>
-
-				 <Modal
-					ref="languageModal"
-					title={<span>
-							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}
-						</span>}
-					languageFromMain={this.props.languageFromMain}
-				>
-					<LanguageSelector
-						anyLanguage={[multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage]}
-									  languageMap={this.state.languageMap}
-									  selectedLanguage={this.state.language}
-									  languageFilter={this.state.languageFilter}
-						languageChangeHandler={this.setLanguageAndFilter}
-						languageFromMain={this.props.languageFromMain}
-					/>
-				</Modal> */}
-
-				{/* <Modal
-					ref="resultModal"
-					title={this.renderZoomedResultTitle(this.state.zoomedCorpusHit)}
-					languageFromMain={this.props.languageFromMain}
-				>
-					<ZoomedResult
-						corpusHit={this.state.zoomedCorpusHit}
-						nextResults={this.nextResults}
-						getDownloadLink={this.getDownloadLink}
-						searchedLanguage={this.state.language}
-						languageMap={this.state.languageMap} 
-						queryTypeId={this.state.queryTypeId}
-						languageFromMain={this.props.languageFromMain}
-					/>
-				</Modal> */}
-
 				<div className="top-gap">
-					<Results
-						collhits={this.state.hits}
-						toggleResultModal={this.toggleResultModal}
-						// getDownloadLink={this.getDownloadLink}
-						searchedLanguage={this.state.language}
-						queryTypeId={this.state.queryTypeId}
-						languageFromMain={this.props.languageFromMain}
-					/>
+						{this.state.hits.map( (hit) => 
+                             <Results
+                            collhits={hit}
+                            toggleResultModal={this.toggleResultModal}
+                            // getDownloadLink={this.getDownloadLink}
+                            searchedLanguage={this.state.language}
+                            queryTypeId={this.state.queryTypeId}
+                            languageFromMain={this.props.languageFromMain}
+                        />
+                  )}
+
+					
 				</div>
 			</div>
 			);

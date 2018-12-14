@@ -22,11 +22,11 @@
 }
 
 .top-gap {
-	margin-top: 64px;
+	margin-top: 20px;
 }
 
 .bottom-gap {
-	margin-top: 40px;
+	margin-top: 20px;
 }
 
 .register-form input {
@@ -330,7 +330,7 @@ div.card-title span.institutionName{
 .modal-title span.institutionName{
 	font-size: 14px;
 	font-weight:300;
-	color: rgb(40,85,143);
+	color: rgb(100, 45, 150);
 }
 
 .card-body span {
@@ -355,9 +355,9 @@ div.card-title span.institutionName{
 
 .bs-callout {
 	padding: 0 20px;
-	margin: 0 0 20px 0;
+	margin: 0 0 40px 0;
 	border: 1px solid #ddd;
-	border-left: 5px solid rgb(40,85,143); /*blue*/
+	border-left: 5px solid rgba(100, 45, 150, 0.7); /*blue*/
 	border-radius: 4px;
 }
 .bs-callout .card-heading {
@@ -366,7 +366,7 @@ div.card-title span.institutionName{
 	padding: 10px 15px 4px;
 }
 .bs-callout .card-title {
-	color: rgb(220, 133, 46);
+	color: rgb(210, 45, 184);
 }
 .card-body {
 	border-top: 1px solid #ddd;
