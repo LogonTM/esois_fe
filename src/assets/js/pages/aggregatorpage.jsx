@@ -583,7 +583,7 @@ class AggregatorPage extends Component {
 					*/}
 				</div>
 				
-				<div className="row justify-content-center align-items-center" >
+					{/*	<div className="row justify-content-center align-items-center" >
 					<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">
@@ -602,7 +602,7 @@ class AggregatorPage extends Component {
 							</div>
 						</form>
 					</div>
-					{/*	<div className="col-auto">
+						<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">								
 								<div className="input-group-prepend">
@@ -631,24 +631,24 @@ class AggregatorPage extends Component {
 					
 						</form>
 					</div>
-					*/}
+					
 				</div>
-
-				<Modal
+*/}
+					{/*	<Modal
 					ref="corporaModal"
 					title={<span>
 							{dictionary[this.props.languageFromMain].aggregatorpage.collections}
 						</span>}
 					languageFromMain={this.props.languageFromMain}
 				>
-					<CorpusView
+						<CorpusView
 						corpora={this.state.corpora}
 						languageMap={this.state.languageMap}
 						languageFromMain={this.props.languageFromMain}
 					/>
 				</Modal>
 
-				{/* <Modal
+				 <Modal
 					ref="languageModal"
 					title={<span>
 							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}

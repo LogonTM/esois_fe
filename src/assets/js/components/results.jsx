@@ -42,24 +42,22 @@ class Results extends Component {
 		// );
 	}
 
-	renderResultPanel = corpusHit => {
+	renderResultPanel = () => {
 		var collhits = this.props.collhits
-		console.log("Within renderResultsPanel" + corpusHit.id)
-		if (corpusHit.id !== 1 ) {
-			return false;
-		} else {
+		console.log("Within renderResultsPanel" + collhits.id)
+		
 			return (
-				<CSSTransition key={corpusHit.id} classNames="fade" timeout={{enter: 200, exit: 200}}>
+				<CSSTransition key={collhits.id} classNames="fade" timeout={{enter: 200, exit: 200}}>
 					<Panel
-						key={corpusHit.id}
+						key={collhits.id}
 						title={this.renderPanelTitle(collhits.tootekood)}
 						info={this.renderPanelInfo(collhits.tootekood)}
 					>
-						{this.renderPanelBody(corpusHit)}
+						{this.renderPanelBody(collhits.results)}
 					</Panel>
 				</CSSTransition>
 			);	
-		}
+		
 	}
 
 	// renderProgressMessage = () => {
@@ -100,21 +98,22 @@ class Results extends Component {
 			<div class="container">
 				<div className='inline'>
 					Search query for product code: {collhits.tootekood}
-				</div> 			
-				{/* <div className="row"> 
+				</div>
+					<br></br> <hr/>
+				 <div className="row"> 
 					<div class="col-sm">
-						ID
+						Vendor
 					</div>
 					<div class="col-sm">
-						PRICE
+						Price
 					</div>
 					<div class="col-sm">
-						QTY
+						Quantity
 					</div>
 					<div class="col-sm">
-						DATE
+						First avaliable
 					</div>
-				</div> */}
+				</div>
 			</div>
 		);
 	}
@@ -124,19 +123,17 @@ class Results extends Component {
 			<div class="container">
 				<div class="row">
 					<div class="col-sm">
-						ID {" "}
-						{hit.id}
+						{hit.name}
 					</div>
 					<div class="col-sm">
-						PRICE {" "}
 						{hit.hind}
 					</div>
 					<div class="col-sm">
-						QTY {" "}
-						{hit.Qty}
+						{hit.qty}
 					</div>
 					<div class="col-sm">
-						DATE {hit.date}
+						{ hit.date === null ? 'N/A' : hit.date }
+						
 					</div>
 				</div>
 			</div>
@@ -222,27 +219,7 @@ class Results extends Component {
 		var fulllength = {width:"100%"};
 		var collhits = this.props.collhits;
 
-		// if (this.state.displayADV) {
-		// 	return (
-		// 		<div>
-		// 			{this.renderErrors(corpusHit)}
-		// 			{this.renderDiagnostics(corpusHit)}
-		// 			<table className="table table-condensed table-hover" style={fulllength}>
-		// 				<tbody>{corpusHit.advancedLayers.map(this.renderRowsAsADV)}</tbody>
-		// 			</table>
-		// 		</div>
-		// 	);
-		// } else if (this.state.displayKwic) {
-		// 	return (
-		// 		<div>
-		// 			{this.renderErrors(corpusHit)}
-		// 			{this.renderDiagnostics(corpusHit)}
-		// 			<table className="table table-condensed table-hover" style={fulllength}>
-		// 				<tbody>{corpusHit.kwics.map(this.renderRowsAsKwic)}</tbody>
-		// 			</table>
-		// 		</div>
-		// 	);
-		// } else {
+		
 			return (
 				<div>
 					{/* {this.renderErrors(corpusHit)}
@@ -253,70 +230,7 @@ class Results extends Component {
 		// }
 	}
 
-	// renderDisplayKWIC = () => {
-	// 	return (
-	// 		<div className="inline btn-group" style={{display:"inline-block"}}>
-	// 			<label htmlFor="inputKwic" className="btn btn-flat">
-	// 				<input
-	// 					id="inputKwic"
-	// 					type="checkbox"
-	// 					value="kwic"
-	// 					checked={this.state.displayKwic}
-	// 					onChange={this.toggleKwic}
-	// 				/>
-	// 				&nbsp;
-	// 				{dictionary[this.props.languageFromMain].resultfunctions.displayKwic}
-	// 			</label>
-	// 		</div>
-	// 	);
-	// }
-
-	// renderDisplayADV = () => {
-	// 	 return (
-	// 		 <div className="inline btn-group" style={{display:"inline-block"}}>
-	// 			<label htmlFor="inputADV" className="btn btn-flat">
-	// 				<input
-	// 					id="inputADV"
-	// 					type="checkbox"
-	// 					value="adv"
-	// 					checked={this.state.displayADV}
-	// 					onChange={this.toggleADV}
-	// 				/>
-	// 				&nbsp;
-	// 				{dictionary[this.props.languageFromMain].resultfunctions.displayAdv}
-	// 			</label>
-	// 		</div>
-	// 	);
-	// }
-
-	// renderDownloadLinks = corpusId => {
-	// 	return (
-	// 		<div className="dropdown">
-	// 			<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
-	// 				<span className="fa fa-download" aria-hidden="true"/>{" "}
-	// 					{dictionary[this.props.languageFromMain].resultfunctions.download}{" "}
-	// 				<span className="caret"/>
-	// 			</button>
-	// 			<ul className="dropdown-menu">
-	// 				<li className="dropdown-item">
-	// 					<a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
-	// 						{dictionary[this.props.languageFromMain].resultfunctions.downloadCsv}
-	// 					</a>
-	// 				</li>
-	// 				<li className="dropdown-item">
-	// 					<a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
-	// 						{dictionary[this.props.languageFromMain].resultfunctions.downloadJson}
-	// 					</a>
-	// 				</li>
-	// 				<li className="dropdown-item">
-	// 					<a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
-	// 						{dictionary[this.props.languageFromMain].resultfunctions.downloadXml}
-	// 					</a>
-	// 				</li>
-	// 			</ul>
-	// 		</div>
-	// 	);
-	// }
+	
 
 	render() {
 		var collhits = this.props.collhits;
@@ -351,7 +265,7 @@ class Results extends Component {
 					<div style={{clear:'both'}}/>
 				</div>
 				<TransitionGroup>
-					{collhits.results.map(this.renderResultPanel)}
+					{this.renderResultPanel(collhits.results)}
 				</TransitionGroup>
 			</div>
 		);
