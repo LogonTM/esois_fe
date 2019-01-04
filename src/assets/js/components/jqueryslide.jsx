@@ -7,7 +7,7 @@ class JQuerySlide extends Component {
 		var el = jQuery(ReactDOM.findDOMNode(this));
 		el.css("display", "none");
 		el.slideDown(500, callback);
-		$el.slideDown(function(){
+		el.slideDown(function(){
 			callback();
 		});
 	}

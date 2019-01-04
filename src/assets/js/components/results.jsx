@@ -78,8 +78,7 @@ class Results extends Component {
 								aria-valuenow='100' aria-valuemin="0" aria-valuemax="100"
 								style={{width: '100%', backgroundColor:'#888'}} />
 						}
-					</div> :
-					false}
+					</div> : false}
 			</div>
 		);
 	}

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
-import { authentication_token } from '../constants/constants';
+import { authentication_token, okta_url, google_auth_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import googleLogo from '../../img/google-logo.png';
 
 var PT = PropTypes
 
@@ -208,6 +209,11 @@ class LoginPage extends Component {
                                 />
 							</form>
 							<div className="bottom-gap"></div>
+						</div>
+						<div className="oauth2">
+							<a className="btn btn-block" href={google_auth_url}>
+								<img src={googleLogo} alt="google_logo"/>
+							</a>
 						</div>
 					</div>
 				</div>

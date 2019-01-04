@@ -54,6 +54,13 @@ export function checkEmailAvailability(email) {
     });
 }
 
+export function checkUserEnabled(username) {
+    return request({
+        url: back_end_host + "db/user/checkEnabled?username=" + username,
+        method: 'GET'
+    })
+}
+
 export function getCurrentUser() {
     if(!localStorage.getItem(authentication_token)) {
         return Promise.reject("No access token set.");
@@ -61,13 +68,6 @@ export function getCurrentUser() {
 
     return request({
         url: back_end_host + "db/user/me",
-        method: 'GET'
-    });
-}
-
-export function getUserProfile(username) {
-    return request({
-        url: back_end_host + "db/users/" + username,
         method: 'GET'
     });
 }

@@ -824,7 +824,7 @@ Corpora.prototype.getSelectedIds = function() {
 		}
 		return true;
 	});
-
+	
 	return ids;
 };
 
