@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
-import { authentication_token } from '../constants/constants';
+import { authentication_token, okta_url, google_auth_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import googleLogo from '../../img/google-logo.png';
 
 var PT = PropTypes
 
@@ -78,19 +79,19 @@ class LoginPage extends Component {
 						usernameOrEmail : {
 							value : this.state.usernameOrEmail.value,
 							valid: false,
-							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
+							errormessage : dictionary[this.props.languageFromMain].loginpage.error.incorrect
 						},
 						password : {
 							value : this.state.password.value,
 							valid : false,
-							errormessage : dictionary[this.props.languageFromMain].loginpage.loginerrorincorrect
+							errormessage : dictionary[this.props.languageFromMain].loginpage.error.incorrect
 						}
 					})
 				} else {
 					// Fix here Bootstrap notification for some other server side failure?
 					this.setState({
 						notificationMessage : {
-							message: "RABA: " + error.message || dictionary[this.props.languageFromMain].loginpage.loginerrorservercatch
+							message: "RABA: " + error.message || dictionary[this.props.languageFromMain].loginpage.error.servercatch
 						}
 					})
 				}
@@ -193,7 +194,7 @@ class LoginPage extends Component {
 									<div className="invalid-feedback">{this.state.password.errormessage}</div>
 								</div>
 								<Button
-									label={dictionary[this.props.languageFromMain].loginpage.loginButton}
+									label={dictionary[this.props.languageFromMain].button.login}
 									type='submit'
 									uiType='btn.lg'
 									onClick={this.logInOut}
@@ -201,13 +202,18 @@ class LoginPage extends Component {
 								/>
                                 &nbsp;
                                 <Button
-                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    label={dictionary[this.props.languageFromMain].button.register}
                                     type='submit'
 									uiType='btn.lg'
 									onClick={this.handleToRegistration}
                                 />
 							</form>
 							<div className="bottom-gap"></div>
+						</div>
+						<div className="oauth2">
+							<a className="btn btn-block" href={google_auth_url}>
+								<img src={googleLogo} alt="google_logo"/>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -217,10 +223,10 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.loginMessageP1} ${this.state.currentUser}, ${dictionary[this.props.languageFromMain].loginpage.loginMessageP2}!`}</span>
+							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.messageP1} ${this.state.currentUser}, ${dictionary[this.props.languageFromMain].loginpage.messageP2}!`}</span>
 							<div>
 								<Button
-                                    label={dictionary[this.props.languageFromMain].loginpage.logoutButton}
+                                    label={dictionary[this.props.languageFromMain].button.logout}
                                     uiType='btn.lg'
                                     onClick={this.logInOut}
                                 />

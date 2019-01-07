@@ -15,6 +15,7 @@ import LoginIcon from '../img/login-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
+import Rabalogo from '../img/rabalogo.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
@@ -45,9 +46,15 @@ class Main extends Component {
 			navbarPageFn: this.renderAggregator,
 			errorMessages: [],
 			language: 'ee',
-			loggedInStatus: false,
+			loggedInStatus: localStorage.getItem(authentication_token) !== null ? true : false,
 			userName: ''
 		}
+	}
+
+	statusFlip = () => {
+		this.setState({
+			loggedInStatus: true
+		})
 	}
 
 	error = errObj => {
@@ -150,13 +157,13 @@ class Main extends Component {
 		return <ManageUsers languageFromMain={this.state.language} /> // For admins only
 	}
 
-	renderUserManager = () => {
-		// return <UserManager/> Should combine with login page?
-	}
+	// renderUserManager = () => {
+	// 	// return <UserManager/>
+	// }
 
-	renderManageLogs = () => {
+	// renderManageLogs = () => {
 		// return <ManageLogs/>
-	}
+	// }
 
 	getPageFns = () => {
 		return {
@@ -165,8 +172,8 @@ class Main extends Component {
 			login: this.renderLogin,
 			register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
-			// userManager: this.renderUserManager, For regular users
-			// manageLogs: this.renderManageLogs For admins only
+			// userManager: this.renderUserManager, // For regular users
+			// manageLogs: this.renderManageLogs // For admins only
 			manageCenter: this.renderManageCenter // For admins only
 		}
 	}
@@ -214,11 +221,11 @@ class Main extends Component {
 		}
 	}
 
-	toUserManager = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
-			this.gotoPage(doPushHistory, 'userManager')
-		}
-	}
+	// toUserManager = doPushHistory => {
+	// 	if(localStorage.getItem(authentication_token) !== null) {
+	// 		this.gotoPage(doPushHistory, 'userManager')
+	// 	}
+	// }
 
 	toManageLogs = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null) {
@@ -275,7 +282,7 @@ class Main extends Component {
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
-							title='Agregator'
+							title='Aggregator'
 							onClick={this.toAggregator.bind(this, true)}
 						>
 							<img
@@ -310,7 +317,7 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
-{/* 						<a
+ 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
@@ -327,7 +334,7 @@ class Main extends Component {
 							onClick={this.toManageUsers.bind(this, true)}
 						>
 							<i className="fa fa-users"/>
-						</a> */}
+						</a>
 					</div>
 				</div>
 			</div>
@@ -366,6 +373,11 @@ class Main extends Component {
 									alt='CLARIN ERIC logo'
 								/>
 							</a>
+								<img
+									className='logo'
+									src={Rabalogo}
+									alt='Raba logo'
+								/>
 						</header>
 						<button
 							type='button'
@@ -393,6 +405,7 @@ class Main extends Component {
 	}
 
 	render() {
+		console.log("Log in status from main: " + this.state.loggedInStatus)
 		return (
 			<div>
 				<div>
@@ -427,8 +440,24 @@ var routeFromLocation = function() {
 			this.toManageCenter()
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null)  {
 			this.toManageUsers()
-		} else if (path === '/user' /*&& localStorage.getItem(authentication_token) !== null*/) {
-			this.toUserManager()
+		} else if (path === '/oauth2/redirect') {
+			function getUrlParameter(name) {
+				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+				var results = regex.exec(document.location);
+				return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+			}
+			const token = getUrlParameter('token');
+			if(token) {
+				localStorage.setItem(authentication_token, token);
+				path = '/'
+				document.location = '/'
+			} else {
+				path = '/'
+				document.location = '/'
+			}
+		// } else if (path === '/user' && localStorage.getItem(authentication_token) !== null) {
+		// 	this.toUserManager()
 		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
 			this.toManageLogs()
 		} else {

@@ -59,7 +59,7 @@ class Modal extends Component {
 							<button type="button" className="close" data-dismiss="modal">
 								<span aria-hidden="true">&times;</span>
 								<span className="sr-only">
-									{dictionary[this.props.languageFromMain].common.closeButton}
+									{dictionary[this.props.languageFromMain].button.close}
 								</span>
 							</button>
 						</div>
@@ -68,7 +68,7 @@ class Modal extends Component {
 						</div>
 						<div className="modal-footer">
 							<Button
-								label={dictionary[this.props.languageFromMain].common.closeButton}
+								label={dictionary[this.props.languageFromMain].button.close}
 								data-dismiss="modal"
 							/>
 						</div>
