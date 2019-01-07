@@ -45,9 +45,15 @@ class Main extends Component {
 			navbarPageFn: this.renderAggregator,
 			errorMessages: [],
 			language: 'ee',
-			loggedInStatus: false,
+			loggedInStatus: localStorage.getItem(authentication_token) !== null ? true : false,
 			userName: ''
 		}
+	}
+
+	statusFlip = () => {
+		this.setState({
+			loggedInStatus: true
+		})
 	}
 
 	error = errObj => {
@@ -393,6 +399,7 @@ class Main extends Component {
 	}
 
 	render() {
+		console.log("Log in status from main: " + this.state.loggedInStatus)
 		return (
 			<div>
 				<div>
