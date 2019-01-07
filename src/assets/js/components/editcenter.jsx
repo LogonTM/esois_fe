@@ -27,7 +27,7 @@ class EditCenter extends Component {
         }).then(response => {
             console.log(response)
             if(response.status === 200) {
-                alert(dictionary[this.props.languageFromMain].editcenter.corpusIsUpdated);
+                alert(dictionary[this.props.languageFromMain].center.edit.success);
             }
         }).then(this.props.getCenterList)
     }
@@ -42,7 +42,7 @@ class EditCenter extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                         <label htmlFor="Center_id">
-                                {dictionary[this.props.languageFromMain].common.corpusId}
+                                {dictionary[this.props.languageFromMain].center.common.id}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -59,7 +59,7 @@ class EditCenter extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="Center_name">
-                                {dictionary[this.props.languageFromMain].common.corpusName}
+                                {dictionary[this.props.languageFromMain].center.common.name}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -70,10 +70,10 @@ class EditCenter extends Component {
                                 id="Center_name"
                                 value={this.props.oneCenterName}
                                 onChange={this.props.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
+                                placeholder={dictionary[this.props.languageFromMain].center.common.name}
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
+                                {dictionary[this.props.languageFromMain].center.common.enterName}
                             </div>
                         </div>
                     </div>
@@ -92,13 +92,13 @@ class EditCenter extends Component {
                                 placeholder="http"
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
+                                {dictionary[this.props.languageFromMain].center.common.enterLink}
                             </div>
                         </div>
                     </div>
                     <p className='align-right'>
                         <Button
-                            label={dictionary[this.props.languageFromMain].common.save}
+                            label={dictionary[this.props.languageFromMain].button.save}
                             onClick={this.handleEdit}
                             disabled={!disableButton}
                         />

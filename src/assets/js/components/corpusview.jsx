@@ -168,9 +168,9 @@ class CorpusView extends Component {
 		}
 		return (
 			<div id="searchInCollections">
-				{`${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP1} ${visible} 
-				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP2} ${total} 
-				${dictionary[this.props.languageFromMain].corpusview.howManyCollectionsAreShownP3}.`}
+				{`${dictionary[this.props.languageFromMain].corpusview.howManyAreShownP1} ${visible} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyAreShownP2} ${total} 
+				${dictionary[this.props.languageFromMain].corpusview.howManyAreShownP3}.`}
 			</div>
 		);
 	}

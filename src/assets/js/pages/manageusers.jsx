@@ -101,7 +101,7 @@ class ManageUsers extends Component {
 				<table className='table table-striped'>
 					<thead className='thead-blue'>
 						<tr>
-							<TableHeaderRow headers={dictionary[this.props.languageFromMain].manageuser.headers} />
+							<TableHeaderRow headers={dictionary[this.props.languageFromMain].user.headers} />
 							<th>
 								{dictionary[this.props.languageFromMain].common.actions}
 							</th>
@@ -115,10 +115,10 @@ class ManageUsers extends Component {
 										<td>{item.name}</td>
 										<td>{item.username}</td>
 										<td>{item.email}</td>
-										<td>{dictionary[this.props.languageFromMain].manageuser.enabled[item.enabled]}</td>
+										<td>{dictionary[this.props.languageFromMain].user.manage.enabled[item.enabled]}</td>
 										<td>
 											<Button
-												label={dictionary[this.props.languageFromMain].common.edit}
+												label={dictionary[this.props.languageFromMain].button.edit}
 												onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled)}
 											/>
 										</td>
@@ -134,7 +134,7 @@ class ManageUsers extends Component {
 					ref='editUserModal'
 					title={
 						<span>
-							{dictionary[this.props.languageFromMain].manageuser.editUserData}
+							{dictionary[this.props.languageFromMain].user.manage.edit}
 						</span>
 					}
 					languageFromMain={this.props.languageFromMain}

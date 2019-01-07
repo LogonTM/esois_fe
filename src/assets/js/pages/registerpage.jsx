@@ -64,14 +64,16 @@ class RegisterPage extends Component {
         if(name.length < minimum_name_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
-                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
+                hasError: `${dictionary[this.props.languageFromMain].register.nameerror.shortP1} 
+                ${minimum_name_length} 
+                ${dictionary[this.props.languageFromMain].register.nameerror.shortP2}`
             }
         } else if (name.length > maximum_name_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.nameerrortooshortP1 + " " + minimum_name_length + " " + 
-                          dictionary[this.props.languageFromMain].register.nameerrortooshortP2
+                hasError: `${dictionary[this.props.languageFromMain].register.nameerror.longP1} 
+                ${maximum_name_length} 
+                ${dictionary[this.props.languageFromMain].register.nameerror.longP2}`
             }
         } else {
             return {
@@ -97,14 +99,16 @@ class RegisterPage extends Component {
         if(username.length < minimum_username_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + minimum_username_length + " " + 
-                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
+                hasError: `${dictionary[this.props.languageFromMain].register.usernameerror.shortP1} 
+                ${minimum_username_length} 
+                ${dictionary[this.props.languageFromMain].register.usernameerror.shortP2}`
             }
         } else if (username.length > maximum_name_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.usernameerrortooshortP1 + " " + maximum_username_length + " " + 
-                          dictionary[this.props.languageFromMain].register.usernameerrortooshortP2
+                hasError: `${dictionary[this.props.languageFromMain].register.usernameerror.longP1} 
+                ${maximum_username_length} 
+                ${dictionary[this.props.languageFromMain].register.usernameerror.longP2}`
             }
         } else {
             return {
@@ -129,14 +133,16 @@ class RegisterPage extends Component {
         if(password.length < minimum_password_length) {
             return {
                 isValid: false,
-                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
-                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
+                hasError : `${dictionary[this.props.languageFromMain].register.passworderror.shortP1} 
+                ${minimum_password_length} 
+                ${dictionary[this.props.languageFromMain].register.passworderror.shortP2}`
             }
         } else if (password.length > maximum_password_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
-                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
+                hasError: `${dictionary[this.props.languageFromMain].register.passworderror.longP1} 
+                ${maximum_password_length} 
+                ${dictionary[this.props.languageFromMain].register.passworderror.longP2}`
             }
         } else {
             return {
@@ -161,19 +167,21 @@ class RegisterPage extends Component {
         if(password.length < minimum_password_length) {
             return {
                 isValid: false,
-                hasError : dictionary[this.props.languageFromMain].register.passworderrortooshortP1 + " " + minimum_password_length + " " + 
-                           dictionary[this.props.languageFromMain].register.passworderrortooshortP2
+                hasError : `${dictionary[this.props.languageFromMain].register.passworderror.shortP1} 
+                ${minimum_password_length} 
+                ${dictionary[this.props.languageFromMain].register.passworderror.shortP2}`
             }
         } else if (password.length > maximum_password_length) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrortoolongP1 + " " + maximum_password_length + " " + 
-                          dictionary[this.props.languageFromMain].register.passworderrortoolongP2
+                hasError: `${dictionary[this.props.languageFromMain].register.passworderror.longP1} 
+                ${maximum_password_length} 
+                ${dictionary[this.props.languageFromMain].register.passworderror.longP2}`
             }
         } else if (this.state.password.value !== password) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.passworderrornomatch
+                hasError: dictionary[this.props.languageFromMain].register.passworderror.nomatch
             }            
         } else if (this.state.password.value === password) {
             return {
@@ -198,7 +206,7 @@ class RegisterPage extends Component {
         if(!email) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.emailerrorntovalid
+                hasError: dictionary[this.props.languageFromMain].register.emailerror.notvalid
             }
         }
 
@@ -206,15 +214,16 @@ class RegisterPage extends Component {
         if(!email_regex.test(email)) {
             return {
                 isValid: false,
-                hasError: dictionary[this.props.languageFromMain].register.emailerrornotvalid
+                hasError: dictionary[this.props.languageFromMain].register.emailerror.notvalid
             }
         }
 
         if(email.length > maximum_email_length) {
             return {
                 isValid: false,
-                hasError : dictionary[this.props.languageFromMain].register.emailerrortoolongP1 + " " + maximum_email_length + " " + 
-                           dictionary[this.props.languageFromMain].register.emailerrortoolongP2
+                hasError : `${dictionary[this.props.languageFromMain].register.emailerror.longP1} 
+                ${maximum_email_length} 
+                ${dictionary[this.props.languageFromMain].register.emailerror.longP2}`
             }
         }
 
@@ -324,7 +333,7 @@ class RegisterPage extends Component {
                     username: {
                         value: usernameValue,
                         valid: false,
-                        errormessage: dictionary[this.props.languageFromMain].register.usernameavailableerror
+                        errormessage: dictionary[this.props.languageFromMain].register.usernameerror.notavailable
                     }
                 });
             }
@@ -368,7 +377,7 @@ class RegisterPage extends Component {
                     email: {
                         value: emailValue,
                         valid: false,
-                        errormessage: dictionary[this.props.languageFromMain].register.emailavailableerror
+                        errormessage: dictionary[this.props.languageFromMain].register.emailerror.notavailable
                     }
                 });
             }
@@ -462,7 +471,7 @@ class RegisterPage extends Component {
                                     <div className="invalid-feedback">{this.state.email.errormessage}</div>
                                 </div>
                                 <Button
-                                    label={dictionary[this.props.languageFromMain].loginpage.registerButton}
+                                    label={dictionary[this.props.languageFromMain].button.register}
                                     uiType='btn.lg'
                                     onClick={this.handleRegister}
                                     disabled={this.formValidator()}

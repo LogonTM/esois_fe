@@ -15,6 +15,7 @@ import LoginIcon from '../img/login-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
+import Rabalogo from '../img/rabalogo.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
@@ -281,7 +282,7 @@ class Main extends Component {
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
-							title='Agregator'
+							title='Aggregator'
 							onClick={this.toAggregator.bind(this, true)}
 						>
 							<img
@@ -372,6 +373,11 @@ class Main extends Component {
 									alt='CLARIN ERIC logo'
 								/>
 							</a>
+								<img
+									className='logo'
+									src={Rabalogo}
+									alt='Raba logo'
+								/>
 						</header>
 						<button
 							type='button'
@@ -449,7 +455,7 @@ var routeFromLocation = function() {
 			} else {
 				path = '/'
 				document.location = '/'
-			}		
+			}
 		// } else if (path === '/user' && localStorage.getItem(authentication_token) !== null) {
 		// 	this.toUserManager()
 		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {

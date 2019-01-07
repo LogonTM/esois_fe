@@ -383,9 +383,7 @@ class AggregatorPage extends Component {
 	
 	toggleFcsView = (e, fcsTextAreaVisibility) => {
 		e.preventDefault();
-		this.setState({
-			fcsTextAreaVisibility: fcsTextAreaVisibility
-		});
+		this.setState({ fcsTextAreaVisibility });
 	}
 
 	renderZoomedResultTitle = corpusHit => {
@@ -540,7 +538,9 @@ class AggregatorPage extends Component {
 								</div>
 								<div className="input-group">
 									<Button
-										label={this.state.language[1]}
+										label={(this.state.language === this.anyLanguage) ? 
+											dictionary[this.props.languageFromMain].common.anyLanguage
+											: this.state.language[1]}
 										uiType='dropdown-toggle'
 										onClick={this.toggleLanguageSelection}
 									/>
@@ -831,11 +831,11 @@ Corpora.prototype.getSelectedIds = function() {
 Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
 	if (this.corpora.length === selectedIdsCount) {
-		return `${dictionary[languageFromMain].corpusview.allCollectionsSelected} (${selectedIdsCount})`;
+		return `${dictionary[languageFromMain].corpusview.selected.all} (${selectedIdsCount})`;
 	} else if (selectedIdsCount === 1) {
-		return dictionary[languageFromMain].corpusview.oneCollectionSelected;
+		return dictionary[languageFromMain].corpusview.selected.one;
 	}
-	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.someCollectionsSelected}`;
+	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.selected.some}`;
 };
 
 function getQueryVariable(variable) {

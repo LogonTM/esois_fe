@@ -34,7 +34,7 @@ class Results extends Component {
 					<button className="btn btn-outline-secondary zoomResultButton"
 							onClick={e => this.props.toggleResultModal(e,corpusHit)}>
 						<span className="fa fa-eye"/>
-						{dictionary[this.props.languageFromMain].results.viewButton}
+						{dictionary[this.props.languageFromMain].button.view}
 					</button>
 				</div>
 			</div>
@@ -63,7 +63,7 @@ class Results extends Component {
 	renderProgressMessage = () => {
 		var collhits = this.props.collhits;
 		var done = collhits.results.length - collhits.inProgress;
-		var msg = `${collhits.hits} ${dictionary[this.props.languageFromMain].results.renderProgressMessageP1} ${done} ${dictionary[this.props.languageFromMain].results.renderProgressMessageP2}`
+		var msg = `${collhits.hits} ${dictionary[this.props.languageFromMain].results.progressMessageP1} ${done} ${dictionary[this.props.languageFromMain].results.progressMessageP2}`
 		var percents = Math.round(100 * collhits.hits / collhits.results.length);
 		var styleperc = {width: percents+"%"};
 		return (
@@ -223,7 +223,7 @@ class Results extends Component {
 						onChange={this.toggleKwic}
 					/>
 					&nbsp;
-					{dictionary[this.props.languageFromMain].resultfunctions.displayKwic}
+					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
 				</label>
 			</div>
 		);
@@ -241,7 +241,7 @@ class Results extends Component {
 						onChange={this.toggleADV}
 					/>
 					&nbsp;
-					{dictionary[this.props.languageFromMain].resultfunctions.displayAdv}
+					{dictionary[this.props.languageFromMain].resultfunctions.display.adv}
 				</label>
 			</div>
 		);
@@ -252,23 +252,23 @@ class Results extends Component {
 			<div className="dropdown">
 				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
 					<span className="fa fa-download" aria-hidden="true"/>{" "}
-						{dictionary[this.props.languageFromMain].resultfunctions.download}{" "}
+						{dictionary[this.props.languageFromMain].button.download}{" "}
 					<span className="caret"/>
 				</button>
 				<ul className="dropdown-menu">
 					<li className="dropdown-item">
 						<a href={this.props.getDownloadLink(corpusId, "csv")}>{" "}
-							{dictionary[this.props.languageFromMain].resultfunctions.downloadCsv}
+							{dictionary[this.props.languageFromMain].resultfunctions.download.csv}
 						</a>
 					</li>
 					<li className="dropdown-item">
 						<a href={this.props.getDownloadLink(corpusId, "json")}>{" "}
-							{dictionary[this.props.languageFromMain].resultfunctions.downloadJson}
+							{dictionary[this.props.languageFromMain].resultfunctions.download.json}
 						</a>
 					</li>
 					<li className="dropdown-item">
 						<a href={this.props.getDownloadLink(corpusId, "xml")}>{" "}
-							{dictionary[this.props.languageFromMain].resultfunctions.downloadXml}
+							{dictionary[this.props.languageFromMain].resultfunctions.download.xml}
 						</a>
 					</li>
 				</ul>
@@ -289,7 +289,7 @@ class Results extends Component {
 				<div style={{marginBottom:2}}>
 					{ showprogress ? false :
 						<div className="float-left">
-							{`${collhits.hits} ${dictionary[this.props.languageFromMain].results.howManyMatchingCollectionsFound}`}
+							{`${collhits.hits} ${dictionary[this.props.languageFromMain].results.collectionsFound}`}
 						</div>
 					}
 					{ collhits.hits === 0 ? false :
