@@ -15,7 +15,6 @@ import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
 
 var PT = PropTypes;
-var back_end_host = 'http://217.159.229.95:8888';
 
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
