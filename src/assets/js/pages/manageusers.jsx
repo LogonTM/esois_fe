@@ -32,7 +32,7 @@ class ManageUsers extends Component {
 	}
 
 	getUserList = () => {
-		fetch(back_end_host + 'db/user/list')
+		fetch(back_end_host + 'db/user')
 		.then(response => response.json())
 		.then(result => {
 			this.setState({

@@ -17,7 +17,7 @@ class EditUser extends Component {
     }
 
     handleEdit = () => {
-        fetch(back_end_host + 'db/user/update', {
+        fetch(back_end_host + 'db/user', {
             method: 'POST',
             body: JSON.stringify({
                 id: this.props.oneUserId,

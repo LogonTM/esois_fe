@@ -31,7 +31,7 @@ class ManageCenter extends Component {
 	}
 
 	getCenterList = () => {
-		fetch(back_end_host + 'db/center/list')
+		fetch(back_end_host + 'db/center')
 		.then(response => response.json())
 		.then(result => {
 			this.setState({
@@ -42,7 +42,7 @@ class ManageCenter extends Component {
 
 	deleteCenter = id => {
 		if (window.confirm(dictionary[this.props.languageFromMain].center.delete.confirm)) {
-			fetch(back_end_host + 'db/center/delete/' + id, {
+			fetch(back_end_host + 'db/center/' + id, {
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',

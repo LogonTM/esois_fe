@@ -25,7 +25,7 @@ class AddCenter extends Component {
     }
 
     handleAdd = () => {
-        fetch(back_end_host + 'db/center/add', {
+        fetch(back_end_host + 'db/center', {
             method: 'PUT',
             body: JSON.stringify({
                 id: this.state.id,
