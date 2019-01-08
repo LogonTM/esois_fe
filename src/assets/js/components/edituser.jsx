@@ -39,7 +39,7 @@ class EditUser extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="name">
-                                {dictionary[this.props.languageFromMain].edituser.name}
+                                {dictionary[this.props.languageFromMain].user.headers[0].label}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -71,7 +71,7 @@ class EditUser extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="enabled">
-                                {dictionary[this.props.languageFromMain].edituser.accountstate}
+                                {dictionary[this.props.languageFromMain].user.edit.accountstate}
                             </label>
                         </div>
                         <div className="col-sm-3">
@@ -80,20 +80,20 @@ class EditUser extends Component {
                                 type="text"
                                 name="oneUserEnabled"
                                 id="enabled"
-                                value={dictionary[this.props.languageFromMain].manageuser.enabled[this.props.oneUserAccountstate]}
+                                value={dictionary[this.props.languageFromMain].user.manage.enabled[this.props.oneUserAccountstate]}
                                 readOnly
                             />
                         </div>
                         <div className="col-sm-3">
                             <Button
-                                label={dictionary[this.props.languageFromMain].common.edit}
+                                label={dictionary[this.props.languageFromMain].button.edit}
                                 onClick={e => this.props.handleAccountState(e, this.props.oneUserAccountstate)}
                             />
                         </div>
                     </div>
                     <p className='align-right'>
                         <Button
-                            label={dictionary[this.props.languageFromMain].common.save}
+                            label={dictionary[this.props.languageFromMain].button.save}
                             onClick={this.handleEdit}
                         />
                     </p>

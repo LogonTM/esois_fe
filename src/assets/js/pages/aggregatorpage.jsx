@@ -4,7 +4,6 @@ import 'bootstrap';
 import Button from '../utilities/button';
 import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
-import ELlogo from '../../img/el-reg-fond.jpg';
 import LanguageSelector from '../components/languageselector.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
@@ -46,18 +45,18 @@ class AggregatorPage extends Component {
 	];
 	
 	queryTypeMap = {
-			 cql: this.queryTypes[0],
-			 fcs: this.queryTypes[1]
+		cql: this.queryTypes[0],
+		fcs: this.queryTypes[1]
 	};
 
 	constructor(props) {
 		super(props);
 		var aggrContext = getQueryVariable('x-aggregation-context');
-	    aggrContext = aggrContext && JSON.parse(aggrContext);
+	   aggrContext = aggrContext && JSON.parse(aggrContext);
 		this.state = {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
-	        queryTypeId: getQueryVariable('queryType') || 'cql',
+	      queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
 			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
 			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
@@ -76,22 +75,22 @@ class AggregatorPage extends Component {
 	}
 
 	componentDidMount() {
-	    this._isMounted = true;
+	   this._isMounted = true;
 
 		this.props.ajax({
 			url: back_end_host + 'rest/init',
 			success: (json, textStatus, jqXHR) => {
 				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
-                    var aggregationContext = json['x-aggregation-context'] || this.state.aggregationContext;
+					var aggregationContext = json['x-aggregation-context'] || this.state.aggregationContext;
 				    
-				    window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
-				    window.MyAggregator.corpora = json.corpora;
-	                window.MyAggregator.xAggregationContext = aggregationContext;
-					
-				    // Setting visibility, e.g. only corpora 
-                    // from v2.0 endpoints for fcs v2.0
-                    corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+					window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
+					window.MyAggregator.corpora = json.corpora;
+					window.MyAggregator.xAggregationContext = aggregationContext;
+				
+					// Setting visibility, e.g. only corpora 
+					// from v2.0 endpoints for fcs v2.0
+					corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
 
                     if (aggregationContext) {
                         const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
@@ -132,7 +131,7 @@ class AggregatorPage extends Component {
 	                }, this.postInit);
 				}
 				else {
-				    console.warn("Got Aggregator init response, but not mounted!");
+					console.warn("Got Aggregator init response, but not mounted!");
 				}
 			}
 		});
@@ -262,6 +261,10 @@ class AggregatorPage extends Component {
 		});
 	}
 
+	handleQueryTypeChange = e => {
+		this.setQueryType(e.target.value);
+	}
+
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
 		setQueryVariable('queryType', queryTypeId);
@@ -269,7 +272,7 @@ class AggregatorPage extends Component {
 		this.setState({
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
-			searchId: null,
+			searchId: null
 		});
 	}
 
@@ -335,28 +338,28 @@ class AggregatorPage extends Component {
 	}
 
 	toggleCorpusSelection = e => {
-	    $(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
+		$(ReactDOM.findDOMNode(this.refs.corporaModal)).modal();
 		e.preventDefault();
 		e.stopPropagation();
 	}
 
 	toggleResultModal = (e, corpusHit) => {
-	    $(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
+		$(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
 		e.stopPropagation();
 	}
 
 	onQueryChange = queryStr => {
-	    if (this.state.queryTypeId === 'cql') {
-	        this.setState({
-				cqlQuery: queryStr || '',
-		    });
-	    } else {
-	        this.setState({
-				fcsQuery: queryStr || '',
-		    });
-	    }
+		if (this.state.queryTypeId === 'cql') {
+			this.setState({
+			cqlQuery: queryStr || '',
+			});
+		} else {
+			this.setState({
+			fcsQuery: queryStr || '',
+			});
+		}
 		setQueryVariable('query', queryStr);
 	}
 
@@ -375,17 +378,15 @@ class AggregatorPage extends Component {
 		}
 	}
 
-    handleADVKey = event => {
-	    if (event.keyCode === 13) {
-			this.addADVToken();
-	    }
+	handleADVKey = event => {
+		if (event.keyCode === 13) {
+		this.addADVToken();
+		}
 	}
 	
 	toggleFcsView = (e, fcsTextAreaVisibility) => {
 		e.preventDefault();
-		this.setState({
-			fcsTextAreaVisibility: fcsTextAreaVisibility
-		});
+		this.setState({ fcsTextAreaVisibility });
 	}
 
 	renderZoomedResultTitle = corpusHit => {
@@ -416,13 +417,13 @@ class AggregatorPage extends Component {
 	}
 
 	renderQueryInput = () => {
-	    return (
-	        <QueryInput 
-			    searchedLanguage={this.state.searchedLanguage || [multipleLanguageCode]}
-			    queryTypeId={this.state.queryTypeId}
-			    query={this.getCurrentQuery()}
-			    placeholder={dictionary[this.props.languageFromMain].cql.placeholder}
-			    onKeyDown={this.handleKey}
+	   return (
+	      <QueryInput 
+				searchedLanguage={this.state.searchedLanguage || [multipleLanguageCode]}
+				queryTypeId={this.state.queryTypeId}
+				query={this.getCurrentQuery()}
+				placeholder={dictionary[this.props.languageFromMain].cql.placeholder}
+				onKeyDown={this.handleKey}
 				handleKeyTextarea={this.handleKeyTextarea}
 				languageFromMain={this.props.languageFromMain}
 				corpora={this.props.corpora}
@@ -432,47 +433,62 @@ class AggregatorPage extends Component {
 		);
 	}
 	
-	renderCql = () => {
-	    var queryType = this.queryTypeMap[this.state.queryTypeId];
-	    
-	    return (
-			<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
-				<div className="input-group mb-3">
-					<div className="input-group-prepend">
-						<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-							{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
-						</span>
-					</div>
-					{ this.renderQueryInput() }
-					<div className="input-group-append">
-						{this.renderSearchButtonOrLink()}
-					</div>
+	renderCql = () => (
+		<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
+			<div className="input-group mb-3">
+				{ this.renderQueryInput() }
+				<div className="input-group-append">
+					{this.renderSearchButtonOrLink()}
 				</div>
 			</div>
-		);
-	}
-	
+		</div>
+	);
+
 	renderGQB = () => {
-	    var queryType = this.queryTypeMap[this.state.queryTypeId];
 	    return (
 			<div style={{marginLeft:16, marginRight:16}}>
 				<div className="card">
 					<div
 						id='fcsFormHeading'
 						className="card-heading"
-						style={{backgroundColor:queryType.searchLabelBkColor, fontSize: "120%"}}
 					>
-						{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
+						<div className="row">
+							<div className="col-l-2 col-md-3 col-sm-4 col-xs-4">
+								<fieldset>
+									<div className="switch-toggle switch-candy blue">
+										<input
+											id="fcs-form"
+											name="fcs"
+											type="radio"
+											checked={!this.state.fcsTextAreaVisibility}
+											readOnly
+										/>
+										<label
+											htmlFor="fcs-form"
+											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+										>
+											{dictionary[this.props.languageFromMain].fcs.form}
+										</label>
+										<input
+											id="fcs-text"
+											name="fcs"
+											type="radio"
+											checked={this.state.fcsTextAreaVisibility}
+											readOnly
+										/>
+										<label
+											htmlFor="fcs-text"
+											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+										>
+											{dictionary[this.props.languageFromMain].fcs.text}
+										</label>
+										<a></a>
+									</div>
+								</fieldset>
+							</div>
+						</div>
 					</div>
 					<div className="card-body">
-						<p>
-							<Button
-								label={this.state.fcsTextAreaVisibility ?
-								dictionary[this.props.languageFromMain].queryinput.fcsQueryFromButton :
-								dictionary[this.props.languageFromMain].queryinput.fcsTextFieldButton}
-								onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
-							/>
-						</p>
 						{ this.renderQueryInput() }
 					</div>
 					<div className="card-footer">
@@ -500,7 +516,7 @@ class AggregatorPage extends Component {
                 unavailable.push(c);
             }
             if (c.selected) {
-                // apparently a selected corpus 
+               // apparently a selected corpus 
             }
         });
         
@@ -524,6 +540,42 @@ class AggregatorPage extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
+					<div className="col-xl-5 col-l-5 col-md-7 col-sm-9 col-xs-12">
+						<fieldset>
+							<div className="switch-toggle switch-candy orange">
+								<input
+									id='cql'
+									name='queryTypeOptions'
+									type='radio'
+									value='cql'
+									checked={this.state.queryTypeId === 'cql'}
+									onChange={this.handleQueryTypeChange}
+								/>
+								<label
+									htmlFor='cql'
+								>
+									{dictionary[this.props.languageFromMain].cql.nameBtn}
+								</label>
+								<input
+									id='fcs'
+									name='queryTypeOptions'
+									type='radio'
+									value='fcs'
+									checked={this.state.queryTypeId === 'fcs'}
+									onChange={this.handleQueryTypeChange}
+								/>
+								<label
+									htmlFor="fcs"
+								>
+									{dictionary[this.props.languageFromMain].fcs.nameBtn}
+								</label>
+								<a></a>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+
+				<div className="row justify-content-center" style={{marginTop:30}}>
 					<div className="col-12">
 						{ (this.state.queryTypeId === "fcs") ? this.renderGQB() : this.renderCql() }
 					</div>
@@ -540,7 +592,9 @@ class AggregatorPage extends Component {
 								</div>
 								<div className="input-group">
 									<Button
-										label={this.state.language[1]}
+										label={(this.state.language === this.anyLanguage) ? 
+											dictionary[this.props.languageFromMain].common.anyLanguage
+											: this.state.language[1]}
 										uiType='dropdown-toggle'
 										onClick={this.toggleLanguageSelection}
 									/>
@@ -548,39 +602,6 @@ class AggregatorPage extends Component {
 							</div>
 						</form>
 					</div>
-					<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">
-								<div className="input-group">
-									<Button
-										label={dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
-										uiType='dropdown-toggle dropdown-toggle-split'
-										aria-expanded="false"
-										data-toggle="dropdown"
-									/>
-									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ this.queryTypes.map(l => {
-												var cls = l.disabled ? 'disabled':'dropdown-item';
-												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (
-													<li 
-														key={l.id}
-														className={cls}
-													>
-														<a tabIndex="-1" href="#" onClick={handler}>
-															{dictionary[this.props.languageFromMain][l.id].name}
-														</a>
-													</li>
-												);
-											})
-										}
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div className="row justify-content-center align-items-center" >
 					<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">
@@ -831,11 +852,11 @@ Corpora.prototype.getSelectedIds = function() {
 Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
 	if (this.corpora.length === selectedIdsCount) {
-		return `${dictionary[languageFromMain].corpusview.allCollectionsSelected} (${selectedIdsCount})`;
+		return `${dictionary[languageFromMain].corpusview.selected.all} (${selectedIdsCount})`;
 	} else if (selectedIdsCount === 1) {
-		return dictionary[languageFromMain].corpusview.oneCollectionSelected;
+		return dictionary[languageFromMain].corpusview.selected.one;
 	}
-	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.someCollectionsSelected}`;
+	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.selected.some}`;
 };
 
 function getQueryVariable(variable) {

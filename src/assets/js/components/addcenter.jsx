@@ -62,7 +62,7 @@ class AddCenter extends Component {
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="Center_id">
-                            {dictionary[this.props.languageFromMain].common.corpusId}
+                                {dictionary[this.props.languageFromMain].center.common.id}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -73,17 +73,17 @@ class AddCenter extends Component {
                                 id="Center_id"
                                 value={this.state.id}
                                 onChange={this.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusId}
+                                placeholder={dictionary[this.props.languageFromMain].center.common.id}
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].addcenter.enterCorpusId}
+                                {dictionary[this.props.languageFromMain].center.add.enterId}
                             </div>
                         </div>
                     </div>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="Center_name">
-                                {dictionary[this.props.languageFromMain].common.corpusName}
+                                {dictionary[this.props.languageFromMain].center.common.name}
                             </label>
                         </div>
                         <div className="col-sm-9">
@@ -94,11 +94,11 @@ class AddCenter extends Component {
                                 id="Center_name"
                                 value={this.state.centerName}
                                 onChange={this.handleChange}
-                                placeholder={dictionary[this.props.languageFromMain].common.corpusName}
+                                placeholder={dictionary[this.props.languageFromMain].center.common.name}
 
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusName}
+                                {dictionary[this.props.languageFromMain].center.common.enterName}
                             </div>
                         </div>
                     </div>
@@ -117,13 +117,13 @@ class AddCenter extends Component {
                                 placeholder="http"
                             />
                             <div className="invalid-feedback">
-                                {dictionary[this.props.languageFromMain].common.enterCorpusLink}
+                                {dictionary[this.props.languageFromMain].center.common.enterLink}
                             </div>
                         </div>
                     </div>
                     <p className='align-right'>
                         <Button
-                            label={dictionary[this.props.languageFromMain].common.add}
+                            label={dictionary[this.props.languageFromMain].button.add}
                             onClick={this.handleAdd}
                             disabled={!disableButton}
                             data-dismiss='modal'

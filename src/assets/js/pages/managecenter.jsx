@@ -79,14 +79,14 @@ class ManageCenter extends Component {
 				<div className='top-gap'></div>
 				<p className='align-right'>
 					<Button
-						label={dictionary[this.props.languageFromMain].managecenter.addNewCorpus}
+						label={dictionary[this.props.languageFromMain].center.manage.add}
 						onClick={this.toggleAdd}
 					/>
 				</p>
 				<table className='table table-striped'>
 					<thead className='thead-blue'>
 						<tr>
-							<TableHeaderRow headers={dictionary[this.props.languageFromMain].managecenter.headers} />
+							<TableHeaderRow headers={dictionary[this.props.languageFromMain].center.headers} />
 							<th>
 								{dictionary[this.props.languageFromMain].common.actions}
 							</th>
@@ -102,12 +102,12 @@ class ManageCenter extends Component {
 										<td>{item.link}</td>
 										<td>
 											<Button
-												label={dictionary[this.props.languageFromMain].common.edit}
+												label={dictionary[this.props.languageFromMain].button.edit}
 												onClick={e => this.toggleEdit(e, item.id, item.centerName, item.link)}
 											/>
 											&nbsp;
 											<Button
-												label={dictionary[this.props.languageFromMain].common.delete}
+												label={dictionary[this.props.languageFromMain].button.delete}
 												onClick={this.deleteCenter.bind(this, item.id)}
 											/>
 										</td>
@@ -123,7 +123,7 @@ class ManageCenter extends Component {
 					ref='AddCenterModal'
 					title={
 						<span>
-							{dictionary[this.props.languageFromMain].managecenter.addNewCorpus}
+							{dictionary[this.props.languageFromMain].center.manage.add}
 						</span>
 					}
 					languageFromMain={this.props.languageFromMain}
@@ -138,7 +138,7 @@ class ManageCenter extends Component {
 					ref='editCenterModal'
 					title={
 						<span>
-							{dictionary[this.props.languageFromMain].managecenter.editCenterData}
+							{dictionary[this.props.languageFromMain].center.manage.edit}
 						</span>
 					}
 					languageFromMain={this.props.languageFromMain}

@@ -1,30 +1,27 @@
 export default {
     ee: {
+        button: {
+            add: 'Lisa',
+            close: 'Sulge',
+            delete: 'Kustuta',
+            download: 'Allalaadimine',
+            edit: 'Muuda',
+            login: 'Sisene',
+            logout: 'Välju',
+            register: 'Registreeri',
+            save: 'Salvesta',
+            update: 'Uuenda',
+            view: 'Vaata'
+        },
         common: {
             actions: 'Tegevused',
-            add: 'Lisa',
             anyLanguage: 'igas keeles',
-            closeButton: 'Sulge',
-            corpusId: 'Korpuse ID',
-            corpusName: 'Korpuse nimi',
-            delete: 'Kustuta',
-            edit: 'Muuda',
-            enterCorpusName: 'Sisesta korpuse nimi',
-            enterCorpusLink: 'Sisesta korpuse URL',
             homepage: '– Koduleht',
             in: ' ',
             password: 'Salasõna',
-            save: 'Salvesta',
             search: 'Otsing',
             toggleNavigation: 'Ava navigatsiooni menüü',
-            update: 'Uuenda',
             username: 'Kasutajanimi',
-        },
-        addcenter: {
-            enterCorpusId: 'Sisesta korpuse ID',
-            newCorpusAddedSuccess: 'Uus korpus on edukalt lisatud',
-            pleaseCheckData: 'Palun kontrolli sisestatud andmete õigsust',
-            thisIdExists: 'Sellise ID-ga korpus on juba olemas'
         },
         aggregatorpage: {
             andShowUpTo: 'ja näita kuni',
@@ -34,48 +31,65 @@ export default {
             searchFor: 'Otsi',
             selectLanguage: 'Vali keel',
         },
+        center: {
+            add: {
+                checkData: 'Palun kontrolli sisestatud andmete õigsust',
+                enterId: 'Sisesta korpuse ID',
+                success: 'Uus korpus on edukalt lisatud'
+            },
+            common: {
+                id: 'Korpuse ID',
+                enterLink: 'Sisesta korpuse URL',
+                enterName: 'Sisesta korpuse nimi',
+                name: 'Korpuse nimi'
+            },
+            delete: {
+                confirm: 'Kas oled kindel, et soovid korpuse kustutada?',
+                success: 'Korpus on edukalt kustutatud'
+            },
+            edit: {
+                success: 'Korpuse andmed on edukalt uuendatud'
+            },
+            headers: [
+                { key: 'id', label: 'Korpuse ID'},
+                { key: 'centerName', label: 'Korpuse nimi'},
+                { key: 'link', label: 'URL'}
+            ],
+            manage: {
+                add: 'Lisa uus korpus',
+                edit: 'Korpuse andmete muutmine'
+            }
+        },
         corpusview: {
-            allCollectionsSelected: 'kõigist korpustest',
             collapse: 'Peida',
-            deselectAll: 'Kõik mitte valituks',
             expand: 'Laienda',
-            howManyCollectionsAreShownP1: 'Näitan',
-            howManyCollectionsAreShownP2: 'korpust',
-            howManyCollectionsAreShownP3: '(alam)korpusest',
-            searchCorpusBox: 'Otsi korpust',
-            selectAll: 'Kõik valituks',
-            someCollectionsSelected: 'valitud korpusest',
             subcollections: 'alamkorpust',
-            oneCollectionSelected: 'ühest valitud korpusest'
+            deselectAll: 'Kõik mitte valituks',
+            selectAll: 'Kõik valituks',
+            searchCorpusBox: 'Otsi korpust',
+            howManyAreShownP1: 'Näitan',
+            howManyAreShownP2: 'korpust',
+            howManyAreShownP3: '(alam)korpusest',
+            selected: {
+                all: 'kõigist korpustest',
+                one: 'ühest valitud korpusest',
+                some: 'valitud korpusest'
+            }
         },
         cql: {
-            name: 'tekstikihi kontekstuaalses päringukeeles (CQL)',
-            placeholder: 'koer',
-            searchLabel: 'Tekstikihi CQL päring'
-        },
-        editcenter: {
-            corpusIsUpdated: 'Korpuse andmed on edukalt uuendatud'
-        },
-        edituser: {
-            accountstate: 'Kasutajakonto olek',
-            email: 'e-mail',
-            enterName: 'Sisesta nimi',
-            enterUsername: 'Sisesta kasutajanimi',
-            enterEmail: 'Sisesta e-maili aadress',
-            name: 'Nimi',
-            userIsUpdated: 'Kasutaja andmed on edukalt uuendatud',
-            username: 'Kasutajanimi'
+            nameBtn: 'Lihtne (CQL)',
+            placeholder: 'koer'
         },
         errors: {
             cannotFindRequiredCollection: 'Ei leia soovitud korpust, otsin selle asemel kõigist korpustest',
-            incorrectLoginData: 'Sisestasid vale Kasutajanime või Parooli. Palun proovi uuesti!',
             noNetwork: 'Viga võrgu ühenduses, palun kontrolli oma interneti ühendust',
             selectCollection: 'Palun vali korpus, millest otsingut teostada'
         },
         fcs: {
-            name: 'mitmekihilise ühendatud sisuotsingu päringukeeles (FCS-QL)',
+            form: 'vorm',
+            nameBtn: 'Laiendatud (FCS-QL)',
             placeholder: '[word = "märkus"][word = "keskendunud"]',
-            searchLabel: 'Mitmekihiline FCS päring'
+            text: 'tekst'
         },
         footer: {
             ekrk: 'Eesti Keeleressursside Keskus',
@@ -97,38 +111,12 @@ export default {
             radioByMetaAndGuess: 'Esmalt kasuta filtreerimiseks korpuses täpsustatud keelt ja seejärel kasuta ka keele tuvastajat'        
         },
         loginpage: {
-            loginButton: 'Sisene',
-            loginMessageP1: 'Tere',
-            loginMessageP2: 'olete sisse logitud',
-            loginerrorincorrect: 'RABA: Teie kasutajanimi või parool on vale. Palun proovige uuesti!',
-            loginerrorservercatch: 'RABA: Vabandame! Midagi läks valesti. Palun proovige uuesti!',
-            logoutButton: 'Välju',
-            registerButton: 'Registreeri'
-        },
-        managecenter: {
-            addNewCorpus: 'Lisa uus korpus',
-            confirmDelete: 'Kas oled kindel, et soovid korpuse kustutada?',
-            corpusIsDeleted: 'Korpus on edukalt kustutatud',
-            editCenterData: 'Korpuse andmete muutmine',
-            headers: [
-                { key: 'id', label: 'Korpuse ID'},
-                { key: 'centerName', label: 'Korpuse nimi'},
-                { key: 'link', label: 'URL'}
-            ]
-        },
-        manageuser: {
-            editUserData: 'Kasutaja andmete muutmine',
-            enabled: {
-                true: 'aktiivne',
-                false: 'suletud'
+            error: {
+                incorrect: 'RABA: Teie kasutajanimi või parool on vale. Palun proovige uuesti!',
+                servercatch: 'RABA: Vabandame! Midagi läks valesti. Palun proovige uuesti!'    
             },
-            headers: [
-/*                 { key: 'id', label: 'Kasutaja ID'}, */
-                { key: 'name', label: 'Nimi'},
-                { key: 'username', label: 'Kasutajanimi'},
-                { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Kasutajakonto olek'}
-            ]
+            messageP1: 'Tere',
+            messageP2: 'olete sisse logitud',
         },
         queryinput: {
             and: 'ja',
@@ -216,44 +204,77 @@ export default {
         },
         register: {
             name: 'Teie täispikk nimi',
-            nameerrortooshortP1: 'Nimi on liiga lühike (Vähemalt ',
-            nameerrortooshortP2: ' tähemärki on nõutud.)',
-            nameerrortoolongP1: 'Nimi on liiga pikk (Maksimaalselt ',
-            nameerrortoolongP2: ' tähemärki on lubatud.)',
+            nameerror: {
+                shortP1: 'Nimi on liiga lühike (Vähemalt',
+                shortP2: 'tähemärki on nõutud.)',
+                longP1: 'Nimi on liiga pikk (Maksimaalselt',
+                longP2: 'tähemärki on lubatud.)',
+            },
             username: 'Teie kasutajanimi',
-            usernameavailableerror: 'See kasutajanimi on juba kasutusel',
-            usernameerrortooshortP1: 'Kasutajanimi on liiga lühike (Minimaalselt ',
-            usernameerrortooshortP2: ' tähemärki on nõutud.)',
-            usernameerrortoolongP1: 'Kasutajanimi on liiga pikk (Maksimaalselt ',
-            usernameerrortoolongP2: ' tähemärki on lubatud.)',
+            usernameerror: {
+                notavailable: 'See kasutajanimi on juba kasutusel',
+                shortP1: 'Kasutajanimi on liiga lühike (Minimaalselt',
+                shortP2: 'tähemärki on nõutud.)',
+                longP1: 'Kasutajanimi on liiga pikk (Maksimaalselt',
+                longP2: 'tähemärki on lubatud.)',
+            },
             email: 'Teie e-mail',
-            emailavailableerror: 'See e-mail on juba kasutuses',
-            emailerrornotvalid: 'E-mail pole õige',
-            emailerrortoolongP1: 'Sisestatud e-mail on liiga pikk (Maksimaalselt ',
-            emailerrortoolongP2: ' tähemärki lubatud)',
+            emailerror: {
+                notavailable: 'See e-mail on juba kasutuses',
+                notvalid: 'E-mail pole õige',
+                longP1: 'Sisestatud e-mail on liiga pikk (Maksimaalselt',
+                longP2: 'tähemärki lubatud)'
+            },
             password: 'Teie parool',
-            passworderrortooshortP1: 'Salasõna on liiga lühike (Vähemalt ',
-            passworderrortooshortP2: ' tähemärki on nõutud.)',
-            passworderrortoolongP1: 'Salasõna on liiga pikk (Maksimaalselt ',
-            passworderrortoolongP2: ' tähemärki on lubatud)',
-            passworderrornomatch: 'Password do not match.',            
+            passworderror: {
+                shortP1: 'Salasõna on liiga lühike (Vähemalt',
+                shortP2: 'tähemärki on nõutud.)',
+                longP1: 'Salasõna on liiga pikk (Maksimaalselt',
+                longP2: 'tähemärki on lubatud)',
+                nomatch: 'Salasõnad ei ole ühesugused.'
+            },
             passwordvalidation: 'Teie parooli kinnitus'
         },
         resultfunctions: {
             causedBy: 'Põhjustaja:',
-            displayAdv: 'Näita laiendatud andmete vaadet (ADV)',
-            displayKwic: 'Näita KWIC',
-            download: 'Allalaadimine',
-            downloadCsv: 'CSV formaadis fail',
-            downloadJson: 'JSON formaadis fail',
-            downloadXml: 'XML formaadis fail',
+            display: {
+                adv: 'Näita laiendatud andmete vaadet (ADV)',
+                kwic: 'Näita KWIC'
+            },
+            download: {
+                csv: 'CSV formaadis fail',
+                json: 'JSON formaadis fail',
+                xml: 'XML formaadis fail'
+            },
             exception: 'Erand:'
         },
         results: {
             howManyMatchingCollectionsFound: 'vastavat korpust leitud',
-            renderProgressMessageP1: 'vastavat korpust leitud',
-            renderProgressMessageP2: 'otsitud korpusest',
-            viewButton: 'Vaata'
+            progressMessageP1: 'vastavat korpust leitud',
+            progressMessageP2: 'otsitud korpusest',
+        },
+        user: {
+            edit: {
+                accountstate: 'Kasutajakonto olek',
+                email: 'e-mail',
+                name: 'Nimi',
+                username: 'Kasutajanimi',
+                success: 'Kasutaja andmed on edukalt uuendatud'
+            },
+            headers: [
+/*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'name', label: 'Nimi'},
+                { key: 'username', label: 'Kasutajanimi'},
+                { key: 'email', label: 'e-mail'},
+                { key: 'enabled', label: 'Kasutajakonto olek'}
+            ],
+            manage: {
+                edit: 'Kasutaja andmete muutmine',
+                enabled: {
+                    true: 'aktiivne',
+                    false: 'suletud'
+                }
+            }
         },
         zoomedresult: {
             moreResults: 'Rohkem tulemusi',
@@ -262,31 +283,28 @@ export default {
         }
     },
     en: {
+        button: {
+            add: 'Add',
+            close: 'Close',
+            delete: 'Delete',
+            download: 'Download',
+            edit: 'Edit',
+            login: 'Login',
+            logout: 'Log out',
+            register: 'Register',
+            save: 'Save',
+            update: 'Update',
+            view: 'View'
+        },
         common: {
             actions: 'Actions',
-            add: 'Add',
             anyLanguage: 'Any Language',
-            closeButton: 'Close',
-            corpusId: "Corpus' ID",
-            corpusName: "Corpus' name",
-            delete: 'Delete',
-            edit: 'Edit',
-            enterCorpusName: "Enter corpus' name",
-            enterCorpusLink: "Enter corpus' URL",
             homepage: '– Homepage',
             in: 'in',
             password: 'Password',
-            save: 'Save',
             search: 'Search',
             toggleNavigation: 'Toggle navigation',
-            update: 'Update',
             username: 'Username',
-        },
-        addcenter: {
-            enterCorpusId: "Enter corpus' ID",
-            newCorpusAddedSuccess: 'New corpus has been added successfully',
-            pleaseCheckData: 'Please check that the data you inserted is correct',
-            thisIdExists: 'A corpus with this ID already exists in the database'
         },
         aggregatorpage: {
             andShowUpTo: 'and show up to',
@@ -296,48 +314,65 @@ export default {
             searchFor: 'Search for',
             selectLanguage: 'Select Language',
         },
+        center: {
+            add: {
+                checkData: 'Please check that the data you inserted is correct',
+                enterId: "Enter corpus' ID",
+                success: 'New corpus has been added successfully'
+            },
+            common: {
+                id: "Corpus' ID",
+                enterLink: "Enter corpus' URL",
+                enterName: "Enter corpus' name",
+                name: "Corpus' name"
+            },
+            delete: {
+                confirm: 'Are you sure you want to delete this corpus?',
+                success: 'Corpus has been deleted successfully',
+            },
+            edit: {
+                success: 'Corpus is updated successfully'
+            },
+            headers: [
+                { key: 'id', label: "Corpus' ID"},
+                { key: 'centerName', label: "Corpus' name"},
+                { key: 'link', label: 'URL' }
+            ],
+            manage: {
+                add: 'Add new corpus',
+                edit: 'Edit corpus data'
+            }
+        },
         corpusview: {
-            allCollectionsSelected: 'All available collections',
             collapse: 'Collapse',
-            deselectAll: 'Deselect all',
             expand: 'Expand',
-            howManyCollectionsAreShownP1: 'Showing',
-            howManyCollectionsAreShownP2: 'out of',
-            howManyCollectionsAreShownP3: '(sub)collections',
-            searchCorpusBox: 'Search for collection',
-            selectAll: 'Select all',
-            someCollectionsSelected: 'selected collections',
             subcollections: 'subcollections',
-            oneCollectionSelected: '1 selected collection'
+            deselectAll: 'Deselect all',
+            selectAll: 'Select all',
+            searchCorpusBox: 'Search for collection',
+            howManyAreShownP1: 'Showing',
+            howManyAreShownP2: 'out of',
+            howManyAreShownP3: '(sub)collections',
+            selected: {
+                all: 'All available collections',
+                one: '1 selected collection',
+                some: 'selected collections'
+            }
         },
         cql: {
-            name: 'Text layer Contextual Query Language (CQL)',
-            placeholder: 'Elephant',
-            searchLabel: 'Text layer CQL query'
-        },
-        editcenter: {
-            corpusIsUpdated: 'Corpus is updated successfully'
-        },
-        edituser: {
-            accountstate: 'Useraccount state',
-            email: 'e-mail',
-            enterName: 'Enter name',
-            enterUsername: 'Enter username',
-            enterEmail: 'Enter e-mail address',
-            name: 'Name',
-            userIsUpdated: 'User is updated successfully',
-            username: 'Username' 
+            nameBtn: 'Simple (CQL)',
+            placeholder: 'Elephant'
         },
         errors: {
             cannotFindRequiredCollection: 'Cannot find the required collection, will search all collections instead',
-            incorrectLoginData: 'Your Username or Password is incorrect. Please try again!',
             noNetwork: 'Network error, please check your internet connection',
             selectCollection: 'Please select a collection to search into'
         },
         fcs: {
-            name: 'Multi-layer Federated Content Search Query Language (FCS-QL)',
+            form: 'form',
+            nameBtn: 'Advanced (FCS-QL)',
             placeholder: '[word = "annotation"][word = "focused"]',
-            searchLabel: 'Multi-layer FCS query'
+            text: 'text'
         },
         footer: {
             ekrk: 'Center of Estonian Language Resources',
@@ -359,38 +394,12 @@ export default {
             radioByMetaAndGuess: 'First use the collections specified language then also use a language detector'        
         },
         loginpage: {
-            loginButton: 'Login',
-            loginMessageP1: 'Hello',
-            loginMessageP2: 'you have logged in',
-            loginerrorincorrect: 'RABA: Your Username or Password is incorrect. Please try again!',
-            loginerrorservercatch: 'RABA: Sorry! Something went wrong. Please try again!',
-            logoutButton: 'Log out',
-            registerButton: 'Register'
-        },
-        managecenter: {
-            addNewCorpus: 'Add new corpus',
-            confirmDelete: 'Are you sure you want to delete this corpus?',
-            corpusIsDeleted: 'Corpus has been deleted successfully',
-            editCenterData: 'Edit corpus data',
-            headers: [
-                { key: 'id', label: "Corpus' ID"},
-                { key: 'centerName', label: "Corpus' name"},
-                { key: 'link', label: 'URL' }
-            ]
-        },
-        manageuser: {
-            editUserData: 'Edit user data',
-            enabled: {
-                true: 'Active',
-                false: 'Disabled'
+            error: {
+                incorrect: 'RABA: Your Username or Password is incorrect. Please try again!',
+                servercatch: 'RABA: Sorry! Something went wrong. Please try again!'
             },
-            headers: [
-/*                 { key: 'id', label: 'User ID'}, */
-                { key: 'name', label: 'Name'},
-                { key: 'username', label: 'Username'},
-                { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Useraccount state'}
-            ]
+            messageP1: 'Hello',
+            messageP2: 'you have logged in',
         },
         queryinput: {
             and: 'and',
@@ -478,44 +487,77 @@ export default {
         },
         register: {
             name: 'Your full name',
-            nameerrortooshortP1: 'Name is too short (Minimum ',
-            nameerrortooshortP2: ' characters needed.)',
-            nameerrortoolongP1: 'Name is too long (Maximum ',
-            nameerrortoolongP2: ' characters allowed.)',
+            nameerror: {
+                shortP1: 'Name is too short (Minimum',
+                shortP2: 'characters needed.)',
+                longP1: 'Name is too long (Maximum',
+                longP2: 'characters allowed.)',
+            },
             username: 'Your username',
-            usernameavailableerror: 'This username is already taken',
-            usernameerrortooshortP1: 'Username is too short (Minimum ',
-            usernameerrortooshortP2: ' characters needed.)',
-            usernameerrortoolongP1: 'Username is too long (Maximum ',
-            usernameerrortoolongP2: ' characters allowed.)',
+            usernameerror: {
+                notavailable: 'This username is already taken',
+                shortP1: 'Username is too short (Minimum',
+                shortP2: 'characters needed.)',
+                longP1: 'Username is too long (Maximum',
+                longP2: 'characters allowed.)',
+            },
             email: 'Your e-mail',
-            emailavailableerror: 'This Email is already registered',
-            emailerrornotvalid: 'Email not valid',
-            emailerrortoolongP1: 'Email is too long (Maximum ',
-            emailerrortoolongP2: ' characters allowed)',
+            emailerror: {
+                notavailable: 'This Email is already registered',
+                notvalid: 'Email not valid',
+                longP1: 'Email is too long (Maximum ',
+                longP2: ' characters allowed)'
+            },
             password: 'Your password',
-            passworderrortooshortP1: 'Password is too short (Minimum ',
-            passworderrortooshortP2: ' characters needed.)',
-            passworderrortoolongP1: 'Password is too long (Maximum ',
-            passworderrortoolongP2: ' characters needed.)',
-            passworderrornomatch: 'Password do not match.',
+            passworderror: {
+                shortP1: 'Password is too short (Minimum ',
+                shortP2: ' characters needed.)',
+                longP1: 'Password is too long (Maximum ',
+                longP2: ' characters needed.)',
+                nomatch: 'Password do not match.'
+            },
             passwordvalidation: 'Your password confirmation'
         },
         resultfunctions: {
             causedBy: 'Caused by:',
-            displayAdv: 'Display as AdvancedDataView (ADV)',
-            displayKwic: 'Display as Key Word In Context',
-            download: 'Download',
-            downloadCsv: 'As CSV file',
-            downloadJson: 'As JSON file',
-            downloadXml: 'As XML file',
+            display: {
+                adv: 'Display as AdvancedDataView (ADV)',
+                kwic: 'Display as Key Word In Context'
+            },
+            download: {
+                csv: 'As CSV file',
+                json: 'As JSON file',
+                xml: 'As XML file'
+            },
             exception: 'Exception:'
         },
         results: {
-            howManyMatchingCollectionsFound: 'matching collections found',
-            renderProgressMessageP1: 'matching collections found in',
-            renderProgressMessageP2: 'searched collections',
-            viewButton: 'View'
+            collectionsFound: 'matching collections found',
+            progressMessageP1: 'matching collections found in',
+            progressMessageP2: 'searched collections',
+        },
+        user: {
+            edit: {
+                accountstate: 'Useraccount state',
+                email: 'e-mail',
+                name: 'Name',
+                username: 'Username',
+                success: 'User is updated successfully'
+            },
+            headers: [
+/*                 { key: 'id', label: 'User ID'}, */
+                { key: 'name', label: 'Name'},
+                { key: 'username', label: 'Username'},
+                { key: 'email', label: 'e-mail'},
+                { key: 'enabled', label: 'Useraccount state'}
+            ],
+            manage: {
+                edit: 'Edit user data',
+                enabled: {
+                    true: 'Active',
+                    false: 'Disabled'
+                }
+            }
         },
         zoomedresult: {
             moreResults: 'More Results',

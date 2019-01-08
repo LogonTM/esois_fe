@@ -13,6 +13,7 @@ Kasutus- ja paigaldusjuhend
   - [Registreerimine ja kasutaja autentimine](#registreerimine-ja-kasutaja-autentimine)
 - [Internatsionaliseeritavus](#internatsionaliseeritavus)
   - [Tõlked](#tõlked)
+- [EL logo suuruse muutmine](#EL-logo-suuruse-muutmine)
 
 ## Sissejuhatus
 
@@ -88,3 +89,8 @@ const logoIntl = {
   ee: EeEKRKlogo,
   en: EnEKRKlogo
 };
+
+## EL logo suuruse muutmine
+
+Euroopa Liidu Regionaalarengu Fondi logo suurus on määratud logo kõrgusega pikslites.
+Selle muutmiseks tuleb muuta src > index.css failis .footer-img-left all atribuudi 'height' väärtust.
