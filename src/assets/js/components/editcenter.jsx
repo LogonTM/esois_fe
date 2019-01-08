@@ -14,7 +14,7 @@ class EditCenter extends Component {
     }
     
     handleEdit = () => {
-        fetch(back_end_host + 'db/center/update', {
+        fetch(back_end_host + 'db/center/', {
             method: 'POST',
             body: JSON.stringify({
                 id: this.props.oneCenterId,

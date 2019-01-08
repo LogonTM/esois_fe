@@ -118,6 +118,35 @@ div.navbar {
   background-color: rgba(40,85,143, .3) !important;
 }
 
+.btn.btn-outline-secondary.checked {
+  background-color: rgba(220, 133, 46, 0.3) !important;
+}
+
+.switch-candy label {
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+  color: rgb(40,85,143) !important;
+  text-shadow: 0px 0px 0px !important;
+  font-weight: lighter !important;
+}
+
+.switch-toggle.switch-candy.blue {
+  background-color: rgba(40,85,143, .15) !important;
+  border-radius: 4px !important;
+}
+
+.switch-candy.blue a {
+  background-color: rgba(40,85,143, .25) !important;
+}
+
+.switch-toggle.switch-candy.orange {
+  background-color: rgba(220, 133, 46, 0.25) !important;
+  border-radius: 4px !important;
+}
+
+.switch-candy.orange a {
+  background-color: rgba(220, 133, 46, 0.35) !important;
+}
+
 .btn-xs {
   padding-top: 2.8px !important;
   padding-right: 0 !important;

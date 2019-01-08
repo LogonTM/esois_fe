@@ -77,10 +77,8 @@ export default {
             }
         },
         cql: {
-            name: 'tekstikihi kontekstuaalses päringukeeles (CQL)',
             nameBtn: 'Lihtne (CQL)',
-            placeholder: 'koer',
-            searchLabel: 'Tekstikihi CQL päring'
+            placeholder: 'koer'
         },
         errors: {
             cannotFindRequiredCollection: 'Ei leia soovitud korpust, otsin selle asemel kõigist korpustest',
@@ -88,13 +86,10 @@ export default {
             selectCollection: 'Palun vali korpus, millest otsingut teostada'
         },
         fcs: {
-            name: 'mitmekihilise ühendatud sisuotsingu päringukeeles (FCS-QL)',
-            nameBtn: 'Edasijõudnuile (FCS-QL)',
+            form: 'vorm',
+            nameBtn: 'Laiendatud (FCS-QL)',
             placeholder: '[word = "märkus"][word = "keskendunud"]',
-            searchLabel: 'Mitmekihiline FCS päring'
-        },
-        fcsform: {
-            nameBtn: 'Laiendatud (FCS-QL)'
+            text: 'tekst'
         },
         footer: {
             ekrk: 'Eesti Keeleressursside Keskus',
@@ -365,10 +360,8 @@ export default {
             }
         },
         cql: {
-            name: 'Text layer Contextual Query Language (CQL)',
             nameBtn: 'Simple (CQL)',
-            placeholder: 'Elephant',
-            searchLabel: 'Text layer CQL query'
+            placeholder: 'Elephant'
         },
         errors: {
             cannotFindRequiredCollection: 'Cannot find the required collection, will search all collections instead',
@@ -376,13 +369,10 @@ export default {
             selectCollection: 'Please select a collection to search into'
         },
         fcs: {
-            name: 'Multi-layer Federated Content Search Query Language (FCS-QL)',
+            form: 'form',
             nameBtn: 'Advanced (FCS-QL)',
             placeholder: '[word = "annotation"][word = "focused"]',
-            searchLabel: 'Multi-layer FCS query'
-        },
-        fcsform: {
-            nameBtn: 'Extended (FCS-QL)'
+            text: 'text'
         },
         footer: {
             ekrk: 'Center of Estonian Language Resources',

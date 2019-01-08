@@ -25,7 +25,6 @@ class Results extends Component {
 	}
 
 	renderPanelInfo(corpusHit) {
-		var corpus = corpusHit.corpus;
 		var inline = {display:"inline-block"};
 		return (
 			<div>
@@ -48,7 +47,11 @@ class Results extends Component {
 			return false;
 		}
 		return (
-			<CSSTransition key={corpusHit.corpus.id} classNames="fade" timeout={{enter: 200, exit: 200}}>
+			<CSSTransition
+				key={corpusHit.corpus.id}
+				classNames="fade"
+				timeout={{enter: 200, exit: 200}}
+			>
 				<Panel
 					key={corpusHit.corpus.id}
 					title={this.renderPanelTitle(corpusHit.corpus)}
