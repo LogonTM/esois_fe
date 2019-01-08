@@ -7,6 +7,7 @@ import './assets/base.css';
 import 'bootstrap';
 import './assets/lib/bootstrap.min.css';
 import './assets/lib/font-awesome.min.css';
+import './assets/lib/toggle-switch.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Main />, document.getElementById('body'));

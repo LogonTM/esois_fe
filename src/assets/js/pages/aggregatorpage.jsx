@@ -4,7 +4,6 @@ import 'bootstrap';
 import Button from '../utilities/button';
 import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
-import ELlogo from '../../img/el-reg-fond.jpg';
 import LanguageSelector from '../components/languageselector.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
@@ -105,18 +104,18 @@ class AggregatorPage extends Component {
                         if (contextCorporaInfo.selected.length !== actuallySelectedCorpora.length) {
                             if (actuallySelectedCorpora.length === 0) {
                                 this.props.error("This search does not support the required collection(s), will search all collections instead"); // TODO give detailed reason its not supported.
-							corpora.recurse(function(corpus) { corpus.selected = true; });
+								corpora.recurse(function(corpus) { corpus.selected = true; });
                             } else {
                                 var err = "Some required context collections are not supported for this search:\n"
                                 err = err + contextCorporaInfo.filter((c) => {
                                     if (actuallySelectedCorpora.indexOf(c) === -1) {
                                         console.warn("Requested corpus but not available for selection", c);
                                         return true;
-						}
+									}
                                     return false;
                                 }).map((c) => c.title).join('\n')
                                 this.props.error(err);
-					}
+							}
                         }
                     }
                     else {
@@ -124,7 +123,7 @@ class AggregatorPage extends Component {
                         console.log("no context set, selecting all available");
                         corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
                     }
-
+						
                     this.setState({
 	                    corpora : corpora,
 	                    languageMap: json.languages,
@@ -262,6 +261,10 @@ class AggregatorPage extends Component {
 		});
 	}
 
+	handleQueryTypeChange = e => {
+		this.setQueryType(e.target.value);
+	}
+
 	setQueryType = queryTypeId => {
 		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
 		setQueryVariable('queryType', queryTypeId);
@@ -269,7 +272,7 @@ class AggregatorPage extends Component {
 		this.setState({
 			queryTypeId: queryTypeId,
 			hits: this.nohits,
-			searchId: null,
+			searchId: null
 		});
 	}
 
@@ -356,7 +359,7 @@ class AggregatorPage extends Component {
 	        this.setState({
 				fcsQuery: queryStr || '',
 		    });
-	}
+		}
 		setQueryVariable('query', queryStr);
 	}
 
@@ -430,17 +433,9 @@ class AggregatorPage extends Component {
 		);
 	}
 	
-	renderCql = () => {
-		var queryType = this.queryTypeMap[this.state.queryTypeId];
-	    
-	    return (
+	renderCql = () => (
 			<div className="aligncenter" style={{marginLeft:16, marginRight:16}}>
-							<div className="input-group mb-3">
-								<div className="input-group-prepend">
-									<span className="input-group-text" style={{backgroundColor:queryType.searchLabelBkColor}}>
-							{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
-									</span>
-								</div>
+			<div className="input-group mb-3">
 					{ this.renderQueryInput() }
 					<div className="input-group-append">
 						{this.renderSearchButtonOrLink()}
@@ -448,29 +443,52 @@ class AggregatorPage extends Component {
 				</div>
 			</div>
 		);
-	}
 
 	renderGQB = () => {
-	    var queryType = this.queryTypeMap[this.state.queryTypeId];
 	    return (
 			<div style={{marginLeft:16, marginRight:16}}>
 				<div className="card">
 					<div
 						id='fcsFormHeading'
 						className="card-heading"
-						style={{backgroundColor:queryType.searchLabelBkColor, fontSize: "120%"}}
 					>
-						{dictionary[this.props.languageFromMain][this.state.queryTypeId].searchLabel}
+						<div className="row">
+							<div className="col-l-2 col-md-3 col-sm-4 col-xs-4">
+								<fieldset>
+									<div className="switch-toggle switch-candy blue">
+										<input
+											id="fcs-form"
+											name="fcs"
+											type="radio"
+											checked={!this.state.fcsTextAreaVisibility}
+											readOnly
+										/>
+										<label
+											htmlFor="fcs-form"
+											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+										>
+											{dictionary[this.props.languageFromMain].fcs.form}
+										</label>
+										<input
+											id="fcs-text"
+											name="fcs"
+											type="radio"
+											checked={this.state.fcsTextAreaVisibility}
+											readOnly
+										/>
+										<label
+											htmlFor="fcs-text"
+											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+										>
+											{dictionary[this.props.languageFromMain].fcs.text}
+										</label>
+										<a></a>
+					</div>
+								</fieldset>
+							</div>
+						</div>
 					</div>
 					<div className="card-body">
-						<p>
-							<Button
-								label={this.state.fcsTextAreaVisibility ?
-								dictionary[this.props.languageFromMain].queryinput.fcsQueryFromButton :
-								dictionary[this.props.languageFromMain].queryinput.fcsTextFieldButton}
-								onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
-							/>
-						</p>
 						{ this.renderQueryInput() }
 					</div>
 					<div className="card-footer">
@@ -522,6 +540,42 @@ class AggregatorPage extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
+					<div className="col-xl-5 col-l-5 col-md-7 col-sm-9 col-xs-12">
+						<fieldset>
+							<div className="switch-toggle switch-candy orange">
+								<input
+									id='cql'
+									name='queryTypeOptions'
+									type='radio'
+									value='cql'
+									checked={this.state.queryTypeId === 'cql'}
+									onChange={this.handleQueryTypeChange}
+								/>
+								<label
+									htmlFor='cql'
+								>
+									{dictionary[this.props.languageFromMain].cql.nameBtn}
+								</label>
+								<input
+									id='fcs'
+									name='queryTypeOptions'
+									type='radio'
+									value='fcs'
+									checked={this.state.queryTypeId === 'fcs'}
+									onChange={this.handleQueryTypeChange}
+								/>
+								<label
+									htmlFor="fcs"
+								>
+									{dictionary[this.props.languageFromMain].fcs.nameBtn}
+								</label>
+								<a></a>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+
+				<div className="row justify-content-center" style={{marginTop:30}}>
 					<div className="col-12">
 						{ (this.state.queryTypeId === "fcs") ? this.renderGQB() : this.renderCql() }
 					</div>
@@ -548,39 +602,6 @@ class AggregatorPage extends Component {
 							</div>
 						</form>
 					</div>
-					<div className="col-auto">
-						<form className="form-inline">
-							<div className="input-group mb-3">
-								<div className="input-group">
-									<Button
-										label={dictionary[this.props.languageFromMain][this.state.queryTypeId].name}
-										uiType='dropdown-toggle dropdown-toggle-split'
-											aria-expanded="false"
-										data-toggle="dropdown"
-									/>
-									<ul ref="queryTypeDropdownMenu" className="dropdown-menu">
-										{ this.queryTypes.map(l => {
-												var cls = l.disabled ? 'disabled':'dropdown-item';
-												var handler = () => { if (!l.disabled) this.setQueryType(l.id); };
-												return (
-													<li 
-														key={l.id}
-														className={cls}
-													>
-														<a tabIndex="-1" href="#" onClick={handler}>
-															{dictionary[this.props.languageFromMain][l.id].name}
-														</a>
-													</li>
-												);
-											})
-										}
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div className="row justify-content-center align-items-center" >
 					<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">
