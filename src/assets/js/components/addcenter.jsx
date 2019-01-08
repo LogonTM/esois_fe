@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import { addCenter } from '../utilities/functions';
 
 class AddCenter extends Component {
 	static propTypes = {
@@ -25,30 +26,28 @@ class AddCenter extends Component {
     }
 
     handleAdd = () => {
-        fetch(back_end_host + 'db/center/add', {
-            method: 'PUT',
-            body: JSON.stringify({
-                id: this.state.id,
-                centerName: this.state.centerName,
-                link: this.state.link
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then(response => {
-            console.log(response)
-            if (response.status === 200) {
+        const centerAddData = {
+            id: this.state.id,
+            centerName: this.state.centerName,
+            link: this.state.link
+        }
+        addCenter(centerAddData)
+        .then(response => {
+            if(response) {
                 alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
                 this.setState({
                     id: '',
                     centerName: '',
                     link: ''
                 });
-            } else if (response.status === 409) {
-                alert(dictionary[this.props.languageFromMain].addcenter.thisIdExists)
-            } else {
-                alert(dictionary[this.props.languageFromMain].addcenter.pleaseCheckData);
             }
+        }).catch(error => {
+            this.setState({
+                id: '',
+                centerName: '',
+                link: ''
+            });
+            alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
         }).then(this.props.getCenterList)
     }
 

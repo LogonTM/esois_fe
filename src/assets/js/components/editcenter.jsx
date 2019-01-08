@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import { updateCenter } from '../utilities/functions';
 
 class EditCenter extends Component {
 	static propTypes = {
@@ -14,21 +15,18 @@ class EditCenter extends Component {
     }
     
     handleEdit = () => {
-        fetch(back_end_host + 'db/center/update', {
-            method: 'POST',
-            body: JSON.stringify({
-                id: this.props.oneCenterId,
-                centerName: this.props.oneCenterName,
-                link: this.props.oneCenterLink
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then(response => {
-            console.log(response)
-            if(response.status === 200) {
+        const centerUpdateData = {
+            id: this.props.oneCenterId,
+            centerName: this.props.oneCenterName,
+            link: this.props.oneCenterLink
+        }
+        updateCenter(centerUpdateData)
+        .then(response => {
+            if(response) {
                 alert(dictionary[this.props.languageFromMain].editcenter.corpusIsUpdated);
             }
+        }).catch(error => {
+            alert(dictionary[this.props.languageFromMain].editcenter.corpusIsUpdated);
         }).then(this.props.getCenterList)
     }
 

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import { updateUser } from '../utilities/functions';
 
 class EditUser extends Component {
 	static propTypes = {
@@ -17,20 +18,17 @@ class EditUser extends Component {
     }
 
     handleEdit = () => {
-        fetch(back_end_host + 'db/user/update', {
-            method: 'POST',
-            body: JSON.stringify({
-                id: this.props.oneUserId,
-                enabled: this.props.oneUserAccountstate
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then(response => {
-            console.log(response)
-            if(response.status === 200) {
+        const userUpdateData = {
+            id: this.props.oneUserId,
+            enabled: this.props.oneUserAccountstate
+        }
+        updateUser(userUpdateData)
+        .then(response => {
+            if(response) {
                 alert(dictionary[this.props.languageFromMain].edituser.userIsUpdated);
             }
+        }).catch(error => {
+            // console.log(error)
         }).then(this.props.getUserList)
     }
 

@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
+import { getCurrentUsers } from '../utilities/functions';
 
 class ManageUsers extends Component {
 	static propTypes = {
@@ -30,10 +31,9 @@ class ManageUsers extends Component {
 	componentDidMount() {
 		this.getUserList();
 	}
-
+	
 	getUserList = () => {
-		fetch(back_end_host + 'db/user/list')
-		.then(response => response.json())
+		getCurrentUsers()
 		.then(result => {
 			this.setState({
 				users: result

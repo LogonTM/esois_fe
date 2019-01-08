@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
-import { getCurrentUser } from '../utilities/functions';
-import { authentication_token, okta_url, google_auth_url } from '../constants/constants';
+import { getCurrentUser, getSAMLToken } from '../utilities/functions';
+import { authentication_token, okta_url, google_auth_url, logout_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import googleLogo from '../../img/google-logo.png';
+import ekrk_sso from '../../img/ekrk-footer-logo.png';
 
 var PT = PropTypes
 
@@ -15,7 +16,8 @@ class LoginPage extends Component {
 		getStatus: PT.func,
 		backToAggregator: PT.func,
 		toRegistration: PT.func,
-		languageFromMain: PropTypes.string.isRequired
+		languageFromMain: PropTypes.string.isRequired,
+		getRole: PT.func
 	}
 
 	constructor(props) {
@@ -35,9 +37,11 @@ class LoginPage extends Component {
 			notificationMessage: {
                 message: ''
             },
-			loggedInStatus: this.props.isUserloggedIn
+			loggedInStatus: this.props.isUserloggedIn,
+			userRoleDesignator: this.props.getUserRole
 		};
 	}
+	
 	componentDidMount() {
 		this.loadCurrentUser();
 	  }
@@ -45,10 +49,12 @@ class LoginPage extends Component {
 	loadCurrentUser = () => {
 		getCurrentUser()
 		.then(response => {
+			console.log("UserSummary response: " + response.authorities[0].authority)
 		  this.setState({
 			currentUser: response.name,
 			loggedInStatus: true,
 		  });
+		  this.props.getRole(response.authorities[0].authority);
 		}).catch(error => {
 
 		});
@@ -64,6 +70,7 @@ class LoginPage extends Component {
 			login(loginRequest)
 			.then(response => {
 				localStorage.setItem(authentication_token, response.accessToken);
+				console.log("Local token: " + localStorage.getItem(authentication_token))
 				this.setState({
 					loggedInStatus: true
 				})
@@ -102,6 +109,7 @@ class LoginPage extends Component {
 				loggedInStatus: false
 			})
 			this.props.getStatus(false)
+			document.location = logout_url
 		}
 	}
 

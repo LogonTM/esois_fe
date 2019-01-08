@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { TableHeaderRow } from '../constants/admintable';
+import { getCurrentCenters, removeCenter } from '../utilities/functions';
 
 class ManageCenter extends Component {
 	static propTypes = {
@@ -31,8 +32,7 @@ class ManageCenter extends Component {
 	}
 
 	getCenterList = () => {
-		fetch(back_end_host + 'db/center/list')
-		.then(response => response.json())
+		getCurrentCenters()
 		.then(result => {
 			this.setState({
 				centers: result
@@ -42,19 +42,15 @@ class ManageCenter extends Component {
 
 	deleteCenter = id => {
 		if (window.confirm(dictionary[this.props.languageFromMain].managecenter.confirmDelete)) {
-			fetch(back_end_host + 'db/center/delete/' + id, {
-				method: 'DELETE',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				}
-			})
-			.then(response => { 
-				if (response.status === 200) {
+			removeCenter(id)
+			.then(response => {
+				if(response) {
 					alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
 					this.getCenterList();
-				} 
-			});
+				}
+			}).catch(error => {
+				alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
+			}).then(this.getCenterList())
 		}
 	}
 
