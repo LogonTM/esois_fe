@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
 import { getCurrentUser, getSAMLToken } from '../utilities/functions';
-import { authentication_token, okta_url, google_auth_url, logout_url } from '../constants/constants';
+import { authentication_token, saml_url, google_auth_url, logout_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
@@ -76,9 +76,6 @@ class LoginPage extends Component {
 				})
 				this.loadCurrentUser()
 				this.props.getStatus(true)
-				setTimeout(() => {
-					this.props.backToAggregator();
-				}, 1500)
 			}).catch(error => {
 				if(error.status === 401) {
 					// Fix here Bootstrap notification for incorrect password or username?
@@ -169,6 +166,15 @@ class LoginPage extends Component {
             this.state.password.valid === true)
 	}
 
+	getSAML = () => {
+		getSAMLToken()
+		.then(response => {
+			console.log("Response from SAML token: " + response + " with token specific:" + response.accessToken  + " and bearer type: " + response.tokenType)
+		}).catch(error => {
+			console.log("Response error from SAML token: " + error.status + " " + error.message)
+		})
+	}
+
 	render () {
 		const usernameOrEmailInputValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " +
             (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
@@ -215,6 +221,12 @@ class LoginPage extends Component {
 									uiType='btn.lg'
 									onClick={this.handleToRegistration}
                                 />
+								<Button
+                                    label='samlTESTER'
+                                    type='button'
+									uiType='btn.lg'
+									onClick={this.getSAML}
+                                />
 							</form>
 							<div className="bottom-gap"></div>
 						</div>
@@ -223,6 +235,11 @@ class LoginPage extends Component {
 								<img src={googleLogo} alt="google_logo"/>
 							</a>
 						</div>
+						{/* <div className="oauth2">
+							<a className="btn btn-block" href={saml_url}>
+								<img src={ekrk_sso} alt="google_logo"/>
+							</a>
+						</div> */}
 					</div>
 				</div>
 			);

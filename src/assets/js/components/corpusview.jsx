@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import Button from '../utilities/button';
@@ -6,7 +6,7 @@ import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
-class CorpusView extends Component {
+class CorpusView extends PureComponent {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,

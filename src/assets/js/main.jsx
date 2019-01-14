@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
@@ -31,13 +31,18 @@ window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
-class Main extends Component {
+class Main extends PureComponent {
 	componentWillMount() {
 		routeFromLocation.bind(this)()
 		getCurrentUser()
 		.then(response => {
-		  this.setState({
-			  userRole: response.authorities[0].authority,
+		  var isAdmin = 'ROLE_USER';
+		  for(let value in response.authorities) {
+			if (response.authorities[value].authority === 'ROLE_ADMIN')
+				isAdmin = 'ROLE_ADMIN';
+			}
+			this.setState({
+			  userRole: isAdmin,
 			  userName: response.name
 		  });
 		}).catch(error => {
@@ -47,6 +52,21 @@ class Main extends Component {
 
 	componentDidUpdate() {
 		routeFromLocation.bind(this)()
+		getCurrentUser()
+		.then(response => {
+			var isAdmin = 'ROLE_USER';
+			for(let value in response.authorities) {
+			  if (response.authorities[value].authority === 'ROLE_ADMIN')
+				  isAdmin = 'ROLE_ADMIN';
+			  }
+			  this.setState({
+				userRole: isAdmin,
+				userName: response.name
+			});
+
+		}).catch(error => {
+
+		});
 	}
   
 	constructor(props) {

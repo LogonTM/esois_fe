@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import { addCenter } from '../utilities/functions';
 
-class AddCenter extends Component {
+class AddCenter extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
         getCenterList: PropTypes.func.isRequired
@@ -34,7 +34,7 @@ class AddCenter extends Component {
         addCenter(centerAddData)
         .then(response => {
             if(response) {
-                alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
+                alert(dictionary[this.props.languageFromMain].center.add.success);
                 this.setState({
                     id: '',
                     centerName: '',
@@ -47,7 +47,7 @@ class AddCenter extends Component {
                 centerName: '',
                 link: ''
             });
-            alert(dictionary[this.props.languageFromMain].addcenter.newCorpusAddedSuccess);
+            alert(dictionary[this.props.languageFromMain].center.add.success);
         }).then(this.props.getCenterList)
     }
 

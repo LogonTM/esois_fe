@@ -7,7 +7,7 @@ import dictionary from '../../../translations/dictionary';
 import LanguageSelector from '../components/languageselector.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
@@ -18,7 +18,7 @@ var PT = PropTypes;
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
 
-class AggregatorPage extends Component {
+class AggregatorPage extends PureComponent {
 	static propTypes = {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,

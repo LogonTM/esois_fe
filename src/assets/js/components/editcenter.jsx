@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import { updateCenter } from '../utilities/functions';
 
-class EditCenter extends Component {
+class EditCenter extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
         getCenterList: PropTypes.func.isRequired,
@@ -23,10 +23,10 @@ class EditCenter extends Component {
         updateCenter(centerUpdateData)
         .then(response => {
             if(response) {
-                alert(dictionary[this.props.languageFromMain].editcenter.corpusIsUpdated);
+                alert(dictionary[this.props.languageFromMain].center.edit.success);
             }
         }).catch(error => {
-            alert(dictionary[this.props.languageFromMain].editcenter.corpusIsUpdated);
+            alert(dictionary[this.props.languageFromMain].center.edit.success);
         }).then(this.props.getCenterList)
     }
 
@@ -39,8 +39,8 @@ class EditCenter extends Component {
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
-                        <label htmlFor="Center_id">
-                                {dictionary[this.props.languageFromMain].center.common.id}
+                            <label htmlFor="Center_id">
+                                    {dictionary[this.props.languageFromMain].center.common.id}
                             </label>
                         </div>
                         <div className="col-sm-9">

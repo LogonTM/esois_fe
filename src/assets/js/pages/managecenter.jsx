@@ -7,12 +7,12 @@ import dictionary from '../../../translations/dictionary';
 import EditCenter from '../components/editcenter.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { TableHeaderRow } from '../constants/admintable';
 import { getCurrentCenters, removeCenter } from '../utilities/functions';
 
-class ManageCenter extends Component {
+class ManageCenter extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
 	}
@@ -41,15 +41,15 @@ class ManageCenter extends Component {
 	}
 
 	deleteCenter = id => {
-		if (window.confirm(dictionary[this.props.languageFromMain].managecenter.confirmDelete)) {
+		if (window.confirm(dictionary[this.props.languageFromMain].center.delete.confirm)) {
 			removeCenter(id)
 			.then(response => {
 				if(response) {
-					alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
+					alert(dictionary[this.props.languageFromMain].center.delete.success);
 					this.getCenterList();
 				}
 			}).catch(error => {
-				alert(dictionary[this.props.languageFromMain].managecenter.corpusIsDeleted);
+				alert(dictionary[this.props.languageFromMain].center.delete.success);
 			}).then(this.getCenterList())
 		}
 	}

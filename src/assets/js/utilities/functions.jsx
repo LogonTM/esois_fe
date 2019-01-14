@@ -113,6 +113,16 @@ export function getCurrentUsers() {
     });
 }
 
+export function getUserRoles() {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set.");
+    }
+    return request({
+        url: back_end_host + "db/user/roles",
+        method: 'GET'
+    });
+}
+
 export function getCurrentCenters() {
     if(!localStorage.getItem(authentication_token)) {
         return Promise.reject("No access token set.");
@@ -124,7 +134,7 @@ export function getCurrentCenters() {
     });
 }
 
-export function getSAMLToken () {
+export function getSAMLToken() {
     return request({
         url: back_end_host + 'api/auth/samlLogin',
         method: 'GET'
