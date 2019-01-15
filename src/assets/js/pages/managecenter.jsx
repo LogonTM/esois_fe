@@ -7,11 +7,12 @@ import dictionary from '../../../translations/dictionary';
 import EditCenter from '../components/editcenter.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { TableHeaderRow } from '../constants/admintable';
+import { getCurrentCenters, removeCenter } from '../utilities/functions';
 
-class ManageCenter extends Component {
+class ManageCenter extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
 	}
@@ -31,8 +32,7 @@ class ManageCenter extends Component {
 	}
 
 	getCenterList = () => {
-		fetch(back_end_host + 'db/center')
-		.then(response => response.json())
+		getCurrentCenters()
 		.then(result => {
 			this.setState({
 				centers: result
@@ -42,19 +42,15 @@ class ManageCenter extends Component {
 
 	deleteCenter = id => {
 		if (window.confirm(dictionary[this.props.languageFromMain].center.delete.confirm)) {
-			fetch(back_end_host + 'db/center/' + id, {
-				method: 'DELETE',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				}
-			})
+			removeCenter(id)
 			.then(response => { 
-				if (response.status === 200) {
+				if(response) {
 					alert(dictionary[this.props.languageFromMain].center.delete.success);
 					this.getCenterList();
 				} 
-			});
+			}).catch(error => {
+				alert(dictionary[this.props.languageFromMain].center.delete.success);
+			}).then(this.getCenterList())
 		}
 	}
 

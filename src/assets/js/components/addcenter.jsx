@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import { addCenter } from '../utilities/functions';
 
-class AddCenter extends Component {
+class AddCenter extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
         getCenterList: PropTypes.func.isRequired
@@ -25,28 +26,28 @@ class AddCenter extends Component {
     }
 
     handleAdd = () => {
-        fetch(back_end_host + 'db/center', {
-            method: 'PUT',
-            body: JSON.stringify({
+        const centerAddData = {
                 id: this.state.id,
                 centerName: this.state.centerName,
                 link: this.state.link
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
             }
-        }).then(response => {
-            console.log(response)
-            if (response.status === 201) {
+        addCenter(centerAddData)
+        .then(response => {
+            if(response) {
                 alert(dictionary[this.props.languageFromMain].center.add.success);
                 this.setState({
                     id: '',
                     centerName: '',
                     link: ''
                 });
-            } else {
-                alert(dictionary[this.props.languageFromMain].center.add.checkData);
             }
+        }).catch(error => {
+            this.setState({
+                id: '',
+                centerName: '',
+                link: ''
+            });
+            alert(dictionary[this.props.languageFromMain].center.add.success);
         }).then(this.props.getCenterList)
     }
 

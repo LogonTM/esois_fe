@@ -13,7 +13,7 @@ const request = (options) => {
     options = Object.assign({}, defaults, options);
 
     return fetch(options.url, options)
-    .then(response => 
+    .then(response =>
         response.json().then(json => {
             if(!response.ok) {
                 return Promise.reject(json);
@@ -32,12 +32,42 @@ export function login(loginRequest) {
 }
 
 export function register(registerRequest) {
-    console.log('Register function got called with path: ' + back_end_host + 'auth/register')
     return request({
         url: back_end_host + "api/auth/register",
         method: 'POST',
         body: JSON.stringify(registerRequest)
     });
+}
+
+export function updateUser(userUpdateData) {
+    return request({
+        url: back_end_host + "db/user/",
+        method: 'POST',
+        body: JSON.stringify(userUpdateData)
+    });
+}
+
+export function updateCenter(centerUpdateData) {
+    return request({
+        url: back_end_host + "db/center/",
+        method: 'POST',
+        body: JSON.stringify(centerUpdateData)
+    })
+}
+
+export function addCenter(centerAddData) {
+    return request({
+        url: back_end_host + "db/center/",
+        method: "PUT",
+        body: JSON.stringify(centerAddData)
+    })
+}
+
+export function removeCenter(centerID) {
+    return request({
+        url: back_end_host + 'db/center/' + centerID,
+        method: 'DELETE' 
+    })    
 }
 
 export function checkUsernameAvailability(username) {
@@ -70,4 +100,43 @@ export function getCurrentUser() {
         url: back_end_host + "db/user/me",
         method: 'GET'
     });
+}
+
+export function getCurrentUsers() {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: back_end_host + "db/user/",
+        method: 'GET'
+    });
+}
+
+export function getUserRoles() {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set.");
+    }
+    return request({
+        url: back_end_host + "db/user/roles",
+        method: 'GET'
+    });
+}
+
+export function getCurrentCenters() {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set.");
+    }
+
+    return request({
+        url: back_end_host + "db/center/",
+        method: 'GET'
+    });
+}
+
+export function getSAMLToken() {
+    return request({
+        url: back_end_host + 'api/auth/samlLogin',
+        method: 'GET'
+    })
 }

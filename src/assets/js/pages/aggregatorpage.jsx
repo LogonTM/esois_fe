@@ -7,7 +7,7 @@ import dictionary from '../../../translations/dictionary';
 import LanguageSelector from '../components/languageselector.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
@@ -18,7 +18,7 @@ var PT = PropTypes;
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
 
-class AggregatorPage extends Component {
+class AggregatorPage extends PureComponent {
 	static propTypes = {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
@@ -97,7 +97,7 @@ class AggregatorPage extends Component {
                         const unavailableCorporaHandles = contextCorporaInfo.unavailable; // list of unavailable aggregationContext
                         if (unavailableCorporaHandles.length > 0) {
                             this.props.error("Could not find requested collection handles:\n" + unavailableCorporaHandles.join('\n'));
-					}
+                        }
                     
                         const actuallySelectedCorpora = corpora.getSelectedIds();
                         
@@ -120,7 +120,7 @@ class AggregatorPage extends Component {
                     }
                     else {
                         // no context set all visible to selected as default.
-                        console.log("no context set, selecting all available");
+                        // console.log("no context set, selecting all available");
                         corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
                     }
 						
@@ -862,11 +862,11 @@ Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
-    console.log("vars: ", vars);
+    // console.log("vars: ", vars);
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
         if (decodeURIComponent(pair[0]) === variable) {
-	    console.log("variable found: (", variable, ") = ", decodeURIComponent(pair[1]));
+	    // console.log("variable found: (", variable, ") = ", decodeURIComponent(pair[1]));
             return decodeURIComponent(pair[1]);
         }
     }
@@ -897,7 +897,7 @@ function setQueryVariable(qvar, value) {
     
     var searchPart = vars.join('&');
     var newUrl = window.location.origin + window.location.pathname+'?'+searchPart;
-    console.log("set url", newUrl);
+    // console.log("set url", newUrl);
     window.history.replaceState(window.history.state, null, newUrl);
 }
 

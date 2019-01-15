@@ -6,12 +6,13 @@ import dictionary from '../../../translations/dictionary';
 import EditUser from '../components/edituser.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
+import { getCurrentUsers, getUserRoles } from '../utilities/functions';
 
-class ManageUsers extends Component {
+class ManageUsers extends PureComponent {
 	static propTypes = {
 		languageFromMain: PropTypes.string.isRequired,
 	}
@@ -23,23 +24,34 @@ class ManageUsers extends Component {
 			oneUserId: 0,
             oneUserName: '',
 			oneUserEmail: '',
-			oneUserAccountstate: false
+			oneUserAccountstate: false,
+			oneUserRole: [],
+			availableRoles: []
 		};
 	}
 
 	componentDidMount() {
 		this.getUserList();
+		this.loadUserRoles();
 	}
 
 	getUserList = () => {
-		fetch(back_end_host + 'db/user')
-		.then(response => response.json())
+		getCurrentUsers()
 		.then(result => {
 			this.setState({
 				users: result
 			});
 		});
 	}
+
+	loadUserRoles = () => {
+        getUserRoles()
+        .then(response => {
+            this.setState({
+                availableRoles: response
+            })
+        })
+    }
 
 	handleChange = event => {
         event.preventDefault();
@@ -77,14 +89,15 @@ class ManageUsers extends Component {
 		}
 	}
 
-	toggleEdit = (e, id, name, email, enabled) => {
+	toggleEdit = (e, id, name, email, enabled, role) => {
 		e.preventDefault();
 		$(ReactDOM.findDOMNode(this.refs.editUserModal)).modal();
 		this.setState({
 			oneUserId: id,
 			oneUserName: name,
 			oneUserEmail: email,
-			oneUserAccountstate: enabled
+			oneUserAccountstate: enabled,
+			oneUserRole: role
 		});
 	}
 
@@ -116,10 +129,11 @@ class ManageUsers extends Component {
 										<td>{item.username}</td>
 										<td>{item.email}</td>
 										<td>{dictionary[this.props.languageFromMain].user.manage.enabled[item.enabled]}</td>
+										<td>{item.roles.map(role => dictionary[this.props.languageFromMain].user.manage.role[role.name])}</td>
 										<td>
 											<Button
 												label={dictionary[this.props.languageFromMain].button.edit}
-												onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled)}
+												onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled, item.roles)}
 											/>
 										</td>
 									</tr>
@@ -145,9 +159,12 @@ class ManageUsers extends Component {
 						oneUserId={this.state.oneUserId}
 						oneUserName={this.state.oneUserName}
 						oneUserEmail={this.state.oneUserEmail}
+						oneUserRole={this.state.oneUserRole}
 						oneUserAccountstate={this.state.oneUserAccountstate}
 						handleChange={this.handleChange}
 						handleAccountState={this.handleAccountState}
+						handleUserRole={this.handleUserRole}
+						availableRoles={this.state.availableRoles}
 					/>				
 				</Modal>
 

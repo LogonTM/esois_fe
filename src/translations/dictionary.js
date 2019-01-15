@@ -127,10 +127,10 @@ export default {
                 {cat: 'wordAttribute', label: 'Sõna atribuut', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
                 {cat: 'textAttribute', label: 'Teksti atribuut', layers: ['_.text_language']},
             ],
-            layers: {
-                'word': {
-                    label: 'sõna',
-                    argOpts: 'wordOptions',
+        layers: {
+            'word': {
+                label: 'sõna',
+                argOpts: 'wordOptions',
                 },
                 'pos': {
                     label: 'sõnaliik',
@@ -152,7 +152,7 @@ export default {
                         {value: "SCONJ", label: "Subordinating conjunction"},
                         {value: "PUNCT", label: "Kirjavahemärk"},
                         {value: "SYM", label: "Sümbol"},
-                        {value: "X", label: "Muu"},
+                        {value: "X", label: "Muu"}
                     ],
                 },
                 'lemma': {
@@ -266,13 +266,18 @@ export default {
                 { key: 'name', label: 'Nimi'},
                 { key: 'username', label: 'Kasutajanimi'},
                 { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Kasutajakonto olek'}
+                { key: 'enabled', label: 'Kasutajakonto olek'},
+                { key: 'userRole', label: 'Kasutaja roll(id)'}
             ],
             manage: {
                 edit: 'Kasutaja andmete muutmine',
-                enabled: {
-                    true: 'aktiivne',
-                    false: 'suletud'
+                    enabled: {
+                        true: 'aktiivne',
+                        false: 'suletud'
+                    },
+                role: {
+                    ROLE_ADMIN: 'Admin ',
+                    ROLE_USER: 'Tavakasutaja '
                 }
             }
         },
@@ -549,13 +554,18 @@ export default {
                 { key: 'name', label: 'Name'},
                 { key: 'username', label: 'Username'},
                 { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Useraccount state'}
+                { key: 'enabled', label: 'Useraccount state'},
+                { key: 'userRole', label: 'User role(s)'}
             ],
             manage: {
                 edit: 'Edit user data',
                 enabled: {
                     true: 'Active',
                     false: 'Disabled'
+                },
+                role: {
+                    ROLE_ADMIN: 'Admin ',
+                    ROLE_USER: 'Regular '
                 }
             }
         },

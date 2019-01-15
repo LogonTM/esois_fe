@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
@@ -20,6 +20,7 @@ import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
 import { authentication_token } from './constants/constants';
+import { getCurrentUser } from './utilities/functions';
 
 const logoIntl = {
 	ee: EeEKRKlogo,
@@ -30,13 +31,42 @@ window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
-class Main extends Component {
+class Main extends PureComponent {
 	componentWillMount() {
 		routeFromLocation.bind(this)()
+		getCurrentUser()
+		.then(response => {
+		  var isAdmin = 'ROLE_USER';
+		  for(let value in response.authorities) {
+			if (response.authorities[value].authority === 'ROLE_ADMIN')
+				isAdmin = 'ROLE_ADMIN';
+			}
+			this.setState({
+			  userRole: isAdmin,
+			  userName: response.name
+		  });
+		}).catch(error => {
+
+		});
 	}
 
 	componentDidUpdate() {
 		routeFromLocation.bind(this)()
+		getCurrentUser()
+		.then(response => {
+			var isAdmin = 'ROLE_USER';
+			for(let value in response.authorities) {
+			  if (response.authorities[value].authority === 'ROLE_ADMIN')
+				  isAdmin = 'ROLE_ADMIN';
+			  }
+			  this.setState({
+				userRole: isAdmin,
+				userName: response.name
+			});
+
+		}).catch(error => {
+
+		});
 	}
   
 	constructor(props) {
@@ -47,14 +77,9 @@ class Main extends Component {
 			errorMessages: [],
 			language: 'ee',
 			loggedInStatus: localStorage.getItem(authentication_token) !== null ? true : false,
-			userName: ''
+			userName: '',
+			userRole: ''
 		}
-	}
-
-	statusFlip = () => {
-		this.setState({
-			loggedInStatus: true
-		})
 	}
 
 	error = errObj => {
@@ -96,10 +121,15 @@ class Main extends Component {
 	}
 
 	getUserLoginStatus = (userStatus, currentUser) => {
-		console.log('From main: ' + userStatus)
 		this.setState({
 			loggedInStatus: userStatus,
 			userName: currentUser
+		})
+	}
+
+	getUserRole = role => {
+		this.setState({
+			userRole: role
 		})
 	}
 
@@ -128,6 +158,7 @@ class Main extends Component {
 				isUserloggedIn={this.state.loggedInStatus}
 				getStatus={this.getUserLoginStatus.bind(this)}
 				languageFromMain={this.state.language}
+				getRole={this.getUserRole.bind(this)}
 			/>
 		);
 	}
@@ -141,6 +172,7 @@ class Main extends Component {
 				userName={this.state.userName}
 				getStatus={this.getUserLoginStatus.bind(this)}
 				languageFromMain={this.state.language}
+				getRole={this.getUserRole.bind(this)}
 			/>
 		);
 	}
@@ -154,7 +186,11 @@ class Main extends Component {
 	} 
 
 	renderManageUsers = () => {
-		return <ManageUsers languageFromMain={this.state.language} /> // For admins only
+		return (
+			<ManageUsers 
+				languageFromMain={this.state.language}
+			/> // For admins only
+		)
 	}
 
 	// renderUserManager = () => {
@@ -210,13 +246,13 @@ class Main extends Component {
 	}
 
 	toManageCenter = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
+		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageCenter')
 		}
 	}
 
 	toManageUsers = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
+		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageUsers')
 		}
 	}
@@ -228,7 +264,7 @@ class Main extends Component {
 	// }
 
 	toManageLogs = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null) {
+		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageLogs')
 		}
 	}
@@ -317,7 +353,17 @@ class Main extends Component {
 								alt='Help'
 							/>
 						</a>
- 						<a
+						{this.state.userRole === 'ROLE_ADMIN' ? this.renderAdmin() : null}
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	renderAdmin = () => {
+		return(
+			<div className="d-flex flex-nowrap w-100">
+						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
@@ -335,8 +381,6 @@ class Main extends Component {
 						>
 							<i className="fa fa-users"/>
 						</a>
-					</div>
-				</div>
 			</div>
 		)
 	}
@@ -405,7 +449,6 @@ class Main extends Component {
 	}
 
 	render() {
-		console.log("Log in status from main: " + this.state.loggedInStatus)
 		return (
 			<div>
 				<div>
@@ -425,10 +468,10 @@ function endsWith(str, suffix) {
 }
 
 var routeFromLocation = function() {
-	console.log('routeFromLocation: ' + document.location)
+	// console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
 	var path = window.location.pathname
-	console.log('path: ' + path)
+	// console.log('path: ' + path)
 	if (path !== '/') {
 		if (path === '/help') {
 			this.toHelp()
@@ -436,9 +479,9 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null) {
+		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.toManageCenter()
-		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null)  {
+		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {
 			function getUrlParameter(name) {
