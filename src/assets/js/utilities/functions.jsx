@@ -41,7 +41,7 @@ export function register(registerRequest) {
 
 export function updateUser(userUpdateData) {
     return request({
-        url: back_end_host + "db/user/update",
+        url: back_end_host + "db/user/",
         method: 'POST',
         body: JSON.stringify(userUpdateData)
     });
@@ -49,7 +49,7 @@ export function updateUser(userUpdateData) {
 
 export function updateCenter(centerUpdateData) {
     return request({
-        url: back_end_host + "db/center/update",
+        url: back_end_host + "db/center/",
         method: 'POST',
         body: JSON.stringify(centerUpdateData)
     })
@@ -57,7 +57,7 @@ export function updateCenter(centerUpdateData) {
 
 export function addCenter(centerAddData) {
     return request({
-        url: back_end_host + "db/center/add",
+        url: back_end_host + "db/center/",
         method: "PUT",
         body: JSON.stringify(centerAddData)
     })
@@ -65,7 +65,7 @@ export function addCenter(centerAddData) {
 
 export function removeCenter(centerID) {
     return request({
-        url: back_end_host + 'db/center/delete/' + centerID,
+        url: back_end_host + 'db/center/' + centerID,
         method: 'DELETE' 
     })    
 }
@@ -108,7 +108,7 @@ export function getCurrentUsers() {
     }
 
     return request({
-        url: back_end_host + "db/user/list",
+        url: back_end_host + "db/user/",
         method: 'GET'
     });
 }
@@ -129,7 +129,7 @@ export function getCurrentCenters() {
     }
 
     return request({
-        url: back_end_host + "db/center/list",
+        url: back_end_host + "db/center/",
         method: 'GET'
     });
 }
