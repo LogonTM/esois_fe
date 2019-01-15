@@ -43,7 +43,7 @@ class EditUser extends PureComponent {
         updateUser(userUpdateData)
         .then(response => {
             if(response) {
-                // alert(dictionary[this.props.languageFromMain].user.edit.success);
+                alert(dictionary[this.props.languageFromMain].user.edit.success);
             }
         }).catch(error => {
             // console.log(error)

@@ -308,8 +308,9 @@ div.corpus h3 a, .modal-title a {
 
 .oauth-btn img {
   height: 30px;
-  float: right;
   vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .oauth-btn.google {
