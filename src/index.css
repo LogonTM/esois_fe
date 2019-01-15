@@ -305,3 +305,24 @@ div.corpus h3 a, .modal-title a {
 .fa-plus, .fa-minus, .fa-ellipsis-h, .fa-cog, .fa-times-circle {
   margin-right: 0.5em;
 }
+
+.oauth-btn img {
+  height: 30px;
+  float: right;
+  vertical-align: middle;
+}
+
+.oauth-btn.google {
+  margin-top: auto;
+}
+
+.oauth-login {
+    background: #fff;
+    /* box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27); */
+    border-radius: 2px;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;    
+    padding: 0px;
+}

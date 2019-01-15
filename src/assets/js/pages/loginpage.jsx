@@ -221,25 +221,13 @@ class LoginPage extends Component {
 									uiType='btn.lg'
 									onClick={this.handleToRegistration}
                                 />
-								<Button
-                                    label='samlTESTER'
-                                    type='button'
-									uiType='btn.lg'
-									onClick={this.getSAML}
-                                />
 							</form>
+							<div className="oauth-login">
+								<a className="btn btn-block oauth-btn google" href={google_auth_url}>
+									<img src={googleLogo} alt="Google" /> Login OAuth </a>
+							</div>
 							<div className="bottom-gap"></div>
 						</div>
-						<div className="oauth2">
-							<a className="btn btn-block" href={google_auth_url}>
-								<img src={googleLogo} alt="google_logo"/>
-							</a>
-						</div>
-						{/* <div className="oauth2">
-							<a className="btn btn-block" href={saml_url}>
-								<img src={ekrk_sso} alt="google_logo"/>
-							</a>
-						</div> */}
 					</div>
 				</div>
 			);
