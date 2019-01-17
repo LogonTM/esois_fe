@@ -1,7 +1,6 @@
 import 'bootstrap';
 import $ from 'jquery';
 import AddCenter from '../components/addcenter.jsx'
-import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import EditCenter from '../components/editcenter.jsx'
@@ -55,12 +54,11 @@ class ManageCenter extends PureComponent {
 	}
 
 	handleChange = event => {
-        event.preventDefault();
-        this.setState({[event.target.name]: event.target.value})
+		this.setState({[event.target.name]: event.target.value})
 	}
 	
 	toggleAdd = () => {
-	    $(ReactDOM.findDOMNode(this.refs.AddCenterModal)).modal();
+		$(ReactDOM.findDOMNode(this.refs.AddCenterModal)).modal();
 	}
 
 	toggleEdit = (e, id, name, link) => {

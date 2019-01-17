@@ -127,6 +127,7 @@ div.navbar {
   color: rgb(40,85,143) !important;
   text-shadow: 0px 0px 0px !important;
   font-weight: lighter !important;
+  letter-spacing: 1px;
 }
 
 .switch-toggle.switch-candy.blue {
@@ -139,12 +140,12 @@ div.navbar {
 }
 
 .switch-toggle.switch-candy.orange {
-  background-color: rgba(220, 133, 46, 0.25) !important;
+  background-color: rgba(220, 133, 46, 0.15) !important;
   border-radius: 4px !important;
 }
 
 .switch-candy.orange a {
-  background-color: rgba(220, 133, 46, 0.35) !important;
+  background-color: rgba(220, 133, 46, 0.25) !important;
 }
 
 .btn-xs {

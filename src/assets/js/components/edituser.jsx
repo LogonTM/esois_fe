@@ -31,11 +31,11 @@ class EditUser extends PureComponent {
             newRoleUser: null,
             lastClicked: '',
             uniqueID: this.props.oneUserId
-        }  
+        }
     }
 
     componentDidUpdate() {
-        this.hasRoleValidation();        
+        this.hasRoleValidation();
     }
 
     handleEdit = () => {
@@ -65,7 +65,7 @@ class EditUser extends PureComponent {
                 lastClicked: ''
             })
             if(this.state.newRoleAdmin === null || this.state.newRoleUser === null) {
-                for(let value in this.props.availableRoles) {           
+                for(let value in this.props.availableRoles) {
                     if(this.props.oneUserRole.length > 0 && value < this.props.oneUserRole.length){
                         if(this.props.oneUserRole[value].name === 'ROLE_USER') {
                             this.setState({
@@ -78,11 +78,11 @@ class EditUser extends PureComponent {
                                 hasRoleAdmin: this.props.oneUserRole[value].name,
                                 newRoleAdmin: this.props.oneUserRole[value].name
                             }, () => this.state.hasRoleAdmin)
-                        }              
-                    } 
+                        }
+                    }
                 }
             }
-        } 
+        }
     }
 
     roleChecker = role => {
@@ -227,7 +227,7 @@ class EditUser extends PureComponent {
                             />
                         </div>
                     </div> */}
-                    {this.props.availableRoles.map((role, key) => 
+                    {this.props.availableRoles.map((role, key) =>
                     <div key={key} className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="role">

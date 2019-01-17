@@ -1,8 +1,7 @@
 import React, { Component, PureComponent } from 'react';
-import PropTypes from "prop-types";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import PropTypes from 'prop-types';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import dictionary from '../../../translations/dictionary';
-import $ from 'jquery';
 
 var PT = PropTypes;
 
@@ -21,7 +20,8 @@ class QueryInput extends Component {
 		handleKeyTextarea: PT.func.isRequired,
 		languageFromMain: PT.string.isRequired,
 		onQueryChange: PT.func.isRequired,
-		fcsTextAreaVisibility: PT.bool.isRequired
+		fcsTextAreaVisibility: PT.bool.isRequired,
+		layerMap: PT.object.isRequired
 	}
 
 	render() {
@@ -65,6 +65,7 @@ class QueryInput extends Component {
 						ref="fcsGQB"
 						onQueryChange={this.props.onQueryChange}
 						languageFromMain={this.props.languageFromMain}
+						layerMap={this.props.layerMap}
 					/>
 				</div>
 			</div>
@@ -77,7 +78,8 @@ class ADVTokens extends Component {
 	static propTypes = {
 		query: PT.string, // initial state query
 		onQueryChange: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		layerMap: PT.object.isRequired
 	}
 
 	constructor(props) {
@@ -139,6 +141,7 @@ class ADVTokens extends Component {
 						onQueryChange={(qs) => this.onQueryChange(tokenId, qs)}
 						handleRemoveADVToken={() => this.removeADVToken(tokenId)}
 						languageFromMain={this.props.languageFromMain}
+						layerMap={this.props.layerMap}
 					/>
 				</CSSTransition>
 			);
@@ -164,7 +167,8 @@ class ADVToken extends Component {
 		query: PT.string,
 		onQueryChange: PT.func.isRequired,
 		handleRemoveADVToken: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		layerMap: PT.object.isRequired
 	}
 	
 	render() {
@@ -187,6 +191,7 @@ class ADVToken extends Component {
 							onQueryChange={this.props.onQueryChange}
 							query={this.props.query}
 							languageFromMain={this.props.languageFromMain}
+							layerMap={this.props.layerMap}
 						/>
 					<div className="lower_footer">
 					</div>
@@ -218,14 +223,6 @@ class ADVTokenMenu extends PureComponent {
 		}
 	}
 
-	getMenuState = () => {
-		if (this.state.hideMenu) {
-			return {};
-		} else {
-			return $.extend({}, this.state); // copy of state
-		}
-	}
-
 	toggleRepeatMenu = e => {
 		this.setState((st) =>({hideMenu: !st.hideMenu}));
 	}
@@ -236,16 +233,6 @@ class ADVTokenMenu extends PureComponent {
 
 	toggleEnd = e => {
 		this.setState((st) => ({isEnd: !st.isEnd}));
-	}
-	
-	componentDidMount() {
-		// make this compoent controlled to so that this awkward ref.getMenuState() stuff can be removed
-		this.props.onChange(this.getMenuState());
-	}
-
-	componentDidUpdate() {
-		// safe because of pure render mixin: will only update on state change.
-		this.props.onChange(this.getMenuState());
 	}
 
 	render() {
@@ -310,7 +297,8 @@ class ANDQueryArgs extends Component {
 	static propTypes = {
 		query: PT.string,
 		onQueryChange: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		layerMap: PT.object.isRequired
 	}
 
 	constructor(props) {
@@ -432,6 +420,7 @@ class ANDQueryArgs extends Component {
 							onQueryChange={(qs) => this.onQueryChange(andId, qs)}
 							handleRemoveADVAnd={() => this.removeADVAnd(andId)}
 							languageFromMain={this.props.languageFromMain}
+							layerMap={this.props.layerMap}
 						/>
 					</div>
 				</CSSTransition>
@@ -453,7 +442,8 @@ class ANDQueryORArgs extends Component {
 		query: PT.string,
 		onQueryChange: PT.func.isRequired,
 		handleRemoveADVAnd: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		layerMap: PT.object.isRequired
 	}
 	
 	constructor(props) {
@@ -475,11 +465,6 @@ class ANDQueryORArgs extends Component {
 				ors
 			}
 		}
-	}
-
-	validateADV(value) {
-		//fixme! - disable SearchButton if not atleast 1 token is in the query filter
-		return;
 	}
 	
 	fireQueryChange = () => {
@@ -506,7 +491,7 @@ class ANDQueryORArgs extends Component {
 			} else {
 					this.fireQueryChange();
 			}
-	 });
+		});
 	}
 	
 	onQueryChange = (orId, queryStr) => {
@@ -524,6 +509,7 @@ class ANDQueryORArgs extends Component {
 						handleValidateADV={() => {return true}}
 						onQueryChange={(qs) => this.onQueryChange(orId, qs)}
 						languageFromMain={this.props.languageFromMain}
+						layerMap={this.props.layerMap}
 					/>
 				</CSSTransition>
 			)
@@ -549,19 +535,20 @@ class ANDQueryORArgs extends Component {
 	}
 }
 
-class ORArg extends PureComponent {
+class ORArg extends Component {
 	
 	static propTypes = {
 		query: PT.string,
 		handleValidateADV: PT.func.isRequired,
 		handleRemoveADVOr: PT.func.isRequired,
 		onQueryChange: PT.func.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		layerMap: PT.object.isRequired
 	}
 
 	constructor(props) {
 		super(props);
-		var qp = queryParse(this.props.query);
+		var qp = queryParse(this.props.query, this.props.layerMap);
 			
 		if (qp !== null) {
 			var layer = qp.layer;
@@ -571,51 +558,31 @@ class ORArg extends PureComponent {
 
 		this.state = {
 			layer: layer||'word',
-			argOpt: op||'is',
+			argOpt: op||'IS',
 			argValue: val||'',
 			
 			editingText: false,
 		}
 	}
 
-	fireQueryChange() {
-		const queryString = layerToQueryString(this.state.layer, this.state.argOpt, this.state.argValue);
-		this.props.onQueryChange(queryString);
-	}
-	
-	onlayerChange = evt => {
-		var layer = evt.target.value;
-		this.setState((st) => {
-			var argOpt  = getLayerArgOpts(layer)[0].value;
-			var lvo = getLayerValueOptions(layer, argOpt, st.argValue);
-		var argValue = '';
-			if (lvo === undefined) argValue = '';
-			else argValue= lvo[0].value;
-			
-			return {
-				layer,
-				argOpt,
-				argValue,
-			}
-		})
-	}
-	
-	onArgOptChange = evt => {
-		var argOpt = evt.target.value;
-		this.setState({argOpt});
-	}
-	
-	onArgValueChange = evt => {
-		var value = evt.target.value;
-		//console.log("picked arg value", value);
-		
-		this.setState({argValue: value});
-	}
-
 	componentDidMount(){
 		this.fireQueryChange();
 	}
-	
+
+	shouldComponentUpdate(nextProps, nextState) {
+		const thisMapL = Object.keys(this.props.layerMap).length;
+		const nextMapL = Object.keys(nextProps.layerMap).length;
+		if (nextMapL < thisMapL) {
+			if (!nextProps.layerMap.hasOwnProperty(this.state.layer)) {
+				this.setState({
+					layer: 'word'
+				}, () => this.state.layer);
+				return false
+			}
+		}
+		return true;
+	}
+
 	componentDidUpdate(prevProps, prevState) {
 		// after state update.
 		if (prevState.layer !== this.state.layer
@@ -629,8 +596,42 @@ class ORArg extends PureComponent {
 		}
 	}
 	
-	renderInput() {
-		var valueOptions = getLayerValueOptions(this.state.layer, this.state.argOpt, this.state.argValue);
+	fireQueryChange = () => {
+		const queryString = layerToQueryString(this.state.layer, this.state.argOpt, this.state.argValue);
+		this.props.onQueryChange(queryString);
+	}
+
+	onlayerChange = evt => {
+		const layer = evt.target.value;
+		this.setState((st) => {
+			const argOpt  = getLayerArgOpts(this.props.layerMap, layer)[0];
+			const valueOptions = getLayerValueOptions(this.props.layerMap, layer, argOpt, st.argValue);
+		var argValue = '';
+			if (valueOptions === undefined) {
+				argValue = '';
+			} else {
+				argValue = valueOptions[0];
+			}
+			return {
+				layer,
+				argOpt,
+				argValue,
+			}
+		})
+	}
+	
+	onArgOptChange = evt => {
+		const argOpt = evt.target.value;
+		this.setState({argOpt});
+	}
+	
+	onArgValueChange = evt => {
+		const argValue = evt.target.value;
+		this.setState({argValue});
+	}
+
+	renderInput = () => {
+		const valueOptions = getLayerValueOptions(this.props.layerMap, this.state.layer, this.state.argOpt, this.state.argValue);
 		if (valueOptions === undefined) {
 			return (
 				<input
@@ -652,21 +653,18 @@ class ORArg extends PureComponent {
 					onBlur={() => this.setState({editingText: false})}
 				>
 				{
-					valueOptions.map( (valOpt) => {
-						return <option value={valOpt.value}>{valOpt.label}</option>
+					valueOptions.map(valOpt => {
+						return (
+							<option key={valOpt} value={valOpt}>
+								{(dictionary[this.props.languageFromMain].queryinput.valueOptions[valOpt]) ?
+								dictionary[this.props.languageFromMain].queryinput.valueOptions[valOpt] : valOpt}
+							</option>
+						);
 					})
 				}
 				</select>
 			);
 		}
-	}
-
-	getLayerLabel(layer) {
-		return dictionary[this.props.languageFromMain].queryinput.layers[layer].label;
-	}
-
-	getLayerArgOpts(layer) {
-		return dictionary[this.props.languageFromMain].queryinput.layers[layer].argOpts;
 	}
 
 	render() {
@@ -687,16 +685,12 @@ class ORArg extends PureComponent {
 							value={this.state.layer}
 							onChange={this.onlayerChange}
 						>
-							{
-								dictionary[this.props.languageFromMain].queryinput.layerCategories.map(cat => {
+							{ Object.keys(this.props.layerMap).map(layer => {
 									return (
-										<optgroup key={cat.cat} label={cat.label}>
-											{
-												cat.layers.map(layer => {
-													return <option key={layer} value={layer}>{this.getLayerLabel(layer)}</option>;
-												})
-											}
-										</optgroup>
+										<option key={layer} value={layer}>
+											{(dictionary[this.props.languageFromMain].queryinput.layer[layer]) ? 
+											dictionary[this.props.languageFromMain].queryinput.layer[layer] : layer}
+										</option>
 									);
 								})
 							}
@@ -705,9 +699,13 @@ class ORArg extends PureComponent {
 							className="arg_opts form-control"
 							value={this.state.argOpt}
 							onChange={this.onArgOptChange}>
-							{
-								dictionary[this.props.languageFromMain].queryinput[this.getLayerArgOpts(this.state.layer)].map(argOpt => {
-									return <option key={argOpt.value} value={argOpt.value}>{argOpt.label}</option>;
+							{ getLayerArgOpts(this.props.layerMap, this.state.layer).map(argOpt => {
+									return (
+										<option key={argOpt} value={argOpt}>
+											{(dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt]) ?
+											dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt] : argOpt}
+										</option>
+									);
 								})
 							}
 						</select>
@@ -721,39 +719,12 @@ class ORArg extends PureComponent {
 	}
 }
 
-function getLayers() {
-	const layers_arr = [];
-	for (var l in layers) {
-			layers_arr.push(l);
-	}
-	return layers_arr;
-}
-
-function getLayerArgOpts(layer) {
+function getLayerArgOpts(layers, layer) {
 	return layers[layer].argOpts;
 }
 
-function isValidLayerOperator(layer, operator) {
-	return !!layers[layer].argOpts.find((e) => e.value===operator);
-}
-function isValidLayerValue(layer, operator, value) {
-	var valopts = getLayerValueOptions(layer);
-	if (!valopts) {
-			return true
-	}
-	return valopts.indexOf(value) !== -1;
-}
-
 function layerToQueryString(layer, operator, value) {
-	var toStr = layers[layer].toQueryString
-	if (! toStr) {
-			toStr = getLayerArgOpts(layer).defaultToStr;
-	}
-	if (! toStr) {
-			toStr = wordOptions.defaultToStr;
-			console.warn("layerToQueryString: couldnt find a toQueryString method!");
-	}
-	var qstr = toStr(layer, operator, value);
+	var qstr = wordOptionsDefaultToStr(layer, operator, value);
 	if (qstr === undefined) {
 			console.warn("layerToQueryString: qstr undefined!");
 			return 'undefined';
@@ -761,20 +732,16 @@ function layerToQueryString(layer, operator, value) {
 	return qstr;
 }
 
-function getOperatorLabel(layer, operator) {
-	return layers[layer].argOpts[operator].label;
-}
-
-function getLayerValueOptions(layer, operator, value) {
+function getLayerValueOptions(layers, layer, operator, value) {
 	var valopts = layers[layer].valueOptions;
-	if (! valopts) {
-			return;
+	if (!valopts) {
+		return;
 	}
 	if (typeof valopts === 'function') {
-			return valopts(layer, operator, value);
+		return valopts(layer, operator, value);
 	}
 	else if (valopts.length) {
-			return valopts; // array
+		return valopts; // array
 	}
 }
 
@@ -783,23 +750,22 @@ const quotedStringRE = /(?:"(?:\\"|[^"])*")/.source;
 
 // in: 'word = "zebra" '
 // out: ['word', '=', 'zebra']
-function queryParse(q) {
+function queryParse(q, layers) {
 	if (!q) return null;
 	var match = q.match(/^\s*(\w+) *(=|!=) *"((?:\\"|.)*?)"/);
-	if(match===null) {
+	if (match === null) {
 		return null;
 	}
-	
+
 	const layer = match[1];
 	const op = match[2];
 	const value = match[3];
-	
-	var fromStr = getLayerArgOpts(layer).fromQueryString
-	if (! fromStr) {
-		fromStr = getLayerArgOpts(layer).defaultFromString;
+
+	if (!layers.hasOwnProperty(layer)) {
+		return null;
 	}
-	
-	return fromStr(layer, op, value);
+
+	return wordOptionsdefaultFromString(layer, op, value);
 }
 
 // in: '(word = "zebra" | word = "zoo" ...)'
@@ -809,6 +775,7 @@ function queryToORArgs(q) {
 	var match = q.trim().match(queryToORArgs.re);
 	return match;
 }
+
 queryToORArgs.re = RegExp('(?:'+quotedStringRE+'|[^()|])+', 'g')
 
 // in: '[word = "zebra" & (word = "zoo" ...)]'
@@ -819,8 +786,8 @@ function queryToANDArgs(q) {
 	var match = q.trim().match(queryToANDArgs.re);
 	return match;
 }
-queryToANDArgs.re = RegExp('(?:'+quotedStringRE+'|[^&])+', 'g')
 
+queryToANDArgs.re = RegExp('(?:'+quotedStringRE+'|[^&])+', 'g')
 
 // in: '[word = "zebra"] [word = "zoo"]'
 // out: ['[word = "zebra"]', '[word = "zoo"]']
@@ -829,7 +796,8 @@ function queryToTokens(q) {
 	var match = q.match(queryToTokens.re);
 	return match;
 }
-queryToTokens.re = RegExp('\\[(?:'+quotedStringRE+'|.)*?\\] *(?:\\{.*?\\})?', 'g');
+
+queryToTokens.re = RegExp('\\[(?:'+ quotedStringRE +'|.)*?\\] *(?:\\{.*?\\})?', 'g');
 
 var filteredWords = []
 /*To simplify matching regex filter out words within "quotemarks". This help to not stumble on any special characters that can occur there. */
@@ -845,166 +813,76 @@ function filterWords(s, f) {
 	return ret;
 }
 
-var wordOptions = [
-	{value: 'is', label: 'is'},
-	{value: 'is_not', label: 'is not'},
-	{value: 'contains', label: 'contains'},
-	{value: 'starts_with', label: 'starts with'},
-	{value: 'ends_with', label: 'ends with'},
-	{value: 'regex', label: 'regex'},
-	{value: 'not_regex', label: 'not regex'},
-]
-var liteOptions = [
-	{value: "is", label: "is"},
-	{value: "is_not", label: "is not"},
-]
-var setOptions = [
-	{value: "is", label: "is"},
-	{value: "is_not", label: "is not"},
-]
-var probabilitySetOptions = [
-	{value: "is", label: "highest_rank"},
-	{value: "is_not", label: "not_highest_rank"},
-	{value: "contains", label: "rank_contains"},
-	{value: "contains_not", label: "not_rank_contains"},
-]
-
-setOptions.defaultToStr = (layer, op, val) => {
+function wordOptionsDefaultToStr(layer, op, value) {
+	const unescVal = value;
+	const val = escapeRegExp(value);
 	switch(op) {
-	case 'is': 
-			return `${layer} = "${val}"`
-	case 'is_not': 
-			return `${layer} != "${val}"`
+	case 'IS': 
+		return `${layer} = "${val}"`;
+	case 'IS_NOT': 
+		return `${layer} != "${val}"`;
+	case 'CONTAINS': 
+		return `${layer} = ".*${val}.*"`;
+	case 'STARTS_WITH': 
+		return `${layer} = "${val}.*"`;
+	case 'ENDS_WITH': 
+		return `${layer} = ".*${val}"`;
+	case 'REGEX': 
+		return `${layer} = "${unescVal}"`;
+	case 'NOT_REGEX': 
+		return `${layer} != "${unescVal}"`;
+	default:
+		return `${layer} = "${val}"`;
 	}
 }
-setOptions.defaultFromString = (layer, op, val) => {
-	return {layer, op: op==='!='?'is_not':'is', val}
-}
 
-wordOptions.defaultToStr = (layer, op, val) => {
-	var unescVal = val;
-	var val = escapeRegExp(val);
-	switch(op) {
-	case 'is': 
-			return `${layer} = "${val}"`
-	case 'is_not': 
-			return `${layer} != "${val}"`
-	case 'contains': 
-			return `${layer} = ".*${val}.*"`
-	case 'starts_with': 
-			return `${layer} = "${val}.*"`
-	case 'ends_with': 
-			return `${layer} = ".*${val}"`
-	case 'regex': 
-			return `${layer} = "${unescVal}"`
-	case 'not_regex': 
-			return `${layer} != "${unescVal}"`
-	}
-}
-wordOptions.defaultFromString = (layer, op, val) => {
+function wordOptionsdefaultFromString(layer, op, val) {
 	// layer should be good. Now figure out op, and if val is escaped or not
 	if (op === '=') {
-			var strippedOfSemiRE = val.replace(/^\.\*/, '').replace(/\.\*$/, '');
-			if ( strippedOfSemiRE.length !== val.length ) {
-					// could be one of: startswith, contains, endswith.
-					if ( ! guessIfRegexp(strippedOfSemiRE) ) {
-							// Ok, it is one of: startswith, contains, endswith.
-							if (val.startsWith('.*') && val.endsWith('.*')) {
-									var op2 = 'contains';
-							} else if (val.startsWith('.*')) {
-									op2 = 'starts_with';
-							} else if (val.endsWith('.*')) {
-									op2 = 'ends_with'
-							} else {
-									console.error("parsing query failed due to coding error");
-									return null;
-							}
-							return {
-									layer: layer,
-									op: op2,
-									val: unescapeRegExp(strippedOfSemiRE)
-							}
-					}
-					// its regexp.
+		var strippedOfSemiRE = val.replace(/^\.\*/, '').replace(/\.\*$/, '');
+		if ( strippedOfSemiRE.length !== val.length ) {
+			// could be one of: startswith, contains, endswith.
+			if ( !guessIfRegexp(strippedOfSemiRE) ) {
+				// Ok, it is one of: startswith, contains, endswith.
+				if (val.startsWith('.*') && val.endsWith('.*')) {
+					var op2 = 'CONTAINS';
+				} else if (val.startsWith('.*')) {
+					op2 = 'STARTS_WITH';
+				} else if (val.endsWith('.*')) {
+					op2 = 'ENDS_WITH'
+				} else {
+					console.error("parsing query failed due to coding error");
+					return null;
+				}
+				return {
+					layer: layer,
+					op: op2,
+					val: unescapeRegExp(strippedOfSemiRE)
+				}
 			}
+			// its regexp.
+		}
 	}
-	
+
 	if (guessIfRegexp(val)) {
 			// its regexp
-			return {layer, op: op==='='?'regex':'not_regex', val: val};
+			return {layer, op: op==='='?'REGEX':'NOT_REGEX', val: val};
 	}
 	
 	// its not regexp
-	return {layer, op: op==='='?'is':'is_not', val: unescapeRegExp(val)};
+	return {layer, op: op==='='?'IS':'IS_NOT', val: unescapeRegExp(val)};
 }
+
 function guessIfRegexp(s) {
 	return !! s.match(/[^\\][-[\]{}()*+\\?.,^$|#]/); // find if it contains any unescaped regex characters
 }
+
 function unescapeRegExp(text) {
-return text.replace(/\\([-[\]{}()*+?.,\\^$|#])/g, '$1');
+	return text.replace(/\\([-[\]{}()*+?.,\\^$|#])/g, '$1');
 }
+
 function escapeRegExp(text) {
-return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
+	return text.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 }
-
-const layers = {
-	'word': {
-			label: 'word',
-			argOpts: wordOptions,
-	},
-	'pos': {
-			label: 'part-of-speech UD v2.0 tagset',
-			argOpts: setOptions,
-			valueOptions: [
-					{value: "ADJ", label: "Adjective"},
-					{value: "ADV", label: "Adverb"},
-					{value: "INTJ", label: "Interjection"},
-					{value: "NOUN", label: "Noun"},
-					{value: "PROPN", label: "Proper noun"},
-					{value: "VERB", label: "Verb"},
-					{value: "ADP", label: "Adposition"},
-					{value: "AUX", label: "Auxiliary"},
-					{value: "CCONJ", label: "Coordinating conjunction"},
-					{value: "DET", label: "Determiner"},
-					{value: "NUM", label: "Numeral"},
-					{value: "PART", label: "Particle"},
-					{value: "PRON", label: "Pronoun"},
-					{value: "SCONJ", label: "Subordinating conjunction"},
-					{value: "PUNCT", label: "Punctuation"},
-					{value: "SYM", label: "Symbol"},
-					{value: "X", label: "Other"},
-			],
-	},
-	'lemma': {
-			label: 'lemmatization of tokens',
-			argOpts: wordOptions,
-	},
-	'orth': {
-			label: 'orthographic transcription',
-			argOpts: wordOptions,
-	},
-	'norm': {
-			label: 'orthographic normalization',
-			argOpts: wordOptions,
-	},
-	'phonetic': {
-			label: 'phonetic transcription SAMPA',
-			argOpts: wordOptions, // TODO special toString/parse? (probably due to regex character handling)
-	},
-	'text': {
-			label: 'Layer only for Basic Search',
-			argOpts: wordOptions,
-	},
-	'_.text_language': {
-			label: 'language',
-			argOpts: wordOptions,
-	},
-};
-
-const layerCategories = [
-	{cat: 'word', label: 'Word', layers: ['word']},
-	{cat: 'wordAttribute', label: 'Word attribute', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
-	{cat: 'textAttribute', label: 'Text attribute', layers: ['_.text_language']},
-];
 
 export default QueryInput;
