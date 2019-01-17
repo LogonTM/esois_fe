@@ -204,7 +204,7 @@ class EditUser extends PureComponent {
                             />
                         </div>
                     </div>
-                    <div className="form-group row addcorp">
+                    {/* <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
                             <label htmlFor="enabled">
                                 {dictionary[this.props.languageFromMain].user.edit.accountstate}
@@ -226,7 +226,7 @@ class EditUser extends PureComponent {
                                 onClick={e => this.props.handleAccountState(e, this.props.oneUserAccountstate)}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     {this.props.availableRoles.map((role, key) => 
                     <div key={key} className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
