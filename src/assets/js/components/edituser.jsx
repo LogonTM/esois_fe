@@ -40,10 +40,10 @@ class EditUser extends PureComponent {
 
     handleEdit = () => {
         const userUpdateData = {
-            id: this.props.oneUserId,
+                id: this.props.oneUserId,
             enabled: this.props.oneUserAccountstate,
             roles: this.saveRole()
-        }
+            }
         updateUser(userUpdateData)
         .then(response => {
             if(response) {

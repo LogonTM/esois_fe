@@ -43,11 +43,11 @@ class ManageCenter extends PureComponent {
 	deleteCenter = id => {
 		if (window.confirm(dictionary[this.props.languageFromMain].center.delete.confirm)) {
 			removeCenter(id)
-			.then(response => {
+			.then(response => { 
 				if(response) {
 					alert(dictionary[this.props.languageFromMain].center.delete.success);
 					this.getCenterList();
-				}
+				} 
 			}).catch(error => {
 				alert(dictionary[this.props.languageFromMain].center.delete.success);
 			}).then(this.getCenterList())

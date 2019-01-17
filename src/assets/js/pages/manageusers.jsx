@@ -33,7 +33,7 @@ class ManageUsers extends PureComponent {
 		this.getUserList();
 		this.loadUserRoles();
 	}
-		
+
 	getUserList = () => {
 		getCurrentUsers()
 		.then(result => {
@@ -63,8 +63,8 @@ class ManageUsers extends PureComponent {
         this.setState({
             oneUserAccountstate: !enabled
         });
-	}
-	
+    }
+
 	searchUser = query => {
 		query = query.toLowerCase();
 		let table, tr, td, i, j, found;

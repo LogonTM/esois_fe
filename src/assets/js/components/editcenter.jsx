@@ -16,10 +16,10 @@ class EditCenter extends PureComponent {
     
     handleEdit = () => {
         const centerUpdateData = {
-            id: this.props.oneCenterId,
-            centerName: this.props.oneCenterName,
-            link: this.props.oneCenterLink
-        }
+                id: this.props.oneCenterId,
+                centerName: this.props.oneCenterName,
+                link: this.props.oneCenterLink
+            }
         updateCenter(centerUpdateData)
         .then(response => {
             if(response) {
@@ -39,8 +39,8 @@ class EditCenter extends PureComponent {
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
-                            <label htmlFor="Center_id">
-                                    {dictionary[this.props.languageFromMain].center.common.id}
+                        <label htmlFor="Center_id">
+                                {dictionary[this.props.languageFromMain].center.common.id}
                             </label>
                         </div>
                         <div className="col-sm-9">

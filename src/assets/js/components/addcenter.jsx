@@ -27,10 +27,10 @@ class AddCenter extends PureComponent {
 
     handleAdd = () => {
         const centerAddData = {
-            id: this.state.id,
-            centerName: this.state.centerName,
-            link: this.state.link
-        }
+                id: this.state.id,
+                centerName: this.state.centerName,
+                link: this.state.link
+            }
         addCenter(centerAddData)
         .then(response => {
             if(response) {
