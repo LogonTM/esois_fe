@@ -31,9 +31,9 @@ class EditCenter extends PureComponent {
     }
 
     render() {
-        const disableButton = this.props.oneCenterId && this.props.oneCenterName && this.props.oneCenterLink
-        const nameValidator = "form-control input-lg " + (this.props.oneCenterName.length > 3 ? "is-valid" : "is-invalid")
-        const linkValidator = "form-control input-lg " + (this.props.oneCenterLink !== ('' || 'http') && this.props.oneCenterLink.startsWith('http') ? "is-valid" : "is-invalid")
+        // const disableButton = this.props.oneCenterId && this.props.oneCenterName && this.props.oneCenterLink
+        // const nameValidator = "form-control input-lg " + (this.props.oneCenterName.length > 3 ? "is-valid" : "is-invalid")
+        // const linkValidator = "form-control input-lg " + (this.props.oneCenterLink !== ('' || 'http') && this.props.oneCenterLink.startsWith('http') ? "is-valid" : "is-invalid")
         return (
             <div id="container">
                 <form>
@@ -62,7 +62,7 @@ class EditCenter extends PureComponent {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg"
                                 type="text"
                                 name="oneCenterName"
                                 id="Center_name"
@@ -81,7 +81,7 @@ class EditCenter extends PureComponent {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator}
+                                className="form-control input-lg"
                                 type="text"
                                 name="oneCenterLink"
                                 id="Center_url"
@@ -98,7 +98,6 @@ class EditCenter extends PureComponent {
                         <Button
                             label={dictionary[this.props.languageFromMain].button.save}
                             onClick={this.handleEdit}
-                            disabled={!disableButton}
                         />
                     </p>
                 </form>

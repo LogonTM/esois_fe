@@ -6,7 +6,7 @@ import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
-class CorpusView extends PureComponent {
+class CorpusView extends Component {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,

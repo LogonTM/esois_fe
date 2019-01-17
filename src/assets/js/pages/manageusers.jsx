@@ -1,6 +1,5 @@
 import 'bootstrap';
 import $ from 'jquery';
-import { back_end_host } from '../constants/constants';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import EditUser from '../components/edituser.jsx'
@@ -27,7 +26,7 @@ class ManageUsers extends PureComponent {
 			oneUserAccountstate: false,
 			oneUserRole: [],
 			availableRoles: []
-		};
+		}
 	}
 
 	componentDidMount() {

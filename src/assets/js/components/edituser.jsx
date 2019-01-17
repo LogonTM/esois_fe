@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component, PureComponent } from 'react';
-import { back_end_host } from '../constants/constants';
+import $ from 'jquery';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
-import { updateUser, getUserRoles } from '../utilities/functions';
+import { updateUser } from '../utilities/functions';
+import cloneDeep from 'lodash/cloneDeep';
+
+var unique;
 
 class EditUser extends PureComponent {
 	static propTypes = {
@@ -24,9 +27,10 @@ class EditUser extends PureComponent {
 		this.state = {
             hasRoleUser: '',
             hasRoleAdmin: '',
-            newRoleAdmin: '',
-            newRoleUser: '',
-            lastClicked: ''
+            newRoleAdmin: null,
+            newRoleUser: null,
+            lastClicked: '',
+            uniqueID: this.props.oneUserId
         }  
     }
 
@@ -51,31 +55,41 @@ class EditUser extends PureComponent {
     }
 
     hasRoleValidation = () => {
-        this.setState({
-            hasRoleUser: '',
-            hasRoleAdmin: ''
-        })
-		for(let value in this.props.availableRoles) {           
-            if(this.props.oneUserRole.length > 0 && value < this.props.oneUserRole.length){
-                if(this.props.oneUserRole[value].name === 'ROLE_USER') {
-                    this.setState({
-                        hasRoleUser: 'ROLE_USER'
-                    })
+        if(unique !== this.props.oneUserId){
+            unique = cloneDeep(this.props.oneUserId)
+            this.setState({
+                hasRoleUser: '',
+                hasRoleAdmin: '',
+                newRoleAdmin: null,
+                newRoleUser: null,
+                lastClicked: ''
+            })
+            if(this.state.newRoleAdmin === null || this.state.newRoleUser === null) {
+                for(let value in this.props.availableRoles) {           
+                    if(this.props.oneUserRole.length > 0 && value < this.props.oneUserRole.length){
+                        if(this.props.oneUserRole[value].name === 'ROLE_USER') {
+                            this.setState({
+                                hasRoleUser: this.props.oneUserRole[value].name,
+                                newRoleUser: this.props.oneUserRole[value].name
+                            }, () => this.state.hasRoleUser)
+                        }
+                        if (this.props.oneUserRole[value].name === 'ROLE_ADMIN') {
+                            this.setState({
+                                hasRoleAdmin: this.props.oneUserRole[value].name,
+                                newRoleAdmin: this.props.oneUserRole[value].name
+                            }, () => this.state.hasRoleAdmin)
+                        }              
+                    } 
                 }
-                if (this.props.oneUserRole[value].name === 'ROLE_ADMIN') {
-                    this.setState({
-                        hasRoleAdmin: 'ROLE_ADMIN'
-                    })
-                }              
-            } 
-        }
+            }
+        } 
     }
 
     roleChecker = role => {
-        if(role === this.state.hasRoleUser){
+        if(role === this.state.newRoleUser){
             return "form-control input-lg is-valid"
         }
-        if (role === this.state.hasRoleAdmin) {
+        if (role === this.state.newRoleAdmin) {
             return "form-control input-lg is-valid"
         } else {
             return "form-control input-lg is-invalid"
@@ -94,13 +108,13 @@ class EditUser extends PureComponent {
                 name: 'ROLE_ADMIN'
             }]
             return data;
-        } else if (this.state.newRoleAdmin === 'ROLE_ADMIN' && this.state.newRoleUser === '') {
+        } else if (this.state.newRoleAdmin === 'ROLE_ADMIN' && (this.state.newRoleUser === '' || this.state.newRoleUser === null)) {
             data = [{
                 id: 2,
                 name: 'ROLE_ADMIN'
             }]
             return data;
-        } else if (this.state.newRoleAdmin === '' && this.state.newRoleUser === 'ROLE_USER') {
+        } else if ((this.state.newRoleAdmin === '' || this.state.newRoleAdmin === null) && this.state.newRoleUser === 'ROLE_USER') {
             data = [{
                 id: 1,
                 name: 'ROLE_USER'
@@ -112,44 +126,44 @@ class EditUser extends PureComponent {
     handleRoleChange = (e, role) => {
         this.setState({
             lastClicked: role
-        })
+        }, () => this.state.lastClicked)
         e.preventDefault();
-        if(role === this.state.hasRoleAdmin) {
+        if(role === this.state.newRoleAdmin) {
             this.setState({
                 newRoleAdmin: ''
-            })
+            }, () => this.state.newRoleAdmin)
             if(this.state.hasRoleUser === 'ROLE_USER' && this.state.lastClicked !== 'ROLE_USER') {
                 this.setState({
                     newRoleUser: 'ROLE_USER'
-                })
+                }, () => this.state.newRoleUser)
             }
-        } else if (role === this.state.hasRoleUser) {
+        } else if (role === this.state.newRoleUser) {
             this.setState({
                 newRoleUser: ''
-            })
-            if(this.state.hasRoleAdmin === 'ROLE_ADMIN' && this.state.lastClicked !== 'ROLE_ADMIN') {
+            }, () => this.state.newRoleUser)
+            if(this.state.newRoleAdmin === 'ROLE_ADMIN' && this.state.lastClicked !== 'ROLE_ADMIN') {
                 this.setState({
                     newRoleAdmin: 'ROLE_ADMIN'
-                })
+                }, () => this.state.newRoleAdmin)
             }
         }
-        if(role === 'ROLE_ADMIN' && this.state.hasRoleAdmin === '') {
+        if(role === 'ROLE_ADMIN' && (this.state.newRoleAdmin === null || this.state.newRoleAdmin === '')) {
             this.setState({
                 newRoleAdmin: 'ROLE_ADMIN'
-            })
-            if (this.state.hasRoleUser === 'ROLE_USER' && this.state.lastClicked !== 'ROLE_USER') {
+            }, () => this.state.newRoleAdmin)
+            if (this.state.newRoleUser === 'ROLE_USER' && this.state.lastClicked !== 'ROLE_USER') {
                 this.setState({
                     newRoleUser: 'ROLE_USER'
-                })
+                }, () => this.state.newRoleUser)
             }
-        } else if(role ==='ROLE_USER' && this.state.hasRoleUser === '') {
+        } else if(role ==='ROLE_USER' && (this.state.newRoleUser === null || this.state.newRoleUser === '')) {
             this.setState({
                 newRoleUser: 'ROLE_USER'
-            })
-            if (this.state.hasRoleAdmin === 'ROLE_ADMIN' && this.state.lastClicked !== 'ROLE_ADMIN') {
+            }, () => this.state.newRoleUser)
+            if (this.state.newRoleAdmin === 'ROLE_ADMIN' && this.state.lastClicked !== 'ROLE_ADMIN') {
                 this.setState({
                     newRoleAdmin: 'ROLE_ADMIN'
-                })
+                }, () => this.state.newRoleAdmin)
             }
         }
     }

@@ -52,10 +52,10 @@ class AddCenter extends PureComponent {
     }
 
     render() {
-        const disableButton = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
-        const idValidator = "form-control input-lg " + (this.state.id.length > 3 ? "is-valid" : "is-invalid")
-        const nameValidator = "form-control input-lg " + (this.state.centerName.length > 3 ? "is-valid" : "is-invalid")
-        const linkValidator = "form-control input-lg " + (this.state.link !== ('' || 'http') && this.state.link.startsWith('http') ? "is-valid" : "is-invalid")
+        // const disableButton = this.state.id && this.state.centerName && this.state.link !== ('' || 'http')
+        // const idValidator = "form-control input-lg " + (this.state.id.length > 3 ? "is-valid" : "is-invalid")
+        // const nameValidator = "form-control input-lg " + (this.state.centerName.length > 3 ? "is-valid" : "is-invalid")
+        // const linkValidator = "form-control input-lg " + (this.state.link !== ('' || 'http') && this.state.link.startsWith('http') ? "is-valid" : "is-invalid")
         return (
             <div id="container">
                 <form>
@@ -67,7 +67,7 @@ class AddCenter extends PureComponent {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={idValidator}
+                                className="form-control input-lg"
                                 type="text"
                                 name="id"
                                 id="Center_id"
@@ -88,7 +88,7 @@ class AddCenter extends PureComponent {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={nameValidator}
+                                className="form-control input-lg"
                                 type="text"
                                 name="centerName"
                                 id="Center_name"
@@ -108,7 +108,7 @@ class AddCenter extends PureComponent {
                         </div>
                         <div className="col-sm-9">
                             <input
-                                className={linkValidator} 
+                                className="form-control input-lg"
                                 type="text"
                                 name="link"
                                 id="Center_url"
@@ -125,7 +125,7 @@ class AddCenter extends PureComponent {
                         <Button
                             label={dictionary[this.props.languageFromMain].button.add}
                             onClick={this.handleAdd}
-                            disabled={!disableButton}
+                            // disabled={!disableButton}
                             data-dismiss='modal'
                         />
                     </p>

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
-import { getCurrentUser, getSAMLToken } from '../utilities/functions';
-import { authentication_token, saml_url, google_auth_url, logout_url } from '../constants/constants';
+import { getCurrentUser } from '../utilities/functions';
+import { authentication_token, google_auth_url, logout_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import googleLogo from '../../img/google-logo.png';
-import ekrk_sso from '../../img/ekrk-footer-logo.png';
 
 var PT = PropTypes
 
@@ -49,7 +48,6 @@ class LoginPage extends Component {
 	loadCurrentUser = () => {
 		getCurrentUser()
 		.then(response => {
-			console.log("UserSummary response: " + response.authorities[0].authority)
 		  this.setState({
 			currentUser: response.name,
 			loggedInStatus: true,
@@ -70,7 +68,6 @@ class LoginPage extends Component {
 			login(loginRequest)
 			.then(response => {
 				localStorage.setItem(authentication_token, response.accessToken);
-				console.log("Local token: " + localStorage.getItem(authentication_token))
 				this.setState({
 					loggedInStatus: true
 				})
@@ -164,15 +161,6 @@ class LoginPage extends Component {
 		return !(
             this.state.usernameOrEmail.valid === true && 
             this.state.password.valid === true)
-	}
-
-	getSAML = () => {
-		getSAMLToken()
-		.then(response => {
-			console.log("Response from SAML token: " + response + " with token specific:" + response.accessToken  + " and bearer type: " + response.tokenType)
-		}).catch(error => {
-			console.log("Response error from SAML token: " + error.status + " " + error.message)
-		})
 	}
 
 	render () {

@@ -18,7 +18,7 @@ var PT = PropTypes;
 window.MyAggregator = window.MyAggregator || {};
 var multipleLanguageCode = window.MyAggregator.multipleLanguageCode = "mul"; // see ISO-693-3
 
-class AggregatorPage extends PureComponent {
+class AggregatorPage extends Component {
 	static propTypes = {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,

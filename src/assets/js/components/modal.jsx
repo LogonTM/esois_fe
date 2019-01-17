@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom'
 import PropTypes from "prop-types";
 import $ from 'jquery';
@@ -20,23 +20,23 @@ class Modal extends Component {
 		$(ReactDOM.findDOMNode(this)).modal({background: true, keyboard: true, show: false});
 	}
 	
-/* 	componentDidUpdate(prevProps) {
+ 	componentDidUpdate(prevProps) {
 		if (prevProps.isOpen !== this.props.isOpen) {
 			this.toggleModal(this.props.isOpen);
 		}
-	} */
+	}
 
 	componentWillUnmount() {
 		$(ReactDOM.findDOMNode(this)).off('hidden');
 	}
 	
-/* 	toggleModal = isOpen => {
+ 	toggleModal = isOpen => {
 		$(ReactDOM.this.node).modal({
 			background: true,
 			keyboard: true,
 			show: isOpen
 		});
-	}; */
+	}; 
 	
 	handleClick(e) {
 		e.stopPropagation();

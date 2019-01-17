@@ -133,10 +133,3 @@ export function getCurrentCenters() {
         method: 'GET'
     });
 }
-
-export function getSAMLToken() {
-    return request({
-        url: back_end_host + 'api/auth/samlLogin',
-        method: 'GET'
-    })
-}
