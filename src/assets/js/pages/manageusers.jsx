@@ -127,7 +127,7 @@ class ManageUsers extends PureComponent {
 										<td>{item.name}</td>
 										<td>{item.username}</td>
 										<td>{item.email}</td>
-										<td>{dictionary[this.props.languageFromMain].user.manage.enabled[item.enabled]}</td>
+										{/* <td>{dictionary[this.props.languageFromMain].user.manage.enabled[item.enabled]}</td> */}
 										<td>{item.roles.map(role => dictionary[this.props.languageFromMain].user.manage.role[role.name])}</td>
 										<td>
 											<Button

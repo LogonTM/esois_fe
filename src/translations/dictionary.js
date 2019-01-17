@@ -266,7 +266,7 @@ export default {
                 { key: 'name', label: 'Nimi'},
                 { key: 'username', label: 'Kasutajanimi'},
                 { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Kasutajakonto olek'},
+                // { key: 'enabled', label: 'Kasutajakonto olek'},
                 { key: 'userRole', label: 'Kasutaja roll(id)'}
             ],
             manage: {
