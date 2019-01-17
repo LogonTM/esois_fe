@@ -554,7 +554,7 @@ export default {
                 { key: 'name', label: 'Name'},
                 { key: 'username', label: 'Username'},
                 { key: 'email', label: 'e-mail'},
-                { key: 'enabled', label: 'Useraccount state'},
+                // { key: 'enabled', label: 'Useraccount state'},
                 { key: 'userRole', label: 'User role(s)'}
             ],
             manage: {
