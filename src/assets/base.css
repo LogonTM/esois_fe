@@ -79,7 +79,8 @@
 }
 
 .float-left {
-    float: left;
+	 float: left;
+	 margin-bottom: 15px;
 }
 
 .btn-flat {
