@@ -569,21 +569,14 @@ class ORArg extends Component {
 		this.fireQueryChange();
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		const thisMapL = Object.keys(this.props.layerMap).length;
-		const nextMapL = Object.keys(nextProps.layerMap).length;
-		if (nextMapL < thisMapL) {
-			if (!nextProps.layerMap.hasOwnProperty(this.state.layer)) {
+	componentDidUpdate(prevProps, prevState) {
+		// after deselecting corpus if the layer no longer exists change the state of layer to 'word'
+		if (Object.keys(this.props.layerMap).length < Object.keys(prevProps.layerMap).length 
+			&& !this.props.layerMap.hasOwnProperty(this.state.layer)) {
 				this.setState({
 					layer: 'word'
-				}, () => this.state.layer);
-				return false
-			}
+				});
 		}
-		return true;
-	}
-
-	componentDidUpdate(prevProps, prevState) {
 		// after state update.
 		if (prevState.layer !== this.state.layer
 			|| prevState.argOpt !== this.state.argOpt
@@ -652,7 +645,7 @@ class ORArg extends Component {
 					onFocus={() => this.setState({editingText: true})}
 					onBlur={() => this.setState({editingText: false})}
 				>
-				{
+				{ 
 					valueOptions.map(valOpt => {
 						return (
 							<option key={valOpt} value={valOpt}>
@@ -699,19 +692,20 @@ class ORArg extends Component {
 							className="arg_opts form-control"
 							value={this.state.argOpt}
 							onChange={this.onArgOptChange}>
-							{ getLayerArgOpts(this.props.layerMap, this.state.layer).map(argOpt => {
+							{ (this.props.layerMap.hasOwnProperty(this.state.layer)) ?
+								getLayerArgOpts(this.props.layerMap, this.state.layer).map(argOpt => {
 									return (
 										<option key={argOpt} value={argOpt}>
 											{(dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt]) ?
 											dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt] : argOpt}
 										</option>
 									);
-								})
+								}) : false
 							}
 						</select>
 					</div>
 					<div className="arg_val_container">
-						{ this.renderInput() }
+						{ (this.props.layerMap.hasOwnProperty(this.state.layer)) ? this.renderInput() : false }
 					</div>
 				</div>
 			</div>
