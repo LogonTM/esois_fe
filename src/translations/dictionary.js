@@ -120,65 +120,28 @@ export default {
         },
         queryinput: {
             and: 'ja',
-            fcsQueryFromButton: 'Otsinguvormi vaatele',
-            fcsTextFieldButton: 'Tekstivälja vaatele',
-            layerCategories: [
-                {cat: 'word', label: 'Sõna', layers: ['word']},
-                {cat: 'wordAttribute', label: 'Sõna atribuut', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
-                {cat: 'textAttribute', label: 'Teksti atribuut', layers: ['_.text_language']},
-            ],
-        layers: {
-            'word': {
-                label: 'sõna',
-                argOpts: 'wordOptions',
-                },
-                'pos': {
-                    label: 'sõnaliik',
-                    argOpts: 'setOptions',
-                    valueOptions: [
-                        {value: "ADJ", label: "Omadussõna"},
-                        {value: "ADV", label: "Määrsõna"},
-                        {value: "INTJ", label: "Hüüdsõna"},
-                        {value: "NOUN", label: "Nimisõna"},
-                        {value: "PROPN", label: "Pärisnimi"},
-                        {value: "VERB", label: "Tegusõna"},
-                        {value: "ADP", label: "Kaassõna"},
-                        {value: "AUX", label: "Auxiliary"},
-                        {value: "CCONJ", label: "Coordinating conjunction"},
-                        {value: "DET", label: "Determiner"},
-                        {value: "NUM", label: "Arvsõna"},
-                        {value: "PART", label: "Particle"},
-                        {value: "PRON", label: "Asesõna"},
-                        {value: "SCONJ", label: "Subordinating conjunction"},
-                        {value: "PUNCT", label: "Kirjavahemärk"},
-                        {value: "SYM", label: "Sümbol"},
-                        {value: "X", label: "Muu"}
-                    ],
-                },
-                'lemma': {
-                    label: 'lemma',
-                    argOpts: 'wordOptions',
-                },
-                'orth': {
-                    label: 'orthographic transcription',
-                    argOpts: 'wordOptions',
-                },
-                'norm': {
-                    label: 'orthographic normalization',
-                    argOpts: 'wordOptions',
-                },
-                'phonetic': {
-                    label: 'phonetic transcription SAMPA',
-                    argOpts: 'wordOptions',
-                },
-                'text': {
-                    label: 'Layer only for Basic Search',
-                    argOpts: 'wordOptions',
-                },
-                '_.text_language': {
-                    label: 'keel',
-                    argOpts: 'wordOptions',
-                }
+            argOpts: {
+                'IS': 'on',
+                'IS_NOT': 'ei ole',
+                'CONTAINS': 'sisaldab',
+                'STARTS_WITH': 'algab',
+                'ENDS_WITH': 'lõppeb',
+                'REGEX': 'regulaaravaldis',
+                'NOT_REGEX': 'ei ole regulaaravaldis',
+            },
+            layer: {
+                'word': 'sõna',
+                'analysis': 'analüüs',
+                'cases': 'kääne',
+                'pos': 'sõnaliik',
+                'lemma': 'algvorm',
+                'mood': 'kõneviis',
+                'negation': 'kõneliik',
+                'nominal': 'infinitiivsed vormid',
+                'number': 'arv',
+                'person': 'isik',
+                'tense': 'aeg',
+                'voice': 'tegumood',
             },
             or: 'või',
             repeatMenu: {
@@ -188,19 +151,89 @@ export default {
             },
             sentenceEnd: 'Lause lõpp',
             sentenceStart: 'Lause algus',
-            setOptions: [
-                {value: "is", label: "on"},
-                {value: "is_not", label: "ei ole"},
-            ],
-            wordOptions: [
-                {value: 'is', label: 'on'},
-                {value: 'is_not', label: 'ei ole'},
-                {value: 'contains', label: 'sisaldab'},
-                {value: 'starts_with', label: 'algab'},
-                {value: 'ends_with', label: 'lõppeb'},
-                {value: 'regex', label: 'regulaaravaldis'},
-                {value: 'not_regex', label: 'ei ole regulaaravaldis'},
-            ]
+            valueOptions: {
+                // cases
+                'Abe': 'ilmaütlev',
+                'Abl': 'alaltütlev',
+                'Ade': 'alalütlev',
+                'All': 'alaleütlev',
+                'Com': 'kaasaütlev',
+                'Ela': 'seestütlev',
+                'Ess': 'olev',
+                'Gen': 'omastav',
+                'Ill': 'sisseütlev',
+                'Ine': 'seesütlev',
+                'Nom': 'nimetav',
+                'Par': 'osastav',
+                'Trm': 'rajav',
+                'Tra': 'saav',
+
+                // mood
+                'Quot': 'kaudne',
+                'Ind': 'kindel',
+                'Imprt': 'käskiv',
+                'Cond': 'tingiv',
+
+                // negation
+                'Neg': 'eitav kõne',
+                'Aff': 'jaatav kõne',
+
+                // nominal
+                'Ger': 'des-vorm',
+                'Inf': 'da-tegevusnimi',
+                'Prc': 'kesksõna',
+                'Sup': 'ma-tegevusnimi',
+
+                // number
+                'Sg': 'ainsus',
+                'Pl': 'mitmus',
+
+                // part of speech
+                'ADJ': 'Omadussõna',
+                'ADV': 'Määrsõna',
+                'INTJ': 'Hüüdsõna',
+                'NOUN': 'Nimisõna',
+                'PROPN': 'Pärisnimi',
+                'VERB': 'Tegusõna',
+                'ADP': 'Kaassõna',
+                'AUX': 'Auxiliary',
+                'CCONJ': 'Coordinating conjunction',
+                'DET': 'Determiner',
+                'NUM': 'Arvsõna',
+                'PART': 'Particle',
+                'PRON': 'Asesõna',
+                'SCONJ': 'Subordinating conjunction',
+                'PUNCT': 'Kirjavahemärk',
+                'SYM': 'Sümbol',
+                'X': 'Muu',
+                '_A_': 'omadussõna algvõrre',
+                '_B_': 'lausepartikkel',
+                '_C_': 'omadussõna keskvõrre',
+                '_D_': 'määrsõna',
+                '_G_': 'genitiivatribuut',
+                '_H_': 'pärisnimi',
+                '_I_': 'hüüdsõna',
+                '_J_': 'sidesõna',
+                '_K_': 'kaassõna',
+                '_N_': 'põhiarvsõna',
+                '_O_': 'järgarvsõna',
+                '_P_': 'asesõna',
+                '_Q_': 'tundmatu',
+                '_S_': 'nimisõna',
+                '_U_': 'omadussõna ülivõrre',
+                '_V_': 'tegusõna',
+                '_X_': 'partikkel',
+                '_Y_': 'lühend',
+                '_Z_': 'kirjavahemärk',
+
+                // tense
+                'Prt': 'minevik',
+                'Prs': 'olevik',
+
+                // voice
+                'Impers': 'umbisikuline',
+                'Pers': 'isikuline',
+            }
         },
         register: {
             name: 'Teie täispikk nimi',
@@ -316,7 +349,7 @@ export default {
             collections: 'Collections',
             erf: 'The creation of RABA has been supported by the European Union European Regional Development Fund',
             hitsPerEndpoint: 'hits per endpoint',
-            searchFor: 'Search for',
+            searchFor: 'Search',
             selectLanguage: 'Select Language',
         },
         center: {
@@ -408,65 +441,28 @@ export default {
         },
         queryinput: {
             and: 'and',
-            fcsQueryFromButton: 'To Query Form View',
-            fcsTextFieldButton: 'To Text Field View',
-            layerCategories: [
-                {cat: 'word', label: 'Word', layers: ['word']},
-                {cat: 'wordAttribute', label: 'Word attribute', layers: ['pos', 'lemma', 'orth', 'norm', 'phonetic', 'text']},
-                {cat: 'textAttribute', label: 'Text attribute', layers: ['_.text_language']},
-            ],
-            layers: {
-                'word': {
-                    label: 'word',
-                    argOpts: 'wordOptions',
-                },
-                'pos': {
-                    label: 'part-of-speech UD v2.0 tagset',
-                    argOpts: 'setOptions',
-                    valueOptions: [
-                        {value: "ADJ", label: "Adjective"},
-                        {value: "ADV", label: "Adverb"},
-                        {value: "INTJ", label: "Interjection"},
-                        {value: "NOUN", label: "Noun"},
-                        {value: "PROPN", label: "Proper noun"},
-                        {value: "VERB", label: "Verb"},
-                        {value: "ADP", label: "Adposition"},
-                        {value: "AUX", label: "Auxiliary"},
-                        {value: "CCONJ", label: "Coordinating conjunction"},
-                        {value: "DET", label: "Determiner"},
-                        {value: "NUM", label: "Numeral"},
-                        {value: "PART", label: "Particle"},
-                        {value: "PRON", label: "Pronoun"},
-                        {value: "SCONJ", label: "Subordinating conjunction"},
-                        {value: "PUNCT", label: "Punctuation"},
-                        {value: "SYM", label: "Symbol"},
-                        {value: "X", label: "Other"},
-                    ],
-                },
-                'lemma': {
-                    label: 'lemmatization of tokens',
-                    argOpts: 'wordOptions',
-                },
-                'orth': {
-                    label: 'orthographic transcription',
-                    argOpts: 'wordOptions',
-                },
-                'norm': {
-                    label: 'orthographic normalization',
-                    argOpts: 'wordOptions',
-                },
-                'phonetic': {
-                    label: 'phonetic transcription SAMPA',
-                    argOpts: 'wordOptions',
-                },
-                'text': {
-                    label: 'Layer only for Basic Search',
-                    argOpts: 'wordOptions',
-                },
-                '_.text_language': {
-                    label: 'language',
-                    argOpts: 'wordOptions',
-                },
+            argOpts: {
+                'IS': 'is',
+                'IS_NOT': 'is not',
+                'CONTAINS': 'contains',
+                'STARTS_WITH': 'starts with',
+                'ENDS_WITH': 'ends with',
+                'REGEX': 'regex',
+                'NOT_REGEX': 'not regex',
+            },
+            layer: {
+                'word': 'word',
+                'analysis': 'analysis',
+                'cases': 'case',
+                'pos': 'part-of-speech',
+                'lemma': 'baseform',
+                'mood': 'mood',
+                'negation': 'negation',
+                'nominal': 'infinite forms',
+                'number': 'number',
+                'person': 'person',
+                'tense': 'tense',
+                'voice': 'voice',
             },
             or: 'or',
             repeatMenu: {
@@ -476,19 +472,89 @@ export default {
             },
             sentenceEnd: 'Sentence end',
             sentenceStart: 'Sentence start',
-            setOptions: [
-                {value: "is", label: "is"},
-                {value: "is_not", label: "is not"},
-            ],
-            wordOptions: [
-                {value: 'is', label: 'is'},
-                {value: 'is_not', label: 'is not'},
-                {value: 'contains', label: 'contains'},
-                {value: 'starts_with', label: 'starts with'},
-                {value: 'ends_with', label: 'ends with'},
-                {value: 'regex', label: 'regex'},
-                {value: 'not_regex', label: 'not regex'},
-            ]
+            valueOptions: {
+                // cases
+                'Abe': 'abessive',
+                'Abl': 'ablative',
+                'Ade': 'adessive',
+                'All': 'allative',
+                'Com': 'comitative',
+                'Ela': 'elative',
+                'Ess': 'essive',
+                'Gen': 'genitive',
+                'Ill': 'illative',
+                'Ine': 'inessive',
+                'Nom': 'nominative',
+                'Par': 'partitive',
+                'Trm': 'terminative',
+                'Tra': 'translative',
+
+                // mood
+                'Quot': 'quotative',
+                'Ind': 'indicative',
+                'Imprt': 'imperative/jussive',
+                'Cond': 'conditional',
+
+                // negation
+                'Neg': 'negative',
+                'Aff': 'affirmative',
+
+                // nominal
+                'Ger': 'gerund',
+                'Inf': 'infinitive',
+                'Prc': 'participle',
+                'Sup': 'supine',
+
+                // number
+                'Sg': 'singular',
+                'Pl': 'plural',
+
+                // part of speech
+                'ADJ': 'Adjective positive',
+                'ADV': 'Adverb',
+                'INTJ': 'Interjection',
+                'NOUN': 'Noun',
+                'PROPN': 'Proper name',
+                'VERB': 'Verb',
+                'ADP': 'Adposition',
+                'AUX': 'Auxiliary',
+                'CCONJ': 'Coordinating conjunction',
+                'DET': 'Determiner',
+                'NUM': 'Numeral',
+                'PART': 'Particle',
+                'PRON': 'Pronoun',
+                'SCONJ': 'Subordinating conjunction',
+                'PUNCT': 'Punctuation',
+                'SYM': 'Symbol',
+                'X': 'Other',
+                '_A_': 'adjective positive',
+                '_B_': 'sentence particle',
+                '_C_': 'adjective comparative',
+                '_D_': 'adverb',
+                '_G_': 'genitive attribute',
+                '_H_': 'proper name',
+                '_I_': 'interjection',
+                '_J_': 'conjunction',
+                '_K_': 'adposition',
+                '_N_': 'cardinal numeral',
+                '_O_': 'ordinal numeral',
+                '_P_': 'pronoun',
+                '_Q_': 'unknown',
+                '_S_': 'substantive',
+                '_U_': 'adjective superlative',
+                '_V_': 'verb',
+                '_X_': 'particle',
+                '_Y_': 'abbreviation',
+                '_Z_': 'punctuation',
+
+                // tense
+                'Prt': 'past',
+                'Prs': 'present',
+
+                // voice
+                'Impers': 'impersonal',
+                'Pers': 'personal',
+            }
         },
         register: {
             name: 'Your full name',

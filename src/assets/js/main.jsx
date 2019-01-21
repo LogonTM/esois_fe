@@ -177,13 +177,13 @@ class Main extends Component {
 		);
 	}
 
-	renderManageCenter = () => {
+	/* renderManageCenter = () => {
 		return (
 			<ManageCenter
 				languageFromMain={this.state.language}
 			/>
 		)
-	} 
+	}  */
 
 	renderManageUsers = () => {
 		return (
@@ -192,10 +192,6 @@ class Main extends Component {
 			/> // For admins only
 		)
 	}
-
-	// renderUserManager = () => {
-	// 	// return <UserManager/>
-	// }
 
 	// renderManageLogs = () => {
 		// return <ManageLogs/>
@@ -208,9 +204,8 @@ class Main extends Component {
 			login: this.renderLogin,
 			register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
-			// userManager: this.renderUserManager, // For regular users
 			// manageLogs: this.renderManageLogs // For admins only
-			manageCenter: this.renderManageCenter // For admins only
+			// manageCenter: this.renderManageCenter // For admins only
 		}
 	}
 
@@ -218,11 +213,11 @@ class Main extends Component {
 		var pageFn = this.getPageFns()[pageFnName]
 		if (this.state.navbarPageFn !== pageFn) {
 			if (doPushHistory) {
-			  window.history.pushState(
-			    { page: pageFnName },
-			    '',
-			    URLROOT + '/' + pageFnName
-			  )
+			  	window.history.pushState(
+					{ page: pageFnName },
+					'',
+					URLROOT + '/' + pageFnName
+				)
 			}
 			this.setState({ navbarPageFn: pageFn })
 			console.log('new page: ' + document.location + ', name: ' + pageFnName)
@@ -245,23 +240,17 @@ class Main extends Component {
 		this.gotoPage(doPushHistory, 'register')
 	}
 
-	toManageCenter = doPushHistory => {
+	/* toManageCenter = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageCenter')
 		}
-	}
+	} */
 
 	toManageUsers = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageUsers')
 		}
 	}
-
-	// toUserManager = doPushHistory => {
-	// 	if(localStorage.getItem(authentication_token) !== null) {
-	// 		this.gotoPage(doPushHistory, 'userManager')
-	// 	}
-	// }
 
 	toManageLogs = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
@@ -363,7 +352,7 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
-						<a
+{/* 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
@@ -371,7 +360,7 @@ class Main extends Component {
 							onClick={this.toManageCenter.bind(this, true)}
 						>
 							<i className="fa fa-database"/>
-						</a>
+						</a> */}
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
@@ -479,8 +468,8 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		} else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
-			this.toManageCenter()
+		/* } else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
+			this.toManageCenter() */
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {

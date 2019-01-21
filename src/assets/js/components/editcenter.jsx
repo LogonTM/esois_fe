@@ -16,10 +16,10 @@ class EditCenter extends PureComponent {
     
     handleEdit = () => {
         const centerUpdateData = {
-                id: this.props.oneCenterId,
-                centerName: this.props.oneCenterName,
-                link: this.props.oneCenterLink
-            }
+            id: this.props.oneCenterId,
+            centerName: this.props.oneCenterName,
+            link: this.props.oneCenterLink
+        }
         updateCenter(centerUpdateData)
         .then(response => {
             if(response) {

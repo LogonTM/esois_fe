@@ -7,11 +7,11 @@ var PT = PropTypes;
 class LanguageSelector extends Component {
 	static propTypes = {
 		anyLanguage: PT.array.isRequired,
-		languageMap: PT.object.isRequired,
+		currentLanguagesMap: PT.object.isRequired,
 		selectedLanguage: PT.array.isRequired,
 		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
-		languageFromMain: PropTypes.string.isRequired
+		languageFromMain: PropTypes.string.isRequired,
 	}
 
 	selectLang = language => {
@@ -50,7 +50,7 @@ class LanguageSelector extends Component {
 	);
 
 	render() {
-		var languages = pairs(this.props.languageMap)
+		var languages = pairs(this.props.currentLanguagesMap)
 						 .sort(function(l1, l2){return l1[1].localeCompare(l2[1]); });
 		languages.unshift(this.props.anyLanguage);
 		languages = languages.map(this.renderLanguageObject);
