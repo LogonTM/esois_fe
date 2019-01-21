@@ -210,10 +210,10 @@ class LoginPage extends Component {
 									onClick={this.handleToRegistration}
                                 />
 							</form>
-							<div className="oauth-login">
+							{/*<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={google_auth_url}>
 									<img src={googleLogo} alt="Google" /> Login OAuth </a>
-							</div>
+							</div> */}
 							<div className="bottom-gap"></div>
 						</div>
 					</div>

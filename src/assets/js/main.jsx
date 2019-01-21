@@ -31,8 +31,8 @@ window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
-class Main extends PureComponent {
-	componentWillMount() {
+class Main extends Component {
+	componentDidMount() {
 		routeFromLocation.bind(this)()
 		getCurrentUser()
 		.then(response => {
@@ -460,7 +460,7 @@ var routeFromLocation = function() {
 	// console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
 	var path = window.location.pathname
-	// console.log('path: ' + path)
+	console.log('path: ' + path);
 	if (path !== '/') {
 		if (path === '/help') {
 			this.toHelp()
@@ -473,7 +473,10 @@ var routeFromLocation = function() {
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {
-			function getUrlParameter(name) {
+		    console.log('oauth2 parsing start....');
+		     
+		    	function getUrlParameter(name) {
+		    	    console.log('oauth2 name....' + name);
 				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 				var results = regex.exec(document.location);

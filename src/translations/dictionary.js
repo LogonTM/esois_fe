@@ -282,7 +282,7 @@ export default {
             exception: 'Erand:'
         },
         results: {
-            howManyMatchingCollectionsFound: 'vastavat korpust leitud',
+        	collectionsFound: 'vastavat korpust leitud',
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
         },
