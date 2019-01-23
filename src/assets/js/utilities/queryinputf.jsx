@@ -4,8 +4,8 @@ export const nextId = () => {
 
 nextId.id = 0;
 
-export function getLayerArgOpts(layers, layer) {
-	return layers[layer].argOpts;
+export function getLayerOperators(layers, layer) {
+	return layers[layer].layerOperators;
 }
 
 export function layerToQueryString(layer, operator, value) {

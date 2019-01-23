@@ -58,7 +58,13 @@ export default {
             manage: {
                 add: 'Lisa uus korpus',
                 edit: 'Korpuse andmete muutmine'
-            }
+            },
+            layer: 'Kiht',
+            name: 'Nimi',
+            operator: 'Operaatorid',
+            valueOptions: 'Kihi väärtused',
+            protocol: 'Protokoll',
+            synonym: 'Sünonüüm'
         },
         corpusview: {
             collapse: 'Peida',
@@ -120,15 +126,6 @@ export default {
         },
         queryinput: {
             and: 'ja',
-            argOpts: {
-                'IS': 'on',
-                'IS_NOT': 'ei ole',
-                'CONTAINS': 'sisaldab',
-                'STARTS_WITH': 'algab',
-                'ENDS_WITH': 'lõppeb',
-                'REGEX': 'regulaaravaldis',
-                'NOT_REGEX': 'ei ole regulaaravaldis',
-            },
             layer: {
                 'word': 'sõna',
                 'analysis': 'analüüs',
@@ -142,6 +139,15 @@ export default {
                 'person': 'isik',
                 'tense': 'aeg',
                 'voice': 'tegumood',
+            },
+            layerOperators: {
+                'IS': 'on',
+                'IS_NOT': 'ei ole',
+                'STARTS_WITH': 'algab',
+                'CONTAINS': 'sisaldab',
+                'ENDS_WITH': 'lõppeb',
+                'REGEX': 'regulaaravaldis',
+                'NOT_REGEX': 'ei ole regulaaravaldis',
             },
             or: 'või',
             repeatMenu: {
@@ -379,7 +385,13 @@ export default {
             manage: {
                 add: 'Add new corpus',
                 edit: 'Edit corpus data'
-            }
+            },
+            layer: 'Layer',
+            name: 'Name',
+            operator: 'Operators',
+            valueOptions: 'Value options',
+            protocol: 'Protocol',
+            synonym: 'Synonym'
         },
         corpusview: {
             collapse: 'Collapse',
@@ -441,15 +453,6 @@ export default {
         },
         queryinput: {
             and: 'and',
-            argOpts: {
-                'IS': 'is',
-                'IS_NOT': 'is not',
-                'CONTAINS': 'contains',
-                'STARTS_WITH': 'starts with',
-                'ENDS_WITH': 'ends with',
-                'REGEX': 'regex',
-                'NOT_REGEX': 'not regex',
-            },
             layer: {
                 'word': 'word',
                 'analysis': 'analysis',
@@ -463,6 +466,15 @@ export default {
                 'person': 'person',
                 'tense': 'tense',
                 'voice': 'voice',
+            },
+            layerOperators: {
+                'IS': 'is',
+                'IS_NOT': 'is not',
+                'STARTS_WITH': 'starts with',
+                'CONTAINS': 'contains',
+                'ENDS_WITH': 'ends with',
+                'REGEX': 'regex',
+                'NOT_REGEX': 'not regex',
             },
             or: 'or',
             repeatMenu: {

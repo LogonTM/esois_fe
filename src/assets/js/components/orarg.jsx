@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import dictionary from '../../../translations/dictionary';
-import { getLayerArgOpts, getLayerValueOptions, layerToQueryString, queryParse } from '../utilities/queryinputf';
+import { getLayerOperators, getLayerValueOptions, layerToQueryString, queryParse } from '../utilities/queryinputf';
 
 class ORArg extends Component {
 	
@@ -25,14 +25,14 @@ class ORArg extends Component {
 
 		this.state = {
 			layer: layer||'word',
-			argOpt: op||'IS',
+			layerOperator: op||'IS',
 			argValue: val||'',
 			
 			editingText: false,
 		}
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.fireQueryChange();
 	}
 
@@ -46,7 +46,7 @@ class ORArg extends Component {
 		}
 		// after state update.
 		if (prevState.layer !== this.state.layer
-			|| prevState.argOpt !== this.state.argOpt
+			|| prevState.layerOperator !== this.state.layerOperator
 			|| prevState.argValue !== this.state.argValue
 			/*|| (!this.state.editingText && prevState.argValue !== this.state.argValue) // only update text-value input on field blur 
 			|| (prevState.editingText !== this.state.editingText && prevState.editingText) // stopped editing text field.
@@ -57,15 +57,15 @@ class ORArg extends Component {
 	}
 	
 	fireQueryChange = () => {
-		const queryString = layerToQueryString(this.state.layer, this.state.argOpt, this.state.argValue);
+		const queryString = layerToQueryString(this.state.layer, this.state.layerOperator, this.state.argValue);
 		this.props.onQueryChange(queryString);
 	}
 
-	onlayerChange = evt => {
-		const layer = evt.target.value;
+	onlayerChange = e => {
+		const layer = e.target.value;
 		this.setState((st) => {
-			const argOpt  = getLayerArgOpts(this.props.layerMap, layer)[0];
-			const valueOptions = getLayerValueOptions(this.props.layerMap, layer, argOpt, st.argValue);
+			const layerOperator  = getLayerOperators(this.props.layerMap, layer)[0];
+			const valueOptions = getLayerValueOptions(this.props.layerMap, layer, layerOperator, st.argValue);
 		var argValue = '';
 			if (valueOptions === undefined) {
 				argValue = '';
@@ -74,24 +74,24 @@ class ORArg extends Component {
 			}
 			return {
 				layer,
-				argOpt,
+				layerOperator,
 				argValue,
 			}
 		})
 	}
 	
-	onArgOptChange = evt => {
-		const argOpt = evt.target.value;
-		this.setState({argOpt});
+	onLayerOptChange = e => {
+		const layerOperator = e.target.value;
+		this.setState({layerOperator});
 	}
 	
-	onArgValueChange = evt => {
-		const argValue = evt.target.value;
+	onArgValueChange = e => {
+		const argValue = e.target.value;
 		this.setState({argValue});
 	}
 
 	renderInput = () => {
-		const valueOptions = getLayerValueOptions(this.props.layerMap, this.state.layer, this.state.argOpt, this.state.argValue);
+		const valueOptions = getLayerValueOptions(this.props.layerMap, this.state.layer, this.state.layerOperator, this.state.argValue);
 		if (valueOptions === undefined) {
 			return (
 				<input
@@ -157,14 +157,14 @@ class ORArg extends Component {
 						</select>
 						<select
 							className="arg_opts form-control"
-							value={this.state.argOpt}
-							onChange={this.onArgOptChange}>
+							value={this.state.layerOperator}
+							onChange={this.onLayerOptChange}>
 							{ (this.props.layerMap.hasOwnProperty(this.state.layer)) ?
-								getLayerArgOpts(this.props.layerMap, this.state.layer).map(argOpt => {
+								getLayerOperators(this.props.layerMap, this.state.layer).map(layerOpt => {
 									return (
-										<option key={argOpt} value={argOpt}>
-											{(dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt]) ?
-											dictionary[this.props.languageFromMain].queryinput.argOpts[argOpt] : argOpt}
+										<option key={layerOpt} value={layerOpt}>
+											{(dictionary[this.props.languageFromMain].queryinput.layerOperators[layerOpt]) ?
+											dictionary[this.props.languageFromMain].queryinput.layerOperators[layerOpt] : layerOpt}
 										</option>
 									);
 								}) : false
