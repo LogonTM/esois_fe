@@ -6,6 +6,7 @@ import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
 import ErrorBoundary from '../utilities/errorboundary';
 import LanguageSelector from '../components/languageselector.jsx'
+import { sortLayerOptions } from '../utilities/layers';
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
 import React, { Component, PureComponent } from 'react';
@@ -72,7 +73,7 @@ class AggregatorPage extends Component {
 
 			zoomedCorpusHit: null,
 
-			layerMap: { word: { argOpts: ['IS'], valueOptions: [] }},
+			layerMap: { word: { layerOperators: ['IS'], valueOptions: [] }},
 		};
 	}
 
@@ -85,7 +86,7 @@ class AggregatorPage extends Component {
 				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
 					var aggregationContext = json['x-aggregation-context'] || this.state.aggregationContext;
-					const layers = corpora.getLayers();
+					const layers = corpora.getLayers(this.props.languageFromMain);
 
 					window.MyAggregator.mode = getQueryVariable('mode') || json.mode;
 					window.MyAggregator.corpora = json.corpora;
@@ -149,7 +150,8 @@ class AggregatorPage extends Component {
 	}
 
 	updateCorpora = corpora => {
-		this.setState(updateState(corpora));
+		this.setState(updateState(corpora, this.props.languageFromMain));
+		// console.log(this.state.layerMap);
 	}
 
 	getCurrentQuery = () => {
@@ -779,29 +781,29 @@ Corpora.prototype.getLanguageCodes = function() {
 	return languages;
 };
 
-Corpora.prototype.getLayers = function() {
+Corpora.prototype.getLayers = function(languageFromMain) {
 	const layers = {};
-	Object.assign(layers, { word: { argOpts: { 'IS' : 'IS'}, valueOptions: {} }});
+	Object.assign(layers, { word: { layerOperators: { 'IS' : 'IS'}, valueOptions: {} }});
 	this.recurse(function(corpus) {
 		corpus.endpoint.layers.forEach(layer => {
 			if (corpus.selected) {
 				if (layers.hasOwnProperty(layer.name)) {
-					layer.argOpts.forEach(argOpt => {
-						Object.assign(layers[layer.name].argOpts, {[argOpt]: argOpt});
+					layer.layerOperators.forEach(layerOpt => {
+						Object.assign(layers[layer.name].layerOperators, {[layerOpt]: layerOpt});
 					});
 					layer.valueOptions.forEach(valOpt => {
-						Object.assign(layers[layer.name].valueOptions, {[valOpt]: valOpt});
+						Object.assign(layers[layer.name].valueOptions, {[valOpt.name]: valOpt.name});
 					});
 				} else {
-					const argOpts = {};
-					layer.argOpts.forEach(argOpt => {
-						Object.assign(argOpts, {[argOpt]: [argOpt]});
+					const layerOperators = {};
+					layer.layerOperators.forEach(layerOpt => {
+						Object.assign(layerOperators, {[layerOpt]: layerOpt});
 					});
 					const valOpts = {};
 					layer.valueOptions.forEach(valOpt => {
-						Object.assign(valOpts, {[valOpt]: [valOpt]});
+						Object.assign(valOpts, {[valOpt.name]: valOpt.name});
 					});
-					Object.assign(layers, { [layer.name] : { argOpts: argOpts, valueOptions: valOpts } });
+					Object.assign(layers, { [layer.name] : { layerOperators: layerOperators, valueOptions: valOpts } });
 				}
 			}
 		});
@@ -809,10 +811,23 @@ Corpora.prototype.getLayers = function() {
 	});
 	const currentLayers = {};
 	const layerKeys = Object.keys(layers);
-	layerKeys.forEach(key => {
+	const wordLayer = (layerKeys[0] === 'word') && layerKeys.shift();
+	const layerKeysLanguageMap = layerKeys.map(key => {
+		if (dictionary[languageFromMain].queryinput.layer[key]) {
+			return [dictionary[languageFromMain].queryinput.layer[key], key];
+		} else {
+			return [key, key];
+		}
+	});
+	layerKeysLanguageMap.sort();
+	const sortedLayerKeys = layerKeysLanguageMap.map(layer => {
+		return layer[1];
+	})
+	sortedLayerKeys.unshift(wordLayer);
+	sortedLayerKeys.forEach(key => {
 		Object.assign(currentLayers, { [key] :
-			{ argOpts: [].concat(Object.keys(layers[key].argOpts)),
-			  valueOptions: [].concat(Object.keys(layers[key].valueOptions)) } });
+			{ layerOperators: sortLayerOptions(Object.keys(layers[key].layerOperators)),
+				valueOptions: Object.keys(layers[key].valueOptions) } });
 	});
 	return currentLayers;
 }
@@ -971,9 +986,9 @@ function encodeQueryData(data)
 	return ret.join("&");
 }
 
-const updateState = corpora => /* ({languageMap}) => */ ({
+const updateState = (corpora, languageFromMain) => /* ({languageMap}) => */ ({
 	corpora,
-	layerMap: corpora.getLayers(),
+	layerMap: corpora.getLayers(languageFromMain),
 	// currentLanguagesMap: corpora.getCurrentLanguages(languageMap)
 })
 
