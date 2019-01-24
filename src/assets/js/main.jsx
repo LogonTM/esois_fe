@@ -4,6 +4,7 @@ import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
 import ManageCenter from './pages/managecenter.jsx'
+import ManageLogs from './pages/managelogs'
 import ManageUsers from './pages/manageusers'
 import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
@@ -32,7 +33,7 @@ window.MyAggregator = window.MyAggregator || {}
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
 class Main extends Component {
-	componenWillMount() {
+	componenDidMount() {
 		routeFromLocation.bind(this)()
 		getCurrentUser()
 		.then(response => {
@@ -193,9 +194,13 @@ class Main extends Component {
 		)
 	}
 
-	// renderManageLogs = () => {
-		// return <ManageLogs/>
-	// }
+	renderManageLogs = () => {
+		return (
+			<ManageLogs
+				languageFromMain={this.state.language}
+			/>
+		)
+	}
 
 	getPageFns = () => {
 		return {
@@ -204,7 +209,7 @@ class Main extends Component {
 			login: this.renderLogin,
 			register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
-			// manageLogs: this.renderManageLogs // For admins only
+			manageLogs: this.renderManageLogs // For admins only
 			// manageCenter: this.renderManageCenter // For admins only
 		}
 	}
@@ -240,11 +245,11 @@ class Main extends Component {
 		this.gotoPage(doPushHistory, 'register')
 	}
 
-	/* toManageCenter = doPushHistory => {
+	toManageCenter = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.gotoPage(doPushHistory, 'manageCenter')
 		}
-	} */
+	}
 
 	toManageUsers = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
@@ -352,6 +357,15 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
+						<a
+							className='nav-item navbar-brand'
+							tabIndex="-1"
+							data-toggle='tooltip'
+							title='Manage Center'
+							onClick={this.toManageLogs.bind(this, true)}
+						>
+							<i className="fa fa-database"/>
+						</a>
 {/* 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
@@ -491,7 +505,7 @@ var routeFromLocation = function() {
 			}
 		// } else if (path === '/user' && localStorage.getItem(authentication_token) !== null) {
 		// 	this.toUserManager()
-		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
+		} else if (path === '/manageLogs' && localStorage.getItem(authentication_token) !== null) {
 			this.toManageLogs()
 		} else {
 			this.toAggregator()

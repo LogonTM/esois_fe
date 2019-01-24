@@ -91,6 +91,14 @@ export default {
             noNetwork: 'Viga võrgu ühenduses, palun kontrolli oma interneti ühendust',
             selectCollection: 'Palun vali korpus, millest otsingut teostada'
         },
+        errorlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                                { key: 'createdAt', label: 'Aeg'},
+                                { key: 'errorType', label: 'Vea tüüp'},
+                                { key: 'errorValue', label: 'Vea väärtus'}
+                            ],
+        },
         fcs: {
             form: 'vorm',
             nameBtn: 'Laiendatud (FCS-QL)',
@@ -123,6 +131,11 @@ export default {
             },
             messageP1: 'Tere',
             messageP2: 'olete sisse logitud',
+        },
+        managelogs: {
+            searchlogs: 'Otsilogid',
+            userlogs: 'Kasutajalogi',
+            errorlogs: 'Vealogi'
         },
         queryinput: {
             and: 'ja',
@@ -292,6 +305,16 @@ export default {
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
         },
+        searchlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                                { key: 'createdAt', label: 'Aeg'},
+                                { key: 'username', label: 'Kasutaja'},
+                                { key: 'query', label: 'Otsing'},
+                                // { key: 'enabled', label: 'Kasutajakonto olek'},
+                                { key: 'corporas', label: 'Otsitud korpustest'}
+                            ],
+        },
         user: {
             edit: {
                 accountstate: 'Kasutajakonto olek',
@@ -318,6 +341,28 @@ export default {
                     ROLE_ADMIN: 'Admin ',
                     ROLE_USER: 'Tavakasutaja '
                 }
+            }
+        },
+        userlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Aeg'},
+                { key: 'username', label: 'Kasutaja'},
+                { key: 'consent', label: 'Andis nõusoleku'},
+                { key: 'initialregister', label: 'Algne registreering'},
+                { key: 'logedin', label: 'Logis sisse'}
+            ],
+            consent: {
+                true: 'Jah',
+                false: 'Ei'
+            },
+            initialregister: {
+                true: 'Jah',
+                false: 'Ei'
+            },
+            logedin: {
+                true: 'Jah',
+                false: 'Ei'
             }
         },
         zoomedresult: {
@@ -418,6 +463,14 @@ export default {
             noNetwork: 'Network error, please check your internet connection',
             selectCollection: 'Please select a collection to search into'
         },
+        errorlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'errorType', label: 'Error type'},
+                { key: 'errorValue', label: 'Error value'}
+            ],
+        },
         fcs: {
             form: 'form',
             nameBtn: 'Advanced (FCS-QL)',
@@ -450,6 +503,11 @@ export default {
             },
             messageP1: 'Hello',
             messageP2: 'you have logged in',
+        },
+        managelogs: {
+            searchlogs: 'Search logs',  
+            userlogs: 'User logs',
+            errorlogs: 'Error logs'
         },
         queryinput: {
             and: 'and',
@@ -619,6 +677,15 @@ export default {
             progressMessageP1: 'matching collections found in',
             progressMessageP2: 'searched collections',
         },
+        searchlogs: {
+            headers: [
+                /*{ key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'username', label: 'User'},
+                { key: 'query', label: 'Query'},
+                { key: 'corporas', label: 'Searched from corpora(s)'}
+            ],
+        },
         user: {
             edit: {
                 accountstate: 'Useraccount state',
@@ -645,6 +712,28 @@ export default {
                     ROLE_ADMIN: 'Admin ',
                     ROLE_USER: 'Regular '
                 }
+            }
+        },
+        userlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'username', label: 'User'},
+                { key: 'consent', label: 'Consent'},
+                { key: 'initialregister', label: 'Intial registration'},
+                { key: 'logedin', label: 'Loged in'}
+            ],
+            consent: {
+                true: 'Yes',
+                false: 'No'
+            },
+            initialregister: {
+                true: 'Yes',
+                false: 'No'
+            },
+            logedin: {
+                true: 'Yes',
+                false: 'No'
             }
         },
         zoomedresult: {
