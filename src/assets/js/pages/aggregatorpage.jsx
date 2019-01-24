@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
+import { authentication_token } from '../constants/constants';
 
 var PT = PropTypes;
 
@@ -180,6 +181,7 @@ class AggregatorPage extends Component {
 				language: this.state.language[0],
 				numberOfResults: this.state.numberOfResults,
 				corporaIds: selectedIds,
+				token: localStorage.getItem(authentication_token)
 			},
 			success: (searchId, textStatus, jqXHR) => {
 				if (Location.hostname !== "localhost") {

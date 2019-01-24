@@ -361,7 +361,7 @@ class Main extends Component {
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
-							title='Manage Center'
+							title='Manage Logs'
 							onClick={this.toManageLogs.bind(this, true)}
 						>
 							<i className="fa fa-database"/>
