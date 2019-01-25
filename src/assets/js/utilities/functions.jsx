@@ -133,3 +133,37 @@ export function getCurrentCenters() {
         method: 'GET'
     });
 }
+
+export function getSearchesMade(){
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set");
+    }
+
+    return request({
+        url: back_end_host + "db/searchlog",
+        method: 'GET'
+    })
+
+}
+
+export function getUsersLog () {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set");
+    }
+
+    return request({
+        url: back_end_host + "db/userlog",
+        method: 'GET'
+    })
+}
+
+export function getErrorsLog () {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set");
+    }
+    
+    return request({
+        url: back_end_host + "db/errorlog",
+        method: 'GET'
+    })
+}

@@ -1,8 +1,9 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
+import Corpus from '../components/corpus/corpus';
 
 var PT = PropTypes;
 
@@ -10,7 +11,8 @@ class CorpusView extends Component {
 	static propTypes = {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
-		languageFromMain: PT.string.isRequired
+		languageFromMain: PT.string.isRequired,
+		userRole: PT.string.isRequired
 	}
 
 	toggleSelection = (corpus, e) => {
@@ -23,6 +25,13 @@ class CorpusView extends Component {
 	toggleExpansion = (corpus) => {
 		corpus.expanded = !corpus.expanded;
 		this.props.corpora.update();
+	}
+
+	toggleEditCenter = (corpus, e) => {
+		e.preventDefault();
+		corpus.edit = !corpus.edit;
+		this.props.corpora.update();
+		this.stop(e);
 	}
 
 	selectAll = (value) => {
@@ -115,12 +124,14 @@ class CorpusView extends Component {
 	}
 
 	renderCheckbox(corpus) {
-		return	<button className="btn btn-outline-secondary">
-					{ corpus.selected ?
-						<span className="fa fa-check-square" aria-hidden="true"/> :
-						<span className="fa fa-square" aria-hidden="true"/>
-					}
-				</button>;
+		return (
+			<button className="btn btn-outline-secondary">
+				{ corpus.selected ?
+					<span className="fa fa-check-square" aria-hidden="true"/> :
+					<span className="fa fa-square" aria-hidden="true"/>
+				}
+			</button>
+		);
 	}
 
 	renderExpansion(corpus) {
@@ -147,7 +158,9 @@ class CorpusView extends Component {
 
 	renderLanguages = (languages) => {
 		return languages
-				.map(l => this.props.languageMap[l])
+				.map(l => dictionary[this.props.languageFromMain].language[l] ?
+					dictionary[this.props.languageFromMain].language[l]
+					: this.props.languageMap[l])
 				.sort()
 				.join(", ");
 	}
@@ -179,7 +192,6 @@ class CorpusView extends Component {
 		if (!corpus.visible || corpus.priority <= 0) {
 			return false;
 		}
-
 		var indent = {marginLeft:level*50};
 		var corpusContainerClass = "corpus-container " + (corpus.priority > 0 ? "" : "dimmed");
 
@@ -188,7 +200,7 @@ class CorpusView extends Component {
 		var priorityStyle = {paddingBottom: 4, paddingLeft: 2, borderBottom: '3px solid '+color };
 		var expansive = corpus.expanded ? {overflow:'hidden'} 
 			: {whiteSpace:'nowrap', overflow:'hidden', textOverflow: 'ellipsis'};
-		return	(
+		return (
 			<div className={corpusContainerClass} key={corpus.id}>
 				<div className="row corpus" onClick={this.toggleExpansion.bind(this, corpus)}>
 					<div className="col-sm-2 col-lg-1 vcenter">
@@ -213,7 +225,7 @@ class CorpusView extends Component {
 							{this.renderExpansion(corpus)}
 						</div>
 					</div>
-					<div className="col-sm-3 col-lg-3 vcenter">
+					<div className="col-sm-3 col-lg-2 vcenter">
 						<p style={expansive}>
 							<i className="fa fa-institution"/> {corpus.institution.name}
 						</p>
@@ -221,7 +233,26 @@ class CorpusView extends Component {
 							<i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}
 						</p>
 					</div>
+					{ this.props.userRole === 'ROLE_ADMIN' ?
+						<div className="col-lg-1 vcenter align-right">
+							<Button
+								label={dictionary[this.props.languageFromMain].button.view}
+								onClick={this.toggleEditCenter.bind(this, corpus)}
+								style={{marginRight:1}}
+							/>
+						</div>
+						: false
+					}
 				</div>
+				{ this.props.userRole === 'ROLE_ADMIN' ?
+					<div id="viewEndpoint" className={"hide-" + !corpus.edit}>
+						<Corpus
+							languageFromMain={this.props.languageFromMain}
+							corpus={corpus}
+						/>
+					</div>
+					: false
+				}
 				{corpus.expanded ? corpus.subCorpora.map(this.renderCorpus.bind(this, level+1, minmaxp)) : false}
 			</div>
 		);

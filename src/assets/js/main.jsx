@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
-import ManageCenter from './pages/managecenter.jsx'
+import ManageLogs from './pages/managelogs'
 import ManageUsers from './pages/manageusers'
 import RegisterPage from './pages/registerpage.jsx'
 import ErrorPane from './components/errorpane.jsx'
@@ -143,6 +143,7 @@ class Main extends Component {
 				ajax={this.ajax}
 				error={this.error}
 				languageFromMain={this.state.language}
+				userRole={this.state.userRole}
 			/>
 		);
 	}
@@ -177,14 +178,6 @@ class Main extends Component {
 		);
 	}
 
-	/* renderManageCenter = () => {
-		return (
-			<ManageCenter
-				languageFromMain={this.state.language}
-			/>
-		)
-	}  */
-
 	renderManageUsers = () => {
 		return (
 			<ManageUsers 
@@ -193,9 +186,13 @@ class Main extends Component {
 		)
 	}
 
-	// renderManageLogs = () => {
-		// return <ManageLogs/>
-	// }
+	renderManageLogs = () => {
+		return (
+			<ManageLogs
+				languageFromMain={this.state.language}
+			/>
+		)
+	}
 
 	getPageFns = () => {
 		return {
@@ -204,8 +201,7 @@ class Main extends Component {
 			login: this.renderLogin,
 			register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
-			// manageLogs: this.renderManageLogs // For admins only
-			// manageCenter: this.renderManageCenter // For admins only
+			manageLogs: this.renderManageLogs // For admins only
 		}
 	}
 
@@ -239,12 +235,6 @@ class Main extends Component {
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
 	}
-
-	/* toManageCenter = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
-			this.gotoPage(doPushHistory, 'manageCenter')
-		}
-	} */
 
 	toManageUsers = doPushHistory => {
 		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
@@ -352,15 +342,15 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
-{/* 						<a
+						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
 							data-toggle='tooltip'
-							title='Manage Center'
-							onClick={this.toManageCenter.bind(this, true)}
+							title='Manage Logs'
+							onClick={this.toManageLogs.bind(this, true)}
 						>
 							<i className="fa fa-database"/>
-						</a> */}
+						</a>
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"
@@ -457,10 +447,10 @@ function endsWith(str, suffix) {
 }
 
 var routeFromLocation = function() {
-	// console.log('routeFromLocation: ' + document.location)
+	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
 	var path = window.location.pathname
-	console.log('path: ' + path);
+	console.log('path: ' + path)
 	if (path !== '/') {
 		if (path === '/help') {
 			this.toHelp()
@@ -476,7 +466,7 @@ var routeFromLocation = function() {
 		    console.log('oauth2 parsing start....');
 		     
 		    	function getUrlParameter(name) {
-		    	    console.log('oauth2 name....' + name);
+				console.log('path: ' + name)
 				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 				var results = regex.exec(document.location);
@@ -493,7 +483,7 @@ var routeFromLocation = function() {
 			}
 		// } else if (path === '/user' && localStorage.getItem(authentication_token) !== null) {
 		// 	this.toUserManager()
-		} else if (path === '/manageLogs' /*&& localStorage.getItem(authentication_token) !== null*/) {
+		} else if (path === '/manageLogs' && localStorage.getItem(authentication_token) !== null) {
 			this.toManageLogs()
 		} else {
 			this.toAggregator()

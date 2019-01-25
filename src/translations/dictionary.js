@@ -58,7 +58,13 @@ export default {
             manage: {
                 add: 'Lisa uus korpus',
                 edit: 'Korpuse andmete muutmine'
-            }
+            },
+            layer: 'Kiht',
+            name: 'Nimi',
+            operator: 'Operaatorid',
+            valueOptions: 'Kihi väärtused',
+            protocol: 'Protokoll',
+            synonym: 'Sünonüüm'
         },
         corpusview: {
             collapse: 'Peida',
@@ -85,6 +91,14 @@ export default {
             noNetwork: 'Viga võrgu ühenduses, palun kontrolli oma interneti ühendust',
             selectCollection: 'Palun vali korpus, millest otsingut teostada'
         },
+        errorlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                                { key: 'createdAt', label: 'Aeg'},
+                                { key: 'errorType', label: 'Vea tüüp'},
+                                { key: 'errorValue', label: 'Vea väärtus'}
+                            ],
+        },
         fcs: {
             form: 'vorm',
             nameBtn: 'Laiendatud (FCS-QL)',
@@ -105,6 +119,11 @@ export default {
             howToSearchParagraph4: 'Mõne korpuse vastete lähema tutvumise jaoks tuleb vajutada vastavate tulemuste juures olevale "Vaata" nupule.',
             mainTitle: 'Abileht ja seaded'
         },
+        language: {
+            est: 'Eesti',
+            vot: 'Vadja',
+            vro: 'Võru'
+        },
         languageselector: {
             radioByGuess: 'Filtreeri tulemusi kasutades keele tuvastajat',
             radioByMeta: 'Kasuta korpuses täpsustatud keelt tulemuste filtreerimiseks',
@@ -118,17 +137,13 @@ export default {
             messageP1: 'Tere',
             messageP2: 'olete sisse logitud',
         },
+        managelogs: {
+            searchlogs: 'Otsilogid',
+            userlogs: 'Kasutajalogi',
+            errorlogs: 'Vealogi'
+        },
         queryinput: {
             and: 'ja',
-            argOpts: {
-                'IS': 'on',
-                'IS_NOT': 'ei ole',
-                'CONTAINS': 'sisaldab',
-                'STARTS_WITH': 'algab',
-                'ENDS_WITH': 'lõppeb',
-                'REGEX': 'regulaaravaldis',
-                'NOT_REGEX': 'ei ole regulaaravaldis',
-            },
             layer: {
                 'word': 'sõna',
                 'analysis': 'analüüs',
@@ -142,6 +157,15 @@ export default {
                 'person': 'isik',
                 'tense': 'aeg',
                 'voice': 'tegumood',
+            },
+            layerOperators: {
+                'IS': 'on',
+                'IS_NOT': 'ei ole',
+                'STARTS_WITH': 'algab',
+                'CONTAINS': 'sisaldab',
+                'ENDS_WITH': 'lõppeb',
+                'REGEX': 'regulaaravaldis',
+                'NOT_REGEX': 'ei ole regulaaravaldis',
             },
             or: 'või',
             repeatMenu: {
@@ -286,6 +310,16 @@ export default {
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
         },
+        searchlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                                { key: 'createdAt', label: 'Aeg'},
+                                { key: 'username', label: 'Kasutaja'},
+                                { key: 'query', label: 'Otsing'},
+                                // { key: 'enabled', label: 'Kasutajakonto olek'},
+                                { key: 'corporas', label: 'Otsitud korpustest'}
+                            ],
+        },
         user: {
             edit: {
                 accountstate: 'Kasutajakonto olek',
@@ -312,6 +346,28 @@ export default {
                     ROLE_ADMIN: 'Admin ',
                     ROLE_USER: 'Tavakasutaja '
                 }
+            }
+        },
+        userlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Aeg'},
+                { key: 'username', label: 'Kasutaja'},
+                { key: 'consent', label: 'Andis nõusoleku'},
+                { key: 'initialregister', label: 'Algne registreering'},
+                { key: 'logedin', label: 'Logis sisse'}
+            ],
+            consent: {
+                true: 'Jah',
+                false: 'Ei'
+            },
+            initialregister: {
+                true: 'Jah',
+                false: 'Ei'
+            },
+            logedin: {
+                true: 'Jah',
+                false: 'Ei'
             }
         },
         zoomedresult: {
@@ -379,7 +435,13 @@ export default {
             manage: {
                 add: 'Add new corpus',
                 edit: 'Edit corpus data'
-            }
+            },
+            layer: 'Layer',
+            name: 'Name',
+            operator: 'Operators',
+            valueOptions: 'Value options',
+            protocol: 'Protocol',
+            synonym: 'Synonym'
         },
         corpusview: {
             collapse: 'Collapse',
@@ -406,6 +468,14 @@ export default {
             noNetwork: 'Network error, please check your internet connection',
             selectCollection: 'Please select a collection to search into'
         },
+        errorlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'errorType', label: 'Error type'},
+                { key: 'errorValue', label: 'Error value'}
+            ],
+        },
         fcs: {
             form: 'form',
             nameBtn: 'Advanced (FCS-QL)',
@@ -426,6 +496,11 @@ export default {
             howToSearchParagraph4: "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button.",
             mainTitle: 'Help'
         },
+        language: {
+            est: 'Estonian',
+            vot: 'Votic',
+            vro: 'Võro'
+        },
         languageselector: {
             radioByGuess: 'Filter results by using a language detector',
             radioByMeta: 'Use the collections\' specified language to filter results',
@@ -439,17 +514,13 @@ export default {
             messageP1: 'Hello',
             messageP2: 'you have logged in',
         },
+        managelogs: {
+            searchlogs: 'Search logs',  
+            userlogs: 'User logs',
+            errorlogs: 'Error logs'
+        },
         queryinput: {
             and: 'and',
-            argOpts: {
-                'IS': 'is',
-                'IS_NOT': 'is not',
-                'CONTAINS': 'contains',
-                'STARTS_WITH': 'starts with',
-                'ENDS_WITH': 'ends with',
-                'REGEX': 'regex',
-                'NOT_REGEX': 'not regex',
-            },
             layer: {
                 'word': 'word',
                 'analysis': 'analysis',
@@ -463,6 +534,15 @@ export default {
                 'person': 'person',
                 'tense': 'tense',
                 'voice': 'voice',
+            },
+            layerOperators: {
+                'IS': 'is',
+                'IS_NOT': 'is not',
+                'STARTS_WITH': 'starts with',
+                'CONTAINS': 'contains',
+                'ENDS_WITH': 'ends with',
+                'REGEX': 'regex',
+                'NOT_REGEX': 'not regex',
             },
             or: 'or',
             repeatMenu: {
@@ -607,6 +687,15 @@ export default {
             progressMessageP1: 'matching collections found in',
             progressMessageP2: 'searched collections',
         },
+        searchlogs: {
+            headers: [
+                /*{ key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'username', label: 'User'},
+                { key: 'query', label: 'Query'},
+                { key: 'corporas', label: 'Searched from corpora(s)'}
+            ],
+        },
         user: {
             edit: {
                 accountstate: 'Useraccount state',
@@ -633,6 +722,28 @@ export default {
                     ROLE_ADMIN: 'Admin ',
                     ROLE_USER: 'Regular '
                 }
+            }
+        },
+        userlogs: {
+            headers: [
+                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                { key: 'createdAt', label: 'Created at'},
+                { key: 'username', label: 'User'},
+                { key: 'consent', label: 'Consent'},
+                { key: 'initialregister', label: 'Intial registration'},
+                { key: 'logedin', label: 'Loged in'}
+            ],
+            consent: {
+                true: 'Yes',
+                false: 'No'
+            },
+            initialregister: {
+                true: 'Yes',
+                false: 'No'
+            },
+            logedin: {
+                true: 'Yes',
+                false: 'No'
             }
         },
         zoomedresult: {

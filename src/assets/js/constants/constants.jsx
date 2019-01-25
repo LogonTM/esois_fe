@@ -1,5 +1,5 @@
 export const back_end_host = 'http://localhost:8080/';
-//export const back_end_host = 'http://217.159.229.95:8888';
+// export const back_end_host = 'http://raba.heisi.eu:8888/';
 export const authentication_token = 'accessToken';
 
 export const minimum_name_length = 4;

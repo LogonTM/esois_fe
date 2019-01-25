@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
-import { authentication_token, google_auth_url, logout_url } from '../constants/constants';
+import { authentication_token, google_auth_url, logout_url, saml_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
