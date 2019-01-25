@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import AggregatorPage from './pages/aggregatorpage.jsx'
 import HelpPage from './pages/helppage.jsx'
 import LoginPage from './pages/loginpage.jsx'
-import ManageCenter from './pages/managecenter.jsx'
 import ManageLogs from './pages/managelogs'
 import ManageUsers from './pages/manageusers'
 import RegisterPage from './pages/registerpage.jsx'
@@ -144,6 +143,7 @@ class Main extends Component {
 				ajax={this.ajax}
 				error={this.error}
 				languageFromMain={this.state.language}
+				userRole={this.state.userRole}
 			/>
 		);
 	}
@@ -178,14 +178,6 @@ class Main extends Component {
 		);
 	}
 
-	/* renderManageCenter = () => {
-		return (
-			<ManageCenter
-				languageFromMain={this.state.language}
-			/>
-		)
-	}  */
-
 	renderManageUsers = () => {
 		return (
 			<ManageUsers 
@@ -210,7 +202,6 @@ class Main extends Component {
 			register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
 			manageLogs: this.renderManageLogs // For admins only
-			// manageCenter: this.renderManageCenter // For admins only
 		}
 	}
 
@@ -243,12 +234,6 @@ class Main extends Component {
 
 	toRegister = doPushHistory => {
 		this.gotoPage(doPushHistory, 'register')
-	}
-
-	toManageCenter = doPushHistory => {
-		if(localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
-			this.gotoPage(doPushHistory, 'manageCenter')
-		}
 	}
 
 	toManageUsers = doPushHistory => {
@@ -366,15 +351,6 @@ class Main extends Component {
 						>
 							<i className="fa fa-database"/>
 						</a>
-{/* 						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Manage Center'
-							onClick={this.toManageCenter.bind(this, true)}
-						>
-							<i className="fa fa-database"/>
-						</a> */}
 						<a
 							className='nav-item navbar-brand'
 							tabIndex="-1"

@@ -6,7 +6,7 @@ import CorpusView from '../components/corpusview.jsx';
 import dictionary from '../../../translations/dictionary';
 import ErrorBoundary from '../utilities/errorboundary';
 import LanguageSelector from '../components/languageselector.jsx'
-import { sortLayerOptions } from '../utilities/layers';
+import { sortLayerOperators } from '../utilities/layers';
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
 import React, { Component, PureComponent } from 'react';
@@ -26,6 +26,7 @@ class AggregatorPage extends Component {
 	 	ajax: PT.func.isRequired,
 	 	error: PT.func.isRequired,
 		languageFromMain: PT.string.isRequired,
+		userRole: PT.string.isRequired,
 	} 
 
 	nohits = {
@@ -352,7 +353,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	toggleResultModal = (e, corpusHit) => {
+	toggleResultModal = (corpusHit, e) => {
 		$(ReactDOM.findDOMNode(this.refs.resultModal)).modal();
 		this.setState({zoomedCorpusHit: corpusHit});
 		e.preventDefault();
@@ -393,7 +394,7 @@ class AggregatorPage extends Component {
 		}
 	}
 	
-	toggleFcsView = (e, fcsTextAreaVisibility) => {
+	toggleFcsView = (fcsTextAreaVisibility, e) => {
 		e.preventDefault();
 		this.setState({ fcsTextAreaVisibility });
 	}
@@ -477,7 +478,7 @@ class AggregatorPage extends Component {
 										/>
 										<label
 											htmlFor="fcs-form"
-											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+											onClick={this.toggleFcsView.bind(this, !this.state.fcsTextAreaVisibility)}
 										>
 											{dictionary[this.props.languageFromMain].fcs.form}
 										</label>
@@ -490,7 +491,7 @@ class AggregatorPage extends Component {
 										/>
 										<label
 											htmlFor="fcs-text"
-											onClick={e => this.toggleFcsView(e, !this.state.fcsTextAreaVisibility)}
+											onClick={this.toggleFcsView.bind(this, !this.state.fcsTextAreaVisibility)}
 										>
 											{dictionary[this.props.languageFromMain].fcs.text}
 										</label>
@@ -673,6 +674,7 @@ class AggregatorPage extends Component {
 						corpora={this.state.corpora}
 						languageMap={this.state.languageMap}
 						languageFromMain={this.props.languageFromMain}
+						userRole={this.props.userRole}
 					/>
 				</Modal>
 
@@ -746,6 +748,7 @@ function Corpora(corpora, updateFn) {
 		corpus.expanded = false; // not expanded in the corpus view
 		corpus.priority = 1; // used for ordering search results in corpus view
 		corpus.index = index; // original order, used for stable sort
+		corpus.edit = false; // edit panel not expanded in the corpus view
 	});
 }
 
@@ -822,13 +825,11 @@ Corpora.prototype.getLayers = function(languageFromMain) {
 		}
 	});
 	layerKeysLanguageMap.sort();
-	const sortedLayerKeys = layerKeysLanguageMap.map(layer => {
-		return layer[1];
-	})
+	const sortedLayerKeys = layerKeysLanguageMap.map(layer => layer[1])
 	sortedLayerKeys.unshift(wordLayer);
 	sortedLayerKeys.forEach(key => {
 		Object.assign(currentLayers, { [key] :
-			{ layerOperators: sortLayerOptions(Object.keys(layers[key].layerOperators)),
+			{ layerOperators: sortLayerOperators(Object.keys(layers[key].layerOperators)),
 				valueOptions: Object.keys(layers[key].valueOptions) } });
 	});
 	return currentLayers;

@@ -119,6 +119,11 @@ export default {
             howToSearchParagraph4: 'Mõne korpuse vastete lähema tutvumise jaoks tuleb vajutada vastavate tulemuste juures olevale "Vaata" nupule.',
             mainTitle: 'Abileht ja seaded'
         },
+        language: {
+            est: 'Eesti',
+            vot: 'Vadja',
+            vro: 'Võru'
+        },
         languageselector: {
             radioByGuess: 'Filtreeri tulemusi kasutades keele tuvastajat',
             radioByMeta: 'Kasuta korpuses täpsustatud keelt tulemuste filtreerimiseks',
@@ -490,6 +495,11 @@ export default {
             howToSearchParagraph3: 'When the search starts, the page will start filling in with the corpora responses.',
             howToSearchParagraph4: "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button.",
             mainTitle: 'Help'
+        },
+        language: {
+            est: 'Estonian',
+            vot: 'Votic',
+            vro: 'Võro'
         },
         languageselector: {
             radioByGuess: 'Filter results by using a language detector',

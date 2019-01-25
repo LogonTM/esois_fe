@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import PropTypes from "prop-types";
 import $ from 'jquery';

@@ -84,19 +84,19 @@ export function queryToTokens(q) {
 
 queryToTokens.re = RegExp('\\[(?:'+ quotedStringRE +'|.)*?\\] *(?:\\{.*?\\})?', 'g');
 
-var filteredWords = []
-/*To simplify matching regex filter out words within "quotemarks". This help to not stumble on any special characters that can occur there. */
-function filterWords(s, f) {
-	const filteredString = s.replace(/("(?:\\"|[^"])*")/g, (m) => {
-		filteredWords.push(m)
-		return '""'
-	})
-	const ret = f(filteredString)
-	// restore words
+// var filteredWords = []
+// /*To simplify matching regex filter out words within "quotemarks". This help to not stumble on any special characters that can occur there. */
+// function filterWords(s, f) {
+// 	const filteredString = s.replace(/("(?:\\"|[^"])*")/g, (m) => {
+// 		filteredWords.push(m)
+// 		return '""'
+// 	})
+// 	const ret = f(filteredString)
+// 	// restore words
 	
-	// return return value
-	return ret;
-}
+// 	// return return value
+// 	return ret;
+// }
 
 function wordOptionsDefaultToStr(layer, op, value) {
 	const unescVal = value;

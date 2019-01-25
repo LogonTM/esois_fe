@@ -1,4 +1,4 @@
-export const layerOptions = [
+export const layerOperators = [
    'IS',
    'IS_NOT',
    'STARTS_WITH',
@@ -21,7 +21,7 @@ const applyOrderTemplate = order => data =>
    .sort()
    .map(index => order[index]);
 
-export const sortLayerOptions = applyOrderTemplate(layerOptions);
+export const sortLayerOperators = applyOrderTemplate(layerOperators);
 
 export const sortLayers = data => {
    const word = (data[0] === 'word') && data.shift();
