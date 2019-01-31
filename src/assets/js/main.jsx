@@ -31,7 +31,7 @@ window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
-class Main extends Component {
+class Main extends PureComponent {
 	componentDidMount() {
 		routeFromLocation.bind(this)()
 		getCurrentUser()
@@ -458,15 +458,10 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		/* } else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
-			this.toManageCenter() */
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {
-		    console.log('oauth2 parsing start....');
-		     
 		    	function getUrlParameter(name) {
-				console.log('path: ' + name)
 				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 				var results = regex.exec(document.location);
