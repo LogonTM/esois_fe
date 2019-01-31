@@ -76,7 +76,7 @@ class CorpusView extends Component {
 
 		fetch(back_end_host + 'endpoint', {
 			 headers,
-			 method: 'POST',
+			 method: 'PUT',
 			 body: this.state.xml
 		}).then(response => {
 			 console.log(response)
