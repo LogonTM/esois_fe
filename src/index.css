@@ -106,6 +106,17 @@ div.navbar {
   opacity: 0.6 !important;
 }
 
+#inputFileRow {
+  margin-top: 10px !important;
+  margin-bottom: 25px !important;
+}
+
+#fileInput {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  width: 360px !important;
+}
+
 .btn-outline-secondary {
   border-color: lightgray !important;
 }

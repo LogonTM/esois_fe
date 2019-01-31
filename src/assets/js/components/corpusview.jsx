@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import Corpus from '../components/corpus/corpus';
+import { back_end_host, authentication_token } from '../constants/constants';
+import readFile from '../utilities/readfile';
 
 var PT = PropTypes;
 
@@ -15,6 +17,25 @@ class CorpusView extends Component {
 		userRole: PT.string.isRequired
 	}
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			 file: null,
+			 xml: "",
+			 isUploaded: false
+		}
+  	}
+
+	componentDidUpdate(_, prevState) {
+		if (prevState.file !== this.state.file) {
+			readFile(this.state.file).then(xml => this.setState({ xml }));
+		}
+  
+		if (prevState.isUploaded !== this.state.isUploaded) {
+			alert(dictionary[this.props.languageFromMain].center.edit.success);
+		}
+   }
+	
 	toggleSelection = (corpus, e) => {
 		var s = !corpus.selected;
 		this.props.corpora.recurseCorpus(corpus, function(c) { c.selected = s; });
@@ -38,6 +59,31 @@ class CorpusView extends Component {
 		this.props.corpora.recurse( c => { c.selected = value; });
 		this.props.corpora.update();
 	}
+
+	handleFileChange = ({ target: { files } }) =>
+	this.setState({ file: files[0] });
+
+	handleSendFile = () => {
+		const headers = {
+			 'Content-Type': 'text/xml',
+		}
+
+		const token = localStorage.getItem(authentication_token);
+
+		if(token) {
+			 headers.Authorization = `Bearer ${token}`;
+		}
+
+		fetch(back_end_host + 'endpoint', {
+			 headers,
+			 method: 'POST',
+			 body: this.state.xml
+		}).then(response => {
+			 console.log(response)
+			 this.setState({ isUploaded: response.status === 200 });
+			 }
+		)
+  }
 
 	searchCorpus = (query) => {
 		// sort fn: descending priority, stable sort
@@ -292,7 +338,32 @@ class CorpusView extends Component {
 						</div>
 					</div>
 				</div>
-				
+				{ this.props.userRole === 'ROLE_ADMIN' ?
+					<div>
+						<form>
+							<div className="input-group row addcorp" id="inputFileRow">
+								<div className="col-2 align-right nobkg">
+									{dictionary[this.props.languageFromMain].center.manage.add}
+								</div>
+								<div className="col-5 custom-file" style={{marginLeft:10}}>
+									<input
+										type="file"
+										id="fileInput"
+										name="myFile"
+										onChange={this.handleFileChange}
+									/>
+								</div>
+								<div className="col-2 align-right" style={{marginRight:10}}>
+									<Button 
+										label={dictionary[this.props.languageFromMain].button.upload}
+										onClick={this.handleSendFile}
+									/>
+								</div>
+							</div>
+						</form>
+					</div>				
+					: false
+				}
 				{this.props.corpora.corpora.map(this.renderCorpus.bind(this, 0, minmaxp))}
 			</div>
 		);

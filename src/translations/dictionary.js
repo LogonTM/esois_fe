@@ -11,6 +11,7 @@ export default {
             register: 'Registreeri',
             save: 'Salvesta',
             update: 'Uuenda',
+            upload: 'Üleslaadimine',
             view: 'Vaata'
         },
         common: {
@@ -56,9 +57,10 @@ export default {
                 { key: 'link', label: 'URL'}
             ],
             manage: {
-                add: 'Lisa uus korpus',
+                add: 'Lisa uus korpus:',
                 edit: 'Korpuse andmete muutmine'
             },
+            browse: 'Vali fail',
             layer: 'Kiht',
             name: 'Nimi',
             operator: 'Operaatorid',
@@ -121,6 +123,7 @@ export default {
         },
         language: {
             est: 'Eesti',
+            et: 'Eesti',
             vot: 'Vadja',
             vro: 'Võru'
         },
@@ -388,6 +391,7 @@ export default {
             register: 'Register',
             save: 'Save',
             update: 'Update',
+            upload: 'Upload file',
             view: 'View'
         },
         common: {
@@ -405,7 +409,7 @@ export default {
             collections: 'Collections',
             erf: 'The creation of RABA has been supported by the European Union European Regional Development Fund',
             hitsPerEndpoint: 'hits per endpoint',
-            searchFor: 'Search',
+            searchFor: 'Search for',
             selectLanguage: 'Select Language',
         },
         center: {
@@ -433,9 +437,10 @@ export default {
                 { key: 'link', label: 'URL' }
             ],
             manage: {
-                add: 'Add new corpus',
+                add: 'Add new corpus:',
                 edit: 'Edit corpus data'
             },
+            browse: 'Choose file',
             layer: 'Layer',
             name: 'Name',
             operator: 'Operators',
@@ -498,6 +503,7 @@ export default {
         },
         language: {
             est: 'Estonian',
+            et: 'Estonian',
             vot: 'Votic',
             vro: 'Võro'
         },

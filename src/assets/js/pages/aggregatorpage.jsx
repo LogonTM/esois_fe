@@ -153,7 +153,6 @@ class AggregatorPage extends Component {
 
 	updateCorpora = corpora => {
 		this.setState(updateState(corpora, this.props.languageFromMain));
-		// console.log(this.state.layerMap);
 	}
 
 	getCurrentQuery = () => {
@@ -603,7 +602,7 @@ class AggregatorPage extends Component {
 										{dictionary[this.props.languageFromMain].aggregatorpage.searchFor}
 									</span>
 								</div>
-{/* 								<div className="input-group">
+								<div className="input-group">
 									<Button
 										label={(this.state.language === this.anyLanguage) ? 
 											dictionary[this.props.languageFromMain].common.anyLanguage
@@ -617,7 +616,7 @@ class AggregatorPage extends Component {
 					</div>
 					<div className="col-auto">
 						<form className="form-inline">
-							<div className="input-group mb-3"> */}
+							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
 										{dictionary[this.props.languageFromMain].common.in}
@@ -678,7 +677,7 @@ class AggregatorPage extends Component {
 					/>
 				</Modal>
 
-{/* 				<Modal
+				<Modal
 					ref="languageModal"
 					title={<span>
 							{dictionary[this.props.languageFromMain].aggregatorpage.selectLanguage}
@@ -693,7 +692,7 @@ class AggregatorPage extends Component {
 						languageChangeHandler={this.setLanguageAndFilter}
 						languageFromMain={this.props.languageFromMain}
 					/>
-				</Modal> */}
+				</Modal>
 
 				<Modal
 					ref="resultModal"
@@ -835,7 +834,7 @@ Corpora.prototype.getLayers = function(languageFromMain) {
 	return currentLayers;
 }
 
-/* Corpora.prototype.getCurrentLanguages = function(languageMap) {
+Corpora.prototype.getCurrentLanguages = function(languageMap) {
 	const languages = {};
 	this.recurse(function(corpus) {
 		corpus.languages.forEach(language => {
@@ -848,7 +847,7 @@ Corpora.prototype.getLayers = function(languageFromMain) {
 		return true;
 	});
 	return languages;
-} */
+}
 
 Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode) {
 	if (queryTypeId === "fcs" && (corpus.endpoint.protocol === "LEGACY" || corpus.endpoint.protocol === "VERSION_1")) {
@@ -989,10 +988,10 @@ function encodeQueryData(data)
 	return ret.join("&");
 }
 
-const updateState = (corpora, languageFromMain) => /* ({languageMap}) => */ ({
+const updateState = (corpora, languageFromMain) => ({languageMap}) => ({
 	corpora,
 	layerMap: corpora.getLayers(languageFromMain),
-	// currentLanguagesMap: corpora.getCurrentLanguages(languageMap)
+	currentLanguagesMap: corpora.getCurrentLanguages(languageMap)
 })
 
 export default AggregatorPage;

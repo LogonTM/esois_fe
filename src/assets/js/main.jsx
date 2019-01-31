@@ -458,13 +458,11 @@ var routeFromLocation = function() {
 			this.toLogin()
 		} else if (path === '/register'){
 			this.toRegister()
-		/* } else if (path === '/manageCenter' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
-			this.toManageCenter() */
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {
 			function getUrlParameter(name) {
-				console.log('path: ' + name)
+				// console.log('path: ' + name)
 				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
 				var results = regex.exec(document.location);
