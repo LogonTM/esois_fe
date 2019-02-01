@@ -41,19 +41,12 @@ class Corpus extends PureComponent {
     handleFileChange = ({ target: { files } }) =>
         this.setState({ file: files[0] });
 
-    getDownloadLink = () => {
-        return back_end_host + 'endpoint/' + this.props.corpus.id + '/download?'
-    }
-
     handleSendFile = () => {
         const headers = {
             'Content-Type': 'text/xml',
         }
 
         const token = localStorage.getItem(authentication_token);
-
-        // const data = new FormData();
-        // data.append('endpoint file', this.state.file, this.state.file.name)
 
         if(token) {
             headers.Authorization = `Bearer ${token}`;
@@ -103,11 +96,12 @@ class Corpus extends PureComponent {
                                 onClick={this.handleSendFile}
                             />
                             {` `}
-                            <Button
-                                label={dictionary[this.props.languageFromMain].button.download}
-                                onClick={this.getDownloadLink}
-                                style={{marginRight:1}}
-                            />
+                            <a href={`${back_end_host}endpoint/${this.props.corpus.id}/download`}>
+                                <Button
+                                    label={dictionary[this.props.languageFromMain].button.download}
+                                    style={{marginRight:1}}
+                                />
+                            </a>
                             {` `}
                             <Button
                                 label={dictionary[this.props.languageFromMain].button.delete}
