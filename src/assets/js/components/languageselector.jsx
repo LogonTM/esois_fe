@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import dictionary from '../../../translations/dictionary';
 
 var PT = PropTypes;
 
@@ -17,14 +16,6 @@ class LanguageSelector extends Component {
 	selectLang = language => {
 		this.props.languageChangeHandler(language, this.props.languageFilter);
 	}
-
-	setFilter = filter => {
-		this.props.languageChangeHandler(this.props.selectedLanguage, filter);
-	}
-
-	handleRadioChange = e => {
-		this.setFilter(e.target.value);
-	}
 	
 	renderLanguageObject = lang => {
 		var desc = lang[1] + " [" + lang[0] + "]";
@@ -38,16 +29,6 @@ class LanguageSelector extends Component {
 			</div>
 		);
 	}
-
-	renderRadio = option => (
-		<input
-			type="radio" 
-			name="filterOpts"
-			value={option}
-			checked={this.props.languageFilter === option}
-			onChange={this.handleRadioChange}
-		/>
-	);
 
 	render() {
 		var languages = pairs(this.props.currentLanguagesMap)
@@ -65,30 +46,7 @@ class LanguageSelector extends Component {
 					<div className="col-sm-4">{l1}</div>
 					<div className="col-sm-4">{l2}</div>
 					<div className="col-sm-4">{l3}</div>
-					<div className="col-sm-12" style={{marginTop:10, marginBottom:10, borderBottom:"1px solid #eee"}}/>
 				</div>
-				<form className="form">
-					<div>
-						<div className="custom-control custom-radio">
-							<label>
-								{ this.renderRadio('byMeta') }&nbsp;
-								{dictionary[this.props.languageFromMain].languageselector.radioByMeta}
-							</label>
-						</div>
-						<div className="custom-control custom-radio">
-							<label>
-								{ this.renderRadio('byGuess') }&nbsp;
-								{dictionary[this.props.languageFromMain].languageselector.radioByGuess}
-							</label>
-						</div>
-						<div className="custom-control custom-radio">
-							<label>
-								{ this.renderRadio('byMetaAndGuess') }&nbsp;
-								{dictionary[this.props.languageFromMain].languageselector.radioByMetaAndGuess}
-							</label>
-						</div>
-					</div>
-				</form>
 			</div>
 		);
 	}

@@ -123,14 +123,8 @@ export default {
         },
         language: {
             est: 'Eesti',
-            et: 'Eesti',
             vot: 'Vadja',
             vro: 'Võru'
-        },
-        languageselector: {
-            radioByGuess: 'Filtreeri tulemusi kasutades keele tuvastajat',
-            radioByMeta: 'Kasuta korpuses täpsustatud keelt tulemuste filtreerimiseks',
-            radioByMetaAndGuess: 'Esmalt kasuta filtreerimiseks korpuses täpsustatud keelt ja seejärel kasuta ka keele tuvastajat'        
         },
         loginpage: {
             error: {
@@ -503,14 +497,8 @@ export default {
         },
         language: {
             est: 'Estonian',
-            et: 'Estonian',
             vot: 'Votic',
             vro: 'Võro'
-        },
-        languageselector: {
-            radioByGuess: 'Filter results by using a language detector',
-            radioByMeta: 'Use the collections\' specified language to filter results',
-            radioByMetaAndGuess: 'First use the collections specified language then also use a language detector'        
         },
         loginpage: {
             error: {

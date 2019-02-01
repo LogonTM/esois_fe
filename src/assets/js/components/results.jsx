@@ -28,10 +28,10 @@ class Results extends Component {
 		var inline = {display:"inline-block"};
 		return (
 			<div>
-				{" "}
+				{` `}
 				<div style={inline}>
 					<button className="btn btn-outline-secondary zoomResultButton"
-							onClick={e => this.props.toggleResultModal(e,corpusHit)}>
+							onClick={this.props.toggleResultModal.bind(this,corpusHit)}>
 						<span className="fa fa-eye"/>
 						{dictionary[this.props.languageFromMain].button.view}
 					</button>
@@ -191,7 +191,7 @@ class Results extends Component {
 
 		if (this.state.displayADV) {
 			return (
-				<div>
+				<div id="adv-results">
 					{this.renderErrors(corpusHit)}
 					{this.renderDiagnostics(corpusHit)}
 					<table className="table table-condensed table-hover" style={fulllength}>

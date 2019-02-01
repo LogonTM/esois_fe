@@ -159,7 +159,7 @@ class ZoomedResult extends Component {
 
         if (this.state.displayADV) {
 			return (
-				<div>
+				<div id="adv-results">
 					{this.renderErrors(corpusHit)}
 					{this.renderDiagnostics(corpusHit)}
 					<table className="table table-condensed table-hover" style={fulllength}>
