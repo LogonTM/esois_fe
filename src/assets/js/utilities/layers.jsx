@@ -22,9 +22,3 @@ const applyOrderTemplate = order => data =>
    .map(index => order[index]);
 
 export const sortLayerOperators = applyOrderTemplate(layerOperators);
-
-export const sortLayers = data => {
-   const word = (data[0] === 'word') && data.shift();
-   data.sort().unshift(word);
-   return data;
-}

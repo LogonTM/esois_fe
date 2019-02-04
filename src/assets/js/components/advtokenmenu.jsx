@@ -46,7 +46,6 @@ class ADVTokenMenu extends PureComponent {
 	}
 
    componentDidMount() {
-		// make this compoent controlled to so that this awkward ref.getMenuState() stuff can be removed
 		this.props.onChange(this.getMenuState());
 	}
 

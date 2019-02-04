@@ -11,9 +11,11 @@ Kasutus- ja paigaldusjuhend
 - [Kasutamisest](#kasutamisest)
   - [Back-end liidestamine](#back-end-liidestamine)
   - [Registreerimine ja kasutaja autentimine](#registreerimine-ja-kasutaja-autentimine)
+  - [Abilehe täiendamine](#abilehe-täiendamine)
 - [Internatsionaliseeritavus](#internatsionaliseeritavus)
   - [Tõlked](#tõlked)
 - [EL logo suuruse muutmine](#EL-logo-suuruse-muutmine)
+- [RABA logo asetamine lehe päisesse](#RABA-logo-asetamine-lehe-päisesse)
 
 ## Sissejuhatus
 
@@ -51,13 +53,17 @@ Kasutaja sisse logimiseks on vaja vastavalt navigeerida sisse logimise lehekülj
 
 Hetkel välja logimiseks tuleb samuti minna esialgsele lehele, kust logiti sisse. Seal on nüüd võimalik klõpsata vastaval nupul, mis lõpetab sisse logitud sessiooni.
 
+### Abilehe täiendamine
+
+Abilehe täiendamiseks tuleb lisada vajalik tekst (pealkiri, lõik) sõnaraamatusse src > translations > dictionary.js faili helppage jaotuse alla (igas olemasolevas keeles).
+
+Seejärel tuleb src > assets > js > pages > helppage.jsx faili lisada viide vastavale sõnaraamatu kirjele kas <h3></h3> märkide vahele pealkirja puhul või <p></p> märkide vahele tekstilõigu puhul. 
+
 ## Internatsionaliseeritavus
 
 ### Tõlked
 
-Antud tõlked on hetkel kaasas failis dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud faili sisule on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
-
-soovitud lokaali ning tõlgetega, mida soovitakse kuvada.
+Antud tõlked on hetkel kaasas failis src > translations > dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud faili sisule on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
 
 src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb importida 'main.jsx' faili reaga (näidis Suurbritannia lipu kohta):
 import GbFlag from '../img/gb-icon.png';
@@ -90,7 +96,19 @@ const logoIntl = {
   en: EnEKRKlogo
 };
 
+Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla.
+Kihi märgendite tõlked tuleb panna dictionary.js failis queryinput > valueOptions jaotuse alla.
+Uues keeles korpuse keele tõlge tuleb panna dictionary.js failis language jaotuse alla kujul:
+keele 3-täheline lühend: 'tõlge'
+
+Tõlked tuleks panna iga olemasoleva keele kohta.
+
 ## EL logo suuruse muutmine
 
 Euroopa Liidu Regionaalarengu Fondi logo suurus on määratud logo kõrgusega pikslites.
 Selle muutmiseks tuleb muuta src > index.css failis .footer-img-left all atribuudi 'height' väärtust.
+
+## RABA logo asetamine lehe päisesse
+
+Kausta src > assets > img tuleb sealse tühja valge ristküliku faili "rabalogo.png" asemele kopeerida õige RABA logo fail nimega "rabalogo.png".
+

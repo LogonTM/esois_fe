@@ -87,7 +87,6 @@ class Main extends PureComponent {
 		if (typeof errObj === 'string' || errObj instanceof String) {
 			err = errObj
 		} else if (typeof errObj === 'object' && errObj.statusText) {
-			console.log('ERROR: jqXHR = ', errObj)
 			err = errObj.statusText
 		} else {
 			return
@@ -117,7 +116,6 @@ class Main extends PureComponent {
 		} else {
 			this.error(error + ' (' + textStatus + ')')
 		}
-		console.log('ajax error, jqXHR: ', jqXHR)
 	}
 
 	getUserLoginStatus = (userStatus, currentUser) => {
@@ -216,7 +214,6 @@ class Main extends PureComponent {
 				)
 			}
 			this.setState({ navbarPageFn: pageFn })
-			console.log('new page: ' + document.location + ', name: ' + pageFnName)
 		}
 	}
 
@@ -447,10 +444,8 @@ function endsWith(str, suffix) {
 }
 
 var routeFromLocation = function() {
-	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
 	var path = window.location.pathname
-	console.log('path: ' + path)
 	if (path !== '/') {
 		if (path === '/help') {
 			this.toHelp()

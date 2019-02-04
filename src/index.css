@@ -117,6 +117,7 @@ div.navbar {
 #inputFileRow {
   margin-top: 10px !important;
   margin-bottom: 25px !important;
+  margin-left: 0px !important;
 }
 
 #fileInput {
