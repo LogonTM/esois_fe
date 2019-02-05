@@ -138,7 +138,7 @@ class ORArg extends Component {
 						<i className="fa fa-minus"></i>
 					</button>
 				</div>
-				<div className="right_col inline_block" style={{display:"inline-block"}}> { /* , margin-left: "5px" */ }
+				<div className="right_col inline_block" style={{display:"inline-block"}}>
 					<div className="arg_selects form-inline">
 						<select
 							className="arg_type form-control"

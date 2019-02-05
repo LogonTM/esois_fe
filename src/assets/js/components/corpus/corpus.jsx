@@ -82,7 +82,10 @@ class Corpus extends PureComponent {
             <div id="container">
                 <form>
                     <div className="input-group row addcorp" id="inputFileRow">
-                        <div className="col-8 custom-file" style={{marginLeft:10}}>
+                        <div className="col-2 align-right nobkg">
+                            {dictionary[this.props.languageFromMain].center.manage.edit}
+                        </div>
+                        <div className="col-5 custom-file" style={{marginLeft:10}}>
                             <input
                                 type="file"
                                 id="fileInput"

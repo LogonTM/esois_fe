@@ -26,6 +26,7 @@ export function getLayerValueOptions(layers, layer, operator, value) {
 		return valopts(layer, operator, value);
 	}
 	else if (valopts.length) {
+		valopts.sort();
 		return valopts; // array
 	}
 }
@@ -83,20 +84,6 @@ export function queryToTokens(q) {
 }
 
 queryToTokens.re = RegExp('\\[(?:'+ quotedStringRE +'|.)*?\\] *(?:\\{.*?\\})?', 'g');
-
-// var filteredWords = []
-// /*To simplify matching regex filter out words within "quotemarks". This help to not stumble on any special characters that can occur there. */
-// function filterWords(s, f) {
-// 	const filteredString = s.replace(/("(?:\\"|[^"])*")/g, (m) => {
-// 		filteredWords.push(m)
-// 		return '""'
-// 	})
-// 	const ret = f(filteredString)
-// 	// restore words
-	
-// 	// return return value
-// 	return ret;
-// }
 
 function wordOptionsDefaultToStr(layer, op, value) {
 	const unescVal = value;

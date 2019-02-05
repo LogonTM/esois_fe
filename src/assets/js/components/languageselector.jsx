@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 var PT = PropTypes;
 
@@ -10,7 +10,15 @@ class LanguageSelector extends Component {
 		selectedLanguage: PT.array.isRequired,
 		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
-		languageFromMain: PropTypes.string.isRequired,
+		languageFromMain: PT.string.isRequired,
+		corpora: PT.object.isRequired,
+		updateCurrentLanguagesMap: PT.func.isRequired
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.languageFromMain !== prevProps.languageFromMain) {
+			this.props.updateCurrentLanguagesMap(this.props.corpora)
+		}
 	}
 
 	selectLang = language => {

@@ -9,7 +9,7 @@ import LanguageSelector from '../components/languageselector.jsx'
 import { sortLayerOperators } from '../utilities/layers';
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
@@ -126,14 +126,13 @@ class AggregatorPage extends Component {
 						}
 						else {
 							// no context set all visible to selected as default.
-							// console.log("no context set, selecting all available");
 							corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
 						}
 
 					this.setState({
 						corpora : corpora,
 						languageMap: json.languages,
-						currentLanguagesMap: json.languages,
+						currentLanguagesMap: corpora.getCurrentLanguages(this.state.languageMap, this.props.languageFromMain),
 						aggregationContext: aggregationContext,
 						layerMap: layers,
 					}, this.postInit);
@@ -153,6 +152,10 @@ class AggregatorPage extends Component {
 
 	updateCorpora = corpora => {
 		this.setState(updateState(corpora, this.props.languageFromMain));
+	}
+
+	updateCurrentLanguagesMap = corpora => {
+		this.setState({currentLanguagesMap: corpora.getCurrentLanguages(this.state.languageMap, this.props.languageFromMain)})
 	}
 
 	getCurrentQuery = () => {
@@ -604,8 +607,9 @@ class AggregatorPage extends Component {
 								</div>
 								<div className="input-group">
 									<Button
-										label={(this.state.language === this.anyLanguage) ? 
-											dictionary[this.props.languageFromMain].common.anyLanguage
+										label={
+											dictionary[this.props.languageFromMain].language[this.state.language[0]] ?
+											dictionary[this.props.languageFromMain].language[this.state.language[0]]
 											: this.state.language[1]}
 										uiType='dropdown-toggle'
 										onClick={this.toggleLanguageSelection}
@@ -691,6 +695,8 @@ class AggregatorPage extends Component {
 						languageFilter={this.state.languageFilter}
 						languageChangeHandler={this.setLanguageAndFilter}
 						languageFromMain={this.props.languageFromMain}
+						corpora={this.state.corpora}
+						updateCurrentLanguagesMap={this.updateCurrentLanguagesMap}
 					/>
 				</Modal>
 
@@ -834,13 +840,13 @@ Corpora.prototype.getLayers = function(languageFromMain) {
 	return currentLayers;
 }
 
-Corpora.prototype.getCurrentLanguages = function(languageMap) {
+Corpora.prototype.getCurrentLanguages = function(languageMap, languageFromMain) {
 	const languages = {};
 	this.recurse(function(corpus) {
 		corpus.languages.forEach(language => {
 			if (corpus.selected) {
 				if (!languages.hasOwnProperty(language)) {
-					languages[language] = languageMap[language];
+					languages[language] = dictionary[languageFromMain].language[language] ? dictionary[languageFromMain].language[language] : languageMap[language];
 				}
 			}
 		});
@@ -890,8 +896,6 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 	pairs(endpoints2handles).forEach((endp) => {
 		var endpoint = endp[0];
 		var handles = endp[1];
-	   //  console.log(endpoint);
-	   //  console.log(handles);
 		handles.forEach((handle) => {
 			this.recurse(function(corpus){
 				if (corpus.handle === handle) {
@@ -940,11 +944,9 @@ Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split('&');
-   //  console.log("vars: ", vars);
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split('=');
         if (decodeURIComponent(pair[0]) === variable) {
-	   //  console.log("variable found: (", variable, ") = ", decodeURIComponent(pair[1]));
             return decodeURIComponent(pair[1]);
         }
     }
@@ -953,30 +955,29 @@ function getQueryVariable(variable) {
 
 /* setter opposite of getQueryVariable*/
 function setQueryVariable(qvar, value) {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    var d = {};
-    d[qvar] = value;
-    var found = false;
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) === qvar) {
-            
-            vars[i] = encodeQueryData(d);
-            found=true;
-            break;
-        }
-    }
-    
-    if (!found) {
-        // add to end of url
-        vars.push(encodeQueryData(d));
-    }
-    
-    var searchPart = vars.join('&');
-    var newUrl = window.location.origin + window.location.pathname+'?'+searchPart;
-    // console.log("set url", newUrl);
-    window.history.replaceState(window.history.state, null, newUrl);
+	var query = window.location.search.substring(1);
+	var vars = query.split('&');
+	var d = {};
+	d[qvar] = value;
+	var found = false;
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		if (decodeURIComponent(pair[0]) === qvar) {
+			
+			vars[i] = encodeQueryData(d);
+			found=true;
+			break;
+		}
+	}
+	
+	if (!found) {
+		// add to end of url
+		vars.push(encodeQueryData(d));
+	}
+	
+	var searchPart = vars.join('&');
+	var newUrl = window.location.origin + window.location.pathname+'?'+searchPart;
+	window.history.replaceState(window.history.state, null, newUrl);
 }
 
 function encodeQueryData(data)
@@ -991,7 +992,7 @@ function encodeQueryData(data)
 const updateState = (corpora, languageFromMain) => ({languageMap}) => ({
 	corpora,
 	layerMap: corpora.getLayers(languageFromMain),
-	currentLanguagesMap: corpora.getCurrentLanguages(languageMap)
+	currentLanguagesMap: corpora.getCurrentLanguages(languageMap, languageFromMain)
 })
 
 export default AggregatorPage;

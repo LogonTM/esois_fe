@@ -35,14 +35,7 @@ export default {
         center: {
             add: {
                 checkData: 'Palun kontrolli sisestatud andmete õigsust',
-                enterId: 'Sisesta korpuse ID',
                 success: 'Uus korpus on edukalt lisatud'
-            },
-            common: {
-                id: 'Korpuse ID',
-                enterLink: 'Sisesta korpuse URL',
-                enterName: 'Sisesta korpuse nimi',
-                name: 'Korpuse nimi'
             },
             delete: {
                 confirm: 'Kas oled kindel, et soovid korpuse kustutada?',
@@ -51,14 +44,9 @@ export default {
             edit: {
                 success: 'Korpuse andmed on edukalt uuendatud'
             },
-            headers: [
-                { key: 'id', label: 'Korpuse ID'},
-                { key: 'centerName', label: 'Korpuse nimi'},
-                { key: 'link', label: 'URL'}
-            ],
             manage: {
                 add: 'Lisa uus korpus:',
-                edit: 'Korpuse andmete muutmine'
+                edit: 'Muuda korpust:'
             },
             browse: 'Vali fail',
             layer: 'Kiht',
@@ -95,11 +83,11 @@ export default {
         },
         errorlogs: {
             headers: [
-                /*                 { key: 'id', label: 'Kasutaja ID'}, */
-                                { key: 'createdAt', label: 'Aeg'},
-                                { key: 'errorType', label: 'Vea tüüp'},
-                                { key: 'errorValue', label: 'Vea väärtus'}
-                            ],
+                // { key: 'id', label: 'Kasutaja ID'},
+                { key: 'createdAt', label: 'Aeg'},
+                { key: 'errorType', label: 'Vea tüüp'},
+                { key: 'errorValue', label: 'Vea väärtus'}
+            ],
         },
         fcs: {
             form: 'vorm',
@@ -123,6 +111,7 @@ export default {
         },
         language: {
             est: 'Eesti',
+            mul: 'igas keeles',
             vot: 'Vadja',
             vro: 'Võru'
         },
@@ -146,7 +135,7 @@ export default {
                 'analysis': 'analüüs',
                 'cases': 'kääne',
                 'dephead': 'peasõna',
-                'deprel': 'süntaktiline roll',
+                'deprel': 'süntaktiline funktsioon',
                 'lemma': 'algvorm',
                 'mood': 'kõneviis',
                 'msd': 'morfoloogiline analüüs',
@@ -154,8 +143,10 @@ export default {
                 'nominal': 'infinitiivsed vormid',
                 'number': 'arv',
                 'person': 'isik',
+                'PHONEME': 'häälik',
                 'pos': 'sõnaliik',
                 'ref': 'järjekorranumber',
+                'SYLLABLE': 'silp',
                 'tense': 'aeg',
                 'voice': 'tegumood',
             },
@@ -178,20 +169,20 @@ export default {
             sentenceStart: 'Lause algus',
             valueOptions: {
                 // cases
-                'Abe': 'ilmaütlev',
-                'Abl': 'alaltütlev',
-                'Ade': 'alalütlev',
-                'All': 'alaleütlev',
-                'Com': 'kaasaütlev',
-                'Ela': 'seestütlev',
-                'Ess': 'olev',
-                'Gen': 'omastav',
-                'Ill': 'sisseütlev',
-                'Ine': 'seesütlev',
-                'Nom': 'nimetav',
-                'Par': 'osastav',
-                'Trm': 'rajav',
-                'Tra': 'saav',
+                'Abe': 'abessiiv (ilmaütlev)',
+                'Abl': 'ablatiiv (alaltütlev)',
+                'Ade': 'adessiiv (alalütlev)',
+                'All': 'allatiiv (alaleütlev)',
+                'Com': 'komitatiiv (kaasaütlev)',
+                'Ela': 'elatiiv (seestütlev)',
+                'Ess': 'essiiv (olev)',
+                'Gen': 'genitiiv (omastav)',
+                'Ill': 'illatiiv (sisseütlev)',
+                'Ine': 'inessiiv (seesütlev)',
+                'Nom': 'nominatiiv (nimetav)',
+                'Par': 'partitiiv (osastav)',
+                'Trm': 'terminatiiv (rajav)',
+                'Tra': 'translatiiv (saav)',
 
                 // mood
                 'Quot': 'kaudne',
@@ -310,13 +301,13 @@ export default {
         },
         searchlogs: {
             headers: [
-                /*                 { key: 'id', label: 'Kasutaja ID'}, */
-                                { key: 'createdAt', label: 'Aeg'},
-                                { key: 'username', label: 'Kasutaja'},
-                                { key: 'query', label: 'Otsing'},
-                                // { key: 'enabled', label: 'Kasutajakonto olek'},
-                                { key: 'corporas', label: 'Otsitud korpustest'}
-                            ],
+                // { key: 'id', label: 'Kasutaja ID'},
+                { key: 'createdAt', label: 'Aeg'},
+                { key: 'username', label: 'Kasutaja'},
+                { key: 'query', label: 'Otsing'},
+                // { key: 'enabled', label: 'Kasutajakonto olek'},
+                { key: 'corporas', label: 'Otsitud korpustest'}
+            ],
         },
         user: {
             edit: {
@@ -327,7 +318,7 @@ export default {
                 success: 'Kasutaja andmed on edukalt uuendatud'
             },
             headers: [
-/*                 { key: 'id', label: 'Kasutaja ID'}, */
+                // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'name', label: 'Nimi'},
                 { key: 'username', label: 'Kasutajanimi'},
                 { key: 'email', label: 'e-mail'},
@@ -348,7 +339,7 @@ export default {
         },
         userlogs: {
             headers: [
-                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Aeg'},
                 { key: 'username', label: 'Kasutaja'},
                 { key: 'consent', label: 'Andis nõusoleku'},
@@ -410,14 +401,7 @@ export default {
         center: {
             add: {
                 checkData: 'Please check that the data you inserted is correct',
-                enterId: "Enter corpus' ID",
                 success: 'New corpus has been added successfully'
-            },
-            common: {
-                id: "Corpus' ID",
-                enterLink: "Enter corpus' URL",
-                enterName: "Enter corpus' name",
-                name: "Corpus' name"
             },
             delete: {
                 confirm: 'Are you sure you want to delete this corpus?',
@@ -426,14 +410,9 @@ export default {
             edit: {
                 success: 'Corpus is updated successfully'
             },
-            headers: [
-                { key: 'id', label: "Corpus' ID"},
-                { key: 'centerName', label: "Corpus' name"},
-                { key: 'link', label: 'URL' }
-            ],
             manage: {
                 add: 'Add new corpus:',
-                edit: 'Edit corpus data'
+                edit: 'Edit corpus:'
             },
             browse: 'Choose file',
             layer: 'Layer',
@@ -470,7 +449,7 @@ export default {
         },
         errorlogs: {
             headers: [
-                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Created at'},
                 { key: 'errorType', label: 'Error type'},
                 { key: 'errorValue', label: 'Error value'}
@@ -498,6 +477,7 @@ export default {
         },
         language: {
             est: 'Estonian',
+            mul: 'Any Language',
             vot: 'Votic',
             vro: 'Võro'
         },
@@ -529,8 +509,10 @@ export default {
                 'nominal': 'infinite forms',
                 'number': 'number',
                 'person': 'person',
+                'PHONEME': 'phoneme',
                 'pos': 'part-of-speech',
                 'ref': 'ref',
+                'SYLLABLE': 'syllable',
                 'tense': 'tense',
                 'voice': 'voice',
             },
@@ -685,7 +667,7 @@ export default {
         },
         searchlogs: {
             headers: [
-                /*{ key: 'id', label: 'Kasutaja ID'}, */
+                // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Created at'},
                 { key: 'username', label: 'User'},
                 { key: 'query', label: 'Query'},
@@ -701,7 +683,7 @@ export default {
                 success: 'User is updated successfully'
             },
             headers: [
-/*                 { key: 'id', label: 'User ID'}, */
+                // { key: 'id', label: 'User ID'},
                 { key: 'name', label: 'Name'},
                 { key: 'username', label: 'Username'},
                 { key: 'email', label: 'e-mail'},
@@ -722,7 +704,7 @@ export default {
         },
         userlogs: {
             headers: [
-                /*                 { key: 'id', label: 'Kasutaja ID'}, */
+                // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Created at'},
                 { key: 'username', label: 'User'},
                 { key: 'consent', label: 'Consent'},

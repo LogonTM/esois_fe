@@ -91,7 +91,6 @@ class Main extends Component {
 		if (typeof errObj === 'string' || errObj instanceof String) {
 			err = errObj
 		} else if (typeof errObj === 'object' && errObj.statusText) {
-			console.log('ERROR: jqXHR = ', errObj)
 			err = errObj.statusText
 		} else {
 			return
@@ -121,7 +120,6 @@ class Main extends Component {
 		} else {
 			this.error(error + ' (' + textStatus + ')')
 		}
-		console.log('ajax error, jqXHR: ', jqXHR)
 	}
 
 	getUserLoginStatus = (userStatus, currentUser) => {
@@ -220,7 +218,6 @@ class Main extends Component {
 				)
 			}
 			this.setState({ navbarPageFn: pageFn })
-			console.log('new page: ' + document.location + ', name: ' + pageFnName)
 		}
 	}
 
@@ -471,10 +468,8 @@ function tokenParser() {
 }
 
 var routeFromLocation = function() {
-	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
 	var path = window.location.pathname
-	console.log('path: ' + path)
 	if (path !== '/') {
 		if (path === '/help') {
 			this.toHelp()

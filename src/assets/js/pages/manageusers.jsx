@@ -171,10 +171,6 @@ class ManageUsers extends PureComponent {
 		)
 	}
 
-
-
-
-
 }
 
 export default ManageUsers;
