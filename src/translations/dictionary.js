@@ -18,7 +18,6 @@ export default {
             actions: 'Tegevused',
             anyLanguage: 'igas keeles',
             homepage: '– Koduleht',
-            in: ' ',
             password: 'Salasõna',
             search: 'Otsing',
             toggleNavigation: 'Ava navigatsiooni menüü',
@@ -29,6 +28,7 @@ export default {
             collections: 'Korpused',
             erf: 'RABA loomist on toetanud Euroopa Liidu Euroopa Regionaalarengu Fond',
             hitsPerEndpoint: 'vastet allika kohta',
+            in: 'keeles',
             searchFor: 'Otsi',
             selectLanguage: 'Vali keel',
         },
@@ -110,10 +110,10 @@ export default {
             mainTitle: 'Abileht ja seaded'
         },
         language: {
-            est: 'Eesti',
-            mul: 'igas keeles',
-            vot: 'Vadja',
-            vro: 'Võru'
+            est: 'eesti',
+            mul: 'igas',
+            vot: 'vadja',
+            vro: 'võru'
         },
         loginpage: {
             error: {
@@ -382,9 +382,8 @@ export default {
         },
         common: {
             actions: 'Actions',
-            anyLanguage: 'Any Language',
+            anyLanguage: 'any language',
             homepage: '– Homepage',
-            in: 'in',
             password: 'Password',
             search: 'Search',
             toggleNavigation: 'Toggle navigation',
@@ -395,6 +394,7 @@ export default {
             collections: 'Collections',
             erf: 'The creation of RABA has been supported by the European Union European Regional Development Fund',
             hitsPerEndpoint: 'hits per endpoint',
+            in: 'in',
             searchFor: 'Search for',
             selectLanguage: 'Select Language',
         },
@@ -477,7 +477,7 @@ export default {
         },
         language: {
             est: 'Estonian',
-            mul: 'Any Language',
+            mul: 'any language',
             vot: 'Votic',
             vro: 'Võro'
         },

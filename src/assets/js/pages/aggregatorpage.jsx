@@ -623,7 +623,7 @@ class AggregatorPage extends Component {
 							<div className="input-group mb-3">
 								<div className="input-group-prepend">
 									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].common.in}
+										{dictionary[this.props.languageFromMain].aggregatorpage.in}
 									</span>
 								</div>
 								<div className="input-group">
