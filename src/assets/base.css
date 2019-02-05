@@ -349,10 +349,25 @@ div.card-title span.institutionName{
 	border-radius: .2em;
 }
 
-.card-body td.keyword {
+.card-body td.keyword, .eki-hit {
 	color: rgb(40,85,143);
 	font-weight: bold;
 	font-weight: bold;
+}
+
+.eki-source {
+	font-size: 0.75rem;
+	color: #7F8891;
+}
+
+.eki-definition {
+	font-weight: 400 !important;
+	line-height: 1.8;
+	font-style: italic;
+}
+
+.eki-usage {
+	font-weight: 400 !important;
 }
 
 .bs-callout {
