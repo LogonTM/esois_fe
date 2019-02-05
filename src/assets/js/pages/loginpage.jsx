@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import googleLogo from '../../img/google-logo.png';
+import favicon from '../../img/favicon.ico';
 
 var PT = PropTypes
 
@@ -210,10 +211,14 @@ class LoginPage extends Component {
 									onClick={this.handleToRegistration}
                                 />
 							</form>
-							{/*<div className="oauth-login">
+							<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={google_auth_url}>
 									<img src={googleLogo} alt="Google" /> Login OAuth </a>
-							</div> */}
+							</div>
+							<div className="oauth-login">
+								<a className="btn btn-block oauth-btn google" href={saml_url}>
+									<img src={favicon} alt="favicon" /> Login SAML </a>
+							</div>
 							<div className="bottom-gap"></div>
 						</div>
 					</div>

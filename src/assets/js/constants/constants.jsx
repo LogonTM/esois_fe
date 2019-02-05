@@ -19,8 +19,6 @@ export const maximum_password_length = 20;
 
 export const google_auth_url = back_end_host + 'oauth2/authorize/google?redirect_uri=' + oauth2_redirect_uri;
 
-export const okta_url = back_end_host + 'api/auth/samlLogin';
-
 export const saml_url = back_end_host + 'saml/login';
 
 export const logout_url = back_end_host + 'logout';

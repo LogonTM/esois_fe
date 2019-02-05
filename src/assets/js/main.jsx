@@ -31,42 +31,46 @@ window.MyAggregator = window.MyAggregator || {}
 
 var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2)) || ''
 
-class Main extends PureComponent {
+class Main extends Component {
 	componentDidMount() {
 		routeFromLocation.bind(this)()
-		getCurrentUser()
-		.then(response => {
-		  var isAdmin = 'ROLE_USER';
-		  for(let value in response.authorities) {
-			if (response.authorities[value].authority === 'ROLE_ADMIN')
-				isAdmin = 'ROLE_ADMIN';
-			}
-			this.setState({
-			  userRole: isAdmin,
-			  userName: response.name
-		  });
-		}).catch(error => {
+		if (!this.state.loggedInStatus){
+			getCurrentUser()
+			.then(response => {
+			var isAdmin = 'ROLE_USER';
+			for(let value in response.authorities) {
+				if (response.authorities[value].authority === 'ROLE_ADMIN')
+					isAdmin = 'ROLE_ADMIN';
+				}
+				this.setState({
+				userRole: isAdmin,
+				userName: response.name,
+			});
+			}).catch(error => {
 
-		});
+			});
+		} 
 	}
 
 	componentDidUpdate() {
 		routeFromLocation.bind(this)()
-		getCurrentUser()
-		.then(response => {
-			var isAdmin = 'ROLE_USER';
-			for(let value in response.authorities) {
-			  if (response.authorities[value].authority === 'ROLE_ADMIN')
-				  isAdmin = 'ROLE_ADMIN';
-			  }
-			  this.setState({
-				userRole: isAdmin,
-				userName: response.name
+		if(!this.state.loggedInStatus){
+			getCurrentUser()
+			.then(response => {
+				var isAdmin = 'ROLE_USER';
+				for(let value in response.authorities) {
+				if (response.authorities[value].authority === 'ROLE_ADMIN')
+					isAdmin = 'ROLE_ADMIN';
+				}
+				this.setState({
+					userRole: isAdmin,
+					userName: response.name,
+				});
+
+			}).catch(error => {
+
 			});
-
-		}).catch(error => {
-
-		});
+		}
 	}
   
 	constructor(props) {
@@ -446,6 +450,26 @@ function endsWith(str, suffix) {
 	return str.indexOf(suffix, str.length - suffix.length) !== -1
 }
 
+function getUrlParameter(name) {
+	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+	var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+	var results = regex.exec(document.location);
+	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+function tokenParser() {
+	var path = window.location.pathname
+	const token = getUrlParameter('token');
+	if(token) {
+		localStorage.setItem(authentication_token, token);
+		path = '/'
+		document.location = '/'
+	} else {
+		path = '/'
+		document.location = '/'
+	}
+}
+
 var routeFromLocation = function() {
 	console.log('routeFromLocation: ' + document.location)
 	if (!this) throw 'routeFromLocation must be bound to main'
@@ -461,24 +485,10 @@ var routeFromLocation = function() {
 		} else if (path === '/manageUsers' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN')  {
 			this.toManageUsers()
 		} else if (path === '/oauth2/redirect') {
-		    	function getUrlParameter(name) {
-				name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-				var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-				var results = regex.exec(document.location);
-				return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-			}
-			const token = getUrlParameter('token');
-			if(token) {
-				localStorage.setItem(authentication_token, token);
-				path = '/'
-				document.location = '/'
-			} else {
-				path = '/'
-				document.location = '/'
-			}
-		// } else if (path === '/user' && localStorage.getItem(authentication_token) !== null) {
-		// 	this.toUserManager()
-		} else if (path === '/manageLogs' && localStorage.getItem(authentication_token) !== null) {
+			tokenParser();
+		} else if (path === '/saml/') {
+			tokenParser();
+		} else if (path === '/manageLogs' && localStorage.getItem(authentication_token) !== null && this.state.userRole === 'ROLE_ADMIN') {
 			this.toManageLogs()
 		} else {
 			this.toAggregator()
