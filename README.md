@@ -45,7 +45,7 @@ Kasutajaliides võimaldab vahetada ka keeli, vajutades vastava lipu peale (Eesti
 
 ### Registreerimine ja kasutaja autentimine
 
-Võimaldatud on ka kasutajate registreerimine ja sisse logimine. Oauth 2.0 läbi väliste teenustega on hetkel testimisel aga lokaalselt on autentimine võimaldatud. Hetkeseisuga on kõik kasutajad vaikimisi tavakasutaja rollis, kes saavad ligi ka hiljem administraatorile mõeldud funktsionaalsustele (mis hetkel olemas). Täiendavalt lisandub ka SAML (TAAT) autentimise võimalus.
+Võimaldatud on ka kasutajate registreerimine ja sisse logimine. Hetkeseisuga on võimalik eristada tavakasutajate ja adminstraatori vahel. Administraatoril on võimalik ligi pääseda kasutajate halduse lehele, kus on võimalik anda juurde ka teistele kasutajatele administreerimiseks vajalikke õigusi. Samuti on adminstraatoril võimalik vaadelda logisid ning pääseda ligi endpointide haldusele.
 
 Kasutaja lokaalseks registreerimiseks on vaja navigeerida läbi login lehekülje registreerimise leheküljele, kus tuleb täita vastavad lahtrid ning vajutada nuppu registreeri. Eduka registreerimise järgselt logitakse kasutaja ka koheselt sisse ning suunatakse agregaatori otsingu lehele. Mitte õnnestunud registreerimise kohta kuvatakse kasutajale ka vastava sisulist tagasidet koos näpunäidetega, kuidas probleemi oleks võimalik lahendada.
 
