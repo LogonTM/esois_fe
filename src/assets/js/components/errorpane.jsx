@@ -29,7 +29,7 @@ class ErrorPane extends Component{
 	render() {
 		return (
 			<div className="container errorDiv">
-				{this.props.errorMessages.length > 0 ? this.renderThisStuff() : null}
+				{this.props.errorMessages.length > 0 ? this.renderErrorTransition() : null}
 			</div>
 		)
 	}
