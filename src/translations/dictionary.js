@@ -501,7 +501,7 @@ export default {
                 'analysis': 'analysis',
                 'cases': 'case',
                 'dephead': 'dephead',
-                'deprel': 'deprel',
+                'deprel': 'syntactic function',
                 'lemma': 'baseform',
                 'mood': 'mood',
                 'msd': 'msd',
@@ -571,7 +571,7 @@ export default {
                 'Pl': 'plural',
 
                 // part of speech
-                'ADJ': 'adjective positive',
+                'ADJ': 'adjective',
                 'ADP': 'adposition',
                 'ADV': 'adverb',
                 'AUX': 'auxiliary',
