@@ -34,22 +34,19 @@ var URLROOT = window.MyAggregator.URLROOT = window.location.pathname.substring(0
 class Main extends Component {
 	componentDidMount() {
 		routeFromLocation.bind(this)()
-		if (!this.state.loggedInStatus){
-			getCurrentUser()
-			.then(response => {
-			var isAdmin = 'ROLE_USER';
-			for(let value in response.authorities) {
-				if (response.authorities[value].authority === 'ROLE_ADMIN')
-					isAdmin = 'ROLE_ADMIN';
-				}
-				this.setState({
+		getCurrentUser()
+		.then(response => {
+		var isAdmin = 'ROLE_USER';
+		for(let value in response.authorities) {
+			if (response.authorities[value].authority === 'ROLE_ADMIN')
+				isAdmin = 'ROLE_ADMIN';
+			}
+			this.setState({
 				userRole: isAdmin,
 				userName: response.name,
 			});
-			}).catch(error => {
-
+		}).catch(error => {
 			});
-		} 
 	}
 
 	componentDidUpdate() {
@@ -343,24 +340,24 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Manage Logs'
-							onClick={this.toManageLogs.bind(this, true)}
-						>
-							<i className="fa fa-database"/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
-							data-toggle='tooltip'
-							title='Manage Users'
-							onClick={this.toManageUsers.bind(this, true)}
-						>
-							<i className="fa fa-users"/>
-						</a>
+				<a
+					className='nav-item navbar-brand'
+					tabIndex="-1"
+					data-toggle='tooltip'
+					title='Manage Logs'
+					onClick={this.toManageLogs.bind(this, true)}
+				>
+					<i className="fa fa-database"/>
+				</a>		
+				<a
+					className='nav-item navbar-brand'
+					tabIndex="-1"
+					data-toggle='tooltip'
+					title='Manage Users'
+					onClick={this.toManageUsers.bind(this, true)}
+				>
+					<i className="fa fa-users"/>
+				</a>
 			</div>
 		)
 	}
