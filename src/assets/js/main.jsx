@@ -96,12 +96,13 @@ class Main extends Component {
 		var errs = this.state.errorMessages.slice()
 		errs.push(err)
 		this.setState({ errorMessages: errs })
-
 		setTimeout(() => {
 			var errs = this.state.errorMessages.slice()
 			errs.shift()
-			this.setState({ errorMessages: errs })
-		}, 10000)
+			this.setState({
+				errorMessages: errs 
+			}, () => this.state.errorMessages)
+		}, 5000)
 	}
 
 	ajax = ajaxObject => {
