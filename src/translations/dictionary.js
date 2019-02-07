@@ -168,6 +168,10 @@ export default {
             },
             sentenceEnd: 'Lause lõpp',
             sentenceStart: 'Lause algus',
+            tooltips: {
+                analysis: 'Analüüs on põnev',
+                word: 'Pane mingi sõna'
+            },
             valueOptions: {
                 // cases
                 'Abe': 'abessiiv (ilmaütlev)',
@@ -522,6 +526,10 @@ export default {
             },
             sentenceEnd: 'Sentence end',
             sentenceStart: 'Sentence start',
+            tooltips: {
+                analysis: 'Analysis is interesting',
+                word: 'Put some word'
+            },
             valueOptions: {
                 // cases
                 'Abe': 'abessive',

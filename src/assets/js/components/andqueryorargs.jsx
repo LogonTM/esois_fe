@@ -70,15 +70,16 @@ class ANDQueryORArgs extends Component {
 	render() {
 		var orArgs = this.state.ors.map((orId)  => {
 			return ( 		
-            <CSSTransition key={orId} classNames="fade" timeout={{enter: 200, exit: 200}}>
-               <ORArg
-                  query={this.queryStrCache[orId]}
-                  handleRemoveADVOr={() => this.removeADVOr(orId)}
-                  onQueryChange={(qs) => this.onQueryChange(orId, qs)}
-                  languageFromMain={this.props.languageFromMain}
-                  layerMap={this.props.layerMap}
-               />
-            </CSSTransition>
+				<CSSTransition key={orId} classNames="fade" timeout={{enter: 200, exit: 200}}>
+					<ORArg
+						query={this.queryStrCache[orId]}
+						handleRemoveADVOr={() => this.removeADVOr(orId)}
+						onQueryChange={(qs) => this.onQueryChange(orId, qs)}
+						languageFromMain={this.props.languageFromMain}
+						layerMap={this.props.layerMap}
+						id={orId}
+					/>
+				</CSSTransition>
 			)
 		});
 		return (
