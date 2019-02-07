@@ -159,6 +159,10 @@ class AggregatorPage extends Component {
 		this.setState({currentLanguagesMap: corpora.getCurrentLanguages(this.state.languageMap, this.props.languageFromMain)})
 	}
 
+	getLayersWithEndpoints = corpora => {
+		return corpora.getLayersWithEndpoints();
+	}
+
 	getCurrentQuery = () => {
 	    return this.state.queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery;
 	}
@@ -721,6 +725,7 @@ class AggregatorPage extends Component {
 						languageMap={this.state.languageMap}
 						languageFromMain={this.props.languageFromMain}
 						userRole={this.props.userRole}
+						getLayersWithEndpoints={this.getLayersWithEndpoints}
 					/>
 				</Modal>
 
@@ -834,6 +839,31 @@ Corpora.prototype.getLanguageCodes = function() {
 	});
 	return languages;
 };
+
+Corpora.prototype.getLayersWithEndpoints = function() {
+	const layers = {};
+	this.recurse(function(corpus) {
+		corpus.endpoint.layers.forEach(layer => {
+			if (layers.hasOwnProperty(layer.name)) {
+				layers[layer.name].usedBy.push(` ${corpus.title}`);
+				layer.valueOptions.forEach(valOpt => {
+					if (layers[layer.name].valueOptions.hasOwnProperty(valOpt.name)) {
+						layers[layer.name].valueOptions[valOpt.name].push(` ${corpus.title}`);
+					} else {
+						Object.assign(layers[layer.name].valueOptions, {[valOpt.name]: [corpus.title]});
+					}
+				});
+			} else {
+				const valOpts = {};
+				layer.valueOptions.forEach(valOpt => {
+					Object.assign(valOpts, {[valOpt.name]: [corpus.title]});
+				});
+				Object.assign(layers, { [layer.name] : { name: layer.name, usedBy: [corpus.title], valueOptions: valOpts } });
+			}
+		})
+	});
+	return layers;
+}
 
 Corpora.prototype.getLayers = function(languageFromMain) {
 	const layers = {};
