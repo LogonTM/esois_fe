@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import Button from '../../utilities/button';
 import Layer from './layer';
 import dictionary from '../../../../translations/dictionary';
-import { removeCenter } from '../../utilities/functions';
+import { removeCenter, getEndpoint } from '../../utilities/functions';
 import { pluck, prop, indexBy } from 'ramda';
 import 'bootstrap';
 import { back_end_host, authentication_token } from '../../constants/constants';
@@ -57,7 +57,6 @@ class Corpus extends PureComponent {
             method: 'POST',
             body: this.state.xml
         }).then(response => {
-            console.log(response)
             this.setState({ isUploaded: response.status === 200 });
             }
         )
@@ -75,7 +74,16 @@ class Corpus extends PureComponent {
 				alert(dictionary[this.props.languageFromMain].center.delete.success);
 			})
 		}
-	}
+    }
+    
+    // downloadEndpointData = (e, id) => {
+    //     getEndpoint(id)
+    //     .then(response => {
+    //         if(response) {
+    //             return back_end_host + 'endpoint/' + id + '/download'
+    //         }
+    //     });
+    // }
 
     render() {
         return (
@@ -103,6 +111,7 @@ class Corpus extends PureComponent {
                                 <Button
                                     label={dictionary[this.props.languageFromMain].button.download}
                                     style={{marginRight:1}}
+                                    // onClick={e => this.downloadEndpointData(e, this.props.corpus.id)}
                                 />
                             </a>
                             {` `}

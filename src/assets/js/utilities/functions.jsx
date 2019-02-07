@@ -167,3 +167,14 @@ export function getErrorsLog () {
         method: 'GET'
     })
 }
+
+export function getEndpoint (id) {
+    if(!localStorage.getItem(authentication_token)) {
+        return Promise.reject("No access token set");
+    }
+    
+    return request({
+        url: back_end_host + "endpoint/" + id + "/download",
+        method: 'GET'
+    })
+}

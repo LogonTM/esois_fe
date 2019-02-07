@@ -167,7 +167,6 @@ class AggregatorPage extends Component {
 		this.setState({
 			searchInitiated: true
 		}, () => this.state.searchInitiated)
-		console.log("THis state for "+ this.state.searchInitiated)
 	}
 
 	onSearchStop = () => {
@@ -211,7 +210,6 @@ class AggregatorPage extends Component {
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId, timeout });
 				this.onSearchStop();
-				console.log("What is the state of search2: " + this.state.searchInitiated)
 			}
 		});
 	}
