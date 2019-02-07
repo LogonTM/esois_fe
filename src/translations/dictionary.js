@@ -298,6 +298,7 @@ export default {
         	collectionsFound: 'vastavat korpust leitud',
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
+            loading: 'Laen tulemusi, palun oota...'
         },
         searchlogs: {
             headers: [
@@ -664,6 +665,7 @@ export default {
             collectionsFound: 'matching collections found',
             progressMessageP1: 'matching collections found in',
             progressMessageP2: 'searched collections',
+            loading: 'Loading results, please wait...'
         },
         searchlogs: {
             headers: [

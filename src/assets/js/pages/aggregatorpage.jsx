@@ -76,6 +76,8 @@ class AggregatorPage extends Component {
 			zoomedCorpusHit: null,
 
 			layerMap: { word: { layerOperators: ['IS'], valueOptions: [] }},
+
+			searchInitiated: false
 		};
 	}
 
@@ -162,7 +164,21 @@ class AggregatorPage extends Component {
 	    return this.state.queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery;
 	}
 
+	onSearchStart = () => {
+		this.setState({
+			searchInitiated: true
+		}, () => this.state.searchInitiated)
+		console.log("THis state for "+ this.state.searchInitiated)
+	}
+
+	onSearchStop = () => {
+		this.setState({
+			searchInitiated: false
+		}, () => this.state.searchInitiated)
+	}
+
 	search = () => {
+		
 		var _paq = [];
 		var query = this.getCurrentQuery();
 		var queryTypeIdForSearch = this.state.queryTypeId;
@@ -175,6 +191,7 @@ class AggregatorPage extends Component {
 			this.props.error("Please select a collection to search into");
 			return;
 		}
+		this.onSearchStart();
 		this.props.ajax({
 			url: back_end_host + 'search',
 			type: "POST",
@@ -194,6 +211,8 @@ class AggregatorPage extends Component {
 				var timeout = 250;
 				setTimeout(this.refreshSearchResults, timeout);
 				this.setState({ searchId, timeout });
+				this.onSearchStop();
+				console.log("What is the state of search2: " + this.state.searchInitiated)
 			}
 		});
 	}
@@ -718,6 +737,7 @@ class AggregatorPage extends Component {
 
 				<div className="top-gap">
 					<Results
+						searchInitiated={this.state.searchInitiated}
 						collhits={this.filterResults()}
 						toggleResultModal={this.toggleResultModal}
 						getDownloadLink={this.getDownloadLink}

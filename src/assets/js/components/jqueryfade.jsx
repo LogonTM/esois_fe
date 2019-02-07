@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
 
 class JQueryFade extends Component {
-
 	componentWillEnter(callback){
 		var el = jQuery(ReactDOM.findDOMNode(this));
 		el.css("display", "none");
