@@ -9,12 +9,14 @@ import LanguageSelector from '../components/languageselector.jsx'
 import { sortLayerOperators } from '../utilities/layers';
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
+import { pluck } from 'ramda';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
 import { authentication_token } from '../constants/constants';
+import { queryToANDArgs, queryToORArgs, queryToTokens } from '../utilities/queryinputf';
 
 var PT = PropTypes;
 
@@ -64,6 +66,7 @@ class AggregatorPage extends Component {
 			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
 			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
 			fcsTextAreaVisibility: false,
+			selectedLayers: new Set(['word']),
 			aggregationContext: aggrContext || null,
 			language: this.anyLanguage,
 			languageFilter: 'byMeta',
@@ -82,7 +85,7 @@ class AggregatorPage extends Component {
 	}
 
 	componentDidMount() {
-	    this._isMounted = true;
+	   this._isMounted = true;
 
 		this.props.ajax({
 			url: back_end_host + 'rest/init',
@@ -98,7 +101,7 @@ class AggregatorPage extends Component {
 
 					// Setting visibility, e.g. only corpora 
 					// from v2.0 endpoints for fcs v2.0
-					corpora.setVisibility(this.state.queryTypeId, this.state.language[0]);
+					corpora.setVisibility(this.state.queryTypeId, this.state.language[0], this.state.selectedLayers);
 
 						if (aggregationContext) {
 							const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
@@ -117,7 +120,6 @@ class AggregatorPage extends Component {
 									var err = "Some required context collections are not supported for this search:\n"
 									err = err + contextCorporaInfo.filter((c) => {
 										if (actuallySelectedCorpora.indexOf(c) === -1) {
-											console.warn("Requested corpus but not available for selection", c);
 											return true;
 										}
 										return false;
@@ -138,9 +140,6 @@ class AggregatorPage extends Component {
 						aggregationContext: aggregationContext,
 						layerMap: layers,
 					}, this.postInit);
-				}
-				else {
-					console.warn("Got Aggregator init response, but not mounted!");
 				}
 			}
 		});
@@ -246,9 +245,6 @@ class AggregatorPage extends Component {
 						timeout = 1.5 * timeout;
 					}
 					setTimeout(this.refreshSearchResults, timeout);
-					console.log("new search in: " + timeout + "ms");
-				} else {
-					console.log("search ended; hits:", json);
 				}
 				var corpusHit = this.state.zoomedCorpusHit;
 				if (corpusHit) {
@@ -283,7 +279,7 @@ class AggregatorPage extends Component {
 
 	setLanguageAndFilter = (languageObj, languageFilter) => {
 		this.state.corpora.setVisibility(this.state.queryTypeId,
-			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0]);
+			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0], this.state.selectedLayers);
 		this.setState({
 			language: languageObj,
 			languageFilter: languageFilter,
@@ -297,7 +293,7 @@ class AggregatorPage extends Component {
 	}
 
 	setQueryType = queryTypeId => {
-		this.state.corpora.setVisibility(queryTypeId, this.state.language[0]);
+		this.state.corpora.setVisibility(queryTypeId, this.state.language[0], this.state.selectedLayers);
 		setQueryVariable('queryType', queryTypeId);
 		setQueryVariable('query', queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery)
 		this.setState({
@@ -382,15 +378,43 @@ class AggregatorPage extends Component {
 	}
 
 	onQueryChange = queryStr => {
-	    if (this.state.queryTypeId === 'cql') {
-	        this.setState({
+	   if (this.state.queryTypeId === 'cql') {
+	      this.setState({
 				cqlQuery: queryStr || '',
-		    });
-	    } else {
-	        this.setState({
-				fcsQuery: queryStr || '',
-		    });
-		}
+		   });
+	   } else {
+			const queryTokens = queryToTokens(queryStr);
+			const queryAndArgs = [];
+			queryTokens.forEach(queryToken => {
+				if (queryToken.includes('&')) {
+					const andArgs = queryToANDArgs(queryToken);
+					andArgs.forEach(andArg => queryAndArgs.push(andArg));
+				} else {
+					queryAndArgs.push(queryToken);
+				}
+			});
+			const queryOrArgs = [];
+			queryAndArgs.forEach(queryToken => {
+				const token = queryToken.replace('[', '').replace(']', '').trim();
+				if (token.includes('|')) {
+					const orArgs = queryToORArgs(token);
+					orArgs.forEach(orArg => queryOrArgs.push(orArg.trim()));
+				} else {
+					queryOrArgs.push(token);
+				}
+			});
+			const layers = new Set();
+			queryOrArgs.forEach(arg => {
+				const parts = arg.split(" ");
+				((parts[0] !== "lbound(sentence)") && (parts[0] !== "rbound(sentence)") && (parts[0][0] !== "{")) && layers.add(parts[0]);
+			});
+			this.setState({
+				selectedLayers: layers,
+				fcsQuery: queryStr || ''
+			});
+			this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0], layers);
+			this.updateCorpora(this.state.corpora);
+		};
 		setQueryVariable('query', queryStr);
 	}
 
@@ -816,7 +840,7 @@ Corpora.prototype.getLayers = function(languageFromMain) {
 	Object.assign(layers, { word: { layerOperators: { 'IS' : 'IS'}, valueOptions: {} }});
 	this.recurse(function(corpus) {
 		corpus.endpoint.layers.forEach(layer => {
-			if (corpus.selected) {
+			if (corpus.selected && corpus.visible) {
 				if (layers.hasOwnProperty(layer.name)) {
 					layer.layerOperators.forEach(layerOpt => {
 						Object.assign(layers[layer.name].layerOperators, {[layerOpt]: layerOpt});
@@ -875,10 +899,21 @@ Corpora.prototype.getCurrentLanguages = function(languageMap, languageFromMain) 
 	return languages;
 }
 
-Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode) {
+Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode, selectedLayers) {
 	if (queryTypeId === "fcs" && (corpus.endpoint.protocol === "LEGACY" || corpus.endpoint.protocol === "VERSION_1")) {
 	    return false;
 	}
+
+	// yes if corpus has currently selected layers
+	const layers = pluck('name')(corpus.endpoint.layers);
+	const hasAllSelectedLayers = new Set();
+	selectedLayers.forEach(function callback(layer) {
+		hasAllSelectedLayers.add(layers.includes(layer))
+	})
+	if (hasAllSelectedLayers.has(false)) {
+		return false;
+	}
+
 	// yes for any language
 	if (languageCode === multipleLanguageCode) {
 		return true;
@@ -896,11 +931,22 @@ Corpora.prototype.isCorpusVisible = function(corpus, queryTypeId, languageCode) 
 	return false;
 };
 
-Corpora.prototype.setVisibility = function(queryTypeId, languageCode) {
+Corpora.prototype.setVisibility = function(queryTypeId, languageCode, selectedLayers) {
 	// top level
-	this.corpora.forEach((corpus) => {
-		corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode);
-		this.recurseCorpora(corpus.subCorpora, function(c) { c.visible = corpus.visible; });
+	this.corpora.forEach(corpus => {
+		let count = 0;
+		// subCorpora
+		this.recurseCorpora(corpus.subCorpora, (c) => { 
+			c.visible = this.isCorpusVisible(c, queryTypeId, languageCode, selectedLayers);
+			c.visible ? count += 1 : count += 0 ;
+		});
+		if (count > 0) { 
+			corpus.visible = true 
+		} else if (corpus.subCorpora.length === 0) {
+			corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode, selectedLayers);
+		} else {
+			corpus.visible = false
+		};
 	});
 };
 
