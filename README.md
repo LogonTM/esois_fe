@@ -100,6 +100,7 @@ Endpoint'i adminile:
 Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust. Võtme väärtus on suure/väikese tähe tundlik.
 
 Kihi kohta käiva täpsustava näpunäite ("tooltip") info koos tõlgetega käib dictionary.js failis queryinput > tooltip jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust.
+Näpunäide on nähtav peale kihi rippmenüüst valimist, liikudes kursoriga ära valitud kihi nimele.
 
 Kihi märgendite tõlked tuleb panna dictionary.js failis queryinput > valueOptions jaotuse alla.
 
