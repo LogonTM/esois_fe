@@ -388,8 +388,8 @@ div.card-title span.institutionName{
 	margin-top: 15px;
 	margin-left: 527px;
 	margin-right: 527px;
-	-webkit-animation: fadeinout 1s linear forwards;
-    animation: fadeinout 1s linear forwards;
+	-webkit-animation: fadeinout 2.5s infinite linear forwards;
+    animation: fadeinout 2.5s infinite linear forwards;
     opacity: 0;
 }
 
