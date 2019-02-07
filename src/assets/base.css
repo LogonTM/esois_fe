@@ -378,6 +378,37 @@ div.card-title span.institutionName{
 	font-weight: 400 !important;
 }
 
+.raba-loading-text {
+	position: relative;
+	text-align: center;
+}
+
+.raba-loading-icon-div {
+	width: 15%;
+	height: 15%;
+}
+
+.raba-loading-icon {
+	position: relative;
+	text-align: center;
+	width: 20%;
+	height: 20%;
+	margin-top: 15px;
+	margin-left: 527px;
+	margin-right: 527px;
+	-webkit-animation: fadeinout 2.5s infinite linear forwards;
+    animation: fadeinout 2.5s infinite linear forwards;
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeinout {
+	50% { opacity: 1; }
+}
+  
+@keyframes fadeinout {
+	50% { opacity: 1; }
+}
+
 .bs-callout {
 	padding: 0 20px;
 	margin: 0 0 20px 0;
@@ -395,6 +426,7 @@ div.card-title span.institutionName{
 }
 .card-body {
 	border-top: 1px solid #ddd;
+	overflow: auto;
 }
 
 .collapse.in {

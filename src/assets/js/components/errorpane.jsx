@@ -16,16 +16,22 @@ class ErrorPane extends Component{
 			false;
 	}
 
+	renderErrorTransition = () => {
+		return (
+			<div className="row errorRow">
+				<TransitionGroup component="div">
+					{this.props.errorMessages.map(this.renderErrorMessage)}
+				</TransitionGroup>
+			</div>
+		)
+	}
+
 	render() {
 		return (
 			<div className="container errorDiv">
-				<div className="row errorRow">
-					<TransitionGroup component="div">
-						{this.props.errorMessages.map(this.renderErrorMessage)}
-					</TransitionGroup>
-				</div>
+				{this.props.errorMessages.length > 0 ? this.renderErrorTransition() : null}
 			</div>
-		);
+		)
 	}
 }
 

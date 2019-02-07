@@ -14,7 +14,8 @@ class CorpusView extends Component {
 		corpora: PT.object.isRequired,
 		languageMap: PT.object.isRequired,
 		languageFromMain: PT.string.isRequired,
-		userRole: PT.string.isRequired
+		userRole: PT.string.isRequired,
+		getLayersWithEndpoints: PT.func.isRequired
 	}
 
 	constructor(props) {
@@ -22,7 +23,8 @@ class CorpusView extends Component {
 		this.state = {
 			 file: null,
 			 xml: "",
-			 isUploaded: false
+			 isUploaded: false,
+			 layersListVisible: false
 		}
   	}
 
@@ -53,6 +55,10 @@ class CorpusView extends Component {
 		corpus.edit = !corpus.edit;
 		this.props.corpora.update();
 		this.stop(e);
+	}
+
+	toggleUsedLayersList = () => {
+		this.setState({layersListVisible: !this.state.layersListVisible})
 	}
 
 	selectAll = (value) => {
@@ -180,7 +186,7 @@ class CorpusView extends Component {
 		);
 	}
 
-	renderExpansion(corpus) {
+	renderExpansion = (corpus) => {
 		if (!corpus.subCorpora || corpus.subCorpora.length === 0) {
 			return false;
 		}
@@ -304,8 +310,46 @@ class CorpusView extends Component {
 		);
 	}
 
+	renderCurrentlyUsedLayers = (layersWithEndpoints) => {
+		const keys = Object.keys(layersWithEndpoints).sort();
+		const layers = keys.map(key => {
+			const layer = layersWithEndpoints[key];
+			const valOpts = Object.keys(layer.valueOptions).sort();
+			return (
+				<div key={key} style={{marginBottom:12}}>
+					<div className='row'>
+						<div className='col-1 align-right' style={{padding:0}}>
+							{`${layer.name}:`}
+						</div>
+						<div className='col-11'>
+							{`${layer.usedBy}`}
+						</div>
+					</div>
+					{ valOpts.length > 0 ? 
+						valOpts.map(valOpt => {
+							return (
+							<div key={valOpt} className='row'>
+								<div className='col-1'></div>
+								<div className='col-1 align-right' style={{padding:0}}>
+									{`${valOpt}:`}
+								</div>
+								<div className='col-10'>
+									{`${layer.valueOptions[valOpt]}`}
+								</div>
+							</div>
+							);
+						})
+						: false
+					}
+				</div>
+			);
+		})
+		return layers;
+	} 
+
 	render() {
 		var minmaxp = this.getMinMaxPriority();
+		const layersWithEndpoints = this.props.userRole === 'ROLE_ADMIN' ? this.props.getLayersWithEndpoints(this.props.corpora) : null;
 		return	(
 			<div style={{margin: "0 30px"}}>
 				<div className="row">
@@ -353,14 +397,26 @@ class CorpusView extends Component {
 										onChange={this.handleFileChange}
 									/>
 								</div>
-								<div className="col-2 align-right" style={{marginRight:10}}>
+								<div className="col-2" style={{marginRight:10}}>
 									<Button 
 										label={dictionary[this.props.languageFromMain].button.upload}
 										onClick={this.handleSendFile}
 									/>
+									</div>
+									<div className="col-3 align-right" style={{marginRight:10}}>
+									<Button 
+										label={dictionary[this.props.languageFromMain].button.layers}
+										onClick={this.toggleUsedLayersList}
+									/>
 								</div>
 							</div>
 						</form>
+						<div style={{marginBottom:30}} className={"hide-" + !this.state.layersListVisible}>
+							{ layersWithEndpoints !== null ?
+								this.renderCurrentlyUsedLayers(layersWithEndpoints)
+								: false
+							}
+						</div>
 					</div>				
 					: false
 				}

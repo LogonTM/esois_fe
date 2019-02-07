@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import dictionary from '../../../translations/dictionary';
 import { getLayerOperators, getLayerValueOptions, layerToQueryString, queryParse } from '../utilities/queryinputf';
+import { Tooltip } from 'reactstrap';
 
 class ORArg extends Component {
 	
@@ -10,7 +11,8 @@ class ORArg extends Component {
 		handleRemoveADVOr: PropTypes.func.isRequired,
 		onQueryChange: PropTypes.func.isRequired,
 		languageFromMain: PropTypes.string.isRequired,
-		layerMap: PropTypes.object.isRequired
+		layerMap: PropTypes.object.isRequired,
+		id: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
@@ -29,6 +31,8 @@ class ORArg extends Component {
 			argValue: val||'',
 			
 			editingText: false,
+
+			tooltipIsOpen: false
 		}
 	}
 
@@ -90,6 +94,12 @@ class ORArg extends Component {
 		this.setState({argValue});
 	}
 
+	toggleTooltip = () => {
+		this.setState({
+			tooltipIsOpen: !this.state.tooltipIsOpen
+		});
+	}
+
 	renderInput = () => {
 		const valueOptions = getLayerValueOptions(this.props.layerMap, this.state.layer, this.state.layerOperator, this.state.argValue);
 		if (valueOptions === undefined) {
@@ -144,7 +154,19 @@ class ORArg extends Component {
 							className="arg_type form-control"
 							value={this.state.layer}
 							onChange={this.onlayerChange}
+							id={`orarg-${this.props.id}`}
 						>
+						{ dictionary[this.props.languageFromMain].queryinput.tooltips[this.state.layer] ?
+							<Tooltip
+								placement="auto"
+								isOpen={this.state.tooltipIsOpen}
+								target={`orarg-${this.props.id}`}
+								toggle={this.toggleTooltip}
+							>
+								{dictionary[this.props.languageFromMain].queryinput.tooltips[this.state.layer]}
+							</Tooltip>
+							: false
+						}
 							{ Object.keys(this.props.layerMap).map(layer => {
 									return (
 										<option key={layer} value={layer}>
@@ -158,7 +180,8 @@ class ORArg extends Component {
 						<select
 							className="arg_opts form-control"
 							value={this.state.layerOperator}
-							onChange={this.onLayerOptChange}>
+							onChange={this.onLayerOptChange}
+						>
 							{ (this.props.layerMap.hasOwnProperty(this.state.layer)) ?
 								getLayerOperators(this.props.layerMap, this.state.layer).map(layerOpt => {
 									return (

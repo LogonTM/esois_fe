@@ -63,7 +63,7 @@ Seejärel tuleb src > assets > js > pages > helppage.jsx faili lisada viide vast
 
 ### Tõlked
 
-Antud tõlked on hetkel kaasas failis src > translations > dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga. Analoogiliselt antud faili sisule on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
+Antud tõlked on hetkel kaasas failis src > translations > dictionary.js eesti ja inglise keele jaoks. Iga tõlgitav lause käib kaasas oma identifikaatoriga (ehk võtmega). Identifikaatorid on suure/väikese tähe tundlikud. Analoogiliselt antud faili sisule on võimalik luua ka tõlkeid näiteks saksakeelsele, venekeelsele ja nii edasi kasutajaliidestele.
 
 src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb importida 'main.jsx' faili reaga (näidis Suurbritannia lipu kohta):
 import GbFlag from '../img/gb-icon.png';
@@ -96,10 +96,16 @@ const logoIntl = {
   en: EnEKRKlogo
 };
 
-Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla.
+Endpoint'i adminile:
+Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust. Võtme väärtus on suure/väikese tähe tundlik.
+
+Kihi kohta käiva täpsustava näpunäite ("tooltip") info koos tõlgetega käib dictionary.js failis queryinput > tooltip jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust.
+Näpunäide on nähtav peale kihi rippmenüüst valimist, liikudes kursoriga ära valitud kihi nimele.
+
 Kihi märgendite tõlked tuleb panna dictionary.js failis queryinput > valueOptions jaotuse alla.
+
 Uues keeles korpuse keele tõlge tuleb panna dictionary.js failis language jaotuse alla kujul:
-keele 3-täheline lühend: 'tõlge'
+keele 3-täheline lühend: 'tõlge',
 
 Tõlked tuleks panna iga olemasoleva keele kohta.
 

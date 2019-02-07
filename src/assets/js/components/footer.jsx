@@ -23,7 +23,7 @@ class Footer extends Component {
 							<div className='row justify-content-center' id='footer-text'>
 								<div className='col-12 col-sm-12 col-12'>
 									<p>
-										© 2018&nbsp;
+										© 2019&nbsp;
 										{dictionary[this.props.languageFromMain].footer.ekrk}
 									</p>
 								</div>

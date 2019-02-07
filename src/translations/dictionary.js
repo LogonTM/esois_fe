@@ -6,13 +6,14 @@ export default {
             delete: 'Kustuta',
             download: 'Allalaadimine',
             edit: 'Muuda',
+            layers: 'Kasutuses kihid',
             login: 'Sisene',
             logout: 'Välju',
             register: 'Registreeri',
             save: 'Salvesta',
             update: 'Uuenda',
             upload: 'Üleslaadimine',
-            view: 'Vaata'
+            view: 'Vaata',
         },
         common: {
             actions: 'Tegevused',
@@ -35,18 +36,18 @@ export default {
         center: {
             add: {
                 checkData: 'Palun kontrolli sisestatud andmete õigsust',
-                success: 'Uus korpus on edukalt lisatud'
+                success: 'Uus korpus on edukalt lisatud',
             },
             delete: {
                 confirm: 'Kas oled kindel, et soovid korpuse kustutada?',
-                success: 'Korpus on edukalt kustutatud'
+                success: 'Korpus on edukalt kustutatud',
             },
             edit: {
-                success: 'Korpuse andmed on edukalt uuendatud'
+                success: 'Korpuse andmed on edukalt uuendatud',
             },
             manage: {
                 add: 'Lisa uus korpus:',
-                edit: 'Muuda korpust:'
+                edit: 'Muuda korpust:',
             },
             browse: 'Vali fail',
             layer: 'Kiht',
@@ -54,7 +55,7 @@ export default {
             operator: 'Operaatorid',
             valueOptions: 'Kihi väärtused',
             protocol: 'Protokoll',
-            synonym: 'Sünonüüm'
+            synonym: 'Sünonüüm',
         },
         corpusview: {
             collapse: 'Peida',
@@ -69,31 +70,31 @@ export default {
             selected: {
                 all: 'kõigist korpustest',
                 one: 'ühest valitud korpusest',
-                some: 'valitud korpusest'
-            }
+                some: 'valitud korpusest',
+            },
         },
         cql: {
             nameBtn: 'Lihtne (CQL)',
-            placeholder: 'koer'
+            placeholder: 'koer',
         },
         errors: {
             cannotFindRequiredCollection: 'Ei leia soovitud korpust, otsin selle asemel kõigist korpustest',
             noNetwork: 'Viga võrgu ühenduses, palun kontrolli oma interneti ühendust',
-            selectCollection: 'Palun vali korpus, millest otsingut teostada'
+            selectCollection: 'Palun vali korpus, millest otsingut teostada',
         },
         errorlogs: {
             headers: [
                 // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Aeg'},
                 { key: 'errorType', label: 'Vea tüüp'},
-                { key: 'errorValue', label: 'Vea väärtus'}
+                { key: 'errorValue', label: 'Vea väärtus'},
             ],
         },
         fcs: {
             form: 'vorm',
             nameBtn: 'Laiendatud (FCS-QL)',
             placeholder: '[word = "märkus"][word = "keskendunud"]',
-            text: 'tekst'
+            text: 'tekst',
         },
         footer: {
             ekrk: 'Eesti Keeleressursside Keskus',
@@ -107,18 +108,18 @@ export default {
             howToSearchParagraph2: 'Teostamaks laiendatud otsinguid, seda toetavatest korpustest, kaasates otsingusse ka annotatsioonid (FCS-QL), tuleb valida rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter".',
             howToSearchParagraph3: 'Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevatest korpustest.',
             howToSearchParagraph4: 'Mõne korpuse vastete lähema tutvumise jaoks tuleb vajutada vastavate tulemuste juures olevale "Vaata" nupule.',
-            mainTitle: 'Abileht ja seaded'
+            mainTitle: 'Abileht ja seaded',
         },
         language: {
             est: 'eesti',
             mul: 'igas',
             vot: 'vadja',
-            vro: 'võru'
+            vro: 'võru',
         },
         loginpage: {
             error: {
                 incorrect: 'RABA: Teie kasutajanimi või parool on vale. Palun proovige uuesti!',
-                servercatch: 'RABA: Vabandame! Midagi läks valesti. Palun proovige uuesti!'    
+                servercatch: 'RABA: Vabandame! Midagi läks valesti. Palun proovige uuesti!', 
             },
             messageP1: 'Tere',
             messageP2: 'olete sisse logitud',
@@ -126,7 +127,7 @@ export default {
         managelogs: {
             searchlogs: 'Otsilogid',
             userlogs: 'Kasutajalogi',
-            errorlogs: 'Vealogi'
+            errorlogs: 'Vealogi',
         },
         queryinput: {
             and: 'ja',
@@ -163,10 +164,14 @@ export default {
             repeatMenu: {
                 repeat: 'korda',
                 times: 'korda',
-                to: 'kuni'
+                to: 'kuni',
             },
             sentenceEnd: 'Lause lõpp',
             sentenceStart: 'Lause algus',
+            tooltips: {
+                analysis: 'Analüüs on põnev',
+                word: 'Pane mingi sõna',
+            },
             valueOptions: {
                 // cases
                 'Abe': 'abessiiv (ilmaütlev)',
@@ -208,36 +213,22 @@ export default {
                 'ADJ': 'omadussõna',
                 'ADP': 'kaassõna',
                 'ADV': 'määrsõna',
-                'AUX': 'abiverb',
-                'CONJ': 'koordineeriv sidend',
+                'CONJ': 'sidesõna',
                 'INTJ': 'hüüdsõna',
                 'NOUN': 'nimisõna',
                 'PRON': 'asesõna',
                 'PROPN': 'pärisnimi',
                 'PUNCT': 'kirjavahemärk',
-                'SCONJ': 'alistav sidend',
                 'SYM': 'sümbol',
                 'VERB': 'verb',
                 'X': 'muu',
-                '_A_': 'omadussõna algvõrre',
                 '_B_': 'lausepartikkel',
-                '_C_': 'omadussõna keskvõrre',
-                '_D_': 'määrsõna',
                 '_G_': 'genitiivatribuut',
-                '_H_': 'pärisnimi',
-                '_I_': 'hüüdsõna',
-                '_J_': 'sidesõna',
-                '_K_': 'kaassõna',
                 '_N_': 'põhiarvsõna',
                 '_O_': 'järgarvsõna',
-                '_P_': 'asesõna',
                 '_Q_': 'tundmatu',
-                '_S_': 'nimisõna',
-                '_U_': 'omadussõna ülivõrre',
-                '_V_': 'tegusõna',
                 '_X_': 'verbi juurde kuuluv sõna',
                 '_Y_': 'lühend',
-                '_Z_': 'kirjavahemärk',
 
                 // tense
                 'Prt': 'minevik',
@@ -246,7 +237,7 @@ export default {
                 // voice
                 'Impers': 'umbisikuline',
                 'Pers': 'isikuline',
-            }
+            },
         },
         register: {
             name: 'Teie täispikk nimi',
@@ -269,7 +260,7 @@ export default {
                 notavailable: 'See e-mail on juba kasutuses',
                 notvalid: 'E-mail pole õige',
                 longP1: 'Sisestatud e-mail on liiga pikk (Maksimaalselt',
-                longP2: 'tähemärki lubatud)'
+                longP2: 'tähemärki lubatud)',
             },
             password: 'Teie parool',
             passworderror: {
@@ -277,20 +268,20 @@ export default {
                 shortP2: 'tähemärki on nõutud.)',
                 longP1: 'Salasõna on liiga pikk (Maksimaalselt',
                 longP2: 'tähemärki on lubatud)',
-                nomatch: 'Salasõnad ei ole ühesugused.'
+                nomatch: 'Salasõnad ei ole ühesugused.',
             },
-            passwordvalidation: 'Teie parooli kinnitus'
+            passwordvalidation: 'Teie parooli kinnitus',
         },
         resultfunctions: {
             causedBy: 'Põhjustaja:',
             display: {
                 adv: 'Näita laiendatud andmete vaadet (ADV)',
-                kwic: 'Näita KWIC'
+                kwic: 'Näita KWIC',
             },
             download: {
                 csv: 'CSV formaadis fail',
                 json: 'JSON formaadis fail',
-                xml: 'XML formaadis fail'
+                xml: 'XML formaadis fail',
             },
             exception: 'Erand:'
         },
@@ -298,6 +289,7 @@ export default {
         	collectionsFound: 'vastavat korpust leitud',
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
+            loading: 'Laen tulemusi, palun oota...',
         },
         searchlogs: {
             headers: [
@@ -306,7 +298,7 @@ export default {
                 { key: 'username', label: 'Kasutaja'},
                 { key: 'query', label: 'Otsing'},
                 // { key: 'enabled', label: 'Kasutajakonto olek'},
-                { key: 'corporas', label: 'Otsitud korpustest'}
+                { key: 'corporas', label: 'Otsitud korpustest'},
             ],
         },
         user: {
@@ -315,7 +307,7 @@ export default {
                 email: 'e-mail',
                 name: 'Nimi',
                 username: 'Kasutajanimi',
-                success: 'Kasutaja andmed on edukalt uuendatud'
+                success: 'Kasutaja andmed on edukalt uuendatud',
             },
             headers: [
                 // { key: 'id', label: 'Kasutaja ID'},
@@ -323,19 +315,19 @@ export default {
                 { key: 'username', label: 'Kasutajanimi'},
                 { key: 'email', label: 'e-mail'},
                 // { key: 'enabled', label: 'Kasutajakonto olek'},
-                { key: 'userRole', label: 'Kasutaja roll(id)'}
+                { key: 'userRole', label: 'Kasutaja roll(id)'},
             ],
             manage: {
                 edit: 'Kasutaja andmete muutmine',
                     enabled: {
                         true: 'aktiivne',
-                        false: 'suletud'
+                        false: 'suletud',
                     },
                 role: {
                     ROLE_ADMIN: 'Admin ',
-                    ROLE_USER: 'Tavakasutaja '
-                }
-            }
+                    ROLE_USER: 'Tavakasutaja ',
+                },
+            },
         },
         userlogs: {
             headers: [
@@ -344,26 +336,26 @@ export default {
                 { key: 'username', label: 'Kasutaja'},
                 { key: 'consent', label: 'Andis nõusoleku'},
                 { key: 'initialregister', label: 'Algne registreering'},
-                { key: 'logedin', label: 'Logis sisse'}
+                { key: 'logedin', label: 'Logis sisse'},
             ],
             consent: {
                 true: 'Jah',
-                false: 'Ei'
+                false: 'Ei',
             },
             initialregister: {
                 true: 'Jah',
-                false: 'Ei'
+                false: 'Ei',
             },
             logedin: {
                 true: 'Jah',
-                false: 'Ei'
-            }
+                false: 'Ei',
+            },
         },
         zoomedresult: {
             moreResults: 'Rohkem tulemusi',
             noMoreResults: 'Sellele päringule pole rohkem tulemusi',
-            pleaseWait: 'Võtan tulemusi vastu, palun oota...'
-        }
+            pleaseWait: 'Võtan tulemusi vastu, palun oota...',
+        },
     },
     en: {
         button: {
@@ -372,13 +364,14 @@ export default {
             delete: 'Delete',
             download: 'Download',
             edit: 'Edit',
+            layers: 'Layers in use',
             login: 'Login',
             logout: 'Log out',
             register: 'Register',
             save: 'Save',
             update: 'Update',
             upload: 'Upload file',
-            view: 'View'
+            view: 'View',
         },
         common: {
             actions: 'Actions',
@@ -401,18 +394,18 @@ export default {
         center: {
             add: {
                 checkData: 'Please check that the data you inserted is correct',
-                success: 'New corpus has been added successfully'
+                success: 'New corpus has been added successfully',
             },
             delete: {
                 confirm: 'Are you sure you want to delete this corpus?',
                 success: 'Corpus has been deleted successfully',
             },
             edit: {
-                success: 'Corpus is updated successfully'
+                success: 'Corpus is updated successfully',
             },
             manage: {
                 add: 'Add new corpus:',
-                edit: 'Edit corpus:'
+                edit: 'Edit corpus:',
             },
             browse: 'Choose file',
             layer: 'Layer',
@@ -420,7 +413,7 @@ export default {
             operator: 'Operators',
             valueOptions: 'Value options',
             protocol: 'Protocol',
-            synonym: 'Synonym'
+            synonym: 'Synonym',
         },
         corpusview: {
             collapse: 'Collapse',
@@ -435,35 +428,35 @@ export default {
             selected: {
                 all: 'All available collections',
                 one: '1 selected collection',
-                some: 'selected collections'
+                some: 'selected collections',
             }
         },
         cql: {
             nameBtn: 'Simple (CQL)',
-            placeholder: 'Elephant'
+            placeholder: 'Elephant',
         },
         errors: {
             cannotFindRequiredCollection: 'Cannot find the required collection, will search all collections instead',
             noNetwork: 'Network error, please check your internet connection',
-            selectCollection: 'Please select a collection to search into'
+            selectCollection: 'Please select a collection to search into',
         },
         errorlogs: {
             headers: [
                 // { key: 'id', label: 'Kasutaja ID'},
                 { key: 'createdAt', label: 'Created at'},
                 { key: 'errorType', label: 'Error type'},
-                { key: 'errorValue', label: 'Error value'}
+                { key: 'errorValue', label: 'Error value'},
             ],
         },
         fcs: {
             form: 'form',
             nameBtn: 'Advanced (FCS-QL)',
             placeholder: '[word = "annotation"][word = "focused"]',
-            text: 'text'
+            text: 'text',
         },
         footer: {
             ekrk: 'Center of Estonian Language Resources',
-            estonia: ', Estonia '        
+            estonia: ', Estonia ',
         },
         helppage: {
             adjustSearchTitle: 'Adjusting search criteria',
@@ -473,18 +466,18 @@ export default {
             howToSearchParagraph2: "To perform an advanced search on multiple annotation layers in corpora that support this, switch to Multi-layer Federated Content Search (FCS) in the dropdown list, enter a FCS query in the search field at the top of the page, and click the 'search' button or press the 'Enter' key.",
             howToSearchParagraph3: 'When the search starts, the page will start filling in with the corpora responses.',
             howToSearchParagraph4: "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button.",
-            mainTitle: 'Help'
+            mainTitle: 'Help',
         },
         language: {
             est: 'Estonian',
             mul: 'any language',
             vot: 'Votic',
-            vro: 'Võro'
+            vro: 'Võro',
         },
         loginpage: {
             error: {
                 incorrect: 'RABA: Your Username or Password is incorrect. Please try again!',
-                servercatch: 'RABA: Sorry! Something went wrong. Please try again!'
+                servercatch: 'RABA: Sorry! Something went wrong. Please try again!',
             },
             messageP1: 'Hello',
             messageP2: 'you have logged in',
@@ -492,7 +485,7 @@ export default {
         managelogs: {
             searchlogs: 'Search logs',  
             userlogs: 'User logs',
-            errorlogs: 'Error logs'
+            errorlogs: 'Error logs',
         },
         queryinput: {
             and: 'and',
@@ -501,7 +494,7 @@ export default {
                 'analysis': 'analysis',
                 'cases': 'case',
                 'dephead': 'dephead',
-                'deprel': 'deprel',
+                'deprel': 'syntactic function',
                 'lemma': 'baseform',
                 'mood': 'mood',
                 'msd': 'msd',
@@ -529,10 +522,14 @@ export default {
             repeatMenu: {
                 repeat: 'repeat',
                 times: 'times',
-                to: 'to'
+                to: 'to',
             },
             sentenceEnd: 'Sentence end',
             sentenceStart: 'Sentence start',
+            tooltips: {
+                analysis: 'Analysis is interesting',
+                word: 'Put some word',
+            },
             valueOptions: {
                 // cases
                 'Abe': 'abessive',
@@ -571,39 +568,25 @@ export default {
                 'Pl': 'plural',
 
                 // part of speech
-                'ADJ': 'adjective positive',
+                'ADJ': 'adjective',
                 'ADP': 'adposition',
                 'ADV': 'adverb',
-                'AUX': 'auxiliary',
-                'CONJ': 'coordinating conjunction',
+                'CONJ': 'conjunction',
                 'INTJ': 'interjection',
                 'NOUN': 'noun',
                 'PRON': 'pronoun',
                 'PROPN': 'proper name',
                 'PUNCT': 'punctuation',
-                'SCONJ': 'subordinating conjunction',
                 'SYM': 'symbol',
                 'VERB': 'verb',
                 'X': 'other',
-                '_A_': 'adjective positive',
                 '_B_': 'sentence particle',
-                '_C_': 'adjective comparative',
-                '_D_': 'adverb',
                 '_G_': 'genitive attribute',
-                '_H_': 'proper name',
-                '_I_': 'interjection',
-                '_J_': 'conjunction',
-                '_K_': 'adposition',
                 '_N_': 'cardinal numeral',
                 '_O_': 'ordinal numeral',
-                '_P_': 'pronoun',
                 '_Q_': 'unknown',
-                '_S_': 'substantive',
-                '_U_': 'adjective superlative',
-                '_V_': 'verb',
                 '_X_': 'particle',
                 '_Y_': 'abbreviation',
-                '_Z_': 'punctuation',
 
                 // tense
                 'Prt': 'past',
@@ -612,7 +595,7 @@ export default {
                 // voice
                 'Impers': 'impersonal',
                 'Pers': 'personal',
-            }
+            },
         },
         register: {
             name: 'Your full name',
@@ -635,7 +618,7 @@ export default {
                 notavailable: 'This Email is already registered',
                 notvalid: 'Email not valid',
                 longP1: 'Email is too long (Maximum ',
-                longP2: ' characters allowed)'
+                longP2: ' characters allowed)',
             },
             password: 'Your password',
             passworderror: {
@@ -643,27 +626,28 @@ export default {
                 shortP2: ' characters needed.)',
                 longP1: 'Password is too long (Maximum ',
                 longP2: ' characters needed.)',
-                nomatch: 'Password do not match.'
+                nomatch: 'Password do not match.',
             },
-            passwordvalidation: 'Your password confirmation'
+            passwordvalidation: 'Your password confirmation',
         },
         resultfunctions: {
             causedBy: 'Caused by:',
             display: {
                 adv: 'Display as AdvancedDataView (ADV)',
-                kwic: 'Display as Key Word In Context'
+                kwic: 'Display as Key Word In Context',
             },
             download: {
                 csv: 'As CSV file',
                 json: 'As JSON file',
-                xml: 'As XML file'
+                xml: 'As XML file',
             },
-            exception: 'Exception:'
+            exception: 'Exception:',
         },
         results: {
             collectionsFound: 'matching collections found',
             progressMessageP1: 'matching collections found in',
             progressMessageP2: 'searched collections',
+            loading: 'Loading results, please wait...',
         },
         searchlogs: {
             headers: [
@@ -671,7 +655,7 @@ export default {
                 { key: 'createdAt', label: 'Created at'},
                 { key: 'username', label: 'User'},
                 { key: 'query', label: 'Query'},
-                { key: 'corporas', label: 'Searched from corpora(s)'}
+                { key: 'corporas', label: 'Searched from corpora(s)'},
             ],
         },
         user: {
@@ -680,7 +664,7 @@ export default {
                 email: 'e-mail',
                 name: 'Name',
                 username: 'Username',
-                success: 'User is updated successfully'
+                success: 'User is updated successfully',
             },
             headers: [
                 // { key: 'id', label: 'User ID'},
@@ -688,19 +672,19 @@ export default {
                 { key: 'username', label: 'Username'},
                 { key: 'email', label: 'e-mail'},
                 // { key: 'enabled', label: 'Useraccount state'},
-                { key: 'userRole', label: 'User role(s)'}
+                { key: 'userRole', label: 'User role(s)'},
             ],
             manage: {
                 edit: 'Edit user data',
                 enabled: {
                     true: 'Active',
-                    false: 'Disabled'
+                    false: 'Disabled',
                 },
                 role: {
                     ROLE_ADMIN: 'Admin ',
-                    ROLE_USER: 'Regular '
-                }
-            }
+                    ROLE_USER: 'Regular ',
+                },
+            },
         },
         userlogs: {
             headers: [
@@ -709,25 +693,25 @@ export default {
                 { key: 'username', label: 'User'},
                 { key: 'consent', label: 'Consent'},
                 { key: 'initialregister', label: 'Intial registration'},
-                { key: 'logedin', label: 'Loged in'}
+                { key: 'logedin', label: 'Loged in'},
             ],
             consent: {
                 true: 'Yes',
-                false: 'No'
+                false: 'No',
             },
             initialregister: {
                 true: 'Yes',
-                false: 'No'
+                false: 'No',
             },
             logedin: {
                 true: 'Yes',
-                false: 'No'
-            }
+                false: 'No',
+            },
         },
         zoomedresult: {
             moreResults: 'More Results',
             noMoreResults: 'No other results available for this query',
-            pleaseWait: 'Retrieving results, please wait...'
+            pleaseWait: 'Retrieving results, please wait...',
         }
     }
 }

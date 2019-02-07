@@ -3,6 +3,7 @@ import Panel from "./panel.jsx";
 import PropTypes from "prop-types";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import dictionary from '../../../translations/dictionary';
+import favicon from '../../img/favicon.ico';
 
 var PT = PropTypes;
 
@@ -40,7 +41,7 @@ class Results extends Component {
 		);
 	}
 
-	renderResultPanel = corpusHit => {
+	renderResultPanel = (corpusHit, searchInitiated) => {
 		if (corpusHit.kwics.length === 0 &&
 			!corpusHit.exception &&
 			corpusHit.diagnostics.length === 0) {
@@ -64,24 +65,12 @@ class Results extends Component {
 	}
 
 	renderProgressMessage = () => {
-		var collhits = this.props.collhits;
-		var done = collhits.results.length - collhits.inProgress;
-		var msg = `${collhits.hits} ${dictionary[this.props.languageFromMain].results.progressMessageP1} ${done} ${dictionary[this.props.languageFromMain].results.progressMessageP2}`
-		var percents = Math.round(100 * collhits.hits / collhits.results.length);
-		var styleperc = {width: percents+"%"};
 		return (
 			<div style={{marginTop:10}}>
-				<div>{msg}</div>
-				{collhits.inProgress > 0 ?
-					<div className="progress" style={{marginBottom:10}}>
-						<div className="progress-bar progress-bar-striped active" role="progressbar"
-							aria-valuenow={percents} aria-valuemin="0" aria-valuemax="100" style={styleperc} />
-						{percents > 2 ? false :
-							<div className="progress-bar progress-bar-striped active" role="progressbar"
-								aria-valuenow='100' aria-valuemin="0" aria-valuemax="100"
-								style={{width: '100%', backgroundColor:'#888'}} />
-						}
-					</div> : false}
+				<div className="raba-loading-text">{dictionary[this.props.languageFromMain].results.loading}</div>
+					<div className="raba-loading-icon-div">
+						<img src={favicon} className="raba-loading-icon" alt="raba-loading-icon"/>
+					</div>
 			</div>
 		);
 	}
@@ -285,14 +274,16 @@ class Results extends Component {
 
 	render() {
 		var collhits = this.props.collhits;
-		if (!collhits.results) {
+		if (!collhits.results && !this.props.searchInitiated) {
 			return false;
+		} else if (this.props.searchInitiated) {
+			return (
+				this.renderProgressMessage()
+			)
 		}
 		var showprogress = collhits.inProgress > 0;
-	     
 		return (
 			<div>
-				{ showprogress ? this.renderProgressMessage() : <div style={{height:20}} />}
 				<div style={{marginBottom:2}}>
 					{ showprogress ? false :
 						<div className="float-left">
@@ -317,7 +308,7 @@ class Results extends Component {
 					{collhits.results.map(this.renderResultPanel)}
 				</TransitionGroup>
 			</div>
-		);
+		)
 	}
 }
 
