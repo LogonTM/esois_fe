@@ -80,12 +80,11 @@ class CorpusView extends Component {
 			 headers.Authorization = `Bearer ${token}`;
 		}
 
-		fetch(back_end_host + 'endpoint', {
+		fetch(back_end_host + 'endpoint/upload', {
 			 headers,
-			 method: 'PUT',
+			 method: 'POST',
 			 body: this.state.xml
 		}).then(response => {
-			 console.log(response)
 			 this.setState({ isUploaded: response.status === 200 });
 			 }
 		)
@@ -387,7 +386,7 @@ class CorpusView extends Component {
 						<form>
 							<div className="input-group row addcorp" id="inputFileRow">
 								<div className="col-2 align-right nobkg">
-									{dictionary[this.props.languageFromMain].center.manage.add}
+									{dictionary[this.props.languageFromMain].center.manage.edit}
 								</div>
 								<div className="col-5 custom-file" style={{marginLeft:10}}>
 									<input

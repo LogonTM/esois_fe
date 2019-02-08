@@ -355,6 +355,14 @@ div.card-title span.institutionName{
 	font-weight: bold;
 }
 
+.eki-pos {
+	margin-right:0.25rem;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 17, 36, 0.25);
+    color: rgba(40,85,143, 0.7);
+    padding: 0.125rem 0.3125rem 0.0625rem 0.3125rem;
+    border-radius: 0.3125rem;
+}
 .eki-source {
 	font-size: 0.75rem;
 	color: #7F8891;

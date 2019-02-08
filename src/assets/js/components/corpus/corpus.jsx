@@ -52,7 +52,7 @@ class Corpus extends PureComponent {
             headers.Authorization = `Bearer ${token}`;
         }
 
-        fetch(back_end_host + 'endpoint', {
+        fetch(back_end_host + 'endpoint/upload', {
             headers,
             method: 'POST',
             body: this.state.xml
@@ -90,23 +90,9 @@ class Corpus extends PureComponent {
             <div id="container">
                 <form>
                     <div className="input-group row addcorp" id="inputFileRow">
-                        <div className="col-2 align-right nobkg">
-                            {dictionary[this.props.languageFromMain].center.manage.edit}
-                        </div>
-                        <div className="col-5 custom-file" style={{marginLeft:10}}>
-                            <input
-                                type="file"
-                                id="fileInput"
-                                name="myFile"
-                                onChange={this.handleFileChange}
-                            />
-                        </div>
+                        
                         <div className="col-5 align-right" style={{marginRight:10}}>
-                            <Button 
-                                label={dictionary[this.props.languageFromMain].button.upload}
-                                onClick={this.handleSendFile}
-                            />
-                            {` `}
+                            
                             <a href={`${back_end_host}endpoint/${this.props.corpus.id}/download`}>
                                 <Button
                                     label={dictionary[this.props.languageFromMain].button.download}
