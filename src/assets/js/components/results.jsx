@@ -93,10 +93,8 @@ class Results extends Component {
 	}
 
 	renderRowsAsHits = (hit,i) => {
-		function renderTextFragments(tf, idx) {
-		    
+		function renderTextFragments(tf, idx) {		    
 		    if (tf.html) {
-		        console.log(tf);
 		        return (<span key={idx} className="beHTML" dangerouslySetInnerHTML={{__html: tf.text}}></span>)
 		                    
 	        }

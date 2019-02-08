@@ -79,7 +79,10 @@ class ZoomedResult extends Component {
 
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
-			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
+		    if (tf.html) {
+                return (<span key={idx} className="beHTML" dangerouslySetInnerHTML={{__html: tf.text}}></span>)
+            }
+		    return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
 		return (
 			<p key={i} className="hitrow">
