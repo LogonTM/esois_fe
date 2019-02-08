@@ -386,38 +386,44 @@ class AggregatorPage extends Component {
 	      this.setState({
 				cqlQuery: queryStr || '',
 		   });
-	   } else {
+	   } else {			
 			const queryTokens = queryToTokens(queryStr);
-			const queryAndArgs = [];
-			queryTokens.forEach(queryToken => {
-				if (queryToken.includes('&')) {
-					const andArgs = queryToANDArgs(queryToken);
-					andArgs.forEach(andArg => queryAndArgs.push(andArg));
-				} else {
-					queryAndArgs.push(queryToken);
-				}
-			});
-			const queryOrArgs = [];
-			queryAndArgs.forEach(queryToken => {
-				const token = queryToken.replace('[', '').replace(']', '').trim();
-				if (token.includes('|')) {
-					const orArgs = queryToORArgs(token);
-					orArgs.forEach(orArg => queryOrArgs.push(orArg.trim()));
-				} else {
-					queryOrArgs.push(token);
-				}
-			});
-			const layers = new Set();
-			queryOrArgs.forEach(arg => {
-				const parts = arg.split(" ");
-				((parts[0] !== "lbound(sentence)") && (parts[0] !== "rbound(sentence)") && (parts[0][0] !== "{")) && layers.add(parts[0]);
-			});
-			this.setState({
-				selectedLayers: layers,
-				fcsQuery: queryStr || ''
-			});
-			this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0], layers);
-			this.updateCorpora(this.state.corpora);
+			if (queryTokens !== null) {
+				const queryAndArgs = [];
+				queryTokens.forEach(queryToken => {
+					if (queryToken.includes('&')) {
+						const andArgs = queryToANDArgs(queryToken);
+						andArgs.forEach(andArg => queryAndArgs.push(andArg));
+					} else {
+						queryAndArgs.push(queryToken);
+					}
+				});
+				const queryOrArgs = [];
+				queryAndArgs.forEach(queryToken => {
+					const token = queryToken.replace('[', '').replace(']', '').trim();
+					if (token.includes('|')) {
+						const orArgs = queryToORArgs(token);
+						orArgs.forEach(orArg => queryOrArgs.push(orArg.trim()));
+					} else {
+						queryOrArgs.push(token);
+					}
+				});
+				const layers = new Set();
+				queryOrArgs.forEach(arg => {
+					const parts = arg.split(" ");
+					((parts[0] !== "lbound(sentence)") && (parts[0] !== "rbound(sentence)") && (parts[0][0] !== "{")) && layers.add(parts[0]);
+				});
+				this.setState({
+					selectedLayers: layers,
+					fcsQuery: queryStr || ''
+				});
+				this.state.corpora.setVisibility(this.state.queryTypeId, this.state.language[0], layers);
+				this.updateCorpora(this.state.corpora);
+			} else {
+				this.setState({
+					fcsQuery: queryStr || ''
+				})
+			}
 		};
 		setQueryVariable('query', queryStr);
 	}
