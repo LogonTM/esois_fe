@@ -488,7 +488,8 @@ class AggregatorPage extends Component {
 					searchedLanguage={this.state.searchedLanguage || [multipleLanguageCode]}
 					queryTypeId={this.state.queryTypeId}
 					query={this.getCurrentQuery()}
-					placeholder={dictionary[this.props.languageFromMain].cql.placeholder}
+					placeholderCQL={dictionary[this.props.languageFromMain].cql.placeholder}
+					placeholderFCS={dictionary[this.props.languageFromMain].fcs.placeholder}
 					onKeyDown={this.handleKey}
 					handleKeyTextarea={this.handleKeyTextarea}
 					languageFromMain={this.props.languageFromMain}

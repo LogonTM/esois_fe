@@ -9,7 +9,8 @@ class QueryInput extends Component {
 		searchedLanguage: PT.array,
 		queryTypeId: PT.string.isRequired,
 		query: PT.string,
-		placeholder: PT.string,
+		placeholderCQL: PT.string,
+		placeholderFCS: PT.string,
 		onKeyDown: PT.func.isRequired,
 		handleKeyTextarea: PT.func.isRequired,
 		languageFromMain: PT.string.isRequired,
@@ -27,7 +28,7 @@ class QueryInput extends Component {
 					name="query-cql"
 					type="text"
 					value={this.props.query}
-					placeholder={this.props.placeholder}
+					placeholder={this.props.placeholderCQL}
 					tabIndex="1"
 					onChange={evt => this.props.onQueryChange(evt.target.value)}
 					onKeyDown={this.props.onKeyDown}
@@ -43,7 +44,7 @@ class QueryInput extends Component {
 					type="text"
 					rows="1"
 					value={this.props.query}
-					placeholder={this.props.placeholder}
+					placeholder={this.props.placeholderFCS}
 					tabIndex="1"
 					onChange={evt => this.props.onQueryChange(evt.target.value)} 
 					onKeyDown={this.props.handleKeyTextarea} 
