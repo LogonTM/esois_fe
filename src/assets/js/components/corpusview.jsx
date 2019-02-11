@@ -25,7 +25,6 @@ class CorpusView extends Component {
 		this.state = {
 			file: null,
 			xml: "",
-			isUploaded: false,
 			layersListVisible: false
 		}
   	}
@@ -33,15 +32,6 @@ class CorpusView extends Component {
 	componentDidUpdate(_, prevState) {
 		if (prevState.file !== this.state.file) {
 			readFile(this.state.file).then(xml => this.setState({ xml }));
-		}
-  
-		if (prevState.isUploaded !== this.state.isUploaded) {
-			alert(dictionary[this.props.languageFromMain].corpus.upload.success);
-			this.setState({
-				file: null,
-				xml: "",
-				isUploaded: false
-			})
 		}
    }
 	
@@ -92,9 +82,14 @@ class CorpusView extends Component {
 			method: 'POST',
 			body: this.state.xml
 		}).then(response => {
-			this.setState({ isUploaded: response.status === 200 });
-			if (response.status !== 200) {
-				alert(dictionary[this.props.languageFromMain].corpus.upload.fail)
+			if (response.status === 200) {
+				alert(dictionary[this.props.languageFromMain].corpus.upload.success);
+				this.setState({
+					file: null,
+					xml: ""
+				})
+			} else {
+				alert(dictionary[this.props.languageFromMain].corpus.upload.fail);
 			}
 		})
 	}
@@ -311,7 +306,7 @@ class CorpusView extends Component {
 							<Button
 								label={(
 									<React.Fragment>
-										<span className="fa fa-eye"/>{` `}
+										<span className="fa fa-eye"/>&nbsp;
 										{dictionary[this.props.languageFromMain].button.view}
 									</React.Fragment>
 								)}
@@ -323,7 +318,7 @@ class CorpusView extends Component {
 								<Button
 									label={(
 										<React.Fragment>
-											<span className="fa fa-download"/>{` `}
+											<span className="fa fa-download"/>&nbsp;
 											{dictionary[this.props.languageFromMain].button.download}
 										</React.Fragment>
 									)}
@@ -334,7 +329,7 @@ class CorpusView extends Component {
 							<Button
 								label={(
 									<React.Fragment>
-										<span className="fa fa-trash-o"/>{` `}
+										<span className="fa fa-trash-o"/>&nbsp;
 										{dictionary[this.props.languageFromMain].button.delete}
 									</React.Fragment>
 								)}
@@ -456,10 +451,10 @@ class CorpusView extends Component {
 					<div>
 						<form>
 							<div className="input-group row addcorp" id="inputFileRow">
-								<div className="col-2 align-right nobkg">
-									{dictionary[this.props.languageFromMain].corpus.edit}
-								</div>
-								<div className="col-5 custom-file" style={{marginLeft:10}}>
+								<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 custom-file" style={{marginLeft:10, marginTop: 7}}>
+									<span className="input-group-text nobkg">
+										{dictionary[this.props.languageFromMain].corpus.edit}
+									</span>
 									<input
 										type="file"
 										id="fileInput"
@@ -467,28 +462,27 @@ class CorpusView extends Component {
 										onChange={this.handleFileChange}
 									/>
 								</div>
-								<div className="col-2" style={{paddingRight:0, paddingLeft:3}}>
-									<Button 
-										label={(
-											<React.Fragment>
-												<span className="fa fa-upload"/>{` `}
-												{dictionary[this.props.languageFromMain].button.upload}
-											</React.Fragment>
-										)}
-										onClick={this.handleSendFile}
-									/>
-									{` `}
-									</div>
-									<div className="col-3 align-right" style={{marginRight:10}}>
-									<Button 
-										label={(
-											<React.Fragment>
-												<span className="fa fa-eye"/>{` `}
-												{dictionary[this.props.languageFromMain].button.layers}
-											</React.Fragment>
-										)}
-										onClick={this.toggleUsedLayersList}
-									/>
+								<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 align-right" style={{marginLeft: 10, marginTop: 7}}>
+									<span>
+										<Button 
+											label={(
+												<React.Fragment><span>
+													<span className="fa fa-upload"/>{` `}
+													{dictionary[this.props.languageFromMain].button.upload}</span>
+												</React.Fragment>
+											)}
+											onClick={this.handleSendFile}
+										/>{` `}
+										<Button 
+											label={(
+												<React.Fragment>
+													<span className="fa fa-eye"/>{` `}
+													{dictionary[this.props.languageFromMain].button.layers}
+												</React.Fragment>
+											)}
+											onClick={this.toggleUsedLayersList}
+										/>
+										</span>
 								</div>
 							</div>
 						</form>
