@@ -20,7 +20,7 @@ const LayerOperatorsList = ({currentLayerOperators, languageFromMain}) => {
       <div className="form-group row addcorp">
          <div className="col-sm-2 align-right">
             <label htmlFor="Layer_operators">
-               {dictionary[languageFromMain].center.operator}
+               {dictionary[languageFromMain].corpus.operator}
             </label>
          </div>
          <div className="col-sm-3">

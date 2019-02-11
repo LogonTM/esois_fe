@@ -331,6 +331,14 @@ div.corpus h3 a, .modal-title a {
   margin-right: 0.5em;
 }
 
+.fa-eye, .fa-download, .fa-trash-o, .fa-upload {
+  color: rgb(40,85,143) !important;
+}
+
+.fa-upload {
+  font-size: 12px !important;
+}
+
 .oauth-btn img {
   height: 30px;
   vertical-align: middle;

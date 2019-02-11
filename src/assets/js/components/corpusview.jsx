@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
+import { pluck } from 'ramda';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import Corpus from '../components/corpus/corpus';
 import { back_end_host, authentication_token } from '../constants/constants';
 import readFile from '../utilities/readfile';
+import { removeCorpus } from '../utilities/functions';
 
 var PT = PropTypes;
 
@@ -21,10 +23,10 @@ class CorpusView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			 file: null,
-			 xml: "",
-			 isUploaded: false,
-			 layersListVisible: false
+			file: null,
+			xml: "",
+			isUploaded: false,
+			layersListVisible: false
 		}
   	}
 
@@ -34,7 +36,12 @@ class CorpusView extends Component {
 		}
   
 		if (prevState.isUploaded !== this.state.isUploaded) {
-			alert(dictionary[this.props.languageFromMain].center.edit.success);
+			alert(dictionary[this.props.languageFromMain].corpus.upload.success);
+			this.setState({
+				file: null,
+				xml: "",
+				isUploaded: false
+			})
 		}
    }
 	
@@ -71,24 +78,39 @@ class CorpusView extends Component {
 
 	handleSendFile = () => {
 		const headers = {
-			 'Content-Type': 'text/xml',
+			'Content-Type': 'text/xml',
 		}
 
 		const token = localStorage.getItem(authentication_token);
 
-		if(token) {
-			 headers.Authorization = `Bearer ${token}`;
+		if (token) {
+			headers.Authorization = `Bearer ${token}`;
 		}
 
-		fetch(back_end_host + 'endpoint/upload', {
-			 headers,
-			 method: 'POST',
-			 body: this.state.xml
+		fetch(back_end_host + 'db/corpus/upload', {
+			headers,
+			method: 'POST',
+			body: this.state.xml
 		}).then(response => {
-			 this.setState({ isUploaded: response.status === 200 });
-			 }
-		)
-  }
+			this.setState({ isUploaded: response.status === 200 });
+			if (response.status !== 200) {
+				alert(dictionary[this.props.languageFromMain].corpus.upload.fail)
+			}
+		})
+	}
+
+	deleteCorpus = corpus => {
+		if (window.confirm(dictionary[this.props.languageFromMain].corpus.delete.confirm)) {
+			removeCorpus(corpus.id)
+			.then(response => {
+				if (response) {
+					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
+				} 
+			}).catch(error => {
+				alert(dictionary[this.props.languageFromMain].corpus.delete.success);
+			})
+		}
+	}
 
 	searchCorpus = (query) => {
 		// sort fn: descending priority, stable sort
@@ -207,11 +229,21 @@ class CorpusView extends Component {
 		);
 	}
 
-	renderLanguages = (languages) => {
+	renderLanguages = languages => {
 		return languages
 				.map(l => dictionary[this.props.languageFromMain].language[l] ?
 					dictionary[this.props.languageFromMain].language[l]
 					: this.props.languageMap[l])
+				.sort()
+				.join(", ");
+	}
+
+	renderLayers = layers => {
+		const layerNames = pluck('name')(layers);
+		return layerNames
+				.map(layer => dictionary[this.props.languageFromMain].queryinput.layer[layer] ?
+					dictionary[this.props.languageFromMain].queryinput.layer[layer]
+					: layer)
 				.sort()
 				.join(", ");
 	}
@@ -273,27 +305,66 @@ class CorpusView extends Component {
 								}
 							</h3>
 							<p style={expansive}>{corpus.description}</p>
+							<p>
+					{ this.props.userRole === 'ROLE_ADMIN' ?
+						<span>
+							<Button
+								label={(
+									<React.Fragment>
+										<span className="fa fa-eye"/>{` `}
+										{dictionary[this.props.languageFromMain].button.view}
+									</React.Fragment>
+								)}
+								onClick={this.toggleEditCenter.bind(this, corpus)}
+								style={{marginRight:1}}
+							/>
+							{` `}
+							<a href={`${back_end_host}endpoint/${corpus.id}/download`}>
+								<Button
+									label={(
+										<React.Fragment>
+											<span className="fa fa-download"/>{` `}
+											{dictionary[this.props.languageFromMain].button.download}
+										</React.Fragment>
+									)}
+									style={{marginRight:1}}
+								/>
+							</a>
+							{` `}
+							<Button
+								label={(
+									<React.Fragment>
+										<span className="fa fa-trash-o"/>{` `}
+										{dictionary[this.props.languageFromMain].button.delete}
+									</React.Fragment>
+								)}
+								onClick={this.deleteCorpus.bind(this, corpus)}
+								style={{marginRight:1}}
+							/>
+						</span>
+						: false
+					}								
+							</p>
 							{this.renderExpansion(corpus)}
 						</div>
 					</div>
-					<div className="col-sm-3 col-lg-2 vcenter">
+					<div className="col-sm-3 col-lg-3 vcenter">
 						<p style={expansive}>
 							<i className="fa fa-institution"/> {corpus.institution.name}
 						</p>
 						<p style={expansive}>
 							<i className="fa fa-language"/> {this.renderLanguages(corpus.languages)}
 						</p>
+						<p style={expansive}>
+							<i className="fa fa-search"/> {corpus.endpoint.protocol === "VERSION_2" ? 'FCS-QL' : 'CQL'}
+						</p>
+						{ corpus.endpoint.layers.length > 0 ?
+							<p style={expansive}>
+								<i className="fa fa-sliders"/> {this.renderLayers(corpus.endpoint.layers)}
+							</p>
+							: false
+						}
 					</div>
-					{ this.props.userRole === 'ROLE_ADMIN' ?
-						<div className="col-lg-1 vcenter align-right">
-							<Button
-								label={dictionary[this.props.languageFromMain].button.view}
-								onClick={this.toggleEditCenter.bind(this, corpus)}
-								style={{marginRight:1}}
-							/>
-						</div>
-						: false
-					}
 				</div>
 				{ this.props.userRole === 'ROLE_ADMIN' ?
 					<div id="viewEndpoint" className={"hide-" + !corpus.edit}>
@@ -386,7 +457,7 @@ class CorpusView extends Component {
 						<form>
 							<div className="input-group row addcorp" id="inputFileRow">
 								<div className="col-2 align-right nobkg">
-									{dictionary[this.props.languageFromMain].center.manage.edit}
+									{dictionary[this.props.languageFromMain].corpus.edit}
 								</div>
 								<div className="col-5 custom-file" style={{marginLeft:10}}>
 									<input
@@ -396,15 +467,26 @@ class CorpusView extends Component {
 										onChange={this.handleFileChange}
 									/>
 								</div>
-								<div className="col-2" style={{marginRight:10}}>
+								<div className="col-2" style={{paddingRight:0, paddingLeft:3}}>
 									<Button 
-										label={dictionary[this.props.languageFromMain].button.upload}
+										label={(
+											<React.Fragment>
+												<span className="fa fa-upload"/>{` `}
+												{dictionary[this.props.languageFromMain].button.upload}
+											</React.Fragment>
+										)}
 										onClick={this.handleSendFile}
 									/>
+									{` `}
 									</div>
 									<div className="col-3 align-right" style={{marginRight:10}}>
 									<Button 
-										label={dictionary[this.props.languageFromMain].button.layers}
+										label={(
+											<React.Fragment>
+												<span className="fa fa-eye"/>{` `}
+												{dictionary[this.props.languageFromMain].button.layers}
+											</React.Fragment>
+										)}
 										onClick={this.toggleUsedLayersList}
 									/>
 								</div>
