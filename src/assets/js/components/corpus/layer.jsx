@@ -24,7 +24,7 @@ const Layer = ({ layer, languageFromMain, id }) => {
 	return (
 		<div key={id}>
 			<h5 style={{ marginLeft: 50 }}>
-				{`${dictionary[languageFromMain].center.layer} id: ${layer.id}`}
+				{`${dictionary[languageFromMain].corpus.layer} id: ${layer.id}`}
 			</h5>
 			<Row
 				nameValue={layer.name}
@@ -38,7 +38,7 @@ const Layer = ({ layer, languageFromMain, id }) => {
 				{valOptsIDs.length > 0 ? 
 					<div>
 						<h6 style={{ marginLeft: 50 }}>
-							{dictionary[languageFromMain].center.valueOptions}
+							{dictionary[languageFromMain].corpus.valueOptions}
 						</h6>            
 						{valueOptions}
 					</div>

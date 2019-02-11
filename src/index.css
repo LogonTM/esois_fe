@@ -222,6 +222,10 @@ input[type="checkbox"], input[type="radio"] {
   padding-bottom: 40px;
 }
 
+.raba-loading-icon-div {
+  margin-bottom: 15px !important;
+}
+
 div#new-footer {
   border-top: 0px solid white;
   background-color: white;
@@ -325,6 +329,14 @@ div.corpus h3 a, .modal-title a {
 
 .fa-plus, .fa-minus, .fa-ellipsis-h, .fa-cog, .fa-times-circle {
   margin-right: 0.5em;
+}
+
+.fa-eye, .fa-download, .fa-trash-o, .fa-upload {
+  color: rgb(40,85,143) !important;
+}
+
+.fa-upload {
+  font-size: 12px !important;
 }
 
 .oauth-btn img {

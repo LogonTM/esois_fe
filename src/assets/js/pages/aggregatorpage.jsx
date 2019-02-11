@@ -89,6 +89,9 @@ class AggregatorPage extends Component {
 
 		this.props.ajax({
 			url: back_end_host + 'rest/init',
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader("Authorization" , localStorage.getItem(authentication_token));
+			},
 			success: (json, textStatus, jqXHR) => {
 				if (this._isMounted) {
 					var corpora = new Corpora(json.corpora, this.updateCorpora);
@@ -981,7 +984,7 @@ Corpora.prototype.setVisibility = function(queryTypeId, languageCode, selectedLa
 			corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode, selectedLayers);
 		} else {
 			corpus.visible = false
-		};
+		};		
 	});
 };
 

@@ -5,7 +5,7 @@ const request = (options) => {
         'Content-Type': 'application/json',
     })
     
-    if(localStorage.getItem(authentication_token)) {
+    if (localStorage.getItem(authentication_token)) {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(authentication_token))
     }
 
@@ -47,26 +47,10 @@ export function updateUser(userUpdateData) {
     });
 }
 
-export function updateCenter(centerUpdateData) {
+export function removeCorpus(corpusID) {
     return request({
-        url: back_end_host + "db/center/",
-        method: 'POST',
-        body: JSON.stringify(centerUpdateData)
-    })
-}
-
-export function addCenter(centerAddData) {
-    return request({
-        url: back_end_host + "db/center/",
-        method: "PUT",
-        body: JSON.stringify(centerAddData)
-    })
-}
-
-export function removeCenter(centerID) {
-    return request({
-        url: back_end_host + 'db/center/' + centerID,
-        method: 'DELETE' 
+        url: back_end_host + 'db/corpus/' + corpusID,
+        method: 'DELETE'
     })    
 }
 
@@ -119,17 +103,6 @@ export function getUserRoles() {
     }
     return request({
         url: back_end_host + "db/user/roles",
-        method: 'GET'
-    });
-}
-
-export function getCurrentCenters() {
-    if(!localStorage.getItem(authentication_token)) {
-        return Promise.reject("No access token set.");
-    }
-
-    return request({
-        url: back_end_host + "db/center/",
         method: 'GET'
     });
 }

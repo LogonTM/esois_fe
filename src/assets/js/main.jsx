@@ -102,7 +102,7 @@ class Main extends Component {
 			this.setState({
 				errorMessages: errs 
 			}, () => this.state.errorMessages)
-		}, 5000)
+		}, 2500)
 	}
 
 	ajax = ajaxObject => {

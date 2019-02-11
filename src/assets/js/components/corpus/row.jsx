@@ -8,7 +8,7 @@ const Row = ({nameValue, synonymValue, languageFromMain}) => {
       <div className="form-group row addcorp">
          <div className="col-sm-2 align-right">
             <label htmlFor='name'>
-               {dictionary[languageFromMain].center.name}
+               {dictionary[languageFromMain].corpus.name}
             </label>
          </div>
          <div className="col-sm-3">
@@ -17,13 +17,13 @@ const Row = ({nameValue, synonymValue, languageFromMain}) => {
                type="text"
                name='name'
                value={nameValue}
-               placeholder={dictionary[languageFromMain].center.name}
+               placeholder={dictionary[languageFromMain].corpus.name}
                readOnly
             />
          </div>
          <div className="col-sm-2 align-right">
             <label htmlFor='synonym'>
-               {dictionary[languageFromMain].center.synonym}
+               {dictionary[languageFromMain].corpus.synonym}
             </label>
          </div>
          <div className="col-sm-3">
@@ -32,7 +32,7 @@ const Row = ({nameValue, synonymValue, languageFromMain}) => {
                type="text"
                name='synonym'
                value={synonymValue}
-               placeholder={dictionary[languageFromMain].center.synonym}
+               placeholder={dictionary[languageFromMain].corpus.synonym}
                readOnly
             />
          </div>

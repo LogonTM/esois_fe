@@ -33,23 +33,17 @@ export default {
             searchFor: 'Otsi',
             selectLanguage: 'Vali keel',
         },
-        center: {
-            add: {
-                checkData: 'Palun kontrolli sisestatud andmete õigsust',
-                success: 'Uus korpus on edukalt lisatud',
-            },
+        corpus: {
             delete: {
                 confirm: 'Kas oled kindel, et soovid korpuse kustutada?',
                 success: 'Korpus on edukalt kustutatud',
             },
-            edit: {
-                success: 'Korpuse andmed on edukalt uuendatud',
-            },
-            manage: {
-                add: 'Lisa uus korpus:',
-                edit: 'Muuda korpust:',
+            upload: {
+                fail: 'Korpuse andmete üles laadimine ei õnnestunud',
+                success: 'Korpuse andmed on edukalt üles laetud'
             },
             browse: 'Vali fail',
+            edit: 'Muuda korpust:',
             layer: 'Kiht',
             name: 'Nimi',
             operator: 'Operaatorid',
@@ -391,23 +385,17 @@ export default {
             searchFor: 'Search for',
             selectLanguage: 'Select Language',
         },
-        center: {
-            add: {
-                checkData: 'Please check that the data you inserted is correct',
-                success: 'New corpus has been added successfully',
-            },
+        corpus: {
             delete: {
                 confirm: 'Are you sure you want to delete this corpus?',
                 success: 'Corpus has been deleted successfully',
             },
-            edit: {
-                success: 'Corpus is updated successfully',
-            },
-            manage: {
-                add: 'Add new corpus:',
-                edit: 'Edit corpus:',
+            upload: {
+                fail: "Uploading corpus' data has failed",
+                success: "Corpus' data upload was successful"
             },
             browse: 'Choose file',
+            edit: 'Edit corpus:',
             layer: 'Layer',
             name: 'Name',
             operator: 'Operators',
