@@ -2,18 +2,13 @@ import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import Layer from './layer';
 import dictionary from '../../../../translations/dictionary';
-import { pluck, prop, indexBy } from 'ramda';
 import 'bootstrap';
 
 class Corpus extends PureComponent {
 	static propTypes = {
         languageFromMain: PropTypes.string.isRequired,
-        corpus: PropTypes.object.isRequired
+        endpoint: PropTypes.object.isRequired
     }
-
-    layersById = indexBy(prop('id'), this.props.corpus.endpoint.layers);
-    // array of current layerIDs
-    layerIDs = pluck('id')(this.props.corpus.endpoint.layers);
 
     render() {
         return (
@@ -29,7 +24,7 @@ class Corpus extends PureComponent {
                                 type="text"
                                 name="url"
                                 id="url"
-                                value={this.props.corpus.endpoint.url}
+                                value={this.props.endpoint.url}
                                 placeholder="http"
                                 readOnly
                             />
@@ -47,17 +42,17 @@ class Corpus extends PureComponent {
                                 type="text"
                                 name="protocol"
                                 id="protocol"
-                                value={this.props.corpus.endpoint.protocol}
+                                value={this.props.endpoint.protocol}
                                 readOnly
                             />
                         </div>
                     </div>
-                    { this.layerIDs.map(id => {
+                    { this.props.endpoint.layers.map(layer => {
                         return (
                             <Layer 
                                 languageFromMain={this.props.languageFromMain}
-                                layer={this.layersById[id]}
-                                key={id}
+                                layer={layer}
+                                key={layer.id}
                             />
                         );
                      })

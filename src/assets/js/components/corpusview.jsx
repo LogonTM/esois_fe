@@ -365,7 +365,7 @@ class CorpusView extends Component {
 					<div id="viewEndpoint" className={"hide-" + !corpus.edit}>
 						<Corpus
 							languageFromMain={this.props.languageFromMain}
-							corpus={corpus}
+							endpoint={corpus.endpoint}
 						/>
 					</div>
 					: false
