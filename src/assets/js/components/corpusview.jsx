@@ -89,7 +89,9 @@ class CorpusView extends Component {
 					xml: ""
 				})
 			} else {
-				alert(dictionary[this.props.languageFromMain].corpus.upload.fail);
+				alert(`${dictionary[this.props.languageFromMain].corpus.upload.fail}:
+				status: ${response.status}
+				${response.statusText ? response.statusText : ''}`);
 			}
 		})
 	}
@@ -289,6 +291,7 @@ class CorpusView extends Component {
 					<div className="col-sm-7 col-lg-8 vcenter">
 						<div style={indent}>
 							<h3 style={expansive}> 
+								{ corpus.preAuthorizeUse && <i className="fa fa-lock" style={{marginRight: 5}}/>}
 								{corpus.title}
 								{ corpus.landingPage ? 
 									<a href={corpus.landingPage} onClick={this.stop}>
