@@ -8,7 +8,6 @@ const LayerOperator = ({ operator, languageFromMain, checked }) => {
             className="form-check-input"
             type="checkbox"
             value={operator}
-            name={operator}
             id={operator}
             checked={checked}
             readOnly
