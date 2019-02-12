@@ -3,7 +3,7 @@ import dictionary from '../../../../translations/dictionary';
 
 const LayerOperator = ({ operator, languageFromMain, checked }) => {
    return (
-      <div className="form-check" key={operator}>
+      <div className="form-check">
          <input
             className="form-check-input"
             type="checkbox"
