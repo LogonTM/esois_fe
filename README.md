@@ -120,3 +120,17 @@ Selle muutmiseks tuleb muuta src > index.css failis .footer-img-left all atribuu
 
 Kausta src > assets > img tuleb sealse tühja valge ristküliku faili "rabalogo.png" asemele kopeerida õige RABA logo fail nimega "rabalogo.png".
 
+## Admin liidese kasutamine
+
+### Endpointide lisamine ja muutmine
+
+Siia tuleb täpsem ja pikk juhend endpointide haldamisest.
+
+### Logide vaatamine
+
+Otsingute-, kasutajate- ja vealogisid on võimalik näha admin'i liideses.
+
+### Kasutajate õigused
+
+Algupärasel admin'il on võimalik pärast sisse logimist teistele kasutajatele anda ka juurde administraatori õigusi või siis neid ära võtta.
+
