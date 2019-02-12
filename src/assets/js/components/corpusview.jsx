@@ -460,6 +460,7 @@ class CorpusView extends Component {
 										id="fileInput"
 										name="myFile"
 										onChange={this.handleFileChange}
+										accept=".xml"
 									/>
 								</div>
 								<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 align-right" style={{marginLeft: 10, marginTop: 7}}>
@@ -472,7 +473,9 @@ class CorpusView extends Component {
 												</React.Fragment>
 											)}
 											onClick={this.handleSendFile}
-										/>{` `}
+											disabled={!this.state.file}
+										/>
+										{` `}
 										<Button 
 											label={(
 												<React.Fragment>
