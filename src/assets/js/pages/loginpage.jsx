@@ -160,8 +160,8 @@ class LoginPage extends Component {
 
 	loginValidator = () => {
 		return !(
-            this.state.usernameOrEmail.valid === true && 
-            this.state.password.valid === true)
+            (this.state.usernameOrEmail.valid === true && this.state.usernameOrEmail !== '') || 
+            (this.state.password.valid === true && this.state.password !== ''))
 	}
 
 	render () {
