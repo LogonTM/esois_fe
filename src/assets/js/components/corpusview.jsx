@@ -8,6 +8,7 @@ import Corpus from '../components/corpus/corpus';
 import { back_end_host, authentication_token } from '../constants/constants';
 import readFile from '../utilities/readfile';
 import { removeCorpus } from '../utilities/functions';
+import $ from 'jquery';
 
 var PT = PropTypes;
 
@@ -28,12 +29,6 @@ class CorpusView extends Component {
 			layersListVisible: false
 		}
   	}
-
-	componentDidUpdate(_, prevState) {
-		if (prevState.file !== this.state.file && this.state.file !== null) {
-			readFile(this.state.file).then(xml => this.setState({ xml }));
-		}
-   }
 	
 	toggleSelection = (corpus, e) => {
 		var s = !corpus.selected;
@@ -70,7 +65,10 @@ class CorpusView extends Component {
 		const headers = {
 			'Content-Type': 'text/xml',
 		}
-
+		
+		readFile(this.state.file).then(xml => {
+		    this.setState({ xml })
+		
 		const token = localStorage.getItem(authentication_token);
 
 		if (token) {
@@ -87,27 +85,29 @@ class CorpusView extends Component {
 				this.setState({
 					file: null,
 					xml: ""
-				})
+				});
+				$("#fileInput").val('');
 			} else {
 				alert(`${dictionary[this.props.languageFromMain].corpus.upload.fail}:
 				status: ${response.status}
 				${response.statusText ? response.statusText : ''}`);
 			}
-		})
+		});
+		
+		});
 	}
 
 	deleteCorpus = corpus => {
 		if (window.confirm(dictionary[this.props.languageFromMain].corpus.delete.confirm)) {
 			removeCorpus(corpus.id)
 			.then(response => {
-				console.log(response)
-				if (response) {
+				if (response.success === true) {
 					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
-				} 
+				}else{
+				    alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${response.message}`);
+				}
 			}).catch(err => {
-				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:
-	status: ${err.status},  error: ${err.error}
-	message: ${err.message}`);
+				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${err.message}`);
 			})
 		}
 	}
