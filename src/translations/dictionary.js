@@ -36,6 +36,7 @@ export default {
         corpus: {
             delete: {
                 confirm: 'Kas oled kindel, et soovid korpuse kustutada?',
+                fail: 'Korpuse kustutamine ei õnnestunud',
                 success: 'Korpus on edukalt kustutatud',
             },
             upload: {
@@ -388,6 +389,7 @@ export default {
         corpus: {
             delete: {
                 confirm: 'Are you sure you want to delete this corpus?',
+                fail: 'Deleting corpus failed',
                 success: 'Corpus has been deleted successfully',
             },
             upload: {

@@ -30,7 +30,7 @@ class CorpusView extends Component {
   	}
 
 	componentDidUpdate(_, prevState) {
-		if (prevState.file !== this.state.file) {
+		if (prevState.file !== this.state.file && this.state.file !== null) {
 			readFile(this.state.file).then(xml => this.setState({ xml }));
 		}
    }
@@ -64,7 +64,7 @@ class CorpusView extends Component {
 	}
 
 	handleFileChange = ({ target: { files } }) =>
-	this.setState({ file: files[0] });
+		this.setState({ file: files[0] });
 
 	handleSendFile = () => {
 		const headers = {
@@ -100,11 +100,14 @@ class CorpusView extends Component {
 		if (window.confirm(dictionary[this.props.languageFromMain].corpus.delete.confirm)) {
 			removeCorpus(corpus.id)
 			.then(response => {
+				console.log(response)
 				if (response) {
 					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
 				} 
-			}).catch(error => {
-				alert(dictionary[this.props.languageFromMain].corpus.delete.success);
+			}).catch(err => {
+				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:
+	status: ${err.status},  error: ${err.error}
+	message: ${err.message}`);
 			})
 		}
 	}
