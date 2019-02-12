@@ -100,11 +100,14 @@ class CorpusView extends Component {
 		if (window.confirm(dictionary[this.props.languageFromMain].corpus.delete.confirm)) {
 			removeCorpus(corpus.id)
 			.then(response => {
+				console.log(response)
 				if (response) {
 					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
 				} 
-			}).catch(error => {
-				alert(dictionary[this.props.languageFromMain].corpus.delete.success);
+			}).catch(err => {
+				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:
+	status: ${err.status},  error: ${err.error}
+	message: ${err.message}`);
 			})
 		}
 	}
