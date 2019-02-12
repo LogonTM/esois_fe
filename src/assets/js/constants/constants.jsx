@@ -17,7 +17,7 @@ export const maximum_email_length = 40;
 export const minimum_password_length = 6;
 export const maximum_password_length = 20;
 
-export const google_auth_url = back_end_host + 'oauth2/authorize/google?redirect_uri=' + oauth2_redirect_uri;
+export const github_auth_url = back_end_host + 'oauth2/authorize/github?redirect_uri=' + oauth2_redirect_uri;
 
 export const saml_url = back_end_host + 'saml/login';
 

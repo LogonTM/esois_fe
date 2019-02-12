@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { login } from '../utilities/functions';
 import { getCurrentUser } from '../utilities/functions';
-import { authentication_token, google_auth_url, logout_url, saml_url } from '../constants/constants';
+import { authentication_token, github_auth_url, logout_url, saml_url } from '../constants/constants';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
-import googleLogo from '../../img/google-logo.png';
+import githublogo from '../../img/github-logo.png';
 import favicon from '../../img/favicon.ico';
 
 var PT = PropTypes
@@ -211,14 +211,14 @@ class LoginPage extends Component {
 									onClick={this.handleToRegistration}
                                 />
 							</form>
-							{/* <div className="oauth-login">
-								<a className="btn btn-block oauth-btn google" href={google_auth_url}>
-									<img src={googleLogo} alt="Google" /> Login OAuth </a>
+							 <div className="oauth-login">
+								<a className="btn btn-block oauth-btn google" href={github_auth_url}>
+									<img src={githublogo} alt="Github" /> Login OAuth </a>
 							</div>
 							<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={saml_url}>
 									<img src={favicon} alt="favicon" /> Login SAML </a>
-							</div> */}
+							</div>
 							<div className="bottom-gap"></div>
 						</div>
 					</div>

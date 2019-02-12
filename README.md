@@ -53,6 +53,8 @@ Kasutaja sisse logimiseks on vaja vastavalt navigeerida sisse logimise lehekülj
 
 Hetkel välja logimiseks tuleb samuti minna esialgsele lehele, kust logiti sisse. Seal on nüüd võimalik klõpsata vastaval nupul, mis lõpetab sisse logitud sessiooni.
 
+Sisse on võimalik logida ka kasutades OAuth 2.0 ja SAML 2.0 protokolle. Hetkel on demonstratiivselt OAuth 2.0 jaoks seadistatud GitHub. GitHub'iga edukalt sisse logimiseks on vajalik, et potentsiaalsel kasutajal on oma GitHub'i profiilis avalikuks määratud tema kasutajanimi (name) ning e-mail. Kui SAML 2.0 seadistamine toimub peamiselt back-end'i poolt, siis OAuth'i jaoks on vaja ära määrata vastavad URL'id, mis on hetkel võimalik leida failist /assets/js/consants/constants.jsx. Samuti on sisse logimise leheküljel vastavalt GitHub'i logoga nupp, mida on võimalik ära kaotada või tagasi tuua failist /assets/js/pages/loginpage.jsx ridadelt 214-217.
+
 ### Abilehe täiendamine
 
 Abilehe täiendamiseks tuleb lisada vajalik tekst (pealkiri, lõik) sõnaraamatusse src > translations > dictionary.js faili helppage jaotuse alla (igas olemasolevas keeles).
