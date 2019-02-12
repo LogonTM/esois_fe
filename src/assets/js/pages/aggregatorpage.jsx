@@ -450,9 +450,9 @@ class AggregatorPage extends Component {
 		}
 	}
 	
-	toggleFcsView = (fcsTextAreaVisibility, e) => {
+	toggleFcsView = e => {
 		e.preventDefault();
-		this.setState({ fcsTextAreaVisibility });
+		this.setState({ fcsTextAreaVisibility: !this.state.fcsTextAreaVisibility });
 	}
 
 	renderZoomedResultTitle = corpusHit => {
@@ -535,7 +535,7 @@ class AggregatorPage extends Component {
 										/>
 										<label
 											htmlFor="fcs-form"
-											onClick={this.toggleFcsView.bind(this, !this.state.fcsTextAreaVisibility)}
+											onClick={this.toggleFcsView}
 										>
 											{dictionary[this.props.languageFromMain].fcs.form}
 										</label>
@@ -548,7 +548,7 @@ class AggregatorPage extends Component {
 										/>
 										<label
 											htmlFor="fcs-text"
-											onClick={this.toggleFcsView.bind(this, !this.state.fcsTextAreaVisibility)}
+											onClick={this.toggleFcsView}
 										>
 											{dictionary[this.props.languageFromMain].fcs.text}
 										</label>
