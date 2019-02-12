@@ -30,7 +30,7 @@ class CorpusView extends Component {
   	}
 
 	componentDidUpdate(_, prevState) {
-		if (prevState.file !== this.state.file) {
+		if (prevState.file !== this.state.file && this.state.file !== null) {
 			readFile(this.state.file).then(xml => this.setState({ xml }));
 		}
    }
@@ -64,7 +64,7 @@ class CorpusView extends Component {
 	}
 
 	handleFileChange = ({ target: { files } }) =>
-	this.setState({ file: files[0] });
+		this.setState({ file: files[0] });
 
 	handleSendFile = () => {
 		const headers = {
