@@ -452,7 +452,7 @@ class AggregatorPage extends Component {
 	
 	toggleFcsView = e => {
 		e.preventDefault();
-		this.setState({ fcsTextAreaVisibility: !this.state.fcsTextAreaVisibility });
+		this.setState( oldState => ({ fcsTextAreaVisibility: !oldState.fcsTextAreaVisibility }));
 	}
 
 	renderZoomedResultTitle = corpusHit => {
