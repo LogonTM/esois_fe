@@ -75,7 +75,7 @@ class LoginPage extends Component {
 				this.loadCurrentUser()
 				this.props.getStatus(true)
 			}).catch(error => {
-				if(error.status === 401) {
+				if(error) {
 					// Fix here Bootstrap notification for incorrect password or username?
 					this.setState({
 						usernameOrEmail : {
