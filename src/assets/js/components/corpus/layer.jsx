@@ -5,7 +5,7 @@ import LayerOperatorsList from './layeroperatorslist';
 import Row from './row';
 
 	
-const Layer = ({ layer, languageFromMain, id }) => {
+const Layer = ({ layer, languageFromMain }) => {
 
 	const valOptsById = indexBy(prop('id'), layer.valueOptions);
 	const valOptsIDs = pluck('id')(layer.valueOptions);
@@ -22,7 +22,7 @@ const Layer = ({ layer, languageFromMain, id }) => {
 	});
 
 	return (
-		<div key={id}>
+		<div>
 			<h5 style={{ marginLeft: 50 }}>
 				{`${dictionary[languageFromMain].corpus.layer} id: ${layer.id}`}
 			</h5>

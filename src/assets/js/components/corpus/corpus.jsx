@@ -50,9 +50,9 @@ class Corpus extends PureComponent {
                     { this.props.endpoint.layers.map(layer => {
                         return (
                             <Layer 
+                                key={layer.id}
                                 languageFromMain={this.props.languageFromMain}
                                 layer={layer}
-                                key={layer.id}
                             />
                         );
                      })
