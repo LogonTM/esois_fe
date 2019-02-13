@@ -56,17 +56,17 @@ export default {
             collapse: 'Peida',
             expand: 'Laienda',
             subcollections: 'alamkorpust',
-            deselectAll: 'Kõik mitte valituks',
+            deselectAll: 'Kõik mittevalituks',
             selectAll: 'Kõik valituks',
             searchCorpusBox: 'Otsi korpust',
             howManyAreShownP1: 'Näitan',
             howManyAreShownP2: 'korpust',
             howManyAreShownP3: '(alam)korpusest',
             selected: {
-                all: 'kõigist korpustest',
                 one: 'ühest valitud korpusest',
                 some: 'valitud korpusest',
             },
+            tooltip: 'Vaata abilehelt lisainfot kõigi korpuste mittevalituks muutmise kohta otsingu koostamise ajal',
         },
         cql: {
             nameBtn: 'Lihtne (CQL)',
@@ -101,6 +101,7 @@ export default {
             howToSearchTitle: 'Kuidas otsida',
             howToSearchParagraph1: 'Teostamaks lihtsat sõnaotsingut (CQL) üle kõikvõimalike korpuste, tuleb sisestada otsinguväljale otsitav sõna ning vajutada otsingu nupule või vajutada klaviatuuril "Enter".',
             howToSearchParagraph2: 'Teostamaks laiendatud otsinguid, seda toetavatest korpustest, kaasates otsingusse ka annotatsioonid (FCS-QL), tuleb valida rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter".',
+            howToSearchParagraph2a: 'Kasutades laiendatud otsingu sisestamisel abivormi, filtreeritakse automaatselt vähemaks valitud korpuseid vastavalt sellele, kas nad toetavad kõiki hetkel valitud kihte või mitte. Filtreerimine toimib kahesuunaliselt ehk valides välja mingi kindel korpus või korpused muudetakse valikus olevad kihid vastavaks valitud korpustes leiduvatele kihtidele. Sellest tulenevalt kui muudate kõik korpused mittevalituks jääb ainsana alles kiht "word" ehk "sõna". Kõik seni otsingu vormidel valitud kihid, mis ei ole "sõna", muutuvad kõigi korpuste mittevalituks muutmise järel kihiks "sõna".',
             howToSearchParagraph3: 'Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevatest korpustest.',
             howToSearchParagraph4: 'Mõne korpuse vastete lähema tutvumise jaoks tuleb vajutada vastavate tulemuste juures olevale "Vaata" nupule.',
             mainTitle: 'Abileht ja seaded',
@@ -421,10 +422,10 @@ export default {
             howManyAreShownP2: 'out of',
             howManyAreShownP3: '(sub)collections',
             selected: {
-                all: 'All available collections',
                 one: '1 selected collection',
                 some: 'selected collections',
-            }
+            },
+            tooltip: 'Get more info about deselecting all corpora while constructing your query from help page',
         },
         cql: {
             nameBtn: 'Simple (CQL)',
@@ -459,6 +460,7 @@ export default {
             howToSearchTitle: 'Performing search in Federated Content Search corpora',
             howToSearchParagraph1: "To perform a simple keyword search in all corpora, go to the search field at the top of the page, enter your query, and click the 'search' button or press the 'Enter' key.",
             howToSearchParagraph2: "To perform an advanced search on multiple annotation layers in corpora that support this, switch to Multi-layer Federated Content Search (FCS) in the dropdown list, enter a FCS query in the search field at the top of the page, and click the 'search' button or press the 'Enter' key.",
+            howToSearchParagraph2a: 'When entering query using the form of advanced search the selected corpora are filtered according to whether they have all the selected layers or not. The filtering is bidirectional e.g. when selecting a specific corpus or some corpora the available layers are corresponding to those present in selected corpora. As a result of this if all corpora are deselected the only available layer will be "word". All layers that have been entered with query form that are not "word" will change to "word" after deselecting all corpora.',
             howToSearchParagraph3: 'When the search starts, the page will start filling in with the corpora responses.',
             howToSearchParagraph4: "If you are particularly interested in the results returned by a corpus, you have the option to focus only on the results of that corpus, by clicking on the 'View' button.",
             mainTitle: 'Help',

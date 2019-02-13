@@ -26,6 +26,10 @@ class HelpPage extends Component {
 					</p>
 
 					<p>
+						{dictionary[this.props.languageFromMain].helppage.howToSearchParagraph2a}
+					</p>
+
+					<p>
 						{dictionary[this.props.languageFromMain].helppage.howToSearchParagraph3}
 					</p>
 

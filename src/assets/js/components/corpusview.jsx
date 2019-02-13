@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import SearchCorpusBox from "./searchcorpusbox.jsx";
 import PropTypes from "prop-types";
 import { pluck } from 'ramda';
+import { Tooltip } from 'reactstrap';
 import Button from '../utilities/button';
-import dictionary from '../../../translations/dictionary';
-import Corpus from '../components/corpus/corpus';
 import { back_end_host, authentication_token } from '../constants/constants';
-import readFile from '../utilities/readfile';
+import Corpus from '../components/corpus/corpus';
+import dictionary from '../../../translations/dictionary';
 import { removeCorpus } from '../utilities/functions';
+import readFile from '../utilities/readfile';
 import $ from 'jquery';
 
 var PT = PropTypes;
@@ -18,7 +19,8 @@ class CorpusView extends Component {
 		languageMap: PT.object.isRequired,
 		languageFromMain: PT.string.isRequired,
 		userRole: PT.string.isRequired,
-		getLayersWithEndpoints: PT.func.isRequired
+		getLayersWithEndpoints: PT.func.isRequired,
+		selectedLayers: PT.object.isRequired
 	}
 
 	constructor(props) {
@@ -32,7 +34,13 @@ class CorpusView extends Component {
 	
 	toggleSelection = (corpus, e) => {
 		var s = !corpus.selected;
-		this.props.corpora.recurseCorpus(corpus, function(c) { c.selected = s; });
+		this.props.corpora.recurseCorpus(corpus, c => { 
+			if (c.preAuthorizeUse && !this.props.userRole && c.visible) {
+				c.selected = false
+			} else {
+				c.selected = s
+			}
+		});
 		this.props.corpora.update();
 		this.stop(e);
 	}
@@ -53,8 +61,20 @@ class CorpusView extends Component {
 		this.setState({layersListVisible: !this.state.layersListVisible})
 	}
 
+	toggleTooltip = () => {
+		this.setState({
+			tooltipIsOpen: !this.state.tooltipIsOpen
+		});
+	}
+
 	selectAll = (value) => {
-		this.props.corpora.recurse( c => { c.selected = value; });
+		this.props.corpora.recurse(c => {
+			if (c.preAuthorizeUse && !this.props.userRole && c.visible) {
+				c.selected = false
+			} else if (c.visible) {
+				c.selected = value
+			}
+		});
 		this.props.corpora.update();
 	}
 
@@ -65,35 +85,34 @@ class CorpusView extends Component {
 		const headers = {
 			'Content-Type': 'text/xml',
 		}
-		
+
 		readFile(this.state.file).then(xml => {
 		    this.setState({ xml })
-		
-		const token = localStorage.getItem(authentication_token);
 
-		if (token) {
-			headers.Authorization = `Bearer ${token}`;
-		}
+			const token = localStorage.getItem(authentication_token);
 
-		fetch(back_end_host + 'db/corpus/upload', {
-			headers,
-			method: 'POST',
-			body: this.state.xml
-		}).then(response => {
-			if (response.status === 200) {
-				alert(dictionary[this.props.languageFromMain].corpus.upload.success);
-				this.setState({
-					file: null,
-					xml: ""
-				});
-				$("#fileInput").val('');
-			} else {
-				alert(`${dictionary[this.props.languageFromMain].corpus.upload.fail}:
-				status: ${response.status}
-				${response.statusText ? response.statusText : ''}`);
+			if (token) {
+				headers.Authorization = `Bearer ${token}`;
 			}
-		});
-		
+
+			fetch(back_end_host + 'db/corpus/upload', {
+				headers,
+				method: 'POST',
+				body: this.state.xml
+			}).then(response => {
+				if (response.status === 200) {
+					alert(dictionary[this.props.languageFromMain].corpus.upload.success);
+					this.setState({
+						file: null,
+						xml: ""
+					});
+					$("#fileInput").val('');
+				} else {
+					alert(`${dictionary[this.props.languageFromMain].corpus.upload.fail}:
+					status: ${response.status}
+					${response.statusText ? response.statusText : ''}`);
+				}
+			});
 		});
 	}
 
@@ -198,7 +217,7 @@ class CorpusView extends Component {
 
 	renderCheckbox(corpus) {
 		return (
-			<button className="btn btn-outline-secondary">
+			<button className="btn btn-outline-secondary" disabled={corpus.preAuthorizeUse && !this.props.userRole}>
 				{ corpus.selected ?
 					<span className="fa fa-check-square" aria-hidden="true"/> :
 					<span className="fa fa-square" aria-hidden="true"/>
@@ -223,7 +242,7 @@ class CorpusView extends Component {
 						dictionary[this.props.languageFromMain].corpusview.expand
 					}
 					&nbsp;
-					{`(${corpus.subCorpora.length} ${dictionary[this.props.languageFromMain].corpusview.subcollections})`}
+					{`(${corpus.visibleSubCorporaCount} ${dictionary[this.props.languageFromMain].corpusview.subcollections})`}
 				</a>
 			</div>
 		);
@@ -276,7 +295,8 @@ class CorpusView extends Component {
 			return false;
 		}
 		var indent = {marginLeft:level*50};
-		var corpusContainerClass = "corpus-container " + (corpus.priority > 0 ? "" : "dimmed");
+		var corpusContainerClass = "corpus-container" + (corpus.priority > 0 ? "" : " dimmed") + 
+			(!this.props.userRole && corpus.preAuthorizeUse ? " disabled" : "");
 
 		var hue = 120 * corpus.priority / minmaxp[1];
 		var color = minmaxp[0] === minmaxp[1] ? 'transparent' : 'hsl('+hue+', 50%, 50%)';
@@ -436,10 +456,22 @@ class CorpusView extends Component {
 								onClick={this.selectAll.bind(this,true)}
 								style={{ marginRight: 10 }}
 							/>
+							{ this.props.selectedLayers.size > 1 || !this.props.selectedLayers.has('word') ? 
+								<Tooltip
+									placement="auto"
+									isOpen={this.state.tooltipIsOpen}
+									target='deselectAllButton'
+									toggle={this.toggleTooltip}
+								>	
+									{dictionary[this.props.languageFromMain].corpusview.tooltip}
+								</Tooltip>
+								: false
+							}
 							<Button
 								label={dictionary[this.props.languageFromMain].corpusview.deselectAll}
 								onClick={this.selectAll.bind(this,false)}
 								style={{ marginRight: 20 }}
+								id='deselectAllButton'
 							/>
 						</div>
 						<div className="float-right inline">

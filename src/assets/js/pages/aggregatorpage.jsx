@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { pluck } from 'ramda';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Tooltip } from 'reactstrap';
 import Results from '../components/results.jsx';
 import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
@@ -61,7 +62,7 @@ class AggregatorPage extends Component {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
 			currentLanguagesMap: {},
-	      	queryTypeId: getQueryVariable('queryType') || 'cql',
+			queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
 			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
 			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
@@ -71,6 +72,7 @@ class AggregatorPage extends Component {
 			language: this.anyLanguage,
 			languageFilter: 'byMeta',
 			numberOfResults: 10,
+			tooltipIsOpen: false,
 
 			searchId: null,
 			timeout: 0,
@@ -106,35 +108,35 @@ class AggregatorPage extends Component {
 					// from v2.0 endpoints for fcs v2.0
 					corpora.setVisibility(this.state.queryTypeId, this.state.language[0], this.state.selectedLayers);
 
-						if (aggregationContext) {
-							const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
-							const unavailableCorporaHandles = contextCorporaInfo.unavailable; // list of unavailable aggregationContext
-							if (unavailableCorporaHandles.length > 0) {
-								this.props.error("Could not find requested collection handles:\n" + unavailableCorporaHandles.join('\n'));
-							}
+					if (aggregationContext) {
+						const contextCorporaInfo = corpora.setAggregationContext(aggregationContext);
+						const unavailableCorporaHandles = contextCorporaInfo.unavailable; // list of unavailable aggregationContext
+						if (unavailableCorporaHandles.length > 0) {
+							this.props.error("Could not find requested collection handles:\n" + unavailableCorporaHandles.join('\n'));
+						}
 
-							const actuallySelectedCorpora = corpora.getSelectedIds();
+						const actuallySelectedCorpora = corpora.getSelectedIds();
 
-							if (contextCorporaInfo.selected.length !== actuallySelectedCorpora.length) {
-								if (actuallySelectedCorpora.length === 0) {
-									this.props.error("This search does not support the required collection(s), will search all collections instead"); // TODO give detailed reason its not supported.
-									corpora.recurse(function(corpus) { corpus.selected = true; });
-								} else {
-									var err = "Some required context collections are not supported for this search:\n"
-									err = err + contextCorporaInfo.filter((c) => {
-										if (actuallySelectedCorpora.indexOf(c) === -1) {
-											return true;
-										}
-										return false;
-									}).map((c) => c.title).join('\n')
-									this.props.error(err);
-								}
+						if (contextCorporaInfo.selected.length !== actuallySelectedCorpora.length) {
+							if (actuallySelectedCorpora.length === 0) {
+								this.props.error("This search does not support the required collection(s), will search all collections instead"); // TODO give detailed reason its not supported.
+								corpora.recurse(function(corpus) { corpus.selected = true; });
+							} else {
+								var err = "Some required context collections are not supported for this search:\n"
+								err = err + contextCorporaInfo.filter((c) => {
+									if (actuallySelectedCorpora.indexOf(c) === -1) {
+										return true;
+									}
+									return false;
+								}).map((c) => c.title).join('\n')
+								this.props.error(err);
 							}
 						}
-						else {
-							// no context set all visible to selected as default.
-							corpora.recurse(c => {c.visible ? c.selected=true : c.selected=false})
-						}
+					}
+					else {
+						// no context set all visible to selected as default.
+						this.selectedCorpora(corpora, this.props.userRole)
+					}
 
 					this.setState({
 						corpora : corpora,
@@ -148,10 +150,27 @@ class AggregatorPage extends Component {
 		});
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.userRole !== this.props.userRole) {
+			this.selectedCorpora(this.state.corpora, this.props.userRole);
+			this.updateCorpora(this.state.corpora);
+		}
+	}
+
 	postInit = () => {
 		if (window.MyAggregator.mode === 'search') {
 		   this.search();
 	   }
+	}
+
+	selectedCorpora = (corpora, userRole) => {
+		corpora.recurse(c => {
+			if  (c.preAuthorizeUse && !userRole && c.visible) {
+				c.selected = false
+			} else {
+				c.selected = true
+			}
+		});
 	}
 
 	updateCorpora = corpora => {
@@ -183,7 +202,6 @@ class AggregatorPage extends Component {
 	}
 
 	search = () => {
-		
 		var _paq = [];
 		var query = this.getCurrentQuery();
 		var queryTypeIdForSearch = this.state.queryTypeId;
@@ -298,7 +316,13 @@ class AggregatorPage extends Component {
 	}
 
 	setQueryType = queryTypeId => {
-		this.state.corpora.setVisibility(queryTypeId, this.state.language[0], this.state.selectedLayers);
+		if (queryTypeId === 'cql') {
+			const word = new Set(['word'])
+			this.state.corpora.setVisibility(queryTypeId, this.state.language[0], word);
+			this.updateCorpora(this.state.corpora);	
+		} else {
+			this.state.corpora.setVisibility(queryTypeId, this.state.language[0], this.state.selectedLayers);
+		}
 		setQueryVariable('queryType', queryTypeId);
 		setQueryVariable('query', queryTypeId === 'cql' ? this.state.cqlQuery : this.state.fcsQuery)
 		this.setState({
@@ -317,7 +341,7 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
-	stop(e) {
+	stop = e => {
 		e.stopPropagation();
 	}
 
@@ -382,11 +406,17 @@ class AggregatorPage extends Component {
 		e.stopPropagation();
 	}
 
+	toggleTooltip = () => {
+		this.setState({
+			tooltipIsOpen: !this.state.tooltipIsOpen
+		});
+	}
+
 	onQueryChange = queryStr => {
-	   if (this.state.queryTypeId === 'cql') {
-	      this.setState({
+		if (this.state.queryTypeId === 'cql') {
+			this.setState({
 				cqlQuery: queryStr || '',
-		   });
+			});
 	   } else {			
 			const queryTokens = queryToTokens(queryStr);
 			if (queryTokens !== null) {
@@ -515,7 +545,7 @@ class AggregatorPage extends Component {
 	);
 
 	renderGQB = () => {
-	    return (
+		return (
 			<div style={{marginLeft:16, marginRight:16}}>
 				<div className="card">
 					<div
@@ -574,36 +604,6 @@ class AggregatorPage extends Component {
 				</div>
 			</div>
 		);
-	}
-
-	renderUnavailableCorporaMessage = () => {
-	    if (!this.state.corpora) {
-	        return;
-	    }
-        const unavailable = [];
-        this.state.corpora.recurse((c) => {
-            if (c.selected && ! c.visible) {
-                unavailable.push(c);
-            }
-            if (c.selected) {
-               // apparently a selected corpus 
-            }
-        });
-        
-        if (unavailable.length) {
-            return (
-				<div id="unavailable-corpora-message" className="text-muted">
-					<div id="unavailable-corpora-message-message">
-						<a role="button" data-toggle="dropdown">{unavailable.length} selected collection{unavailable.length > 1 ? 's are' : ' is'} disabled in this search mode.</a>
-					</div>
-					<ul id="unavailable-corpora-message-list" className="dropdown-menu">
-					{
-						unavailable.map((c) => <li className="unavailable-corpora-message-item">{c.name}</li>)
-					}
-					</ul>
-				</div>
-			);
-        }
 	}
 
 	render() {
@@ -670,22 +670,34 @@ class AggregatorPage extends Component {
 										onClick={this.toggleLanguageSelection}
 									/>
 								</div>
+								<div className="input-group-prepend">
+									<span className="input-group-text nobkg">
+										{dictionary[this.props.languageFromMain].aggregatorpage.in}
+									</span>
+								</div>
 							</div>
 						</form>
 					</div>
 					<div className="col-auto">
 						<form className="form-inline">
 							<div className="input-group mb-3">
-								<div className="input-group-prepend">
-									<span className="input-group-text nobkg">
-										{dictionary[this.props.languageFromMain].aggregatorpage.in}
-									</span>
-								</div>
 								<div className="input-group">
+									{ this.state.selectedLayers.size > 1 || !this.state.selectedLayers.has('word') ? 
+										<Tooltip
+											placement="auto"
+											isOpen={this.state.tooltipIsOpen}
+											target='corpusViewButton'
+											toggle={this.toggleTooltip}
+										>	
+											{dictionary[this.props.languageFromMain].corpusview.tooltip}
+										</Tooltip>
+										: false
+									}
 									<Button
 										label={this.state.corpora.getSelectedMessage(this.props.languageFromMain)}
 										uiType='dropdown-toggle'
 										onClick={this.toggleCorpusSelection}
+										id='corpusViewButton'
 									/>
 								</div>
 							</div>
@@ -706,9 +718,9 @@ class AggregatorPage extends Component {
 										min="10"
 										max="250"
 										style={{maxWidth:60}}
-										onChange={this.setNumberOfResults.bind(this)}
+										onChange={this.setNumberOfResults}
 										value={this.state.numberOfResults}
-										onKeyPress={this.stop.bind(this)}
+										onKeyPress={this.stop}
 									/>
 								</div>
 								<div className="input-group-append">
@@ -734,6 +746,7 @@ class AggregatorPage extends Component {
 						languageFromMain={this.props.languageFromMain}
 						userRole={this.props.userRole}
 						getLayersWithEndpoints={this.getLayersWithEndpoints}
+						selectedLayers={this.state.selectedLayers}
 					/>
 				</Modal>
 
@@ -806,11 +819,11 @@ function Corpora(corpora, updateFn) {
 
 	this.recurse(function(corpus, index) {
 		corpus.visible = true; // visible in the corpus view
-		corpus.selected = true; // selected in the corpus view
 		corpus.expanded = false; // not expanded in the corpus view
 		corpus.priority = 1; // used for ordering search results in corpus view
 		corpus.index = index; // original order, used for stable sort
 		corpus.edit = false; // edit panel not expanded in the corpus view
+		corpus.visibleSubCorporaCount = corpus.subCorpora.length
 	});
 }
 
@@ -979,7 +992,8 @@ Corpora.prototype.setVisibility = function(queryTypeId, languageCode, selectedLa
 			c.visible ? count += 1 : count += 0 ;
 		});
 		if (count > 0) { 
-			corpus.visible = true 
+			corpus.visible = true;
+			corpus.visibleSubCorporaCount = count;
 		} else if (corpus.subCorpora.length === 0) {
 			corpus.visible = this.isCorpusVisible(corpus, queryTypeId, languageCode, selectedLayers);
 		} else {
@@ -1025,9 +1039,8 @@ function pairs(o) {
 Corpora.prototype.getSelectedIds = function() {
 	var ids = [];
 	this.recurse(function(corpus) {
-		if (corpus.visible && corpus.selected) {
+		if (corpus.visible && corpus.selected && corpus.handle !== "root") {
 			ids.push(corpus.id);
-			// return false; // top-most collection in tree, don't delve deeper
 		}
 		return true;
 	});
@@ -1037,9 +1050,7 @@ Corpora.prototype.getSelectedIds = function() {
 
 Corpora.prototype.getSelectedMessage = function(languageFromMain) {
 	var selectedIdsCount = this.getSelectedIds().length;
-	if (this.corpora.length === selectedIdsCount) {
-		return `${dictionary[languageFromMain].corpusview.selected.all} (${selectedIdsCount})`;
-	} else if (selectedIdsCount === 1) {
+	if (selectedIdsCount === 1) {
 		return dictionary[languageFromMain].corpusview.selected.one;
 	}
 	return `${selectedIdsCount} ${dictionary[languageFromMain].corpusview.selected.some}`;

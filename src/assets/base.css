@@ -46,7 +46,7 @@
 	width: 100%;
 	line-height: 50px;
 	padding: 0;
-    margin-bottom: 3px;
+   margin-bottom: 3px;
 }
 
 .login-panel{
@@ -240,8 +240,13 @@ div.corpus-container {
 	margin: 5px 0;
 	border-bottom: 1px solid #eee;
 }
+
 div.corpus-container:hover {
 	box-shadow: 0 0 10px rgb(179,216,253) !important;
+}
+
+div.corpus-container.disabled {
+	opacity: 0.5 !important;
 }
 
 div.modal-dialog input {
