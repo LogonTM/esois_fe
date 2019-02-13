@@ -229,7 +229,7 @@ class LoginPage extends Component {
 				<div>
 					<div className="top-gap">
 						<div className="login-panel">
-							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.messageP1} ${this.state.currentUser}, ${dictionary[this.props.languageFromMain].loginpage.messageP2}!`}</span>
+							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.messageP1} ${this.state.currentUser} ${dictionary[this.props.languageFromMain].loginpage.messageP2}!`}</span>
 							<div>
 								<Button
                                     label={dictionary[this.props.languageFromMain].button.logout}

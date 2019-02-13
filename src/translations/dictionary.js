@@ -116,7 +116,7 @@ export default {
                 incorrect: 'RABA: Teie kasutajanimi või parool on vale. Palun proovige uuesti!',
                 servercatch: 'RABA: Vabandame! Midagi läks valesti. Palun proovige uuesti!', 
             },
-            messageP1: 'Tere',
+            messageP1: 'Tere, ',
             messageP2: 'olete sisse logitud',
         },
         managelogs: {
@@ -469,7 +469,7 @@ export default {
                 incorrect: 'RABA: Your Username or Password is incorrect. Please try again!',
                 servercatch: 'RABA: Sorry! Something went wrong. Please try again!',
             },
-            messageP1: 'Hello',
+            messageP1: 'Hello, ',
             messageP2: 'you have logged in',
         },
         managelogs: {
