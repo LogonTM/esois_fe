@@ -89,7 +89,7 @@
 }
 
 .arg_opts.form-control {
-	width: 85px !important;
+	width: 120px !important;
 }
 
 .or_arg {
@@ -158,7 +158,7 @@ input {
 
 .arg_val_container {
 	margin-top: 2px;
-	width: 252px;
+	width: 287px;
 }
 
 .query_token .insert_arg {
