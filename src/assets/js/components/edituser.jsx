@@ -40,10 +40,10 @@ class EditUser extends PureComponent {
 
     handleEdit = () => {
         const userUpdateData = {
-                id: this.props.oneUserId,
+            id: this.props.oneUserId,
             enabled: this.props.oneUserAccountstate,
             roles: this.saveRole()
-            }
+        }
         updateUser(userUpdateData)
         .then(response => {
             if(response) {
@@ -204,29 +204,6 @@ class EditUser extends PureComponent {
                             />
                         </div>
                     </div>
-                    {/* <div className="form-group row addcorp">
-                        <div className="col-sm-2 align-right">
-                            <label htmlFor="enabled">
-                                {dictionary[this.props.languageFromMain].user.edit.accountstate}
-                            </label>
-                        </div>
-                        <div className="col-sm-3">
-                            <input
-                                className="form-control input-lg"
-                                type="text"
-                                name="oneUserEnabled"
-                                id="enabled"
-                                value={dictionary[this.props.languageFromMain].user.manage.enabled[this.props.oneUserAccountstate]}
-                                readOnly
-                            />
-                        </div>
-                        <div className="col-sm-3">
-                            <Button
-                                label={dictionary[this.props.languageFromMain].button.edit}
-                                onClick={e => this.props.handleAccountState(e, this.props.oneUserAccountstate)}
-                            />
-                        </div>
-                    </div> */}
                     {this.props.availableRoles.map((role, key) =>
                     <div key={key} className="form-group row addcorp">
                         <div className="col-sm-2 align-right">

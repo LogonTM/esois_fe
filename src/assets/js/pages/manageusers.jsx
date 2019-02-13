@@ -9,7 +9,7 @@ import React, { Component, PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
-import { getCurrentUsers, getUserRoles } from '../utilities/functions';
+import { getCurrentUsers, getUserRoles, deleteUser } from '../utilities/functions';
 
 class ManageUsers extends PureComponent {
 	static propTypes = {
@@ -25,7 +25,7 @@ class ManageUsers extends PureComponent {
 			oneUserEmail: '',
 			oneUserAccountstate: false,
 			oneUserRole: [],
-			availableRoles: []
+			availableRoles: [],
 		}
 	}
 
@@ -50,7 +50,23 @@ class ManageUsers extends PureComponent {
                 availableRoles: response
             })
         })
-    }
+	}
+
+	removeUser = (e, id) => {
+		if (window.confirm(dictionary[this.props.languageFromMain].user.delete.confirm)) {
+			deleteUser(id)
+			.then(response => {
+				if (response.success === true) {
+					alert(dictionary[this.props.languageFromMain].user.delete.success);
+					this.getUserList();
+				}else{
+				    alert(`${dictionary[this.props.languageFromMain].user.delete.fail}:\nmessage: ${response.message}`);
+				}
+			}).catch(err => {
+				alert(`${dictionary[this.props.languageFromMain].user.delete.fail}:\nmessage: ${err.message}`);
+			})
+		}
+	}
 
 	handleChange = event => {
         event.preventDefault();
@@ -133,6 +149,11 @@ class ManageUsers extends PureComponent {
 											<Button
 												label={dictionary[this.props.languageFromMain].button.edit}
 												onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled, item.roles)}
+											/>
+											{" "}
+											<Button
+												label={dictionary[this.props.languageFromMain].button.delete}
+												onClick={e => this.removeUser(e, item.id)}
 											/>
 										</td>
 									</tr>

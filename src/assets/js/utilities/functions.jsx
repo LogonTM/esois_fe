@@ -54,6 +54,13 @@ export function removeCorpus(corpusID) {
     })    
 }
 
+export function deleteUser(userID) {
+    return request({
+        url: back_end_host + "db/user/" + userID,
+        method: 'DELETE'
+    })
+}
+
 export function checkUsernameAvailability(username) {
     return request({
         url: back_end_host + "db/user/checkUsernameAvailability?username=" + username,

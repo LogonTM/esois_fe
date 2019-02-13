@@ -61,7 +61,7 @@ class AggregatorPage extends Component {
 			corpora: new Corpora([], this.updateCorpora),
 			languageMap: {},
 			currentLanguagesMap: {},
-	      queryTypeId: getQueryVariable('queryType') || 'cql',
+	      	queryTypeId: getQueryVariable('queryType') || 'cql',
 			query: getQueryVariable('query') || '',
 			cqlQuery: (((getQueryVariable('queryType') || 'cql') === 'cql') && getQueryVariable('query')) || '',
 			fcsQuery: ((getQueryVariable('queryType') === 'fcs') && getQueryVariable('query')) || '',
@@ -825,7 +825,7 @@ Corpora.prototype.recurseCorpus = function(corpus, fn) {
 Corpora.prototype.recurseCorpora = function(corpora, fn) {
 	var recfn = function(corpus, index){
 		if (false === fn(corpus, index)) {
-			// no recursion
+			// no recursion			
 		} else {
 			corpus.subCorpora.forEach(recfn);
 		}

@@ -297,6 +297,11 @@ export default {
             ],
         },
         user: {
+            delete: {
+                confirm: 'Kas oled kindel, et soovid kasutaja kustutada?',
+                fail: 'Kasutaja kustutamine ei õnnestunud',
+                success: 'Kasutaja on edukalt kustutatud',
+            },
             edit: {
                 accountstate: 'Kasutajakonto olek',
                 email: 'e-mail',
@@ -649,6 +654,11 @@ export default {
             ],
         },
         user: {
+            delete: {
+                confirm: 'Are you sure you want to delete this user?',
+                fail: 'Deleting user failed',
+                success: 'User has been deleted successfully',
+            },
             edit: {
                 accountstate: 'Useraccount state',
                 email: 'e-mail',
