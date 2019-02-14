@@ -147,7 +147,7 @@ Esimese sammuna tekkinud korpuste põhjad on vaja täiendada ning häälestada.
 Üldjuhul uute korpuste lisamine ja muutmine toimub kasutajaliidese kaudu „administraatori“ õigustega.
 Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vajutada nuppule „üleslaadimine“. Sõltuvalt põhja sisust süsteem:
 * Lisab uue ülemkorpuse, ning automaatselt käivitab eelseadistatud alamkorpuste loomine;
-* Muudab ülemkorpuse parameetreid, aga ei puuduta alam korpusi;
+* Muudab ülemkorpuse parameetreid, aga ei puuduta alamkorpusi;
 * Lisab uue alamkorpuse;
 * Muudab alamkorpust.
 
