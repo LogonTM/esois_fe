@@ -74,9 +74,6 @@ class UserLogs extends PureComponent {
 					<thead className='thead-blue'>
 						<tr>
 							<TableHeaderRow headers={dictionary[this.props.languageFromMain].userlogs.headers} />
-							{/* <th>
-								{dictionary[this.props.languageFromMain].common.actions}
-							</th> */}
 						</tr>
 					</thead>
 					<tbody id='userLogList'>
@@ -86,14 +83,8 @@ class UserLogs extends PureComponent {
 									<td>{item.createdAt}</td>
 									<td>{item.username}</td>
 									<td>{dictionary[this.props.languageFromMain].userlogs.consent[item.consent]}</td>
-                                    <td>{dictionary[this.props.languageFromMain].userlogs.initialregister[item.initialregister]}</td>
-                                    <td>{dictionary[this.props.languageFromMain].userlogs.logedin[item.logedin]}</td>
-									{/* <td>
-										<Button
-											label={dictionary[this.props.languageFromMain].button.edit}
-											onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled, item.roles)}
-										/>
-									</td> */}
+                  <td>{dictionary[this.props.languageFromMain].userlogs.initialregister[item.initialregister]}</td>
+                  <td>{dictionary[this.props.languageFromMain].userlogs.logedin[item.logedin]}</td>
 								</tr>
 								)
 							})

@@ -76,7 +76,6 @@ class LoginPage extends Component {
 				this.props.getStatus(true)
 			}).catch(error => {
 				if(error) {
-					// Fix here Bootstrap notification for incorrect password or username?
 					this.setState({
 						usernameOrEmail : {
 							value : this.state.usernameOrEmail.value,
@@ -90,7 +89,6 @@ class LoginPage extends Component {
 						}
 					})
 				} else {
-					// Fix here Bootstrap notification for some other server side failure?
 					this.setState({
 						notificationMessage : {
 							message: "RABA: " + error.message || dictionary[this.props.languageFromMain].loginpage.error.servercatch
@@ -167,7 +165,7 @@ class LoginPage extends Component {
 	render () {
 		const usernameOrEmailInputValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " +
             (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
-        const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
+    const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
             (this.state.password.valid ? "is-valid"  : "is-invalid")
 		if (this.state.loggedInStatus === false) {
 			return (
@@ -203,13 +201,13 @@ class LoginPage extends Component {
 									onClick={this.logInOut}
 									disabled={this.loginValidator()}
 								/>
-                                &nbsp;
-                                <Button
-                                    label={dictionary[this.props.languageFromMain].button.register}
-                                    type='submit'
+                &nbsp;
+                <Button
+                  label={dictionary[this.props.languageFromMain].button.register}
+                  type='submit'
 									uiType='btn.lg'
 									onClick={this.handleToRegistration}
-                                />
+                />
 							</form>
 							 <div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={github_auth_url}>
@@ -232,10 +230,10 @@ class LoginPage extends Component {
 							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.messageP1} ${this.state.currentUser} ${dictionary[this.props.languageFromMain].loginpage.messageP2}!`}</span>
 							<div>
 								<Button
-                                    label={dictionary[this.props.languageFromMain].button.logout}
-                                    uiType='btn.lg'
-                                    onClick={this.logInOut}
-                                />
+                  label={dictionary[this.props.languageFromMain].button.logout}
+                  uiType='btn.lg'
+                  onClick={this.logInOut}
+                />
 							</div>
 						</div>
 					</div>

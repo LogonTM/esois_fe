@@ -74,9 +74,6 @@ class SearchLogs extends PureComponent {
 					<thead className='thead-blue'>
 						<tr>
 							<TableHeaderRow headers={dictionary[this.props.languageFromMain].searchlogs.headers} />
-							{/* <th>
-								{dictionary[this.props.languageFromMain].common.actions}
-							</th> */}
 						</tr>
 					</thead>
 					<tbody id='searchLogList'>
@@ -87,12 +84,6 @@ class SearchLogs extends PureComponent {
 									<td>{item.username}</td>
 									<td>{item.query}</td>
 									<td>{item.corporas.map(corpora => corpora + " ")}</td>
-									{/* <td>
-										<Button
-											label={dictionary[this.props.languageFromMain].button.edit}
-											onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled, item.roles)}
-										/>
-									</td> */}
 								</tr>
 								)
 							})
