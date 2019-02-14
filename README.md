@@ -17,6 +17,7 @@ Kasutus- ja paigaldusjuhend
 - [EL logo suuruse muutmine](#EL-logo-suuruse-muutmine)
 - [RABA logo asetamine lehe päisesse](#RABA-logo-asetamine-lehe-päisesse)
 - [Admin liidese kasutamine](#Admin-liidese-kasutamine)
+  - [Korpuste administreerimine](#korpuste-administreerimine)
 
 ## Sissejuhatus
 
