@@ -334,7 +334,7 @@ class AggregatorPage extends Component {
 
 	setNumberOfResults = e => {
 		var n = e.target.value;
-		if (n < 10) n = 10;
+		if (n < 0) n = 10;
 		if (n > 250) n = 250;
 		this.setState({numberOfResults: n});
 		e.preventDefault();
