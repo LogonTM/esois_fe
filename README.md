@@ -93,7 +93,7 @@ siin language: 'en' kahetäheline keele lühend vastab dictionary.js failis olev
 Eesti Keeleressursside Keskuse logo on võimalik kuvada nii inglise kui eesti keelsena. Tõlke keele jaoks, kui on ka teistes keeltes logosid olemas, tuleb logo lisada src > assets > img kausta ning importida 'main.jsx' faili vastav logo, nagu on inglise keelse logo importimiseks tehtud järgnevalt:
 import EnEKRKlogo from '../img/ekrk-logo-eng.png';
 
-Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 23 asuvas) muutujas logoIntl:
+Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis muutujas logoIntl:
 ```javascript
 const logoIntl = {
   ee: EeEKRKlogo,
@@ -134,20 +134,19 @@ Algupärasel admin'il on võimalik pärast sisse logimist teistele kasutajatele 
 
 ### Korpuste administreerimine
 
-####Korpuste administreerimine
 Korpused on peamised tarkvara komponendid, mis kirjeldavad ressurssi, mille kaudu edastatakse päring (otsingu)teenuse pakkujale ning teisendavad otsingu tulemused RABAle sobivale kujule.
 Rakenduses on kasutusel kahte tüüpi korpuseid:
-•	Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
-•	Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
+* Item 1	Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
+* Item 2	Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
 1.	Korpuste lisamine ja muutmine
 Korpuste lisamine on jagatud kaheks etappiks. Esimeses faasis luuakse ülemkorpus koos eelseadistatud alamkorpustega, nt. KORP tüüpi ülemkorpuse loomisel tekkivad kõik alamkorpused, mis on saadaval aadressil http://KORP.TEENUSEPAKKUJA/info ning asuvad „corpora“ nimekirja all, samas TTU_SPEACH tüüpi ülemkorpuse loomisel tekkib alati kaks koprust. 
 Esimese sammuna tekkinud korpuste põhjad on vaja täiendada ning häälestada.
 Üldjuhul uute korpuste lisamine ja muutmine toimub kasutajaliidese kaudu „administraatori“ õigustega.
 Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vajutada nuppule „üleslaadimine“. Sõltuvalt põhja sisust süsteem:
-•	Lisab uue ülemkorpuse, ning automaatselt käivitab eelseadistatud alamkorpuste loomine;
-•	Muudab ülemkorpuse parameetreid, aga ei puuduta alam korpusi;
-•	Lisab uue alamkorpuse;
-•	Muudab alamkorpust.
+* Item 1	Lisab uue ülemkorpuse, ning automaatselt käivitab eelseadistatud alamkorpuste loomine;
+* Item 2	Muudab ülemkorpuse parameetreid, aga ei puuduta alam korpusi;
+* Item 3	Lisab uue alamkorpuse;
+* Item 4	Muudab alamkorpust.
 
 
 
