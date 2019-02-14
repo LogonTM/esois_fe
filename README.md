@@ -176,8 +176,8 @@ Kui kasutatakse allalaetud näidist, siis tuleb jälgida, et üleslaadimisel **e
 ![subkorp](images/subkorp.png)
 
 #####	 Alamkorpuse muutmine
-Alamkorpuse muutmine on sarnane ülemkorpuse muutmisega, ehk on oluline jälgida, et korpuse <`id`> oleks see sama korpuse id, mida muuta tahetakse. 
-Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et <`id`> kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma `<id>` väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja vastav plokk kohandada, aga on oluline märkida, et kohandamisel säiliks vähemalt üks operator.
+Alamkorpuse muutmine on sarnane ülemkorpuse muutmisega, ehk on oluline jälgida, et korpuse `<id>` oleks see sama korpuse id, mida muuta tahetakse. 
+Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et `<id>` kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma `<id>` väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja vastav plokk kohandada, aga on oluline märkida, et kohandamisel säiliks vähemalt üks operator.
 
 ####	Korpuse kustutamine
 Kustutamine toimub läbi kasutajaliidese, vajutades „kustuta“ nuppu vastava korpuse juures.
