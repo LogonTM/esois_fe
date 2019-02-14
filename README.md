@@ -138,7 +138,7 @@ Korpused on peamised tarkvara komponendid, mis kirjeldavad ressurssi, mille kaud
 Rakenduses on kasutusel kahte tüüpi korpuseid:
 * Item 1	Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
 * Item 2	Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
-1.	Korpuste lisamine ja muutmine
+####	Korpuste lisamine ja muutmine
 Korpuste lisamine on jagatud kaheks etappiks. Esimeses faasis luuakse ülemkorpus koos eelseadistatud alamkorpustega, nt. KORP tüüpi ülemkorpuse loomisel tekkivad kõik alamkorpused, mis on saadaval aadressil http://KORP.TEENUSEPAKKUJA/info ning asuvad „corpora“ nimekirja all, samas TTU_SPEACH tüüpi ülemkorpuse loomisel tekkib alati kaks koprust. 
 Esimese sammuna tekkinud korpuste põhjad on vaja täiendada ning häälestada.
 Üldjuhul uute korpuste lisamine ja muutmine toimub kasutajaliidese kaudu „administraatori“ õigustega.
