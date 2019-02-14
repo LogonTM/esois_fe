@@ -139,7 +139,7 @@ Algupärasel admin'il on võimalik pärast sisse logimist teistele kasutajatele 
 Korpused on peamised tarkvara komponendid, mis kirjeldavad ressurssi, mille kaudu edastatakse päring (otsingu)teenuse pakkujale ning teisendavad otsingu tulemused RABAle sobivale kujule.
 Rakenduses on kasutusel kahte tüüpi korpuseid:
 * Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
-* Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
+* Alamkorpus – Peamiselt kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
 
 ####	Korpuste lisamine ja muutmine
 Korpuste lisamine on jagatud kaheks etappiks. Esimeses faasis luuakse ülemkorpus koos eelseadistatud alamkorpustega, nt. KORP tüüpi ülemkorpuse loomisel tekkivad kõik alamkorpused, mis on saadaval aadressil http://KORP.TEENUSEPAKKUJA/info ning asuvad „corpora“ nimekirja all, samas TTU_SPEACH tüüpi ülemkorpuse loomisel tekkib alati kaks koprust. 
@@ -152,7 +152,7 @@ Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vaj
 * Muudab alamkorpust.
 
 ##### Ülemkorpuse lisamine
-Korpuse põhja võib allalaadida ning vastavalt kohandada või kasutada allpool olevat näidist. Dokumentatsiooni juurest saab leida vastavad *.xsd faili. 
+Korpuse põhja võib allalaadida ning vastavalt kohandada või kasutada allpool olevat näidist. Dokumentatsiooni juurest saab leida ka vastava *.xsd faili. 
 Peamised väärtused on „endpoint - url“, „endpoint-protocol“ ning “adapterType”.
 Tulemusena luuakse ülemkorpus koos alamkorpustega:
 
@@ -171,7 +171,7 @@ Kui kasutatakse allalaetud näidist, siis tuleb jälgida, et üleslaadimisel **e
 
 #####	 Alamkorpuse muutmine
 Alamkorpuse muutmine on sarnane ülemkorpuse muutmisega, ehk on oluline jälgida, et korpuse <`id`> oleks see sama korpuse id, mida muuta tahetakse. 
-Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et <`id`> kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma <id> väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja kohandada vastav plokk, aga on oluline, et oleks vähemalt üks operator.
+Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et <`id`> kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma `<id>` väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja vastav plokk kohandada, aga on oluline märkida, et kohandamisel säiliks vähemalt üks operator.
 
 ####	Korpuse kustutamine
 Kustutamine toimub läbi kasutajaliidese vajutades „kustuta“ nuppu vastava korpuse juures.
