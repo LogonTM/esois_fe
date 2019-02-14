@@ -202,6 +202,9 @@ class AggregatorPage extends Component {
 	}
 
 	search = () => {
+		if(this.state.numberOfResults == 0 || this.state.numberOfResults === '') {
+			this.setState({numberOfResults: 10})
+		}
 		var _paq = [];
 		var query = this.getCurrentQuery();
 		var queryTypeIdForSearch = this.state.queryTypeId;
