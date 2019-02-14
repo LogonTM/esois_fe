@@ -57,7 +57,15 @@ Sisse on võimalik logida ka kasutades OAuth 2.0 ja SAML 2.0 protokolle. Hetkel 
 
 Abilehe täiendamiseks tuleb lisada vajalik tekst (pealkiri, lõik) sõnaraamatusse src > translations > dictionary.js faili helppage jaotuse alla (igas olemasolevas keeles).
 
-Seejärel tuleb src > assets > js > pages > helppage.jsx faili lisada viide vastavale sõnaraamatu kirjele kas <h3></h3> märkide vahele pealkirja puhul või <p></p> märkide vahele tekstilõigu puhul. 
+Seejärel tuleb src > assets > js > pages > helppage.jsx faili lisada viide vastavale sõnaraamatu kirjele kas 
+```javascript
+<h3></h3>
+```
+märkide vahele pealkirja puhul või 
+```javascript
+<p></p>
+```
+märkide vahele tekstilõigu puhul. 
 
 ## Internatsionaliseeritavus
 
@@ -101,7 +109,7 @@ const logoIntl = {
 };
 ```
 Endpoint'i adminile:
-Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust. Võtme väärtus on suure/väikese tähe tundlik.
+Kasutatavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust. Võtme väärtus on suure/väikese tähe tundlik.
 
 Kihi kohta käiva täpsustava näpunäite ("tooltip") info koos tõlgetega käib dictionary.js failis queryinput > tooltip jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust.
 Näpunäide on nähtav peale kihi rippmenüüst valimist, liikudes kursoriga ära valitud kihi nimele.
@@ -111,7 +119,7 @@ Kihi märgendite tõlked tuleb panna dictionary.js failis queryinput > valueOpti
 Uues keeles korpuse keele tõlge tuleb panna dictionary.js failis language jaotuse alla kujul:
 keele 3-täheline lühend: 'tõlge',
 
-Tõlked tuleks panna iga olemasoleva keele kohta.
+Tõlked tuleb panna iga olemasoleva keele kohta.
 
 ## EL logo suuruse muutmine
 
@@ -157,7 +165,7 @@ Tulemusena luuakse ülemkorpus koos alamkorpustega:
 ![mainkorp](images/mainkorp.png)
 
 #####	 Ülemkorpuse parameetrite muutmine
-NB! Korpuses muudetavate parameetrite alla ei kuulu „**id**“ ja „**adapterType**“ ning muutmisel ei teisendata alamkorpused
+NB! Korpuses muudetavate parameetrite alla ei kuulu „**id**“ ja „**adapterType**“ ning muutmisel ei teisendata alamkorpuseid.
 Enne ülemkorpuse väärtuste muutmist tuleb kasutajaliidese kaudu allalaadida vastava ülemkorpuse XML fail (kasutades nuppu „allalaadimine“), muuta soovitud väärtuseid ning uuesti ülesselaadida.
 Koodi poolelt toimub korpuse otsing „id“ alusel.
 
@@ -172,7 +180,7 @@ Alamkorpuse muutmine on sarnane ülemkorpuse muutmisega, ehk on oluline jälgida
 Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et <`id`> kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma `<id>` väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja vastav plokk kohandada, aga on oluline märkida, et kohandamisel säiliks vähemalt üks operator.
 
 ####	Korpuse kustutamine
-Kustutamine toimub läbi kasutajaliidese vajutades „kustuta“ nuppu vastava korpuse juures.
+Kustutamine toimub läbi kasutajaliidese, vajutades „kustuta“ nuppu vastava korpuse juures.
 
 ####	Korpuste ligipääs
 Spetsiifilisele korpusesle ligipääsu andmine sisse logitud kasutajatele toimub parameetri `<preAuthorizeUse>` muutmisega vastavalt kas väärtusele true või false. Kui antud parameeter on märgitud kui true, siis ei ole võimalik sisse logimata kasutajal seda kasutada. 
