@@ -215,7 +215,7 @@ class LoginPage extends Component {
 							</div>
 							<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={saml_url}>
-									<img src={favicon} alt="favicon" /> Login SAML </a>
+									<img src={favicon} alt="favicon" /> Login CLARIN/TAAT </a>
 							</div>
 							<div className="bottom-gap"></div>
 						</div>
