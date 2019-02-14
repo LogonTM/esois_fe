@@ -140,6 +140,7 @@ Korpused on peamised tarkvara komponendid, mis kirjeldavad ressurssi, mille kaud
 Rakenduses on kasutusel kahte tüüpi korpuseid:
 * Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
 * Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
+
 ####	Korpuste lisamine ja muutmine
 Korpuste lisamine on jagatud kaheks etappiks. Esimeses faasis luuakse ülemkorpus koos eelseadistatud alamkorpustega, nt. KORP tüüpi ülemkorpuse loomisel tekkivad kõik alamkorpused, mis on saadaval aadressil http://KORP.TEENUSEPAKKUJA/info ning asuvad „corpora“ nimekirja all, samas TTU_SPEACH tüüpi ülemkorpuse loomisel tekkib alati kaks koprust. 
 Esimese sammuna tekkinud korpuste põhjad on vaja täiendada ning häälestada.
@@ -158,7 +159,7 @@ Tulemusena luuakse ülemkorpus koos alamkorpustega:
 ![mainkorp](images/mainkorp.png)
 
 #####	 Ülemkorpuse parameetrite muutmine
-NB! Korpuses muudetavate parameetrite alla ei kulu „**id**“ ja „**adapterType**“ ning muutmisel ei teisendata alamkorpused
+NB! Korpuses muudetavate parameetrite alla ei kuulu „**id**“ ja „**adapterType**“ ning muutmisel ei teisendata alamkorpused
 Enne ülemkorpuse väärtuste muutmist tuleb kasutajaliidese kaudu allalaadida vastava ülemkorpuse XML fail (kasutades nuppu „allalaadimine“), muuta soovitud väärtuseid ning uuesti ülesselaadida.
 Koodi poolelt toimub korpuse otsing „id“ alusel.
 
