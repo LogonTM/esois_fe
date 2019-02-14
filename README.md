@@ -16,6 +16,7 @@ Kasutus- ja paigaldusjuhend
   - [Tõlked](#tõlked)
 - [EL logo suuruse muutmine](#EL-logo-suuruse-muutmine)
 - [RABA logo asetamine lehe päisesse](#RABA-logo-asetamine-lehe-päisesse)
+- [Admin liidese kasutamine](#Admin-liidese-kasutamine)
 
 ## Sissejuhatus
 
@@ -34,10 +35,6 @@ Rakenduse käivitamiseks localhostis tuleb esmalt käsurealt (cmd) minna lähtek
 Järgnevalt tuleb sisestada käsklus 'yarn start', mille järel käivitatakse rakendus vaikimisi kasutatavaks määratud veebilehitsejas aadressil localhost:3000.
 
 ## Kasutamisest
-
-Hetkel on võimalik teostada otsinguid, näha otsingurida, otsingunuppu, vahetada lihtotsingu (CQL) ning laiendatud (FCS-QL) otsingu moodi vahel, eksisteerib ka kasutaja sisselogimise lehekülg ning abilehekülg. Viimasel on hetkel kirjeldatud otsingute tegemine.
-
-Kasutajaliides võimaldab vahetada ka keeli, vajutades vastava lipu peale (Eesti, Inglise). Võimaldatud on ka kasutajate registreerimine ja sisse logimine. Oauth 2.0 läbi väliste teenuste on hetkel testimisel aga lokaalselt on autentimine võimaldatud. Hetkeseisuga on kõik kasutajad vaikimisi tavakasutaja rollis, kes saavad ligi ka hiljem administraatorile mõeldud funktsionaalsustele (mis hetkel olemas).
 
 ### Back-end liidestamine
 
