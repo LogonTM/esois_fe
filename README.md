@@ -152,7 +152,33 @@ Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vaj
 Korpuse põhja võib allalaadida ning vastavalt kohandada või kasutada allpool olevat näidist. Dokumentatsiooni juurest saab leida vastavad *.xsd faili. 
 Peamised väärtused on „endpoint - url“, „endpoint-protocol“ ning “adapterType”.
 Tulemusena luuakse ülemkorpus koos alamkorpustega:
+
 ![mainkorp](images/mainkorp.png)
+
+#####	 Ülemkorpuse parameetrite muutmine
+NB! Korpuses muudetavate parameetrite alla ei kulu „**id**“ ja „**adapterType**“ ning muutmisel ei teisendata alamkorpused
+Enne ülemkorpuse väärtuste muutmist tuleb kasutajaliidese kaudu allalaadida vastava ülemkorpuse XML fail (kasutades nuppu „allalaadimine“), muuta soovitud väärtuseid ning uuesti ülesselaadida.
+Koodi poolelt toimub korpuse otsing „id“ alusel.
+
+#####	 Alamkorpuse lisamine
+Alamkorpuse lisamisel on peamised väärtused „**parrentId**“, “**adapterType**” ja „**handle**“ ning nad peavad olema omavahel kooskõlas, ehk parrentId kaudu otsitakse baasist õige ülemkorpus, handle on korpuse sisemine nimi, mida kasutatakse päringute koostamisel. 
+Kui kasutatakse allalaetud näidist, siis tuleb jälgida, et üleslaadimisel **ei oleks** enam `<id>` värtuseid XMLi sees. 
+
+![subkorp](images/subkorp.png)
+
+#####	 Alamkorpuse muutmine
+Alamkorpuse muutmine on sarnane ülemkorpuse muutmisega, ehk on oluline jälgida, et korpuse <`id`> oleks see sama korpuse id, mida muuta tahetakse. 
+Kihtide (`<layer>`) ja väärtuste(`<valueOption>`) muutmine toimub põhimõttel, et <`id`> kaudu otsitakse välja vastav objekt, nime(`<name>`) ei muudeta, muudetakse ainult sünonüüm. Uue objekti lisamiseks oleks vaja lisada vastav plokk XML faili ilma <id> väärtuseta, ning kustutamiseks vaja XMList ära kaotada vastav objekt.  Operaatorite nimekirja (`<layerOperators>`) muutmiseks on vaja kohandada vastav plokk, aga on oluline, et oleks vähemalt üks operator.
+
+####	Korpuse kustutamine
+Kustutamine toimub läbi kasutajaliidese vajutades „kustuta“ nuppu vastava korpuse juures.
+
+####	Korpuste ligipääs
+Spetsiifilisele korpusesle ligipääsu andmine sisse logitud kasutajatele toimub parameetri `<preAuthorizeUse>` muutmisega vastavalt kas väärtusele true või false. Kui antud parameeter on märgitud kui true, siis ei ole võimalik sisse logimata kasutajal seda kasutada. 
+
+
+
+
 
 
 
