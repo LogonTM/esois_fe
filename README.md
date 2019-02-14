@@ -71,9 +71,11 @@ src > assets > img kausta tuleb panna vastava keele lipu fail. See fail tuleb im
 import GbFlag from '../img/gb-icon.png';
 
 'main.jsx' failis olevas funktsioonis renderCollapsible tuleb lipukese ikooni kuvamiseks lisada read (näidis Suurbritannia lipu kohta):
+```javascript
   <a className='nav-item navbar-brand' tabIndex='-1' onClick={this.changeToEN}>
     <img className='ico' src={GbFlag} alt='ENG' />
   </a>
+```
 
 kus onClick={this.changeToEN} viitab keele vahetamise funktsioonile (funktsiooni tegemine on kirjas allpool), mille nimes viimased 2 tähte märgivad konkreetset keelt, antud juhul inglise keelt ('EN'),
 src={GbFlag} viitab imporditud Suurbritannia lipu ikoonile, mida kuvatakse ekraanil,
@@ -92,12 +94,12 @@ Eesti Keeleressursside Keskuse logo on võimalik kuvada nii inglise kui eesti ke
 import EnEKRKlogo from '../img/ekrk-logo-eng.png';
 
 Millist logo konkreetse keele puhul kuvatakse tuleb määrata 'main.jsx' failis (hetkel real 23 asuvas) muutujas logoIntl:
-
+```javascript
 const logoIntl = {
   ee: EeEKRKlogo,
   en: EnEKRKlogo
 };
-
+```
 Endpoint'i adminile:
 Otsitavate kihtide nimede tõlked tuleb panna dictionary.js failis queryinput > layer jaotuse alla. Võtmena kasutada endpoint'i xml failis "name" väljal olevat väärtust. Võtme väärtus on suure/väikese tähe tundlik.
 
@@ -130,7 +132,23 @@ Otsingute-, kasutajate- ja vealogisid on võimalik näha admin'i liideses.
 
 Algupärasel admin'il on võimalik pärast sisse logimist teistele kasutajatele anda ka juurde administraatori õigusi või siis neid ära võtta.
 
-### Endpointide lisamine ja muutmine
+### Korpuste administreerimine
+
+####Korpuste administreerimine
+Korpused on peamised tarkvara komponendid, mis kirjeldavad ressurssi, mille kaudu edastatakse päring (otsingu)teenuse pakkujale ning teisendavad otsingu tulemused RABAle sobivale kujule.
+Rakenduses on kasutusel kahte tüüpi korpuseid:
+•	Ülemkorpus – teenusepakkujale spetsifiline komponent, mis sisaldab kogu loogika kirjeldust konkreetse ressurssiga suhtlemiseks ning sealt saadud vastuste teisendamiseks. Ülemkorpus ühendab enda alla sarnase loogikaga alamkomponendid;
+•	Alamkorpus – Pigem kasutajale mõeldud komponendid, mis kirjeldavad konkreetset ressurssi ning ühtlustab ja täiendab ülemkorpuses olevat loogikat.
+1.	Korpuste lisamine ja muutmine
+Korpuste lisamine on jagatud kaheks etappiks. Esimeses faasis luuakse ülemkorpus koos eelseadistatud alamkorpustega, nt. KORP tüüpi ülemkorpuse loomisel tekkivad kõik alamkorpused, mis on saadaval aadressil http://KORP.TEENUSEPAKKUJA/info ning asuvad „corpora“ nimekirja all, samas TTU_SPEACH tüüpi ülemkorpuse loomisel tekkib alati kaks koprust. 
+Esimese sammuna tekkinud korpuste põhjad on vaja täiendada ning häälestada.
+Üldjuhul uute korpuste lisamine ja muutmine toimub kasutajaliidese kaudu „administraatori“ õigustega.
+Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vajutada nuppule „üleslaadimine“. Sõltuvalt põhja sisust süsteem:
+•	Lisab uue ülemkorpuse, ning automaatselt käivitab eelseadistatud alamkorpuste loomine;
+•	Muudab ülemkorpuse parameetreid, aga ei puuduta alam korpusi;
+•	Lisab uue alamkorpuse;
+•	Muudab alamkorpust.
+
 
 
 

@@ -52,9 +52,6 @@ class ORArg extends Component {
 		if (prevState.layer !== this.state.layer
 			|| prevState.layerOperator !== this.state.layerOperator
 			|| prevState.argValue !== this.state.argValue
-			/*|| (!this.state.editingText && prevState.argValue !== this.state.argValue) // only update text-value input on field blur 
-			|| (prevState.editingText !== this.state.editingText && prevState.editingText) // stopped editing text field.
-			*/
 		) {
 			this.fireQueryChange();
 		}
