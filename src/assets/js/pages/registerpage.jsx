@@ -255,7 +255,6 @@ class RegisterPage extends Component {
             };
             register(registerRequest)
             .then(response => {
-                // Fix here Bootstrap notification for succesfull registration and therefore pending log in?
                 this.setState({
                     notificationMessage: {
                         message: response.message
@@ -276,15 +275,13 @@ class RegisterPage extends Component {
                         this.props.backToAggregator();
                     }, 1500)
                 }).catch(error => {
-                    if(error.status === 401) {
-                        // Fix here Bootstrap notifcation for failure about incorrectness in either Username or Password?     
+                    if(error.status === 401) {  
                         this.setState({
                             notificationMessage: {
                                 message: error.message
                             }
                         })             
                     } else {
-                        // Fix here Bootstrap notification for failure from the server side?
                         this.setState({
                             notificationMessage: {
                                 message: error.message
@@ -293,7 +290,6 @@ class RegisterPage extends Component {
                     }
                 });
             }).catch(error => {
-                // Fix here Bootstrap failure notification for server side registration?
                 this.setState({
                     notificationMessage: {
                         message: error.message

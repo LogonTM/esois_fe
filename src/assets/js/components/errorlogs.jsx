@@ -74,9 +74,6 @@ class ErrorLogs extends PureComponent {
 					<thead className='thead-blue'>
 						<tr>
 							<TableHeaderRow headers={dictionary[this.props.languageFromMain].errorlogs.headers} />
-							{/* <th>
-								{dictionary[this.props.languageFromMain].common.actions}
-							</th> */}
 						</tr>
 					</thead>
 					<tbody id='userLogList'>
@@ -86,12 +83,6 @@ class ErrorLogs extends PureComponent {
 									<td>{item.createdAt}</td>
 									<td>{item.errorType}</td>
 									<td>{item.errorValue}</td>
-									{/* <td>
-										<Button
-											label={dictionary[this.props.languageFromMain].button.edit}
-											onClick={e => this.toggleEdit(e, item.id, item.name, item.email, item.enabled, item.roles)}
-										/>
-									</td> */}
 								</tr>
 								)
 							})
