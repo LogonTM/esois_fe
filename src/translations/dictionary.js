@@ -119,6 +119,8 @@ export default {
             },
             messageP1: 'Tere, ',
             messageP2: 'olete sisse logitud',
+            oauth: 'Sisene OAuth',
+            saml: 'Sisene CLARIN/TAAT'
         },
         managelogs: {
             searchlogs: 'Otsilogid',
@@ -478,6 +480,8 @@ export default {
             },
             messageP1: 'Hello, ',
             messageP2: 'you have logged in',
+            oauth: 'Login OAuth',
+            saml: 'Login CLARIN/TAAT'
         },
         managelogs: {
             searchlogs: 'Search logs',  

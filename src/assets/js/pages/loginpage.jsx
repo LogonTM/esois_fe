@@ -211,11 +211,11 @@ class LoginPage extends Component {
 							</form>
 							 <div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={github_auth_url}>
-									<img src={githublogo} alt="Github" /> Login OAuth </a>
+									<img src={githublogo} alt="Github" /> {dictionary[this.props.languageFromMain].loginpage.oauth}</a>
 							</div>
 							<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={saml_url}>
-									<img src={favicon} alt="favicon" /> Login CLARIN/TAAT </a>
+									<img src={favicon} alt="favicon" /> {dictionary[this.props.languageFromMain].loginpage.saml}</a>
 							</div>
 							<div className="bottom-gap"></div>
 						</div>
