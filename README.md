@@ -82,11 +82,13 @@ src={GbFlag} viitab imporditud Suurbritannia lipu ikoonile, mida kuvatakse ekraa
 alt='ENG' viitab keele lühendile.
 
 Tuleb lisada ka keele vahetamise funktsioon vastavale uuele keelele 'main.jsx' faili. Näidis inglise keele valimise funktsioonist:
+```javascript
 changeToEN = () => {
   this.setState({
     language: 'en'
   })
 }
+```
 
 siin language: 'en' kahetäheline keele lühend vastab dictionary.js failis olevale vastava keele indikaatorile. Sellele vastavalt saadakse kätte vastavad tõlgitud laused.
 
