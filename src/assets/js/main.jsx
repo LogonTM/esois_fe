@@ -15,7 +15,7 @@ import LoginIcon from '../img/login-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
-import Rabalogo from '../img/rabalogo.png'
+import Rabalogo from '../img/raba11.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
@@ -371,6 +371,19 @@ class Main extends Component {
 						<header className="inline navbar-brand" id='navbar-images'>
 							<a
 								tabIndex="-1"
+								href="https://clarin.eu/"
+								target="external"
+								data-toggle='tooltip'
+								title='CLARIN ERIC'
+							>
+								<img 
+									className='logo2'
+									src={Clarinlogo}
+									alt='CLARIN ERIC logo'
+								/>
+							</a>
+							<a
+								tabIndex="-1"
 								href="https://keeleressursid.ee/"
 								target="external"
 								data-toggle='tooltip'
@@ -384,22 +397,15 @@ class Main extends Component {
 							</a>
 							<a
 								tabIndex="-1"
-								href="https://clarin.eu/"
-								target="external"
-								data-toggle='tooltip'
-								title='CLARIN ERIC'
+								href="/"
+								title='Raba ühendatud sisuotsing'
 							>
-								<img 
-									className='logo2'
-									src={Clarinlogo}
-									alt='CLARIN ERIC logo'
-								/>
-							</a>
 								<img
 									className='logo'
 									src={Rabalogo}
-									alt='Raba logo'
+									alt='Raba ühendatud sisuotsing'
 								/>
+							</a>
 						</header>
 						<button
 							type='button'
