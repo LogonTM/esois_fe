@@ -111,11 +111,39 @@ class Results extends Component {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+		const leftContent = left => {
+			if (left.startsWith('<audio')) {
+				const parts = hit.left.split('</audio><br/>')
+				return parts[1];
+			} else {
+				return left
+			}
+		}
+		const rightContent = right => {
+			if (right.startsWith('<ol><li><div>')) {
+				return (
+					<span
+						className="beHTML"
+						dangerouslySetInnerHTML={{__html: right}}
+					></span>
+				);
+			} else {
+				return right
+			}
+		}
 		return	(
 			<tr key={i} className="hitrow">
-				<td style={sright}>{hit.left}</td>
-				<td style={scenter} className="keyword">{hit.keyword}</td>
-				<td style={sleft}>{hit.right}</td>
+				<td style={sright}>
+					{ leftContent(hit.left) }
+				</td>
+				<td style={scenter} className="keyword">
+					{ (hit.keyword.startsWith('<div')) ?
+					<span className="beHTML" dangerouslySetInnerHTML={{__html: hit.keyword}}></span>
+					: hit.keyword }
+				</td>
+				<td style={sleft}>
+					{ rightContent(hit.right) }
+				</td>
 			</tr>
 		);
 	}
@@ -210,13 +238,14 @@ class Results extends Component {
 	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputKwic" className="btn btn-flat">
+				<label htmlFor="inputKwic" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
 					<input
 						id="inputKwic"
 						type="checkbox"
 						value="kwic"
 						checked={this.state.displayKwic}
 						onChange={this.toggleKwic}
+						disabled={this.state.displayADV}
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
@@ -228,13 +257,14 @@ class Results extends Component {
 	renderDisplayADV = () => {
 		 return (
 			 <div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputADV" className="btn btn-flat">
+				<label htmlFor="inputADV" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
 					<input
 						id="inputADV"
 						type="checkbox"
 						value="adv"
 						checked={this.state.displayADV}
 						onChange={this.toggleADV}
+						disabled={this.state.displayKwic}
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.adv}

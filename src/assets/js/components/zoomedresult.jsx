@@ -80,9 +80,22 @@ class ZoomedResult extends Component {
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 		    if (tf.html) {
-                return (<span key={idx} className="beHTML" dangerouslySetInnerHTML={{__html: tf.text}}></span>)
+					return (
+						<span
+							key={idx}
+							className="beHTML"
+							dangerouslySetInnerHTML={{__html: tf.text}}
+						></span>
+					);
             }
-		    return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
+			return (
+				<span
+					key={idx}
+					className={tf.hit?"keyword":""}
+				>
+					{tf.text}
+				</span>
+			);
 		}
 		return (
 			<p key={i} className="hitrow">
@@ -95,11 +108,39 @@ class ZoomedResult extends Component {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+		const leftContent = left => {
+			if (left.startsWith('<audio')) {
+				const parts = hit.left.split('</audio><br/>')
+				return parts[1];
+			} else {
+				return left
+			}
+		}
+		const rightContent = right => {
+			if (right.startsWith('<ol><li><div>')) {
+				return (
+					<span
+						className="beHTML"
+						dangerouslySetInnerHTML={{__html: right}}
+					></span>
+				);
+			} else {
+				return right
+			}
+		}
 		return	(
 			<tr key={i} className="hitrow">
-				<td style={sright}>{hit.left}</td>
-				<td style={scenter} className="keyword">{hit.keyword}</td>
-				<td style={sleft}>{hit.right}</td>
+				<td style={sright}>
+					{ leftContent(hit.left) }
+				</td>
+				<td style={scenter} className="keyword">
+					{ (hit.keyword.startsWith('<div')) ?
+					<span className="beHTML" dangerouslySetInnerHTML={{__html: hit.keyword}}></span>
+					: hit.keyword }
+				</td>
+				<td style={sleft}>
+					{ rightContent(hit.right) }
+				</td>
 			</tr>
 		);
 	}
@@ -158,9 +199,8 @@ class ZoomedResult extends Component {
 	}
 
 	renderPanelBody = corpusHit => {
-	    var fulllength = {width:"100%"};
-
-        if (this.state.displayADV) {
+		var fulllength = {width:"100%"};
+		if (this.state.displayADV) {
 			return (
 				<div id="adv-results">
 					{this.renderErrors(corpusHit)}
@@ -170,7 +210,7 @@ class ZoomedResult extends Component {
 					</table>
 				</div>
 			);
-	    } else if (this.state.displayKwic) {
+		} else if (this.state.displayKwic) {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}
@@ -180,7 +220,7 @@ class ZoomedResult extends Component {
 					</table>
 				</div>
 			);
-	    } else {
+		} else {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}
@@ -188,19 +228,20 @@ class ZoomedResult extends Component {
 					{corpusHit.kwics.map(this.renderRowsAsHits)}
 				</div>
 			);
-	    }
+		}
 	}
 
 	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputKwic" className="btn btn-flat">
+				<label htmlFor="inputKwic" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
 					<input
 						id="inputKwic"
 						type="checkbox"
 						value="kwic"
 						checked={this.state.displayKwic}
 						onChange={this.toggleKwic}
+						disabled={this.state.displayADV}
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
@@ -212,13 +253,14 @@ class ZoomedResult extends Component {
 	renderDisplayADV = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-			   <label htmlFor="inputADV" className="btn btn-flat">
+			   <label htmlFor="inputADV" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
 			   		<input
 						id="inputADV"
 						type="checkbox"
 						value="adv"
 						checked={this.state.displayADV}
 						onChange={this.toggleADV}
+						disabled={this.state.displayKwic}
 					/>
 				   &nbsp;
 				   {dictionary[this.props.languageFromMain].resultfunctions.display.adv}
