@@ -288,6 +288,8 @@ class Results extends Component {
 					{ showprogress ? false :
 						<div className="float-left">
 							{`${collhits.hits} ${dictionary[this.props.languageFromMain].results.collectionsFound}`}
+							{ this.props.queryTypeId === 'cql' && collhits.hits === 0 &&
+								<p>{`\n${dictionary[this.props.languageFromMain].results.cqlnoresults}`}</p>}
 						</div>
 					}
 					{ collhits.hits === 0 ? false :

@@ -99,7 +99,7 @@ export default {
             adjustSearchTitle: 'Otsingukriteeriumite muutmine',
             adjustSearchParagraph1: 'FCS aggregaator võimaldab valida spetsiifilisi korpuseid vastavalt nende nimele või kasutatavale keelele ning määratleda vastete arvu korpuse kohta, mida ühel lehel näidatakse. Kasutajaliides, mis võimaldab vastavaid valikuid teha, asetseb otsinguvälja all.',
             howToSearchTitle: 'Kuidas otsida',
-            howToSearchParagraph1: 'Teostamaks lihtsat sõnaotsingut (CQL) üle kõikvõimalike korpuste, tuleb sisestada otsinguväljale otsitav sõna ning vajutada otsingu nupule või vajutada klaviatuuril "Enter".',
+            howToSearchParagraph1: 'Teostamaks lihtsat sõnaotsingut (CQL) üle kõikvõimalike korpuste, tuleb sisestada otsinguväljale otsitav sõna ning vajutada otsingu nupule või vajutada klaviatuuril "Enter". Lihtotsinguga saab otsida vaid ühte sõna korraga.',
             howToSearchParagraph2: 'Teostamaks laiendatud otsinguid, seda toetavatest korpustest, kaasates otsingusse ka annotatsioonid (FCS-QL), tuleb valida rippmenüüst FCS otsingumood ning sisestada vastav FCS otsing otsinguväljale. Seejärel vajutada otsingu nupule või vajutada klaviatuuril "Enter".',
             howToSearchParagraph2a: 'Kasutades laiendatud otsingu sisestamisel abivormi, filtreeritakse automaatselt vähemaks valitud korpuseid vastavalt sellele, kas nad toetavad kõiki hetkel valitud kihte või mitte. Filtreerimine toimib kahesuunaliselt ehk valides välja mingi kindel korpus või korpused muudetakse valikus olevad kihid vastavaks valitud korpustes leiduvatele kihtidele. Sellest tulenevalt kui muudate kõik korpused mittevalituks jääb ainsana alles kiht "word" ehk "sõna". Kõik seni otsingu vormidel valitud kihid, mis ei ole "sõna", muutuvad kõigi korpuste mittevalituks muutmise järel kihiks "sõna".',
             howToSearchParagraph3: 'Otsingu käivitumisel hakkab lehekülg täituma vastustega erinevatest korpustest.',
@@ -284,10 +284,11 @@ export default {
             exception: 'Erand:'
         },
         results: {
-        	collectionsFound: 'vastavat korpust leitud',
+            collectionsFound: 'vastavat korpust leitud',
+            cqlnoresults: 'Kui tulemus pole see, mida ootasite, kontrollige igaks juhuks oma päring üle. Lihtpäringus saab otsida ühte sõna korraga.',
+            loading: 'Laen tulemusi, palun oota...',
             progressMessageP1: 'vastavat korpust leitud',
             progressMessageP2: 'otsitud korpusest',
-            loading: 'Laen tulemusi, palun oota...',
         },
         searchlogs: {
             headers: [
@@ -460,7 +461,7 @@ export default {
             adjustSearchTitle: 'Adjusting search criteria',
             adjustSearchParagraph1: 'The FCS Aggregator makes possible to select specific corpora based on their name or language and to specify the number of search results (hits) per corpus per page. The user interface controls that allows to change these options are located right below the search fiels on the main page. The current options are to filter resources based on their language, to select specific resources, and to set the maximum number of hits.',
             howToSearchTitle: 'Performing search in Federated Content Search corpora',
-            howToSearchParagraph1: "To perform a simple keyword search in all corpora, go to the search field at the top of the page, enter your query, and click the 'search' button or press the 'Enter' key.",
+            howToSearchParagraph1: "To perform a simple keyword search in all corpora, go to the search field at the top of the page, enter your query, and click the 'search' button or press the 'Enter' key. With the simple search it is possible to search only one keyword at a time.",
             howToSearchParagraph2: "To perform an advanced search on multiple annotation layers in corpora that support this, switch to Multi-layer Federated Content Search (FCS) in the dropdown list, enter a FCS query in the search field at the top of the page, and click the 'search' button or press the 'Enter' key.",
             howToSearchParagraph2a: 'When entering query using the form of advanced search the selected corpora are filtered according to whether they have all the selected layers or not. The filtering is bidirectional e.g. when selecting a specific corpus or some corpora the available layers are corresponding to those present in selected corpora. As a result of this if all corpora are deselected the only available layer will be "word". All layers that have been entered with query form that are not "word" will change to "word" after deselecting all corpora.',
             howToSearchParagraph3: 'When the search starts, the page will start filling in with the corpora responses.',
@@ -646,9 +647,10 @@ export default {
         },
         results: {
             collectionsFound: 'matching collections found',
+            cqlnoresults: 'If the result is not what you expected, please check your query just in case. In simple search it is possible to search only one word at a time.',
+            loading: 'Loading results, please wait...',
             progressMessageP1: 'matching collections found in',
             progressMessageP2: 'searched collections',
-            loading: 'Loading results, please wait...',
         },
         searchlogs: {
             headers: [
