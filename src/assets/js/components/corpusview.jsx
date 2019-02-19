@@ -50,7 +50,7 @@ class CorpusView extends Component {
 		this.props.corpora.update();
 	}
 
-	toggleEditCenter = (corpus, e) => {
+	toggleViewCenterDetails = (corpus, e) => {
 		e.preventDefault();
 		corpus.edit = !corpus.edit;
 		this.props.corpora.update();
@@ -58,13 +58,15 @@ class CorpusView extends Component {
 	}
 
 	toggleUsedLayersList = () => {
-		this.setState({layersListVisible: !this.state.layersListVisible})
+		this.setState(oldState => ({
+			layersListVisible: !oldState.layersListVisible
+		}));
 	}
 
 	toggleTooltip = () => {
-		this.setState({
-			tooltipIsOpen: !this.state.tooltipIsOpen
-		});
+		this.setState(oldState => ({
+			tooltipIsOpen: !oldState.tooltipIsOpen
+		}));
 	}
 
 	selectAll = (value) => {
@@ -87,7 +89,7 @@ class CorpusView extends Component {
 		}
 
 		readFile(this.state.file).then(xml => {
-		    this.setState({ xml })
+		   this.setState({ xml })
 
 			const token = localStorage.getItem(authentication_token);
 
@@ -123,7 +125,7 @@ class CorpusView extends Component {
 				if (response.success === true) {
 					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
 				}else{
-				    alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${response.message}`);
+				   alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${response.message}`);
 				}
 			}).catch(err => {
 				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${err.message}`);
@@ -336,7 +338,7 @@ class CorpusView extends Component {
 										{dictionary[this.props.languageFromMain].button.view}
 									</React.Fragment>
 								)}
-								onClick={this.toggleEditCenter.bind(this, corpus)}
+								onClick={this.toggleViewCenterDetails.bind(this, corpus)}
 								style={{marginRight:1}}
 							/>
 							{` `}

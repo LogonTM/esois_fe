@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types';
 import dictionary from '../../../translations/dictionary';
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import SearchLogs from '../components/searchlogs';
 import UserLogs from '../components/userlogs';
 import ErrorLogs from '../components/errorlogs';

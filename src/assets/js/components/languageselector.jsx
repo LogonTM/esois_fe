@@ -8,7 +8,6 @@ class LanguageSelector extends Component {
 		anyLanguage: PT.array.isRequired,
 		currentLanguagesMap: PT.object.isRequired,
 		selectedLanguage: PT.array.isRequired,
-		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
 		languageFromMain: PT.string.isRequired,
 		corpora: PT.object.isRequired,
@@ -22,7 +21,7 @@ class LanguageSelector extends Component {
 	}
 
 	selectLang = language => {
-		this.props.languageChangeHandler(language, this.props.languageFilter);
+		this.props.languageChangeHandler(language);
 	}
 	
 	renderLanguageObject = lang => {
@@ -67,7 +66,7 @@ function pairs(o){
 				ret.push([x, o[x]]);
 			}
 		}
-		return ret;
+	return ret;
 }
 
 export default LanguageSelector;

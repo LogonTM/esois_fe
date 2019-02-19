@@ -447,9 +447,9 @@ class Main extends Component {
 	}
 }
 
-function endsWith(str, suffix) {
-	return str.indexOf(suffix, str.length - suffix.length) !== -1
-}
+// function endsWith(str, suffix) {
+// 	return str.indexOf(suffix, str.length - suffix.length) !== -1
+// }
 
 function getUrlParameter(name) {
 	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

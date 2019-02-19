@@ -76,11 +76,15 @@ class Results extends Component {
 	}
 
 	toggleKwic = () => {
-		this.setState({displayKwic:!this.state.displayKwic});
+		this.setState(oldState => ({
+			displayKwic:!oldState.displayKwic
+		}));
 	}
 
 	toggleADV = () => {
-		 this.setState({displayADV:!this.state.displayADV});
+		this.setState(oldState => ({
+			displayADV:!oldState.displayADV
+		}));
 	}
 
 	renderPanelTitle(corpus) {

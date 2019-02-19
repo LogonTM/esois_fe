@@ -1,8 +1,7 @@
 import 'bootstrap';
-import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
 import { getUsersLog } from '../utilities/functions';

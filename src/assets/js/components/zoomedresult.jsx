@@ -70,11 +70,15 @@ class ZoomedResult extends Component {
 	}
 
 	toggleKwic = () => {
-		this.setState({displayKwic:!this.state.displayKwic});
+		this.setState(oldState => ({
+			displayKwic:!oldState.displayKwic
+		}));
 	}
 
 	toggleADV = () => {
-		this.setState({displayADV:!this.state.displayADV});
+		this.setState(oldState => ({
+			displayADV:!oldState.displayADV
+		}));
 	}
 
 	renderRowsAsHits = (hit,i) => {

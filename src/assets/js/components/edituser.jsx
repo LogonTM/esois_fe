@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
-import $ from 'jquery';
+import React, { PureComponent } from 'react';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import { updateUser } from '../utilities/functions';

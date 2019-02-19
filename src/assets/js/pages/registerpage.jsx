@@ -6,7 +6,7 @@ import {
     maximum_email_length
 } from '../constants/constants';
 import { login } from '../utilities/functions';
-import { authentication_token, okta_url } from '../constants/constants';
+import { authentication_token } from '../constants/constants';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
@@ -79,7 +79,7 @@ class RegisterPage extends Component {
             return {
                 isValid: true,
                 hasError: null,
-              };            
+            };            
         }
     }
 

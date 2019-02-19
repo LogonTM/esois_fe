@@ -92,9 +92,9 @@ class ORArg extends Component {
 	}
 
 	toggleTooltip = () => {
-		this.setState({
-			tooltipIsOpen: !this.state.tooltipIsOpen
-		});
+		this.setState(oldState => ({
+			tooltipIsOpen: !oldState.tooltipIsOpen
+		}));
 	}
 
 	renderInput = () => {
