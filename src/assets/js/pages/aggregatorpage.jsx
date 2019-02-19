@@ -536,7 +536,7 @@ class AggregatorPage extends Component {
 						className="card-heading"
 					>
 						<div className="row">
-							<div className="col-l-2 col-md-3 col-sm-4 col-xs-4">
+							<div className="col-xl-3 col-lg-4 col-md-5 col-sm-8 col-xs-12">
 								<fieldset>
 									<div className="switch-toggle switch-candy blue">
 										<input
@@ -593,7 +593,7 @@ class AggregatorPage extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
-					<div className="col-xl-5 col-l-5 col-md-8 col-sm-10 col-xs-12">
+					<div className="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-xs-12">
 						<fieldset>
 							<div className="switch-toggle switch-candy orange">
 								<input
