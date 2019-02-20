@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { pairs } from '../utilities/functions'
 
 var PT = PropTypes;
 
@@ -32,7 +33,14 @@ class LanguageSelector extends Component {
 		};
 		return (
 			<div key={lang[0]}>
-				<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
+				<a
+					tabIndex="-1"
+					href="#"
+					style={style}
+					onClick={this.selectLang.bind(this, lang)}
+				>
+					{desc}
+				</a>
 			</div>
 		);
 	}
@@ -57,16 +65,6 @@ class LanguageSelector extends Component {
 			</div>
 		);
 	}
-}
-
-function pairs(o){
-	var ret = [];
-		for (var x in o) {
-			if (o.hasOwnProperty(x)) {
-				ret.push([x, o[x]]);
-			}
-		}
-	return ret;
 }
 
 export default LanguageSelector;

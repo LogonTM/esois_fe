@@ -33,6 +33,7 @@ class QueryInput extends Component {
 					onChange={evt => this.props.onQueryChange(evt.target.value)}
 					onKeyDown={this.props.onKeyDown}
 					ref="cqlOrEmbeddedQuery"
+					data-testid='cql-input'
 				/>
 			);
 		} else if (this.props.queryTypeId === "fcs" && this.props.fcsTextAreaVisibility) {
@@ -49,12 +50,17 @@ class QueryInput extends Component {
 					onChange={evt => this.props.onQueryChange(evt.target.value)} 
 					onKeyDown={this.props.handleKeyTextarea} 
 					ref="fcsOrEmbeddedQuery"
+					data-testid='fcs-text-input'
 				/>
 			);
 		}
 		return (
 			<div>
-				<div id="adv_query_input_group" className="container-fluid">
+				<div
+					id="adv_query_input_group"
+					className="container-fluid"
+					data-testid='fcs-form-input'
+				>
 					<ADVTokens
 						query={this.props.query}
 						ref="fcsGQB"

@@ -97,8 +97,8 @@ class ANDQueryArgs extends Component {
 	}
 	
 	onQueryChange = (andId, queryStr) => {
-			this.queryStrCache[andId] = queryStr;
-			this.fireQueryChange();
+		this.queryStrCache[andId] = queryStr;
+		this.fireQueryChange();
 	}
 
 	renderANDTokenFooter = () => {

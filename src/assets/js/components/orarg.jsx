@@ -108,6 +108,7 @@ class ORArg extends Component {
 					onChange={this.onArgValueChange}
 					onFocus={() => this.setState({editingText: true})}
 					onBlur={() => this.setState({editingText: false})}
+					data-testid='fcsquery-form-textinput'
 				/>
 			);
 		} else {

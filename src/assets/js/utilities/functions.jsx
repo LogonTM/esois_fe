@@ -158,3 +158,13 @@ export function getEndpoint (id) {
         method: 'GET'
     })
 }
+
+export function pairs(o){
+	var ret = [];
+		for (var x in o) {
+			if (o.hasOwnProperty(x)) {
+				ret.push([x, o[x]]);
+			}
+		}
+	return ret;
+}

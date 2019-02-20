@@ -18,6 +18,7 @@ import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
 import { authentication_token } from '../constants/constants';
 import { queryToANDArgs, queryToORArgs, queryToTokens } from '../utilities/queryinputf';
+import { pairs } from '../utilities/functions';
 
 var PT = PropTypes;
 
@@ -1007,16 +1008,6 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 
 	corporaToSelect.forEach(selectSubTree.bind(this, true));
 };
-
-function pairs(o) {
-	var ret = [];
-	for (var x in o) {
-		if (o.hasOwnProperty(x)) {
-			ret.push([x, o[x]]);
-		}
-	}
-	return ret;
-}
 
 Corpora.prototype.getSelectedIds = function() {
 	var ids = [];

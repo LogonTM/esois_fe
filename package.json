@@ -6,16 +6,11 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.2.1",
     "css-toggle-switch": "^4.1.0",
-    "intl": "^1.2.5",
     "jquery": "^3.3.1",
     "ramda": "^0.26.1",
     "react": "^16.5.2",
-    "react-addons-linked-state-mixin": "^15.6.2",
     "react-cookie": "2.2.0",
     "react-dom": "^16.5.2",
-    "react-intl": "^2.7.1",
-    "react-oauth-flow": "^1.2.0",
-    "react-router-dom": "4.3.1",
     "react-scripts": "2.0.3",
     "react-transition-group": "^2.5.0",
     "reactstrap": "^6.5.0"
@@ -34,5 +29,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "dom-testing-library": "^3.16.8",
+    "jest-dom": "^3.1.2",
+    "react-testing-library": "^5.9.0"
+  }
 }
