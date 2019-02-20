@@ -10,7 +10,7 @@ class HelpPage extends Component {
 	render() {
 		return (
 			<div>
-				<div className="top-gap">
+				<div className="top-gap" data-testid='help-page'>
 					<h1>
 						{dictionary[this.props.languageFromMain].helppage.mainTitle}
 					</h1>
