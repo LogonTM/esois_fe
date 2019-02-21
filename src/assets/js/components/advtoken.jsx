@@ -13,13 +13,18 @@ class ADVToken extends Component {
 	
 	render() {
 		return (
-			<div className="token query_token inline btn-group" style={{display:"inline-block"}}>
+			<div
+				className="token query_token inline btn-group"
+				style={{display:"inline-block"}}
+				data-testid='ADVToken'
+			>
 				<div className="token_header">
 					<span
 						className="image_button close_btn"
 						type="button"
 						onClick={this.props.handleRemoveADVToken}
 						ref="removeToken"
+						data-testid="removeADVToken"
 					>
 						<i className="fa fa-times-circle" />
 					</span>

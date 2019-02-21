@@ -108,6 +108,7 @@ class ANDQueryArgs extends Component {
 				className="btn btn-xs btn-default image_button insert_arg"
 				onClick={this.addADVAnd}
 				ref="addAndButton"
+				data-testid='addAndButton'
 			>
 				<i className="fa fa-plus"/>
 			</button>
@@ -139,7 +140,7 @@ class ANDQueryArgs extends Component {
 			);
 		});
 		return (
-			<div>
+			<div data-testid='andQueryArgs'>
 				<TransitionGroup>
 					{andQueryArgs}
 				</TransitionGroup>

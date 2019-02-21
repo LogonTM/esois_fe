@@ -1,11 +1,10 @@
 import React from 'react';
 import ADVTokenMenu from './advtokenmenu';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import 'jest-dom/extend-expect';
 
 afterEach(cleanup);
 
-test('clicking buttons in repeat menu', () => {
+test('checkboxes and input fields in repeat menu', () => {
    const onChange = jest.fn();
    const tokenMenu = render(<ADVTokenMenu onChange={onChange} languageFromMain='ee' repeat1='' repeat2='' />);
    const sentenceStart = tokenMenu.getByLabelText('Lause algus');
@@ -25,7 +24,7 @@ test('clicking buttons in repeat menu', () => {
    expect(repeat2.value).toBe('');
 })
 
-test('prefilled repeats', () => {
+test('prefilled repeats in english', () => {
    const onChange = jest.fn();
    const tokenMenu = render(<ADVTokenMenu onChange={onChange} languageFromMain='en' repeat1='2' repeat2='4' />);
    const sentenceStart = tokenMenu.getByLabelText('Sentence start');

@@ -85,6 +85,7 @@ class ADVTokens extends Component {
 					className="btn btn-xs btn-default image_button insert_token"
 					type="button"
 					onClick={this.addADVToken}
+					data-testid='addADVToken'
 				>
 					<i className="fa fa-plus"></i>
 				</button>
