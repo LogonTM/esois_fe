@@ -49,15 +49,15 @@ class LoginPage extends Component {
 	loadCurrentUser = () => {
 		getCurrentUser()
 		.then(response => {
-		  this.setState({
-			currentUser: response.name,
-			loggedInStatus: true,
-		  });
-		  this.props.getRole(response.authorities[0].authority);
+			this.setState({
+				currentUser: response.name,
+				loggedInStatus: true,
+			});
+			this.props.getRole(response.authorities[0].authority);
 		}).catch(error => {
 
 		});
-	  }
+	}
 
 	logInOut = (event) => {
 		event.preventDefault();
@@ -157,16 +157,20 @@ class LoginPage extends Component {
 	}
 
 	loginValidator = () => {
-		return !(
-            (this.state.usernameOrEmail.valid === true && this.state.usernameOrEmail !== '') || 
-            (this.state.password.valid === true && this.state.password !== ''))
+		if (this.state.usernameOrEmail.value !== '' && this.state.password.value !== '') {
+			return !(
+            (this.state.usernameOrEmail.valid === true) || 
+            (this.state.password.valid === true))
+		} else {
+			return true
+		}
 	}
 
 	render () {
 		const usernameOrEmailInputValidator = (this.state.usernameOrEmail.value === '') ? "form-control" : "form-control input-lg " +
-            (this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
-    const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
-            (this.state.password.valid ? "is-valid"  : "is-invalid")
+			(this.state.usernameOrEmail.valid ? "is-valid" : "is-invalid")
+		const passwordInputValidator = (this.state.password.value === '') ? "form-control" : "form-control input-lg " +
+			(this.state.password.valid ? "is-valid"  : "is-invalid")
 		if (this.state.loggedInStatus === false) {
 			return (
 				<div>
@@ -197,19 +201,19 @@ class LoginPage extends Component {
 								<Button
 									label={dictionary[this.props.languageFromMain].button.login}
 									type='submit'
-									uiType='btn.lg'
+									uiType='btn-lg'
 									onClick={this.logInOut}
 									disabled={this.loginValidator()}
 								/>
-                &nbsp;
-                <Button
-                  label={dictionary[this.props.languageFromMain].button.register}
-                  type='submit'
-									uiType='btn.lg'
+								&nbsp;
+								<Button
+									label={dictionary[this.props.languageFromMain].button.register}
+									type='submit'
+									uiType='btn-lg'
 									onClick={this.handleToRegistration}
-                />
+								/>
 							</form>
-							 <div className="oauth-login">
+							<div className="oauth-login">
 								<a className="btn btn-block oauth-btn google" href={github_auth_url}>
 									<img src={githublogo} alt="Github" /> {dictionary[this.props.languageFromMain].loginpage.oauth}</a>
 							</div>
@@ -230,10 +234,10 @@ class LoginPage extends Component {
 							<span aria-hidden="true">{`${dictionary[this.props.languageFromMain].loginpage.messageP1} ${this.state.currentUser} ${dictionary[this.props.languageFromMain].loginpage.messageP2}!`}</span>
 							<div>
 								<Button
-                  label={dictionary[this.props.languageFromMain].button.logout}
-                  uiType='btn.lg'
-                  onClick={this.logInOut}
-                />
+									label={dictionary[this.props.languageFromMain].button.logout}
+									uiType='btn.lg'
+									onClick={this.logInOut}
+								/>
 							</div>
 						</div>
 					</div>

@@ -75,5 +75,4 @@ test('it should render FCS-QL query form input field', () => {
    fireEvent.change(inputField, {target: {value: 'asi'}});
    expect(onQueryChange).toHaveBeenCalledTimes(3);
    expect(inputField.value).toBe('asi');
-
 })

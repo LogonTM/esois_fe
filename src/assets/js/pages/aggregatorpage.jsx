@@ -652,6 +652,7 @@ class AggregatorPage extends Component {
 											: this.state.language[1]}
 										uiType='dropdown-toggle'
 										onClick={this.toggleLanguageSelection}
+										data-testid='languageSelector'
 									/>
 								</div>
 								<div className="input-group-prepend">
@@ -682,6 +683,7 @@ class AggregatorPage extends Component {
 										uiType='dropdown-toggle'
 										onClick={this.toggleCorpusSelection}
 										id='corpusViewButton'
+										data-testid='corpusViewButton'
 									/>
 								</div>
 							</div>

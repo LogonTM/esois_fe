@@ -61,7 +61,7 @@ class ErrorLogs extends PureComponent {
 
 	render() {
 		return (
-			<div id='container'>
+			<div id='container' data-testid='error-logs'>
 				<div className='top-gap'></div>
 				<div id='searchBox'>
 					<SearchCorpusBox

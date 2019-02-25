@@ -1134,6 +1134,608 @@ export const corporaForTest = {
    ]
 }
 
+export const corporaForTestNotLoggedIn = {
+   "corpora": [
+      {
+         "id": 1,
+         "institution": {
+            "id": null,
+            "name": "EKRK KORP",
+            "link": "https://korp.keeleressursid.ee",
+            "endpoints": []
+         },
+         "endpoint": {
+            "id": 2,
+            "url": "http://193.40.33.81",
+            "protocol": "VERSION_2",
+            "layers": []
+         },
+         "handle": "root",
+         "numberOfRecords": 100000,
+         "landingPage": "https://korp.keeleressursid.ee",
+         "title": "EKRK KORP",
+         "description": "Eesti Keeleressursside Keskuse korpused",
+         "languages": [
+            "vro",
+            "est",
+            "vot"
+         ],
+         "adapterType": "TU_KORP",
+         "preAuthorizeUse": false,
+         "visible": true,
+         "expanded": false,
+         "priority": 1,
+         "index": 0,
+         "edit": false,
+         "visibleSubCorporaCount": 2,
+         "selected": true,
+         "subCorpora": [
+            {
+               "id": 69,
+               "institution": {
+                  "id": null,
+                  "name": "EKRK KORP",
+                  "link": "https://korp.keeleressursid.ee",
+                  "endpoints": []
+               },
+               "endpoint": {
+                  "id": 70,
+                  "url": "http://localhost:8080/adapter",
+                  "protocol": "VERSION_2",
+                  "layers": [
+                     {
+                        "id": 71,
+                        "name": "word",
+                        "synonym": "word",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 72,
+                        "name": "pos",
+                        "synonym": "pos",
+                        "layerOperators": [
+                           "IS",
+                           "IS_NOT"
+                        ],
+                        "valueOptions": [
+                           {
+                              "id": 74,
+                              "name": "_S_",
+                              "synonym": "NOUN"
+                           },
+                           {
+                              "id": 73,
+                              "name": "_K_",
+                              "synonym": "ADP"
+                           },
+                           {
+                              "id": 75,
+                              "name": "_Q_",
+                              "synonym": "_Q_"
+                           },
+                           {
+                              "id": 77,
+                              "name": "_H_",
+                              "synonym": "PROPN"
+                           },
+                           {
+                              "id": 76,
+                              "name": "_C_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 78,
+                              "name": "_B_",
+                              "synonym": "_B_"
+                           },
+                           {
+                              "id": 80,
+                              "name": "_J_",
+                              "synonym": "CONJ"
+                           },
+                           {
+                              "id": 79,
+                              "name": "_G_",
+                              "synonym": "_G_"
+                           },
+                           {
+                              "id": 82,
+                              "name": "_P_",
+                              "synonym": "PRON"
+                           },
+                           {
+                              "id": 81,
+                              "name": "_D_",
+                              "synonym": "ADV"
+                           },
+                           {
+                              "id": 83,
+                              "name": "_U_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 84,
+                              "name": "_V_",
+                              "synonym": "VERB"
+                           },
+                           {
+                              "id": 85,
+                              "name": "_Y_",
+                              "synonym": "_Y_"
+                           },
+                           {
+                              "id": 87,
+                              "name": "_Z_",
+                              "synonym": "PUNCT"
+                           },
+                           {
+                              "id": 86,
+                              "name": "_A_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 88,
+                              "name": "_O_",
+                              "synonym": "_O_"
+                           },
+                           {
+                              "id": 89,
+                              "name": "_X_",
+                              "synonym": "_X_"
+                           },
+                           {
+                              "id": 90,
+                              "name": "_I_",
+                              "synonym": "INTJ"
+                           },
+                           {
+                              "id": 91,
+                              "name": "_N_",
+                              "synonym": "_N_"
+                           }
+                        ]
+                     }
+                  ]
+               },
+               "handle": "TESTCORPUS",
+               "numberOfRecords": 136,
+               "landingPage": "http://193.40.33.81/info?corpus=TESTCORPUS",
+               "title": "TESTCORPUS",
+               "description": "Eesti Keeleressursside Keskuse korpused: TESTCORPUS",
+               "languages": [
+                  "est"
+               ],
+               "adapterType": "TU_KORP",
+               "preAuthorizeUse": false,
+               "visible": true,
+               "expanded": false,
+               "priority": 1,
+               "index": 0,
+               "edit": false,
+               "visibleSubCorporaCount": 0,
+               "selected": true,
+               "subCorpora": [],
+               "parrentId": 1
+            },
+            {
+               "id": 92,
+               "institution": {
+                  "id": null,
+                  "name": "EKRK KORP",
+                  "link": "https://korp.keeleressursid.ee",
+                  "endpoints": []
+               },
+               "endpoint": {
+                  "id": 93,
+                  "url": "http://localhost:8080/adapter",
+                  "protocol": "VERSION_2",
+                  "layers": [
+                     {
+                        "id": 95,
+                        "name": "pos",
+                        "synonym": "pos",
+                        "layerOperators": [
+                           "IS",
+                           "IS_NOT"
+                        ],
+                        "valueOptions": [
+                           {
+                              "id": 97,
+                              "name": "_S_",
+                              "synonym": "NOUN"
+                           },
+                           {
+                              "id": 96,
+                              "name": "_K_",
+                              "synonym": "ADP"
+                           },
+                           {
+                              "id": 98,
+                              "name": "_Q_",
+                              "synonym": "_Q_"
+                           },
+                           {
+                              "id": 100,
+                              "name": "_H_",
+                              "synonym": "PROPN"
+                           },
+                           {
+                              "id": 99,
+                              "name": "_C_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 101,
+                              "name": "_B_",
+                              "synonym": "_B_"
+                           },
+                           {
+                              "id": 103,
+                              "name": "_J_",
+                              "synonym": "CONJ"
+                           },
+                           {
+                              "id": 102,
+                              "name": "_G_",
+                              "synonym": "_G_"
+                           },
+                           {
+                              "id": 105,
+                              "name": "_P_",
+                              "synonym": "PRON"
+                           },
+                           {
+                              "id": 104,
+                              "name": "_D_",
+                              "synonym": "ADV"
+                           },
+                           {
+                              "id": 106,
+                              "name": "_U_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 107,
+                              "name": "_V_",
+                              "synonym": "VERB"
+                           },
+                           {
+                              "id": 108,
+                              "name": "_Y_",
+                              "synonym": "_Y_"
+                           },
+                           {
+                              "id": 110,
+                              "name": "_Z_",
+                              "synonym": "PUNCT"
+                           },
+                           {
+                              "id": 109,
+                              "name": "_A_",
+                              "synonym": "ADJ"
+                           },
+                           {
+                              "id": 111,
+                              "name": "_O_",
+                              "synonym": "_O_"
+                           },
+                           {
+                              "id": 112,
+                              "name": "_X_",
+                              "synonym": "_X_"
+                           },
+                           {
+                              "id": 113,
+                              "name": "_I_",
+                              "synonym": "INTJ"
+                           },
+                           {
+                              "id": 114,
+                              "name": "_N_",
+                              "synonym": "_N_"
+                           }
+                        ]
+                     },
+                     {
+                        "id": 115,
+                        "name": "word",
+                        "synonym": "word",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 94,
+                        "name": "msd",
+                        "synonym": "msd",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 116,
+                        "name": "ref",
+                        "synonym": "ref",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 118,
+                        "name": "deprel",
+                        "synonym": "deprel",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 119,
+                        "name": "lemma",
+                        "synonym": "lemma",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     },
+                     {
+                        "id": 117,
+                        "name": "dephead",
+                        "synonym": "dephead",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     }
+                  ]
+               },
+               "handle": "UDDEV",
+               "numberOfRecords": 37221,
+               "landingPage": "http://193.40.33.81/info?corpus=UDDEV",
+               "title": "UDDEV",
+               "description": "Eesti Keeleressursside Keskuse korpused: UDDEV",
+               "languages": [
+                     "est"
+               ],
+               "adapterType": "TU_KORP",
+               "preAuthorizeUse": true,
+               "visible": true,
+               "expanded": false,
+               "priority": 1,
+               "index": 1,
+               "edit": false,
+               "visibleSubCorporaCount": 0,
+               "selected": false,
+               "subCorpora": [],
+               "parrentId": 1
+            },
+            {
+               "id": 120,
+               "institution": {
+                  "id": null,
+                  "name": "EKRK KORP",
+                  "link": "https://korp.keeleressursid.ee",
+                  "endpoints": []
+               },
+               "endpoint": {
+                  "id": 121,
+                  "url": "http://localhost:8080/adapter",
+                  "protocol": "VERSION_2",
+                  "layers": [
+                     {
+                        "id": 122,
+                        "name": "word",
+                        "synonym": "word",
+                        "layerOperators": [
+                           "IS",
+                           "REGEX",
+                           "IS_NOT",
+                           "ENDS_WITH",
+                           "NOT_REGEX",
+                           "CONTAINS",
+                           "STARTS_WITH"
+                        ],
+                        "valueOptions": []
+                     }
+                  ]
+               },
+               "handle": "VADJASONASTIK",
+               "numberOfRecords": 8279,
+               "landingPage": "http://193.40.33.81/info?corpus=VADJASONASTIK",
+               "title": "VADJASONASTIK",
+               "description": "Eesti Keeleressursside Keskuse korpused: VADJASONASTIK",
+               "languages": [
+                     "est",
+                     "vot"
+               ],
+               "adapterType": "TU_KORP",
+               "preAuthorizeUse": false,
+               "visible": true,
+               "expanded": false,
+               "priority": 1,
+               "index": 0,
+               "edit": false,
+               "visibleSubCorporaCount": 0,
+               "selected": true,
+               "subCorpora": [],
+               "parrentId": 1
+            }
+         ]
+      },
+      {
+         "id": 152,
+         "institution": {
+            "id": null,
+            "name": "EKI Sõnaveeb",
+            "link": "https://ekitest.tripledev.ee/wordweb/",
+            "endpoints": []
+         },
+         "endpoint": {
+            "id": 153,
+            "url": "https://korpused.phon.ioc.ee/api/v1/search/",
+            "protocol": "VERSION_1",
+            "layers": []
+         },
+         "handle": "root",
+         "numberOfRecords": 100000,
+         "landingPage": "https://ekitest.tripledev.ee/wordweb/",
+         "title": "EKI Sõnaveeb",
+         "description": "EKI Sõnaveeb",
+         "languages": [
+            "est"
+         ],
+         "adapterType": "EKI_LEX",
+         "preAuthorizeUse": false,
+         "visible": true,
+         "expanded": false,
+         "priority": 1,
+         "index": 1,
+         "edit": false,
+         "visibleSubCorporaCount": 2,
+         "selected": true,
+         "subCorpora": [
+            {
+               "id": 154,
+               "institution": {
+                  "id": null,
+                  "name": "EKI Sõnaveeb",
+                  "link": "https://ekitest.tripledev.ee/wordweb/",
+                  "endpoints": []
+               },
+               "endpoint": {
+                  "id": 155,
+                  "url": "http://localhost:8080/adapter",
+                  "protocol": "VERSION_1",
+                  "layers": [
+                     {
+                        "id": 156,
+                        "name": "word",
+                        "synonym": "WORD",
+                        "layerOperators": [
+                           "IS"
+                        ],
+                        "valueOptions": []
+                     }
+                  ]
+               },
+               "handle": "ss1",
+               "numberOfRecords": 10000,
+               "landingPage": "https://korpused.phon.ioc.ee/api/v1/search/",
+               "title": "Eesti keele sõnaraamat 2019",
+               "description": "EKI Sõnaveeb: Eesti keele sõnaraamat 2019",
+               "languages": [
+                  "est"
+               ],
+               "adapterType": "EKI_LEX",
+               "preAuthorizeUse": false,
+               "visible": true,
+               "expanded": false,
+               "priority": 1,
+               "index": 0,
+               "edit": false,
+               "visibleSubCorporaCount": 0,
+               "selected": true,
+               "subCorpora": [],
+               "parrentId": 152
+            },
+            {
+               "id": 157,
+               "institution": {
+                  "id": null,
+                  "name": "EKI Sõnaveeb",
+                  "link": "https://ekitest.tripledev.ee/wordweb/",
+                  "endpoints": []
+               },
+               "endpoint": {
+                  "id": 158,
+                  "url": "http://localhost:8080/adapter",
+                  "protocol": "VERSION_1",
+                  "layers": [
+                     {
+                        "id": 159,
+                        "name": "word",
+                        "synonym": "WORD",
+                        "layerOperators": [
+                           "IS"
+                        ],
+                        "valueOptions": []
+                     }
+                  ]
+               },
+               "handle": "psv",
+               "numberOfRecords": 10000,
+               "landingPage": "https://korpused.phon.ioc.ee/api/v1/search/",
+               "title": "Eesti keele põhisõnavara sõnastik 2019",
+               "description": "EKI Sõnaveeb: Eesti keele põhisõnavara sõnastik 2019",
+               "languages": [
+                  "est"
+               ],
+               "adapterType": "EKI_LEX",
+               "preAuthorizeUse": false,
+               "visible": true,
+               "expanded": false,
+               "priority": 1,
+               "index": 1,
+               "edit": false,
+               "visibleSubCorporaCount": 0,
+               "selected": true,
+               "subCorpora": [],
+               "parrentId": 152
+            }
+         ],
+         "parrentId": 0
+      }
+   ]
+}
+
 export const endpointForTest = {
    "id": 93,
    "url": "http://localhost:8080/adapter",

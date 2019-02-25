@@ -134,7 +134,7 @@ class Main extends Component {
 	}
 
 	toggleCollapse = () => {
-		this.setState({ navbarCollapse: !this.state.navbarCollapse })
+		this.setState(oldState => ({ navbarCollapse: !oldState.navbarCollapse }))
 	}
 
 	renderAggregator = () => {
@@ -167,11 +167,10 @@ class Main extends Component {
 	renderLogin = () => {
 		return (
 			<LoginPage
-				toRegistration={this.toRegister.bind(this, true)}
-				backToAggregator={this.toAggregator.bind(this, true)}
 				isUserloggedIn={this.state.loggedInStatus}
-				userName={this.state.userName}
 				getStatus={this.getUserLoginStatus.bind(this)}
+				backToAggregator={this.toAggregator.bind(this, true)}
+				toRegistration={this.toRegister.bind(this, true)}
 				languageFromMain={this.state.language}
 				getRole={this.getUserRole.bind(this)}
 			/>

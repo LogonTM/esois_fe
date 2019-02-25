@@ -118,7 +118,7 @@ class ManageUsers extends PureComponent {
 
 	render() {
 		return (
-			<div id='container'>
+			<div id='container' data-testid='manage-users'>
 				<div className='top-gap'></div>
 				<div id='searchBox'>
 					<SearchCorpusBox

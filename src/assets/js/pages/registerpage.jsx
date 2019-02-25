@@ -410,7 +410,7 @@ class RegisterPage extends Component {
 		return (
 			<div>
 				<div className="top-gap">
-					<div className="register-panel">
+					<div className="register-panel" data-testid='register-page'>
 						    <form onSubmit={this.handleRegister} className="register-form">
                                 <div>
                                     <input
@@ -470,6 +470,7 @@ class RegisterPage extends Component {
                                     uiType='btn.lg'
                                     onClick={this.handleRegister}
                                     disabled={this.formValidator()}
+                                    data-testid='registerButton'
                                 />
 							</form>
 						</div>

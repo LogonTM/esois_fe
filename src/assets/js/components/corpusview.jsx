@@ -444,7 +444,7 @@ class CorpusView extends Component {
 		var minmaxp = this.getMinMaxPriority();
 		const layersWithEndpoints = this.props.userRole === 'ROLE_ADMIN' ? this.props.getLayersWithEndpoints(this.props.corpora) : null;
 		return	(
-			<div style={{margin: "0 30px"}}>
+			<div style={{margin: "0 30px"}} data-testid='corpusview'>
 				<div className="row">
 					<div className="col" style={{ marginRight: -15, marginLeft: -15 }}>
 						<div className="float-left inline">
@@ -501,6 +501,7 @@ class CorpusView extends Component {
 										name="myFile"
 										onChange={this.handleFileChange}
 										accept=".xml"
+										data-testid='fileInputField'
 									/>
 								</div>
 								<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 align-right" style={{marginLeft: 10, marginTop: 7}}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Corpus from './corpus';
-import { render, fireEvent, cleanup } from 'react-testing-library';
+import { render } from 'react-testing-library';
 import { endpointForTest } from '../../constants/corporadatafortest';
 
 test('corpus renders endpoint data', () => {

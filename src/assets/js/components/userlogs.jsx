@@ -61,7 +61,7 @@ class UserLogs extends PureComponent {
 
 	render() {
 		return (
-			<div id='container'>
+			<div id='container' data-testid='user-logs'>
 				<div className='top-gap'></div>
 				<div id='searchBox'>
 					<SearchCorpusBox

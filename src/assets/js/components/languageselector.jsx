@@ -38,6 +38,7 @@ class LanguageSelector extends Component {
 					href="#"
 					style={style}
 					onClick={this.selectLang.bind(this, lang)}
+					data-testid="onelanguage"
 				>
 					{desc}
 				</a>
@@ -57,7 +58,7 @@ class LanguageSelector extends Component {
 
 		return (
 			<div>
-				<div className="row">
+				<div className="row" data-testid="languages">
 					<div className="col-sm-4">{l1}</div>
 					<div className="col-sm-4">{l2}</div>
 					<div className="col-sm-4">{l3}</div>
