@@ -54,7 +54,7 @@ test('language selector modal with only "all languages"', async () => {
    expect(queryAllByTestId('onelanguage').length).toBe(1);
 })
 
-test('corpusview modal', async () => {
+test('corpusview modal user not logged in', async () => {
    const { getByTestId, getByText, getByPlaceholderText, queryByTestId } = render(
       <AggregatorPage
          languageFromMain='ee'
@@ -75,7 +75,7 @@ test('corpusview modal', async () => {
    expect(queryByTestId('fileInputField')).not.toBeInTheDocument();
 })
 
-test('corpusview modal', async () => {
+test('corpusview modal admin logged in', async () => {
    const { getByTestId, getByText, queryByTestId } = render(
       <AggregatorPage
          languageFromMain='ee'
