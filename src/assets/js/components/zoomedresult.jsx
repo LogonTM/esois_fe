@@ -102,7 +102,7 @@ class ZoomedResult extends Component {
 			);
 		}
 		return (
-			<p key={i} className="hitrow">
+			<p key={i} className="hitrow" data-testid='z-rows-hits'>
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
@@ -133,7 +133,7 @@ class ZoomedResult extends Component {
 			}
 		}
 		return	(
-			<tr key={i} className="hitrow">
+			<tr key={i} className="hitrow" data-testid='z-rows-kwic'>
 				<td style={sright}>
 					{ leftContent(hit.left) }
 				</td>
@@ -155,7 +155,7 @@ class ZoomedResult extends Component {
 			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 	    }
 	    return (
-			<tr key={i} className="hitrow">
+			<tr key={i} className="hitrow" data-testid='z-rows-adv'>
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
@@ -246,6 +246,7 @@ class ZoomedResult extends Component {
 						checked={this.state.displayKwic}
 						onChange={this.toggleKwic}
 						disabled={this.state.displayADV}
+						data-testid='z-display-kwic'
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
@@ -265,6 +266,7 @@ class ZoomedResult extends Component {
 						checked={this.state.displayADV}
 						onChange={this.toggleADV}
 						disabled={this.state.displayKwic}
+						data-testid='z-display-adv'
 					/>
 				   &nbsp;
 				   {dictionary[this.props.languageFromMain].resultfunctions.display.adv}
@@ -276,7 +278,7 @@ class ZoomedResult extends Component {
 	renderDownloadLinks = corpusId => {
 		return (
 			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
+				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown" data-testid='z-download'>
 					<span className="fa fa-download" aria-hidden="true"/>
 						{dictionary[this.props.languageFromMain].button.download}
 					<span className="caret"/>
@@ -319,7 +321,7 @@ class ZoomedResult extends Component {
 				</div>
 				<div style={{marginBottom:2}}>
 					<div className="float-right">
-						<div>
+						<div data-testid='zoomed-result'>
 							{this.renderDisplayKWIC()}
 							{this.props.queryTypeId !== "fcs" ? "" : this.renderDisplayADV()}
 							<div className="inline"> {this.renderDownloadLinks(corpusHit.corpus.id)} </div>

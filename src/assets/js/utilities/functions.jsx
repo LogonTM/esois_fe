@@ -75,13 +75,6 @@ export function checkEmailAvailability(email) {
     });
 }
 
-export function checkUserEnabled(username) {
-    return request({
-        url: back_end_host + "db/user/checkEnabled?username=" + username,
-        method: 'GET'
-    })
-}
-
 export function getCurrentUser() {
     if(!localStorage.getItem(authentication_token)) {
         return Promise.reject("No access token set.");
@@ -144,17 +137,6 @@ export function getErrorsLog () {
     
     return request({
         url: back_end_host + "db/errorlog",
-        method: 'GET'
-    })
-}
-
-export function getEndpoint (id) {
-    if(!localStorage.getItem(authentication_token)) {
-        return Promise.reject("No access token set");
-    }
-    
-    return request({
-        url: back_end_host + "endpoint/" + id + "/download",
         method: 'GET'
     })
 }

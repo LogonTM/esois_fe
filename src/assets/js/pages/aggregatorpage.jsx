@@ -707,6 +707,7 @@ class AggregatorPage extends Component {
 										onChange={this.setNumberOfResults}
 										value={this.state.numberOfResults}
 										onKeyPress={this.stop}
+										data-testid='set-result-number'
 									/>
 								</div>
 								<div className="input-group-append">

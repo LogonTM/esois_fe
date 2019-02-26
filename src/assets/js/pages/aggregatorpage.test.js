@@ -3,7 +3,7 @@ import { render, fireEvent, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
 import { wait } from 'dom-testing-library';
 import AggregatorPage from './aggregatorpage';
- 
+
 afterEach(cleanup)
 
 test('it should be possible to write into the queryinput field', () => {
@@ -55,7 +55,7 @@ test('language selector modal with only "all languages"', async () => {
 })
 
 test('corpusview modal user not logged in', async () => {
-   const { getByTestId, getByText, getByPlaceholderText, queryByTestId } = render(
+   const { getByTestId, getByText, getByPlaceholderText, queryByTestId, getByDisplayValue } = render(
       <AggregatorPage
          languageFromMain='ee'
          ajax={() => {}}
@@ -66,6 +66,7 @@ test('corpusview modal user not logged in', async () => {
    expect(corpusViewButton).toBeInTheDocument();
    fireEvent.click(corpusViewButton);
    await wait(() => expect(getByTestId('corpusview')).toBeInTheDocument());
+   expect(getByTestId('modal-close-button')).toBeInTheDocument();
    expect(getByText('Kõik valituks')).toBeInTheDocument();
    expect(getByText('Kõik mittevalituks')).toBeInTheDocument();
    const searchBox = getByPlaceholderText('Otsi korpust')
@@ -73,6 +74,7 @@ test('corpusview modal user not logged in', async () => {
    fireEvent.change(searchBox, {target: {value: 'test'}});
    expect(searchBox.value).toBe('test');
    expect(queryByTestId('fileInputField')).not.toBeInTheDocument();
+   fireEvent.click(getByTestId('modal-close-button'));
 })
 
 test('corpusview modal admin logged in', async () => {
@@ -89,4 +91,19 @@ test('corpusview modal admin logged in', async () => {
    await wait(() => expect(getByTestId('corpusview')).toBeInTheDocument());
    expect(getByText('Kõik valituks')).toBeInTheDocument();
    expect(queryByTestId('fileInputField')).toBeInTheDocument();
+})
+
+test('set result number to 15', () => {
+   const { getByTestId } = render(
+      <AggregatorPage
+         languageFromMain='ee'
+         ajax={() => {}}
+         error={() => {}}
+         userRole=''
+      />)
+   const resultAmount = getByTestId('set-result-number')
+   expect(resultAmount).toBeInTheDocument();
+   expect(resultAmount.value).toBe("10");
+   fireEvent.change(resultAmount, {target: {value: "15"}});
+   expect(resultAmount.value).toBe("15");
 })

@@ -95,6 +95,19 @@ it("should return layer's value options from layerMap", () => {
    expect(getLayerValueOptions(layers, 'tense', 'IS', '10')).toEqual(expect.arrayContaining([ "Prt","Prs" ]));
 });
 
+it("should return when layer has no value options in layerMap", () => {
+   const layer = {
+      "morf": {
+         "layerOperators": [
+            "REGEX",
+            "CONTAINS",
+            "IS"
+         ]
+      }
+   }
+   expect(getLayerValueOptions(layer, 'morf', 'IS', '10')).toBe(undefined);
+});
+
 it('should parse layer, operator and query from query string', () => {
    expect(queryParse('tense = "Prt"', layers)).toEqual({"layer": "tense", "op": "IS", "val": "Prt"});
 })

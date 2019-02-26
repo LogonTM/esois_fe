@@ -2,7 +2,6 @@ import React from 'react';
 import RegisterPage from './registerpage';
 import { render, cleanup, fireEvent } from 'react-testing-library';
 import 'jest-dom/extend-expect';
-import { wait } from 'dom-testing-library';
 
 afterEach(cleanup);
 
@@ -21,7 +20,7 @@ test('that register page renders', () => {
    expect(getByTestId('register-page')).toBeInTheDocument();
 })
 
-test('filling fields on register page', async () => {
+test('filling fields on register page', () => {
    const backToAggregator = jest.fn();
    const getStatus = jest.fn();
    const getRole = jest.fn();
@@ -50,5 +49,4 @@ test('filling fields on register page', async () => {
    expect(passwordValidationField.value).toBe("TestParool");
    fireEvent.change(emailField, {target: {value: 'test@test.ee'}});
    expect(emailField.value).toBe("test@test.ee");
-   // await wait(() => expect(getByTestId('registerButton')).not.toBeDisabled());
 })
