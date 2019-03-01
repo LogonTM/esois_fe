@@ -33,15 +33,15 @@ class LanguageSelector extends Component {
 		};
 		return (
 			<div key={lang[0]}>
-				<a
-					tabIndex="-1"
-					href="#"
+				<button
+					type="button"
+					className="no-border-button"
 					style={style}
 					onClick={this.selectLang.bind(this, lang)}
 					data-testid="onelanguage"
 				>
 					{desc}
-				</a>
+				</button>
 			</div>
 		);
 	}

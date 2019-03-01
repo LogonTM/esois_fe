@@ -265,8 +265,9 @@ class Main extends Component {
 			<div className={classname} id='navMenu'>
 				<div className='navbar-nav navbar-right' id='navbar-right'>
 					<div className="d-flex flex-nowrap w-100">
-						<a
-							className='nav-item navbar-brand'
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex='-1'
 							data-toggle='tooltip'
 							title='EE'
@@ -277,9 +278,10 @@ class Main extends Component {
 								src={EeFlag}
 								alt='EST'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex='-1'
 							data-toggle='tooltip'
 							title='EN'
@@ -290,10 +292,11 @@ class Main extends Component {
 								src={GbFlag}
 								alt='ENG'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
+							tabIndex='-1'
 							data-toggle='tooltip'
 							title='Aggregator'
 							onClick={this.toAggregator.bind(this, true)}
@@ -303,10 +306,11 @@ class Main extends Component {
 								src={Magglass}
 								alt='Search'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
+							tabIndex='-1'
 							data-toggle='tooltip'
 							title='Login/Logout/Register'
 							onClick={this.toLogin.bind(this, true)}
@@ -316,9 +320,10 @@ class Main extends Component {
 								src={LoginIcon}
 								alt='Login'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex="-1"
 							data-toggle='tooltip'
 							title='Help'
@@ -329,7 +334,7 @@ class Main extends Component {
 								src={SettingsIcon}
 								alt='Help'
 							/>
-						</a>
+						</button>
 						{this.state.userRole === 'ROLE_ADMIN' ? this.renderAdmin() : null}
 					</div>
 				</div>
@@ -340,24 +345,26 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
-				<a
-					className='nav-item navbar-brand'
+				<button
+					type='button'
+					className='nav-item navbar-brand no-border-button'
 					tabIndex="-1"
 					data-toggle='tooltip'
 					title='Manage Logs'
 					onClick={this.toManageLogs.bind(this, true)}
 				>
 					<i className="fa fa-database"/>
-				</a>		
-				<a
-					className='nav-item navbar-brand'
+				</button>		
+				<button
+					type='button'
+					className='nav-item navbar-brand no-border-button'
 					tabIndex="-1"
 					data-toggle='tooltip'
 					title='Manage Users'
 					onClick={this.toManageUsers.bind(this, true)}
 				>
 					<i className="fa fa-users"/>
-				</a>
+				</button>
 			</div>
 		)
 	}
