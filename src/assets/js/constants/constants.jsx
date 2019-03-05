@@ -1,8 +1,8 @@
 export const back_end_host = 'http://localhost:8080/';
 export const oauth2_redirect_uri = 'http://localhost:3000/oauth2/redirect'
 
-//export const back_end_host = 'http://raba.heisi.eu:8888/';
-//export const oauth2_redirect_uri = 'http://raba.heisi.eu:8080/oauth2/redirect'
+// export const back_end_host = 'http://raba.heisi.eu:8888/';
+// export const oauth2_redirect_uri = 'http://raba.heisi.eu:8080/oauth2/redirect'
 
 export const authentication_token = 'accessToken';
 

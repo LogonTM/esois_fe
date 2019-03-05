@@ -75,13 +75,6 @@ export function checkEmailAvailability(email) {
     });
 }
 
-export function checkUserEnabled(username) {
-    return request({
-        url: back_end_host + "db/user/checkEnabled?username=" + username,
-        method: 'GET'
-    })
-}
-
 export function getCurrentUser() {
     if(!localStorage.getItem(authentication_token)) {
         return Promise.reject("No access token set.");
@@ -148,13 +141,12 @@ export function getErrorsLog () {
     })
 }
 
-export function getEndpoint (id) {
-    if(!localStorage.getItem(authentication_token)) {
-        return Promise.reject("No access token set");
-    }
-    
-    return request({
-        url: back_end_host + "endpoint/" + id + "/download",
-        method: 'GET'
-    })
+export function pairs(o){
+	var ret = [];
+		for (var x in o) {
+			if (o.hasOwnProperty(x)) {
+				ret.push([x, o[x]]);
+			}
+		}
+	return ret;
 }

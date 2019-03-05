@@ -70,22 +70,39 @@ class ZoomedResult extends Component {
 	}
 
 	toggleKwic = () => {
-		this.setState({displayKwic:!this.state.displayKwic});
+		this.setState(oldState => ({
+			displayKwic:!oldState.displayKwic
+		}));
 	}
 
 	toggleADV = () => {
-		this.setState({displayADV:!this.state.displayADV});
+		this.setState(oldState => ({
+			displayADV:!oldState.displayADV
+		}));
 	}
 
 	renderRowsAsHits = (hit,i) => {
 		function renderTextFragments(tf, idx) {
 		    if (tf.html) {
-                return (<span key={idx} className="beHTML" dangerouslySetInnerHTML={{__html: tf.text}}></span>)
+					return (
+						<span
+							key={idx}
+							className="beHTML"
+							dangerouslySetInnerHTML={{__html: tf.text}}
+						></span>
+					);
             }
-		    return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
+			return (
+				<span
+					key={idx}
+					className={tf.hit?"keyword":""}
+				>
+					{tf.text}
+				</span>
+			);
 		}
 		return (
-			<p key={i} className="hitrow">
+			<p key={i} className="hitrow" data-testid='z-rows-hits'>
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
@@ -95,11 +112,39 @@ class ZoomedResult extends Component {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+		const leftContent = left => {
+			if (left.startsWith('<audio')) {
+				const parts = hit.left.split('</audio><br/>')
+				return parts[1];
+			} else {
+				return left
+			}
+		}
+		const rightContent = right => {
+			if (right.startsWith('<ol><li><div>')) {
+				return (
+					<span
+						className="beHTML"
+						dangerouslySetInnerHTML={{__html: right}}
+					></span>
+				);
+			} else {
+				return right
+			}
+		}
 		return	(
-			<tr key={i} className="hitrow">
-				<td style={sright}>{hit.left}</td>
-				<td style={scenter} className="keyword">{hit.keyword}</td>
-				<td style={sleft}>{hit.right}</td>
+			<tr key={i} className="hitrow" data-testid='z-rows-kwic'>
+				<td style={sright}>
+					{ leftContent(hit.left) }
+				</td>
+				<td style={scenter} className="keyword">
+					{ (hit.keyword.startsWith('<div')) ?
+					<span className="beHTML" dangerouslySetInnerHTML={{__html: hit.keyword}}></span>
+					: hit.keyword }
+				</td>
+				<td style={sleft}>
+					{ rightContent(hit.right) }
+				</td>
 			</tr>
 		);
 	}
@@ -110,7 +155,7 @@ class ZoomedResult extends Component {
 			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 	    }
 	    return (
-			<tr key={i} className="hitrow">
+			<tr key={i} className="hitrow" data-testid='z-rows-adv'>
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
@@ -158,9 +203,8 @@ class ZoomedResult extends Component {
 	}
 
 	renderPanelBody = corpusHit => {
-	    var fulllength = {width:"100%"};
-
-        if (this.state.displayADV) {
+		var fulllength = {width:"100%"};
+		if (this.state.displayADV) {
 			return (
 				<div id="adv-results">
 					{this.renderErrors(corpusHit)}
@@ -170,7 +214,7 @@ class ZoomedResult extends Component {
 					</table>
 				</div>
 			);
-	    } else if (this.state.displayKwic) {
+		} else if (this.state.displayKwic) {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}
@@ -180,7 +224,7 @@ class ZoomedResult extends Component {
 					</table>
 				</div>
 			);
-	    } else {
+		} else {
 			return (
 				<div>
 					{this.renderErrors(corpusHit)}
@@ -188,19 +232,21 @@ class ZoomedResult extends Component {
 					{corpusHit.kwics.map(this.renderRowsAsHits)}
 				</div>
 			);
-	    }
+		}
 	}
 
 	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputKwic" className="btn btn-flat">
+				<label htmlFor="inputKwic" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
 					<input
 						id="inputKwic"
 						type="checkbox"
 						value="kwic"
 						checked={this.state.displayKwic}
 						onChange={this.toggleKwic}
+						disabled={this.state.displayADV}
+						data-testid='z-display-kwic'
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
@@ -212,13 +258,15 @@ class ZoomedResult extends Component {
 	renderDisplayADV = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-			   <label htmlFor="inputADV" className="btn btn-flat">
+			   <label htmlFor="inputADV" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
 			   		<input
 						id="inputADV"
 						type="checkbox"
 						value="adv"
 						checked={this.state.displayADV}
 						onChange={this.toggleADV}
+						disabled={this.state.displayKwic}
+						data-testid='z-display-adv'
 					/>
 				   &nbsp;
 				   {dictionary[this.props.languageFromMain].resultfunctions.display.adv}
@@ -230,7 +278,7 @@ class ZoomedResult extends Component {
 	renderDownloadLinks = corpusId => {
 		return (
 			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
+				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown" data-testid='z-download'>
 					<span className="fa fa-download" aria-hidden="true"/>
 						{dictionary[this.props.languageFromMain].button.download}
 					<span className="caret"/>
@@ -273,7 +321,7 @@ class ZoomedResult extends Component {
 				</div>
 				<div style={{marginBottom:2}}>
 					<div className="float-right">
-						<div>
+						<div data-testid='zoomed-result'>
 							{this.renderDisplayKWIC()}
 							{this.props.queryTypeId !== "fcs" ? "" : this.renderDisplayADV()}
 							<div className="inline"> {this.renderDownloadLinks(corpusHit.corpus.id)} </div>

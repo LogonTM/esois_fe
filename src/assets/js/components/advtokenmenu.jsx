@@ -61,10 +61,11 @@ class ADVTokenMenu extends PureComponent {
 					className="btn btn-xs btn-default image_button repeat_menu"
 					onClick={this.toggleRepeatMenu}
 					ref="repeatMenu"
+					data-testid='repeatMenuToggleButton'
 				>
 					<i className="fa fa-cog" />
 				</button>
-				<div id="ADVtokenMenu-items" className={"hide-" + this.state.hideMenu}>
+				<div id="ADVtokenMenu-items" className={"hide-" + this.state.hideMenu} data-testid='ADVtokenMenu-items'>
 					<div id="repeatMenu" className={"input-group input-group-sm repeat"}>
 						<span>{dictionary[this.props.languageFromMain].queryinput.repeatMenu.repeat}</span>&nbsp;
 						<input
@@ -73,6 +74,7 @@ class ADVTokenMenu extends PureComponent {
 							value={this.state.repeat1}
 							onChange={(evt) => this.setState({repeat1: evt.target.value})}
 							ref="repeat1"
+							data-testid="repeat1"
 						/>&nbsp;
 						<span>{dictionary[this.props.languageFromMain].queryinput.repeatMenu.to}</span>&nbsp;
 						<input
@@ -81,6 +83,7 @@ class ADVTokenMenu extends PureComponent {
 							value={this.state.repeat2}
 							onChange={(evt) => this.setState({repeat2: evt.target.value})}
 							ref="repeat2"
+							data-testid="repeat2"
 						/>&nbsp;
 						<span>{dictionary[this.props.languageFromMain].queryinput.repeatMenu.times}</span>
 					</div>

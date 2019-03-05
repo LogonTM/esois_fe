@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
-import $ from 'jquery';
+import React, { PureComponent } from 'react';
 import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import { updateUser } from '../utilities/functions';
@@ -86,7 +85,7 @@ class EditUser extends PureComponent {
     }
 
     roleChecker = role => {
-        if(role === this.state.newRoleUser){
+        if (role === this.state.newRoleUser){
             return "form-control input-lg is-valid"
         }
         if (role === this.state.newRoleAdmin) {
@@ -170,7 +169,7 @@ class EditUser extends PureComponent {
 
     render() {
         return (
-            <div id="container">
+            <div id="container" data-testid='edit-user'>
                 <form>
                     <div className="form-group row addcorp">
                         <div className="col-sm-2 align-right">
@@ -225,6 +224,7 @@ class EditUser extends PureComponent {
                             <Button
                                 label={dictionary[this.props.languageFromMain].button.edit}
                                 onClick={e => this.handleRoleChange(e, role.name)}
+                                data-testid={`edit-${role.name}`}
                             />
                         </div>
                     </div>

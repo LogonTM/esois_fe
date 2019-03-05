@@ -35,6 +35,10 @@ Rakenduse käivitamiseks localhostis tuleb esmalt käsurealt (cmd) minna lähtek
 
 Järgnevalt tuleb sisestada käsklus 'yarn start', mille järel käivitatakse rakendus vaikimisi kasutatavaks määratud veebilehitsejas aadressil localhost:3000.
 
+####
+
+Tarkvaraga kaasas olevate testide käivitamiseks on vaja käsurealt sisestada käsklus: npm test
+
 ## Kasutamisest
 
 ### Back-end liidestamine
@@ -158,7 +162,7 @@ Korpuste vaates tuleb valida üleslaaditava korpuse kirjeldava XML-fail ning vaj
 * Muudab alamkorpust.
 
 ##### Ülemkorpuse lisamine
-Korpuse põhja võib allalaadida ning vastavalt kohandada või kasutada allpool olevat näidist. Dokumentatsiooni juurest saab leida ka vastava *.xsd faili. 
+Korpuse põhja võib allalaadida ning vastavalt kohandada või kasutada allpool olevat näidist. Dokumentatsiooni juurest saab leida ka vastava *.xsd faili. (XSD failide asukoht: https://gitlab.keeleressursid.ee/jens/esois_be/tree/master/src/main/resources/xsd)
 Peamised väärtused on „endpoint - url“, „endpoint-protocol“ ning “adapterType”.
 Tulemusena luuakse ülemkorpus koos alamkorpustega:
 

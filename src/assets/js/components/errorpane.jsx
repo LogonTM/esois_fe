@@ -11,14 +11,14 @@ class ErrorPane extends Component{
 	renderErrorMessage(errorMessage, index) {
 		return errorMessage ? 
 			<JQueryFade key={index}>
-				<div key={index} className="errorMessage">{errorMessage}</div>
+				<div key={index} className="errorMessage" data-testid="errormessage">{errorMessage}</div>
 			</JQueryFade> :
 			false;
 	}
 
 	renderErrorTransition = () => {
 		return (
-			<div className="row errorRow">
+			<div className="row errorRow" data-testid="errorrow">
 				<TransitionGroup component="div">
 					{this.props.errorMessages.map(this.renderErrorMessage)}
 				</TransitionGroup>
@@ -28,7 +28,7 @@ class ErrorPane extends Component{
 
 	render() {
 		return (
-			<div className="container errorDiv">
+			<div className="container errorDiv" data-testid="errorpane">
 				{this.props.errorMessages.length > 0 ? this.renderErrorTransition() : null}
 			</div>
 		)

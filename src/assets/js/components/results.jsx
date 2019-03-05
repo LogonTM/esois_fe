@@ -28,11 +28,12 @@ class Results extends Component {
 	renderPanelInfo(corpusHit) {
 		var inline = {display:"inline-block"};
 		return (
-			<div>
+			<div data-testid='result-panel'>
 				{` `}
 				<div style={inline}>
 					<button className="btn btn-outline-secondary zoomResultButton"
-							onClick={this.props.toggleResultModal.bind(this,corpusHit)}>
+							onClick={this.props.toggleResultModal.bind(this,corpusHit)}
+							data-testid='view-zoomedresult'>
 						<span className="fa fa-eye"/>
 						{dictionary[this.props.languageFromMain].button.view}
 					</button>
@@ -66,7 +67,7 @@ class Results extends Component {
 
 	renderProgressMessage = () => {
 		return (
-			<div style={{marginTop:10}}>
+			<div style={{marginTop:10}} data-testid='loading-results'>
 				<div className="raba-loading-text">{dictionary[this.props.languageFromMain].results.loading}</div>
 					<div className="raba-loading-icon-div">
 						<img src={favicon} className="raba-loading-icon" alt="raba-loading-icon"/>
@@ -76,11 +77,15 @@ class Results extends Component {
 	}
 
 	toggleKwic = () => {
-		this.setState({displayKwic:!this.state.displayKwic});
+		this.setState(oldState => ({
+			displayKwic:!oldState.displayKwic
+		}));
 	}
 
 	toggleADV = () => {
-		 this.setState({displayADV:!this.state.displayADV});
+		this.setState(oldState => ({
+			displayADV:!oldState.displayADV
+		}));
 	}
 
 	renderPanelTitle(corpus) {
@@ -101,7 +106,7 @@ class Results extends Component {
 			return (<span key={idx} className={tf.hit?"keyword":""}>{tf.text}</span>);
 		}
 		return (
-			<p key={i} className="hitrow">
+			<p key={i} className="hitrow" data-testid='rows-hits'>
 				{hit.fragments.map(renderTextFragments)}
 			</p>
 		);
@@ -111,11 +116,39 @@ class Results extends Component {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		var scenter={textAlign:"center", verticalAlign:"top", maxWidth:"50%"};
 		var sright={textAlign:"right", verticalAlign:"top", maxWidth:"50%"};
+		const leftContent = left => {
+			if (left.startsWith('<audio')) {
+				const parts = hit.left.split('</audio><br/>')
+				return parts[1];
+			} else {
+				return left
+			}
+		}
+		const rightContent = right => {
+			if (right.startsWith('<ol><li><div>')) {
+				return (
+					<span
+						className="beHTML"
+						dangerouslySetInnerHTML={{__html: right}}
+					></span>
+				);
+			} else {
+				return right
+			}
+		}
 		return	(
-			<tr key={i} className="hitrow">
-				<td style={sright}>{hit.left}</td>
-				<td style={scenter} className="keyword">{hit.keyword}</td>
-				<td style={sleft}>{hit.right}</td>
+			<tr key={i} className="hitrow" data-testid='rows-kwic'>
+				<td style={sright}>
+					{ leftContent(hit.left) }
+				</td>
+				<td style={scenter} className="keyword">
+					{ (hit.keyword.startsWith('<div')) ?
+					<span className="beHTML" dangerouslySetInnerHTML={{__html: hit.keyword}}></span>
+					: hit.keyword }
+				</td>
+				<td style={sleft}>
+					{ rightContent(hit.right) }
+				</td>
 			</tr>
 		);
 	}
@@ -126,7 +159,7 @@ class Results extends Component {
 			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 		}
 		return (
-			<tr key={i} className="hitrow">
+			<tr key={i} className="hitrow" data-testid='rows-adv'>
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
@@ -175,7 +208,7 @@ class Results extends Component {
 
 	renderPanelBody = corpusHit => {
 		var fulllength = {width:"100%"};
-
+console.log(corpusHit);
 		if (this.state.displayADV) {
 			return (
 				<div id="adv-results">
@@ -210,13 +243,15 @@ class Results extends Component {
 	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputKwic" className="btn btn-flat">
+				<label htmlFor="inputKwic" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
 					<input
 						id="inputKwic"
 						type="checkbox"
 						value="kwic"
 						checked={this.state.displayKwic}
 						onChange={this.toggleKwic}
+						disabled={this.state.displayADV}
+						data-testid='display-kwic'
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.kwic}
@@ -228,13 +263,15 @@ class Results extends Component {
 	renderDisplayADV = () => {
 		 return (
 			 <div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputADV" className="btn btn-flat">
+				<label htmlFor="inputADV" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
 					<input
 						id="inputADV"
 						type="checkbox"
 						value="adv"
 						checked={this.state.displayADV}
 						onChange={this.toggleADV}
+						disabled={this.state.displayKwic}
+						data-testid='display-adv'
 					/>
 					&nbsp;
 					{dictionary[this.props.languageFromMain].resultfunctions.display.adv}
@@ -246,14 +283,14 @@ class Results extends Component {
 	renderDownloadLinks = corpusId => {
 		return (
 			<div className="dropdown">
-				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown">
+				<button className="btn btn-flat" aria-expanded="false" data-toggle="dropdown" data-testid='download'>
 					<span className="fa fa-download" aria-hidden="true"/>
 						{dictionary[this.props.languageFromMain].button.download}
 					<span className="caret"/>
 				</button>
 				<ul className="dropdown-menu">
 					<li className="dropdown-item">
-						<a href={this.props.getDownloadLink(corpusId, "csv")}>
+						<a href={this.props.getDownloadLink(corpusId, "csv")} data-testid='csv-link'>
 							{dictionary[this.props.languageFromMain].resultfunctions.download.csv}
 						</a>
 					</li>
@@ -288,6 +325,8 @@ class Results extends Component {
 					{ showprogress ? false :
 						<div className="float-left">
 							{`${collhits.hits} ${dictionary[this.props.languageFromMain].results.collectionsFound}`}
+							{ this.props.queryTypeId === 'cql' && collhits.hits === 0 &&
+								<p>{`\n${dictionary[this.props.languageFromMain].results.cqlnoresults}`}</p>}
 						</div>
 					}
 					{ collhits.hits === 0 ? false :

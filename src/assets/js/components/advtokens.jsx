@@ -52,14 +52,14 @@ class ADVTokens extends Component {
 	}
 	
 	fireQueryChange = () => {
-			var tokenParts = this.state.tokens.map( (id) => this.queryStrCache[id] );
-			const queryString = tokenParts.join(' ')
-			this.props.onQueryChange(queryString);
+		var tokenParts = this.state.tokens.map( (id) => this.queryStrCache[id] );
+		const queryString = tokenParts.join(' ')
+		this.props.onQueryChange(queryString);
 	}
 	
 	onQueryChange = (tokenId, queryStr) => {
-			this.queryStrCache[tokenId] = queryStr;
-			this.fireQueryChange();
+		this.queryStrCache[tokenId] = queryStr;
+		this.fireQueryChange();
 	}
 
 	render() {
@@ -85,6 +85,7 @@ class ADVTokens extends Component {
 					className="btn btn-xs btn-default image_button insert_token"
 					type="button"
 					onClick={this.addADVToken}
+					data-testid='addADVToken'
 				>
 					<i className="fa fa-plus"></i>
 				</button>

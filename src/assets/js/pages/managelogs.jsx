@@ -1,7 +1,7 @@
 
 import PropTypes from 'prop-types';
 import dictionary from '../../../translations/dictionary';
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import SearchLogs from '../components/searchlogs';
 import UserLogs from '../components/userlogs';
 import ErrorLogs from '../components/errorlogs';
@@ -118,8 +118,8 @@ class ManageLogs extends Component {
 	render() {
 		return (
 			<div id='container'>
-				<div className="row justify-content-center" style={{marginTop:64}}>
-					<div className="col-xl-5 col-l-5 col-md-8 col-sm-10 col-xs-12">
+				<div className="row justify-content-center" style={{marginTop:64}} data-testid='manage-logs'>
+					<div className="col-xl-5 col-lg-5 col-md-8 col-sm-10 col-xs-12">
 						{this.renderSwitch()}
 					</div>
 				</div>

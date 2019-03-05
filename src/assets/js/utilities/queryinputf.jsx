@@ -36,6 +36,7 @@ const quotedStringRE = /(?:"(?:\\"|[^"])*")/.source;
 
 // in: 'word = "zebra" '
 // out: ['word', '=', 'zebra']
+// actual out: {"layer": "word", "op": "IS", "val": "zebra"}
 export function queryParse(q, layers) {
 	if (!q) return null;
 	var match = q.match(/^\s*(\w+) *(=|!=) *"((?:\\"|.)*?)"/);
@@ -55,7 +56,7 @@ export function queryParse(q, layers) {
 }
 
 // in: '(word = "zebra" | word = "zoo" ...)'
-// out: ['word = "zebra" ', ' (word = "zoo" ...)']
+// out: ['word = "zebra" ', ' word = "zoo" ...']
 export function queryToORArgs(q) {
 	if (!q) return null;
 	var match = q.trim().match(queryToORArgs.re);
@@ -65,7 +66,7 @@ export function queryToORArgs(q) {
 queryToORArgs.re = RegExp('(?:'+quotedStringRE+'|[^()|])+', 'g')
 
 // in: '[word = "zebra" & (word = "zoo" ...)]'
-// out: ['word = "zebra" ', ' (word = "zoo" ...)']
+// out: ['[ word = "zebra" ', ' (word = "zoo" ...)]']
 export function queryToANDArgs(q) {
 	if (!q) return null
 	
@@ -76,7 +77,7 @@ export function queryToANDArgs(q) {
 queryToANDArgs.re = RegExp('(?:'+quotedStringRE+'|[^&])+', 'g')
 
 // in: '[word = "zebra"] [word = "zoo"]'
-// out: ['[word = "zebra"]', '[word = "zoo"]']
+// out: ['[word = "zebra"] ', '[word = "zoo"]']
 export function queryToTokens(q) {
 	if (!q) return null;
 	var match = q.match(queryToTokens.re);
@@ -119,9 +120,9 @@ function wordOptionsdefaultFromString(layer, op, val) {
 				if (val.startsWith('.*') && val.endsWith('.*')) {
 					var op2 = 'CONTAINS';
 				} else if (val.startsWith('.*')) {
-					op2 = 'STARTS_WITH';
+					op2 = 'ENDS_WITH';
 				} else if (val.endsWith('.*')) {
-					op2 = 'ENDS_WITH'
+					op2 = 'STARTS_WITH'
 				} else {
 					console.error("parsing query failed due to coding error");
 					return null;

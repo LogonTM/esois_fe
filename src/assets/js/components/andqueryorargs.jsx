@@ -93,6 +93,7 @@ class ANDQueryORArgs extends Component {
 					<span
 						className="link"
 						onClick={this.addADVOr}
+						data-testid='addOr'
 					>
 						{dictionary[this.props.languageFromMain].queryinput.or}
 					</span>

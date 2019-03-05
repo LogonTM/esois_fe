@@ -18,6 +18,7 @@ import QueryInput from '../components/queryinput.jsx';
 import ZoomedResult from '../components/zoomedresult.jsx';
 import { authentication_token } from '../constants/constants';
 import { queryToANDArgs, queryToORArgs, queryToTokens } from '../utilities/queryinputf';
+import { pairs } from '../utilities/functions';
 
 var PT = PropTypes;
 
@@ -70,7 +71,6 @@ class AggregatorPage extends Component {
 			selectedLayers: new Set(['word']),
 			aggregationContext: aggrContext || null,
 			language: this.anyLanguage,
-			languageFilter: 'byMeta',
 			numberOfResults: 10,
 			tooltipIsOpen: false,
 
@@ -134,7 +134,7 @@ class AggregatorPage extends Component {
 						}
 					}
 					else {
-						// no context set all visible to selected as default.
+						// no context set all visible and accessible corpora to selected as default.
 						this.selectedCorpora(corpora, this.props.userRole)
 					}
 
@@ -165,7 +165,7 @@ class AggregatorPage extends Component {
 
 	selectedCorpora = (corpora, userRole) => {
 		corpora.recurse(c => {
-			if  (c.preAuthorizeUse && !userRole && c.visible) {
+			if (c.preAuthorizeUse && !userRole && c.visible) {
 				c.selected = false
 			} else {
 				c.selected = true
@@ -202,7 +202,7 @@ class AggregatorPage extends Component {
 	}
 
 	search = () => {
-		if(this.state.numberOfResults == 0 || this.state.numberOfResults === '') {
+		if(this.state.numberOfResults === 0 || this.state.numberOfResults === '') {
 			this.setState({numberOfResults: 10})
 		}
 		var _paq = [];
@@ -287,14 +287,9 @@ class AggregatorPage extends Component {
 		});
 	}
 
-	getExportParams = (corpusId, format, filterLanguage) => {
+	getExportParams = (corpusId, format) => {
 		var params = corpusId ? {corpusId:corpusId}:{};
 		if (format) params.format = format;
-		if (filterLanguage) {
-			params.filterLanguage = filterLanguage;
-		} else if (this.state.languageFilter === 'byGuess' || this.state.languageFilter === 'byMetaAndGuess') {
-			params.filterLanguage = this.state.language[0];
-		}
 		return encodeQueryData(params);
 	}
 
@@ -303,12 +298,10 @@ class AggregatorPage extends Component {
 			this.getExportParams(corpusId, format);
 	}
 
-	setLanguageAndFilter = (languageObj, languageFilter) => {
-		this.state.corpora.setVisibility(this.state.queryTypeId,
-			languageFilter === 'byGuess' ? multipleLanguageCode : languageObj[0], this.state.selectedLayers);
+	setLanguage = languageObj => {
+		this.state.corpora.setVisibility(this.state.queryTypeId, languageObj[0], this.state.selectedLayers);
 		this.setState({
 			language: languageObj,
-			languageFilter: languageFilter,
 			corpora: this.state.corpora,
 		});
 	}
@@ -349,8 +342,6 @@ class AggregatorPage extends Component {
 	}
 
 	filterResults = () => {
-		var noLangFiltering = this.state.languageFilter === 'byMeta';
-		var langCode = this.state.language[0];
 		var results = null, inProgress = 0, hits = 0;
 		if (this.state.hits.results) {
 			results = this.state.hits.results.map(function(corpusHit) {
@@ -359,18 +350,8 @@ class AggregatorPage extends Component {
 					inProgress: corpusHit.inProgress,
 					exception: corpusHit.exception,
 					diagnostics: corpusHit.diagnostics,
-					kwics: noLangFiltering ? corpusHit.kwics :
-						corpusHit.kwics.filter(function(kwic) {
-							return kwic.language === langCode ||
-							       langCode === multipleLanguageCode ||
-							       langCode === null;
-						}),
-					advancedLayers: noLangFiltering ? corpusHit.advancedLayers :
-					 	corpusHit.advancedLayers.filter(function(layer) {
-					 		return layer.language === langCode ||
-					 		       langCode === multipleLanguageCode ||
-					 		       langCode === null;
-					 	}),
+					kwics: corpusHit.kwics,
+					advancedLayers: corpusHit.advancedLayers,
 				};
 			});
 			for (var i = 0; i < results.length; i++) {
@@ -410,9 +391,9 @@ class AggregatorPage extends Component {
 	}
 
 	toggleTooltip = () => {
-		this.setState({
-			tooltipIsOpen: !this.state.tooltipIsOpen
-		});
+		this.setState(oldState => ({
+			tooltipIsOpen: !oldState.tooltipIsOpen
+		}));
 	}
 
 	onQueryChange = queryStr => {
@@ -556,7 +537,7 @@ class AggregatorPage extends Component {
 						className="card-heading"
 					>
 						<div className="row">
-							<div className="col-l-2 col-md-3 col-sm-4 col-xs-4">
+							<div className="col-xl-3 col-lg-4 col-md-5 col-sm-8 col-xs-12">
 								<fieldset>
 									<div className="switch-toggle switch-candy blue">
 										<input
@@ -613,7 +594,7 @@ class AggregatorPage extends Component {
 		return (
 			<div className="container">
 				<div className="row justify-content-center" style={{marginTop:64}}>
-					<div className="col-xl-5 col-l-5 col-md-8 col-sm-10 col-xs-12">
+					<div className="col-xl-5 col-lg-6 col-md-8 col-sm-10 col-xs-12">
 						<fieldset>
 							<div className="switch-toggle switch-candy orange">
 								<input
@@ -671,6 +652,7 @@ class AggregatorPage extends Component {
 											: this.state.language[1]}
 										uiType='dropdown-toggle'
 										onClick={this.toggleLanguageSelection}
+										data-testid='languageSelector'
 									/>
 								</div>
 								<div className="input-group-prepend">
@@ -701,6 +683,7 @@ class AggregatorPage extends Component {
 										uiType='dropdown-toggle'
 										onClick={this.toggleCorpusSelection}
 										id='corpusViewButton'
+										data-testid='corpusViewButton'
 									/>
 								</div>
 							</div>
@@ -724,6 +707,7 @@ class AggregatorPage extends Component {
 										onChange={this.setNumberOfResults}
 										value={this.state.numberOfResults}
 										onKeyPress={this.stop}
+										data-testid='set-result-number'
 									/>
 								</div>
 								<div className="input-group-append">
@@ -764,8 +748,7 @@ class AggregatorPage extends Component {
 						anyLanguage={[multipleLanguageCode, dictionary[this.props.languageFromMain].common.anyLanguage]}
 						currentLanguagesMap={this.state.currentLanguagesMap}
 						selectedLanguage={this.state.language}
-						languageFilter={this.state.languageFilter}
-						languageChangeHandler={this.setLanguageAndFilter}
+						languageChangeHandler={this.setLanguage}
 						languageFromMain={this.props.languageFromMain}
 						corpora={this.state.corpora}
 						updateCurrentLanguagesMap={this.updateCurrentLanguagesMap}
@@ -1028,16 +1011,6 @@ Corpora.prototype.setAggregationContext = function(endpoints2handles) {
 
 	corporaToSelect.forEach(selectSubTree.bind(this, true));
 };
-
-function pairs(o) {
-	var ret = [];
-	for (var x in o) {
-		if (o.hasOwnProperty(x)) {
-			ret.push([x, o[x]]);
-		}
-	}
-	return ret;
-}
 
 Corpora.prototype.getSelectedIds = function() {
 	var ids = [];

@@ -70,6 +70,7 @@ class Modal extends Component {
 							<Button
 								label={dictionary[this.props.languageFromMain].button.close}
 								data-dismiss="modal"
+								data-testid='modal-close-button'
 							/>
 						</div>
 					</div>

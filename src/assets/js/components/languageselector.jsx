@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { pairs } from '../utilities/functions'
 
 var PT = PropTypes;
 
@@ -8,7 +9,6 @@ class LanguageSelector extends Component {
 		anyLanguage: PT.array.isRequired,
 		currentLanguagesMap: PT.object.isRequired,
 		selectedLanguage: PT.array.isRequired,
-		languageFilter: PT.string.isRequired,
 		languageChangeHandler: PT.func.isRequired,
 		languageFromMain: PT.string.isRequired,
 		corpora: PT.object.isRequired,
@@ -22,7 +22,7 @@ class LanguageSelector extends Component {
 	}
 
 	selectLang = language => {
-		this.props.languageChangeHandler(language, this.props.languageFilter);
+		this.props.languageChangeHandler(language);
 	}
 	
 	renderLanguageObject = lang => {
@@ -33,7 +33,15 @@ class LanguageSelector extends Component {
 		};
 		return (
 			<div key={lang[0]}>
-				<a tabIndex="-1" href="#" style={style} onClick={this.selectLang.bind(this, lang)}>{desc}</a>
+				<button
+					type="button"
+					className="no-border-button"
+					style={style}
+					onClick={this.selectLang.bind(this, lang)}
+					data-testid="onelanguage"
+				>
+					{desc}
+				</button>
 			</div>
 		);
 	}
@@ -50,7 +58,7 @@ class LanguageSelector extends Component {
 
 		return (
 			<div>
-				<div className="row">
+				<div className="row" data-testid="languages">
 					<div className="col-sm-4">{l1}</div>
 					<div className="col-sm-4">{l2}</div>
 					<div className="col-sm-4">{l3}</div>
@@ -58,16 +66,6 @@ class LanguageSelector extends Component {
 			</div>
 		);
 	}
-}
-
-function pairs(o){
-	var ret = [];
-		for (var x in o) {
-			if (o.hasOwnProperty(x)) {
-				ret.push([x, o[x]]);
-			}
-		}
-		return ret;
 }
 
 export default LanguageSelector;

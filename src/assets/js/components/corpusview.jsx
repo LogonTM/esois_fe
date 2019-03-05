@@ -50,7 +50,7 @@ class CorpusView extends Component {
 		this.props.corpora.update();
 	}
 
-	toggleEditCenter = (corpus, e) => {
+	toggleViewCenterDetails = (corpus, e) => {
 		e.preventDefault();
 		corpus.edit = !corpus.edit;
 		this.props.corpora.update();
@@ -58,13 +58,15 @@ class CorpusView extends Component {
 	}
 
 	toggleUsedLayersList = () => {
-		this.setState({layersListVisible: !this.state.layersListVisible})
+		this.setState(oldState => ({
+			layersListVisible: !oldState.layersListVisible
+		}));
 	}
 
 	toggleTooltip = () => {
-		this.setState({
-			tooltipIsOpen: !this.state.tooltipIsOpen
-		});
+		this.setState(oldState => ({
+			tooltipIsOpen: !oldState.tooltipIsOpen
+		}));
 	}
 
 	selectAll = (value) => {
@@ -87,7 +89,7 @@ class CorpusView extends Component {
 		}
 
 		readFile(this.state.file).then(xml => {
-		    this.setState({ xml })
+		   this.setState({ xml })
 
 			const token = localStorage.getItem(authentication_token);
 
@@ -123,7 +125,7 @@ class CorpusView extends Component {
 				if (response.success === true) {
 					alert(dictionary[this.props.languageFromMain].corpus.delete.success);
 				}else{
-				    alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${response.message}`);
+				   alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${response.message}`);
 				}
 			}).catch(err => {
 				alert(`${dictionary[this.props.languageFromMain].corpus.delete.fail}:\nmessage: ${err.message}`);
@@ -336,7 +338,7 @@ class CorpusView extends Component {
 										{dictionary[this.props.languageFromMain].button.view}
 									</React.Fragment>
 								)}
-								onClick={this.toggleEditCenter.bind(this, corpus)}
+								onClick={this.toggleViewCenterDetails.bind(this, corpus)}
 								style={{marginRight:1}}
 							/>
 							{` `}
@@ -442,7 +444,7 @@ class CorpusView extends Component {
 		var minmaxp = this.getMinMaxPriority();
 		const layersWithEndpoints = this.props.userRole === 'ROLE_ADMIN' ? this.props.getLayersWithEndpoints(this.props.corpora) : null;
 		return	(
-			<div style={{margin: "0 30px"}}>
+			<div style={{margin: "0 30px"}} data-testid='corpusview'>
 				<div className="row">
 					<div className="col" style={{ marginRight: -15, marginLeft: -15 }}>
 						<div className="float-left inline">
@@ -499,6 +501,7 @@ class CorpusView extends Component {
 										name="myFile"
 										onChange={this.handleFileChange}
 										accept=".xml"
+										data-testid='fileInputField'
 									/>
 								</div>
 								<div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 align-right" style={{marginLeft: 10, marginTop: 7}}>

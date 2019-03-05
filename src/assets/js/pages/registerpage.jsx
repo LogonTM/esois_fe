@@ -6,7 +6,7 @@ import {
     maximum_email_length
 } from '../constants/constants';
 import { login } from '../utilities/functions';
-import { authentication_token, okta_url } from '../constants/constants';
+import { authentication_token } from '../constants/constants';
 import { register, checkUsernameAvailability, checkEmailAvailability } from '../utilities/functions';
 import PropTypes from 'prop-types';
 import Button from '../utilities/button';
@@ -79,7 +79,7 @@ class RegisterPage extends Component {
             return {
                 isValid: true,
                 hasError: null,
-              };            
+            };            
         }
     }
 
@@ -410,7 +410,7 @@ class RegisterPage extends Component {
 		return (
 			<div>
 				<div className="top-gap">
-					<div className="register-panel">
+					<div className="register-panel" data-testid='register-page'>
 						    <form onSubmit={this.handleRegister} className="register-form">
                                 <div>
                                     <input
@@ -470,6 +470,7 @@ class RegisterPage extends Component {
                                     uiType='btn.lg'
                                     onClick={this.handleRegister}
                                     disabled={this.formValidator()}
+                                    data-testid='registerButton'
                                 />
 							</form>
 						</div>

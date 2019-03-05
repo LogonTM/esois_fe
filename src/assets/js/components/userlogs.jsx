@@ -1,8 +1,7 @@
 import 'bootstrap';
-import Button from '../utilities/button';
 import dictionary from '../../../translations/dictionary';
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
 import { getUsersLog } from '../utilities/functions';
@@ -62,7 +61,7 @@ class UserLogs extends PureComponent {
 
 	render() {
 		return (
-			<div id='container'>
+			<div id='container' data-testid='user-logs'>
 				<div className='top-gap'></div>
 				<div id='searchBox'>
 					<SearchCorpusBox

@@ -92,9 +92,9 @@ class ORArg extends Component {
 	}
 
 	toggleTooltip = () => {
-		this.setState({
-			tooltipIsOpen: !this.state.tooltipIsOpen
-		});
+		this.setState(oldState => ({
+			tooltipIsOpen: !oldState.tooltipIsOpen
+		}));
 	}
 
 	renderInput = () => {
@@ -108,6 +108,7 @@ class ORArg extends Component {
 					onChange={this.onArgValueChange}
 					onFocus={() => this.setState({editingText: true})}
 					onBlur={() => this.setState({editingText: false})}
+					data-testid='fcsquery-form-textinput'
 				/>
 			);
 		} else {
@@ -118,6 +119,7 @@ class ORArg extends Component {
 					onChange={this.onArgValueChange}
 					onFocus={() => this.setState({editingText: true})}
 					onBlur={() => this.setState({editingText: false})}
+					data-testid='valOpts'
 				>
 				{ 
 					valueOptions.map(valOpt => {
@@ -136,11 +138,12 @@ class ORArg extends Component {
 
 	render() {
 		return (
-			<div className="or or_arg">
+			<div className="or or_arg" data-testid='orarg'>
 				<div className="left_col" >
 					<button
 						className="btn btn-xs btn-default image_button remove_arg"
 						onClick={this.props.handleRemoveADVOr}
+						data-testid='removeORarg'
 					>
 						<i className="fa fa-minus"></i>
 					</button>

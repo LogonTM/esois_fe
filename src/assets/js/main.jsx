@@ -15,7 +15,7 @@ import LoginIcon from '../img/login-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
-import Rabalogo from '../img/rabalogo.png'
+import Rabalogo from '../img/raba-main-logo.png'
 import Magglass from '../img/magglass.png'
 import dictionary from '../../translations/dictionary'
 import jQuery from 'jquery'
@@ -134,7 +134,7 @@ class Main extends Component {
 	}
 
 	toggleCollapse = () => {
-		this.setState({ navbarCollapse: !this.state.navbarCollapse })
+		this.setState(oldState => ({ navbarCollapse: !oldState.navbarCollapse }))
 	}
 
 	renderAggregator = () => {
@@ -167,11 +167,10 @@ class Main extends Component {
 	renderLogin = () => {
 		return (
 			<LoginPage
-				toRegistration={this.toRegister.bind(this, true)}
-				backToAggregator={this.toAggregator.bind(this, true)}
 				isUserloggedIn={this.state.loggedInStatus}
-				userName={this.state.userName}
 				getStatus={this.getUserLoginStatus.bind(this)}
+				backToAggregator={this.toAggregator.bind(this, true)}
+				toRegistration={this.toRegister.bind(this, true)}
 				languageFromMain={this.state.language}
 				getRole={this.getUserRole.bind(this)}
 			/>
@@ -266,8 +265,9 @@ class Main extends Component {
 			<div className={classname} id='navMenu'>
 				<div className='navbar-nav navbar-right' id='navbar-right'>
 					<div className="d-flex flex-nowrap w-100">
-						<a
-							className='nav-item navbar-brand'
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex='-1'
 							data-toggle='tooltip'
 							title='EE'
@@ -278,9 +278,10 @@ class Main extends Component {
 								src={EeFlag}
 								alt='EST'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex='-1'
 							data-toggle='tooltip'
 							title='EN'
@@ -291,10 +292,11 @@ class Main extends Component {
 								src={GbFlag}
 								alt='ENG'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
+							tabIndex='-1'
 							data-toggle='tooltip'
 							title='Aggregator'
 							onClick={this.toAggregator.bind(this, true)}
@@ -304,10 +306,11 @@ class Main extends Component {
 								src={Magglass}
 								alt='Search'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
-							tabIndex="-1"
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
+							tabIndex='-1'
 							data-toggle='tooltip'
 							title='Login/Logout/Register'
 							onClick={this.toLogin.bind(this, true)}
@@ -317,9 +320,10 @@ class Main extends Component {
 								src={LoginIcon}
 								alt='Login'
 							/>
-						</a>
-						<a
-							className='nav-item navbar-brand'
+						</button>
+						<button
+							type='button'
+							className='nav-item navbar-brand no-border-button'
 							tabIndex="-1"
 							data-toggle='tooltip'
 							title='Help'
@@ -330,7 +334,7 @@ class Main extends Component {
 								src={SettingsIcon}
 								alt='Help'
 							/>
-						</a>
+						</button>
 						{this.state.userRole === 'ROLE_ADMIN' ? this.renderAdmin() : null}
 					</div>
 				</div>
@@ -341,24 +345,26 @@ class Main extends Component {
 	renderAdmin = () => {
 		return(
 			<div className="d-flex flex-nowrap w-100">
-				<a
-					className='nav-item navbar-brand'
+				<button
+					type='button'
+					className='nav-item navbar-brand no-border-button'
 					tabIndex="-1"
 					data-toggle='tooltip'
 					title='Manage Logs'
 					onClick={this.toManageLogs.bind(this, true)}
 				>
 					<i className="fa fa-database"/>
-				</a>		
-				<a
-					className='nav-item navbar-brand'
+				</button>		
+				<button
+					type='button'
+					className='nav-item navbar-brand no-border-button'
 					tabIndex="-1"
 					data-toggle='tooltip'
 					title='Manage Users'
 					onClick={this.toManageUsers.bind(this, true)}
 				>
 					<i className="fa fa-users"/>
-				</a>
+				</button>
 			</div>
 		)
 	}
@@ -369,6 +375,19 @@ class Main extends Component {
 				<div className='container'>
 					<nav className='navbar navbar-expand-md'>
 						<header className="inline navbar-brand" id='navbar-images'>
+							<a
+								tabIndex="-1"
+								href="https://clarin.eu/"
+								target="external"
+								data-toggle='tooltip'
+								title='CLARIN ERIC'
+							>
+								<img 
+									className='logo2'
+									src={Clarinlogo}
+									alt='CLARIN ERIC logo'
+								/>
+							</a>
 							<a
 								tabIndex="-1"
 								href="https://keeleressursid.ee/"
@@ -384,22 +403,15 @@ class Main extends Component {
 							</a>
 							<a
 								tabIndex="-1"
-								href="https://clarin.eu/"
-								target="external"
-								data-toggle='tooltip'
-								title='CLARIN ERIC'
+								href="/"
+								title='Raba ühendatud sisuotsing'
 							>
-								<img 
-									className='logo2'
-									src={Clarinlogo}
-									alt='CLARIN ERIC logo'
-								/>
-							</a>
 								<img
 									className='logo'
 									src={Rabalogo}
-									alt='Raba logo'
+									alt='Raba ühendatud sisuotsing'
 								/>
+							</a>
 						</header>
 						<button
 							type='button'
@@ -441,9 +453,9 @@ class Main extends Component {
 	}
 }
 
-function endsWith(str, suffix) {
-	return str.indexOf(suffix, str.length - suffix.length) !== -1
-}
+// function endsWith(str, suffix) {
+// 	return str.indexOf(suffix, str.length - suffix.length) !== -1
+// }
 
 function getUrlParameter(name) {
 	name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

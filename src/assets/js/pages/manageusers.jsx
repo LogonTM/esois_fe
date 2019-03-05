@@ -5,7 +5,7 @@ import dictionary from '../../../translations/dictionary';
 import EditUser from '../components/edituser.jsx'
 import Modal from '../components/modal.jsx';
 import PropTypes from 'prop-types';
-import React, { Component, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import SearchCorpusBox from '../components/searchcorpusbox';
 import { TableHeaderRow } from '../constants/admintable';
@@ -21,7 +21,7 @@ class ManageUsers extends PureComponent {
 		this.state = {
 			users: [],
 			oneUserId: 0,
-            oneUserName: '',
+			oneUserName: '',
 			oneUserEmail: '',
 			oneUserAccountstate: false,
 			oneUserRole: [],
@@ -44,12 +44,12 @@ class ManageUsers extends PureComponent {
 	}
 
 	loadUserRoles = () => {
-        getUserRoles()
-        .then(response => {
-            this.setState({
-                availableRoles: response
-            })
-        })
+		getUserRoles()
+		.then(response => {
+			this.setState({
+				availableRoles: response
+			})
+		})
 	}
 
 	removeUser = (e, id) => {
@@ -60,7 +60,7 @@ class ManageUsers extends PureComponent {
 					alert(dictionary[this.props.languageFromMain].user.delete.success);
 					this.getUserList();
 				}else{
-				    alert(`${dictionary[this.props.languageFromMain].user.delete.fail}:\nmessage: ${response.message}`);
+				   alert(`${dictionary[this.props.languageFromMain].user.delete.fail}:\nmessage: ${response.message}`);
 				}
 			}).catch(err => {
 				alert(`${dictionary[this.props.languageFromMain].user.delete.fail}:\nmessage: ${err.message}`);
@@ -118,7 +118,7 @@ class ManageUsers extends PureComponent {
 
 	render() {
 		return (
-			<div id='container'>
+			<div id='container' data-testid='manage-users'>
 				<div className='top-gap'></div>
 				<div id='searchBox'>
 					<SearchCorpusBox
