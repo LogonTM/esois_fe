@@ -26,8 +26,9 @@ class ZoomedResult extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.queryTypeId === 'fcs' && this.props.queryTypeId === 'cql' && this.state.displayADV === true) {
+		if (this.props.queryTypeId !== prevProps.queryTypeId) {
 			this.setState({
+				displayKwic: false,
 				displayADV: false
 			})
 		}
