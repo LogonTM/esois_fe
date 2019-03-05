@@ -25,6 +25,14 @@ class Results extends Component {
 		};
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.queryTypeId === 'fcs' && this.props.queryTypeId === 'cql' && this.state.displayADV === true) {
+			this.setState({
+				displayADV: false
+			})
+		}
+	}
+
 	renderPanelInfo(corpusHit) {
 		var inline = {display:"inline-block"};
 		return (

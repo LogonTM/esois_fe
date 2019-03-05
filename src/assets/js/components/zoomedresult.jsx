@@ -25,6 +25,14 @@ class ZoomedResult extends Component {
 		};
 	}
 
+	componentDidUpdate(prevProps) {
+		if (prevProps.queryTypeId === 'fcs' && this.props.queryTypeId === 'cql' && this.state.displayADV === true) {
+			this.setState({
+				displayADV: false
+			})
+		}
+	}
+
 	nextResults = e => {
 		this.props.corpusHit.inProgress = true;
 		this.setState({forceUpdate: this.state.forceUpdate + 1});
@@ -238,9 +246,9 @@ class ZoomedResult extends Component {
 	renderDisplayKWIC = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-				<label htmlFor="inputKwic" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
+				<label htmlFor="inputKwicz" className={`btn btn-flat${this.state.displayADV ? ' disabled' : ''}`}>
 					<input
-						id="inputKwic"
+						id="inputKwicz"
 						type="checkbox"
 						value="kwic"
 						checked={this.state.displayKwic}
@@ -258,9 +266,9 @@ class ZoomedResult extends Component {
 	renderDisplayADV = () => {
 		return (
 			<div className="inline btn-group" style={{display:"inline-block"}}>
-			   <label htmlFor="inputADV" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
-			   		<input
-						id="inputADV"
+			   <label htmlFor="inputADVz" className={`btn btn-flat${this.state.displayKwic ? ' disabled' : ''}`}>
+					<input
+						id="inputADVz"
 						type="checkbox"
 						value="adv"
 						checked={this.state.displayADV}
