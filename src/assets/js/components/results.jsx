@@ -162,13 +162,13 @@ class Results extends Component {
 		);
 	}
 
-	renderRowsAsADV = (hit,i) => {
+	renderRowsAsADV = (hit, background) => {
 		var sleft={textAlign:"left", verticalAlign:"top", width:"50%"};
 		function renderSpans(span, idx) {
 			return (<td key={idx} className={span.hit?"keyword":""}>{span.text}</td>);
 		}
 		return (
-			<tr key={i} className="hitrow" data-testid='rows-adv'>
+			<tr key={hit.pid+hit.reference} className={`hitrow${background}`} data-testid='rows-adv'>
 				<td style={sleft}>{hit.pid}</td>
 				<td style={sleft}>{hit.reference}</td>
 				{hit.spans.map(renderSpans)}
@@ -217,14 +217,31 @@ class Results extends Component {
 
 	renderPanelBody = corpusHit => {
 		var fulllength = {width:"100%"};
-
+		let counter = 0;
+		let pid = 0;
+		let advBackground = '';
 		if (this.state.displayADV) {
 			return (
 				<div id="adv-results">
 					{this.renderErrors(corpusHit)}
 					{this.renderDiagnostics(corpusHit)}
 					<table className="table table-condensed table-hover" style={fulllength}>
-						<tbody>{corpusHit.advancedLayers.map(this.renderRowsAsADV)}</tbody>
+						<tbody>
+							{
+								corpusHit.advancedLayers.map(hit => {
+									if (hit.pid === pid) {
+										advBackground = counter % 2 === 1 ? '' : '-odd';
+										return this.renderRowsAsADV(hit, advBackground)
+									}
+									else {
+										counter += 1;
+										advBackground = counter % 2 === 1 ? '' : '-odd';
+										pid = hit.pid;
+										return this.renderRowsAsADV(hit, advBackground)
+									}
+								})
+							}
+						</tbody>
 					</table>
 				</div>
 			);
