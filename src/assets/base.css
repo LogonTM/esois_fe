@@ -449,7 +449,11 @@ td {
 }
 
 .card-body .table-hover > tbody > tr.hitrow:hover {
-    background-color: #F5F5F5;
+   background-color: rgba(40,85,143, 0.2);
+}
+
+.hitrow-odd {
+	background-color: #F6F6F6;
 }
 
 .card-body div > p.hitrow {
@@ -458,7 +462,7 @@ td {
 }
 
 .card-body div > p.hitrow:hover {
-    background-color: #F5F5F5;
+    background-color: rgba(40,85,143, 0.2);
 }
 
 /*** zoomed result ***/
