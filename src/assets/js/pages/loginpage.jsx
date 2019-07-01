@@ -22,8 +22,8 @@ class LoginPage extends Component {
 
 	constructor(props) {
 		super(props);
+		this.loadCurrentUser()
 		this.state = {
-			currentUser: null,
 			usernameOrEmail: {
 				value: '',
 				valid: false,
@@ -54,6 +54,7 @@ class LoginPage extends Component {
 				loggedInStatus: true,
 			});
 			this.props.getRole(response.authorities[0].authority);
+			this.props.setUName(response.name);
 		}).catch(error => {
 
 		});

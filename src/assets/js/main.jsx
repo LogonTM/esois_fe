@@ -12,6 +12,7 @@ import Clarinlogo from '../img/clarin-logo.png'
 import EeFlag from '../img/ee-icon.png'
 import GbFlag from '../img/gb-icon.png'
 import LoginIcon from '../img/login-icon.png'
+import LogOutIcon from '../img/logout-icon.png'
 import SettingsIcon from '../img/settings-icon.png'
 import EeEKRKlogo from '../img/ekrk-logo.png'
 import EnEKRKlogo from '../img/ekrk-logo-eng.png'
@@ -132,6 +133,12 @@ class Main extends Component {
 			userRole: role
 		})
 	}
+	
+	setUName = name => {
+		this.setState({
+			userName: name
+		})
+	}
 
 	toggleCollapse = () => {
 		this.setState(oldState => ({ navbarCollapse: !oldState.navbarCollapse }))
@@ -173,6 +180,7 @@ class Main extends Component {
 				toRegistration={this.toRegister.bind(this, true)}
 				languageFromMain={this.state.language}
 				getRole={this.getUserRole.bind(this)}
+				setUName={this.setUName.bind(this)}
 			/>
 		);
 	}
@@ -198,7 +206,7 @@ class Main extends Component {
 			'': this.renderAggregator,
 			help: this.renderHelp,
 			login: this.renderLogin,
-			register: this.renderRegister,
+            register: this.renderRegister,
 			manageUsers: this.renderManageUsers, // For admins only
 			manageLogs: this.renderManageLogs // For admins only
 		}
@@ -312,12 +320,12 @@ class Main extends Component {
 							className='nav-item navbar-brand no-border-button'
 							tabIndex='-1'
 							data-toggle='tooltip'
-							title='Login/Logout/Register'
+							title={this.state.loggedInStatus ? this.state.userName + '/Logout' : 'Login/Register'}
 							onClick={this.toLogin.bind(this, true)}
 						>
 							<img
 								className='symbols'
-								src={LoginIcon}
+								src={this.state.loggedInStatus ? LogOutIcon : LoginIcon}
 								alt='Login'
 							/>
 						</button>
